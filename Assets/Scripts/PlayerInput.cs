@@ -12,7 +12,7 @@ public class PlayerInput : MonoBehaviour {
 
 
     // components
-    private Rigidbody2D m_rigidbody;
+    new public static Rigidbody2D rigidbody;
 
 
     // input
@@ -66,12 +66,8 @@ public class PlayerInput : MonoBehaviour {
 
     void Start() {
         DefaultKeybinds();
-        m_rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody = GetComponent<Rigidbody2D>();
     }
-
-    static readonly byte[,] directions8 = { {3, 2, 1}, 
-                                            {4, 6, 0}, 
-                                            {5, 6, 7} };
     
     static Vector3 halfScreen;
 
@@ -101,9 +97,7 @@ public class PlayerInput : MonoBehaviour {
 
             mouse_offset = Input.mousePosition-halfScreen;
             mouse_offset.Normalize();
-
-            angle = Vector3.Angle(Vector3.right, mouse_offset);
-            if(mouse_offset.y < 0) angle = 360-angle;
+            angle = Math.NormalizedVecToAngle(mouse_offset);
 
             m_items.eulerAngles = new Vector3(0, 0, angle);
         }
@@ -121,9 +115,9 @@ public class PlayerInput : MonoBehaviour {
             
                 // rotate
                 if(input_move.x != 0 || input_move.y != 0)
-                    direction8index = directions8[(int)-input_move.y+1, (int)input_move.x+1];
+                    direction8index = Math.directions8[(int)-input_move.y+1, (int)input_move.x+1];
                 else
-                    direction8index = directions8[(int)-Mathf.Round(mouse_offset.y)+1, (int)Mathf.Round(mouse_offset.x)+1];
+                    direction8index = Math.directions8[(int)-Mathf.Round(mouse_offset.y)+1, (int)Mathf.Round(mouse_offset.x)+1];
 
             input_move.Normalize();
 
@@ -153,20 +147,19 @@ public class PlayerInput : MonoBehaviour {
 
         // pew pew
         if(PlayerStats._currentGun == PlayerStats._nextGun && Input.GetKey(keybinds[key_shoot]) && PlayerStats.CanShoot()) {
-            PlayerStats.currentGun.Shoot(m_rigidbody.position, mouse_offset, angle, m_rigidbody);
+            PlayerStats.currentGun.Shoot(rigidbody.position, mouse_offset, angle, rigidbody);
             PlayerStats.playerStats.playerHUD.UpdateAmmo();
         }
 
         //items
-        if(Input.GetKeyDown(keybinds[key_item])) {// && PlayerStats.state == PlayerStats.PlayerState.READY) {
+        if(Input.GetKeyDown(keybinds[key_item])) {
 
             switch(PlayerStats.currentItem) {
             case Item.KNIFE:
-                Transform knife = Instantiate(itemPrefabs[(int)Item.KNIFE]);
-                knife.position = knifeThrowingPoint.position;
+                Transform knife = Instantiate(itemPrefabs[(int)Item.KNIFE], knifeThrowingPoint.position, Quaternion.identity);
                 Rigidbody2D rb = knife.GetComponent<Rigidbody2D>();
                 rb.AddForce(mouse_offset*900);
-                rb.AddForce(m_rigidbody.velocity*50);
+                rb.AddForce(rigidbody.velocity*50);
                 rb.AddTorque(60);
                 IgnoreCollisionsItem(knife);
 
@@ -212,7 +205,7 @@ public class PlayerInput : MonoBehaviour {
         // drop
         if(Input.GetKeyDown(keybinds[key_drop]) && PlayerStats.currentItem != Item.NONE) {
             Transform item = Instantiate(itemPrefabs[(int)PlayerStats.currentItem]);
-            item.position = m_rigidbody.position;
+            item.position = rigidbody.position;
             item.GetComponent<ItemPickup>().item = PlayerStats.currentItem;
             RemoveCurrentItem();
             item.GetComponent<Rigidbody2D>().AddForce(new Vector2((Random.value-0.5f)*100, (Random.value-0.5f)*100));
@@ -228,7 +221,7 @@ public class PlayerInput : MonoBehaviour {
 
 
     void FixedUpdate() {
-        m_rigidbody.AddForce(input_move*PlayerStats.k_RUN_ACCELL);
+        rigidbody.AddForce(input_move*PlayerStats.k_RUN_ACCELL);
     }
 
 }

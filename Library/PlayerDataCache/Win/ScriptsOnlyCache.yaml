@@ -3,6 +3,10 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - AspectRatio
     - AudioManager
+    - Coin
+    - Coin_Explosion
+    - EightDirectionAnimator
+    - Enemy_Spider
     - Gun
     - HUD_Button_Gun
     - HUD_Button_Item
@@ -23,6 +27,11 @@ ScriptsOnlyBuild:
     - UnityEditor.Tilemaps.TileDragAndDropManager
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
+    UnityEditor.Graphs.dll:
+    - UnityEditor.Graphs.AnimationBlendTree.Graph
+    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.Graph
+    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -105,7 +114,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14380}
     - Class: 114
-      Script: {instanceID: 14422}
+      Script: {instanceID: 14390}
+    - Class: 114
+      Script: {instanceID: 14424}
+    - Class: 114
+      Script: {instanceID: 33660}
+    - Class: 114
+      Script: {instanceID: 82272}
+    - Class: 114
+      Script: {instanceID: 96516}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -409,7 +426,7 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: ffc9ad4e2b2c88975bea0c812f33f7f4
+      Hash: 865a7f7eb3b3657d390ff3e6b7f5077b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerAnimator
@@ -661,6 +678,12 @@ ScriptsOnlyBuild:
     className: StandaloneInputModule
   - hash:
       serializedVersion: 2
+      Hash: fc4f8c21c2820df4913ebd38a65a0851
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Enemy_Spider
+  - hash:
+      serializedVersion: 2
       Hash: aa88ae22474df55295327e4ee99e5a24
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -689,6 +712,24 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: e79b9bfc4e26a65e420d8d2c5ea292ae
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EightDirectionAnimator
+  - hash:
+      serializedVersion: 2
+      Hash: e7bddfae38d8145408a9175e297a9b02
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Coin_Explosion
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Coin
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
