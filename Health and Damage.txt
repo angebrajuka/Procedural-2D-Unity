@@ -1,0 +1,37 @@
+
+Thing				Health
+
+Zombieman			20
+Shotgun guy			30
+Wolfenstein SS		50
+Imp					60
+Heavy weapon dude	70
+Lost soul			100
+Demon				150
+Spectre				150
+Revenant			300
+Cacodemon			400
+Pain elemental		400
+Hell knight			500
+Arachnotron			500
+Mancubus			600
+Arch-vile			700
+Baron of hell		1000
+Spiderdemon			3000
+Cyberdemon			4000
+
+
+
+
+Weapon				RPM		min dmg,	max dmg,	mean dmg	mean dmg/sec
+
+Fist				120		2,			20,			11			
+Pistol				150 	5,			15,			10			
+Shotgun				58		35,			105,		70			
+Chaingun			530		5,			15,			10			
+Chainsaw			480		2,			20,			11			
+Super Shotgun		42		105,		315,		210			
+Berserk Fist		120		20,			200,		110			
+Plasma Gun			700		5,			40,			22.5		
+Rocket				106		148,		288,		218			
+BFG 9000			56		2060,		4200,		3130		
