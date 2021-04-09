@@ -14,7 +14,8 @@ public class PlayerStats : MonoBehaviour {
 
 
 
-    // upgrades
+    // upgrades + resources
+    public static int coins=0;
 
 
 

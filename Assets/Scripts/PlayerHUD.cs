@@ -8,6 +8,7 @@ public class PlayerHUD : MonoBehaviour {
     public Text bulletsTxt, shellsTxt, energyTxt;
     public Text currentGunAmmoTxt;
     public Text interact;
+    public Text textCoins;
     public Image[] inventoryCells;
     public RectTransform highlight_gun, highlight_item;
     public RectTransform ammoTxt;
@@ -61,5 +62,10 @@ public class PlayerHUD : MonoBehaviour {
 
     public void UpdateHealth() {
         bar_health.value = PlayerStats.player.health / PlayerStats.player.maxHealth;
+    }
+
+    public void UpdateCoins() {
+        int numOfDigits = (PlayerStats.coins+"").Length;
+        textCoins.text = new string('0', 11-numOfDigits) + PlayerStats.coins;
     }
 }

@@ -7,10 +7,12 @@ public class Coin_Explosion : MonoBehaviour {
     // hierarchy
     public Transform prefab_coin;
     public int count;
+    public int variation;
     public int vel;
 
     void Start() {
-        
+        count += (int)((Random.value-0.5)*variation);
+
         for(int i=0; i<count; i++) {
             Transform coin = Instantiate(prefab_coin, transform.position, Quaternion.identity);
             Rigidbody2D rb = coin.GetComponent<Rigidbody2D>();

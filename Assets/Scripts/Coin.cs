@@ -24,7 +24,11 @@ public class Coin : MonoBehaviour {
             Vector2 dir = other.attachedRigidbody.position-m_rigidbody.position;
             dir.Normalize();
             m_rigidbody.AddForce(dir*50);
-            if(Math.Closer(m_rigidbody.position, other.attachedRigidbody.position, 0.05f)) Destroy(gameObject);
+            if(Math.Closer(m_rigidbody.position, other.attachedRigidbody.position, 0.05f)) {
+                PlayerStats.coins ++;
+                PlayerStats.playerStats.playerHUD.UpdateCoins();
+                Destroy(gameObject);
+            }
         }
     }
 }

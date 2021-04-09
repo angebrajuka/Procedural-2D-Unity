@@ -46,4 +46,5 @@ MonoBehaviour:
   prefab_coin: {fileID: 4567969767452962457, guid: 48d055f204d2a2844a9cb47200451714,
     type: 3}
   count: 10
+  variation: 7
   vel: 300

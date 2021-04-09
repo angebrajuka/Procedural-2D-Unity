@@ -12,6 +12,7 @@ public class Enemy_Spider : Target {
 
     // components
     [HideInInspector] public Rigidbody2D m_rigidbody;
+    [HideInInspector] public Material m_material;
 
 
     // members
@@ -19,21 +20,32 @@ public class Enemy_Spider : Target {
     float timer;
     bool following;
     float animationTimer;
+    float flash;
 
 
     void Start() {
         m_rigidbody = GetComponent<Rigidbody2D>();
+        m_material = GetComponent<SpriteRenderer>().material;
         timer = 0;
         animationTimer = 0;
+        flash = 0;
     }
 
-    public override void OnDamage(float damage) {}
+
+    public override void OnDamage(float damage) {
+        Color c = m_animator.m_spriteRenderer.color;
+        flash = 1;
+        m_animator.m_spriteRenderer.color = c;
+    }
+
     public override void OnKill(float damage) {
         Transform coinExplosion = Instantiate(prefab_coinExplosion);
         coinExplosion.position = transform.position;
         Destroy(this.gameObject);
     }
+
     public override void OnHeal(float heal) {}
+
 
     void NewTarget() {
         following = (Random.value > 0.4f);
@@ -43,18 +55,16 @@ public class Enemy_Spider : Target {
         m_animator.direction = Math.AngleToDir8(Math.NormalizedVecToAngle(dir));
         if(m_animator.direction >= 8) m_animator.direction = 0;
         dir = Math.vectors[m_animator.direction];
-
-        // dir = Vector2.right;
         
         timer = Random.value+0.2f;
     }
 
-    void OnCollisionEnter(Collision other) {
-        NewTarget();
-    }
-
-    void OnCollisionStay(Collision other) {
-        NewTarget();
+    void OnCollisionStay2D(Collision2D other) {
+        if(timer < 0.1f) {
+            dir *= -1;
+            m_animator.direction = Math.AngleToDir8(Math.NormalizedVecToAngle(dir));
+            timer = 0.2f;
+        }
     }
 
     void Update() {
@@ -70,7 +80,14 @@ public class Enemy_Spider : Target {
         }
         
         timer -= Time.deltaTime;
-        
+
+        if(flash > 0) {
+            flash -= Time.deltaTime*8;
+            m_material.SetFloat("_Blend", flash);
+        }
+    }
+
+    void FixedUpdate() {
         m_rigidbody.velocity *= 0;
         m_rigidbody.AddForce(dir*120);
     }
