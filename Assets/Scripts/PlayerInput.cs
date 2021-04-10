@@ -9,6 +9,7 @@ public class PlayerInput : MonoBehaviour {
     public Transform m_items;
     public Transform knifeThrowingPoint;
     public Transform[] itemPrefabs;
+    // public TilemapCollider2D decorationsLow;
 
 
     // components
@@ -72,12 +73,10 @@ public class PlayerInput : MonoBehaviour {
     static Vector3 halfScreen;
 
     void IgnoreCollisionsItem(Transform item) {
-        BoxCollider2D c = item.GetComponent<BoxCollider2D>();
-        CircleCollider2D cc = item.GetComponent<CircleCollider2D>();
+        EdgeCollider2D c = item.GetComponent<EdgeCollider2D>();
         foreach(Gun gun in PlayerStats.guns) {
             EdgeCollider2D g = gun.GetComponent<EdgeCollider2D>();
             Physics2D.IgnoreCollision(c, g);
-            Physics2D.IgnoreCollision(cc, g);
         }
         Physics2D.IgnoreCollision(c, GetComponent<BoxCollider2D>());
     }
@@ -155,12 +154,12 @@ public class PlayerInput : MonoBehaviour {
         if(Input.GetKeyDown(keybinds[key_item])) {
 
             switch(PlayerStats.currentItem) {
-            case Item.KNIFE:
-                Transform knife = Instantiate(itemPrefabs[(int)Item.KNIFE], knifeThrowingPoint.position, Quaternion.identity);
+            case Item.BLADE:
+                Transform knife = Instantiate(itemPrefabs[(int)Item.BLADE], knifeThrowingPoint.position, Quaternion.identity);
                 Rigidbody2D rb = knife.GetComponent<Rigidbody2D>();
                 rb.AddForce(mouse_offset*900);
                 rb.AddForce(rigidbody.velocity*50);
-                rb.AddTorque(60);
+                rb.AddTorque(1200);
                 IgnoreCollisionsItem(knife);
 
                 break;

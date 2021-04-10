@@ -76,7 +76,7 @@ public class Gun : MonoBehaviour {
 
         Vector3 direction = AngleToVector3(angle);
 
-        const int layerMask = ~(1<<8);
+        const int layerMask = ~(1<<8 | 1<<2 | 1<<10 | 1<<12);
         RaycastHit2D raycast = Physics2D.Raycast(position, direction, range, layerMask);
         if(raycast.collider != null) {
             

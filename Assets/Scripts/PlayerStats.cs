@@ -41,7 +41,7 @@ public class PlayerStats : MonoBehaviour {
 
 
     // items
-    public static Item[] items = {Item.KNIFE, Item.NONE, Item.NONE, Item.NONE, Item.NONE, Item.NONE, Item.NONE, Item.NONE};
+    public static Item[] items = {Item.BLADE, Item.NONE, Item.NONE, Item.NONE, Item.NONE, Item.NONE, Item.NONE, Item.NONE};
     public static int _item;
     public static Item currentItem = Item.NONE;
     public static Item interactItem = Item.NONE;

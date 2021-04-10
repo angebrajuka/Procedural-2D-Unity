@@ -5,7 +5,7 @@ using UnityEditor;
 
 public enum Item:byte {
     NONE=0,
-    KNIFE=1,
+    BLADE=1,
     BOMB=2,
     MEDKIT=3,
     STIMPACK=4,
