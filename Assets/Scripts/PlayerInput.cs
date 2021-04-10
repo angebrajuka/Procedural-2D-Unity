@@ -9,7 +9,8 @@ public class PlayerInput : MonoBehaviour {
     public Transform m_items;
     public Transform knifeThrowingPoint;
     public Transform[] itemPrefabs;
-    // public TilemapCollider2D decorationsLow;
+    public GameObject weaponWheel;
+    public Transform weaponWheelHighlight;
 
 
     // components
@@ -26,8 +27,8 @@ public class PlayerInput : MonoBehaviour {
 
 
     // keybinds
-    public const int key_moveEast=0, key_moveNorth=1, key_moveWest=2, key_moveSouth=3, key_shoot=4, key_slot1=5, key_slot2=6, key_slot3=7, key_slot4=8, key_slot5=9, key_slot6=10, key_reload=11, key_item=12, key_interact=13, key_drop=14;
-    public static KeyCode[] keybinds = new KeyCode[15];
+    public const int key_moveEast=0, key_moveNorth=1, key_moveWest=2, key_moveSouth=3, key_shoot=4, /*key_slot1=5, key_slot2=6, key_slot3=7, key_slot4=8, key_slot5=9, key_slot6=10,*/ key_reload=5, key_item=6, key_interact=7, key_drop=8, key_wheel=9;
+    public static KeyCode[] keybinds = new KeyCode[10];
     
     public static void DefaultKeybinds() {
         keybinds[key_moveEast]  = KeyCode.D;
@@ -35,16 +36,17 @@ public class PlayerInput : MonoBehaviour {
         keybinds[key_moveWest]  = KeyCode.A;
         keybinds[key_moveSouth] = KeyCode.S;
         keybinds[key_shoot]     = KeyCode.Mouse0;
-        keybinds[key_slot1]     = KeyCode.Alpha1;
-        keybinds[key_slot2]     = KeyCode.Alpha2;
-        keybinds[key_slot3]     = KeyCode.Alpha3;
-        keybinds[key_slot4]     = KeyCode.Alpha4;
-        keybinds[key_slot5]     = KeyCode.Alpha5;
-        keybinds[key_slot6]     = KeyCode.Alpha6;
+        // keybinds[key_slot1]     = KeyCode.Alpha1;
+        // keybinds[key_slot2]     = KeyCode.Alpha2;
+        // keybinds[key_slot3]     = KeyCode.Alpha3;
+        // keybinds[key_slot4]     = KeyCode.Alpha4;
+        // keybinds[key_slot5]     = KeyCode.Alpha5;
+        // keybinds[key_slot6]     = KeyCode.Alpha6;
         keybinds[key_reload]    = KeyCode.R;
         keybinds[key_item]      = KeyCode.F;
         keybinds[key_interact]  = KeyCode.E;
-        keybinds[key_drop]      = KeyCode.Q;
+        keybinds[key_drop]      = KeyCode.P;
+        keybinds[key_wheel]     = KeyCode.Q;
     }
 
     public static void LoadKeybinds() {
@@ -74,10 +76,6 @@ public class PlayerInput : MonoBehaviour {
 
     void IgnoreCollisionsItem(Transform item) {
         EdgeCollider2D c = item.GetComponent<EdgeCollider2D>();
-        foreach(Gun gun in PlayerStats.guns) {
-            EdgeCollider2D g = gun.GetComponent<EdgeCollider2D>();
-            Physics2D.IgnoreCollision(c, g);
-        }
         Physics2D.IgnoreCollision(c, GetComponent<BoxCollider2D>());
     }
 
@@ -126,19 +124,46 @@ public class PlayerInput : MonoBehaviour {
 
 
         // switching
-        if(Input.GetKey(keybinds[key_slot1])) PlayerStats._nextGun = 0;
-        if(Input.GetKey(keybinds[key_slot2])) PlayerStats._nextGun = 1;
-        if(Input.GetKey(keybinds[key_slot3])) PlayerStats._nextGun = 2;
-        if(Input.GetKey(keybinds[key_slot4])) PlayerStats._nextGun = 3;
-        if(Input.GetKey(keybinds[key_slot5])) PlayerStats._nextGun = 4;
-        if(Input.GetKey(keybinds[key_slot6])) PlayerStats._nextGun = 5;
-        if(Input.mouseScrollDelta.y > 0) {
-            PlayerStats._nextGun --;
-            if(PlayerStats._nextGun < 0) PlayerStats._nextGun = 5;
-        } else if(Input.mouseScrollDelta.y < 0) {
-            PlayerStats._nextGun ++;
-            if(PlayerStats._nextGun > 5) PlayerStats._nextGun = 0;
+        if(Input.GetKey(keybinds[key_wheel])) {
+            weaponWheel.SetActive(true);
+            
+            Vector3 r = weaponWheelHighlight.eulerAngles;
+
+            r.z = Mathf.Floor((angle+30)/60)*60;
+
+            weaponWheelHighlight.eulerAngles = r;
+
+            int preConvert = (int)r.z/60;
+            if(preConvert > 5) preConvert = 0;
+
+            byte[] convert = {3, 2, 0, 1, 4, 5};
+
+            PlayerStats._nextGun = convert[preConvert];
+
+            // Time.timeScale = 0.2f;
+            // AudioManager.PitchShift(0.2f);
+        } else {
+            weaponWheel.SetActive(false);
+            // Time.timeScale = 1;
+            // AudioManager.PitchShift(1);
         }
+        
+        
+        
+        // old switching
+        // if(Input.GetKey(keybinds[key_slot1])) PlayerStats._nextGun = 0;
+        // if(Input.GetKey(keybinds[key_slot2])) PlayerStats._nextGun = 1;
+        // if(Input.GetKey(keybinds[key_slot3])) PlayerStats._nextGun = 2;
+        // if(Input.GetKey(keybinds[key_slot4])) PlayerStats._nextGun = 3;
+        // if(Input.GetKey(keybinds[key_slot5])) PlayerStats._nextGun = 4;
+        // if(Input.GetKey(keybinds[key_slot6])) PlayerStats._nextGun = 5;
+        // if(Input.mouseScrollDelta.y > 0) {
+        //     PlayerStats._nextGun --;
+        //     if(PlayerStats._nextGun < 0) PlayerStats._nextGun = 5;
+        // } else if(Input.mouseScrollDelta.y < 0) {
+        //     PlayerStats._nextGun ++;
+        //     if(PlayerStats._nextGun > 5) PlayerStats._nextGun = 0;
+        // }
         
 
         // reload
@@ -156,11 +181,11 @@ public class PlayerInput : MonoBehaviour {
             switch(PlayerStats.currentItem) {
             case Item.BLADE:
                 Transform knife = Instantiate(itemPrefabs[(int)Item.BLADE], knifeThrowingPoint.position, Quaternion.identity);
+                // IgnoreCollisionsItem(knife);
                 Rigidbody2D rb = knife.GetComponent<Rigidbody2D>();
                 rb.AddForce(mouse_offset*900);
                 rb.AddForce(rigidbody.velocity*50);
                 rb.AddTorque(1200);
-                IgnoreCollisionsItem(knife);
 
                 break;
             case Item.BOMB:

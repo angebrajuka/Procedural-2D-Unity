@@ -21,6 +21,7 @@ ScriptsOnlyBuild:
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.Tilemap.Editor.dll:
+    - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
     - UnityEditor.Tilemaps.GridPalettes
@@ -62,8 +63,6 @@ ScriptsOnlyBuild:
     - UnityEngine.Rendering.Universal.UniversalRenderPipelineEditorResources
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
-    Unity.ShaderGraph.Editor.dll:
-    - UnityEditor.ShaderGraph.Drawing.MaterialGraphEditWindow
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -880,7 +879,7 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: c9e64caa263eea267f3ce3959f5898c5
+      Hash: 86a77a7772c2b103cf8e58d37fca6f07
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerInput
@@ -1030,7 +1029,7 @@ ScriptsOnlyBuild:
     className: TMP_StyleSheet
   - hash:
       serializedVersion: 2
-      Hash: e25f534092e41a41a95409c9951ed38d
+      Hash: 489759f4c0450eda85f9aa2301a59ec6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Gun

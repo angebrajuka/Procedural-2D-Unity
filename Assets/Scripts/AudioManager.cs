@@ -62,6 +62,10 @@ public class AudioManager : MonoBehaviour {
         PlayerPrefs.SetFloat("VolMenu", volMenu);
     }
 
+    public static void PitchShift(float pitch) {
+        manager.mixer.SetFloat("PitchSFX", pitch);
+    }
+
     public static void PlayClip(Vector3 position, AudioClip clip, float volume, Mixer mixer, float spatialBlend=0.0f) {
         GameObject gameObject = new GameObject();
         gameObject.transform.position = position;

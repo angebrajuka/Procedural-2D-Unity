@@ -31,7 +31,6 @@ public class Gun : MonoBehaviour {
 
     // components
     ParticleSystem muzzleFlash;
-    [HideInInspector] public EdgeCollider2D edgeCollider;
 
 
     // stats
@@ -43,7 +42,6 @@ public class Gun : MonoBehaviour {
         damage /= bullets;
         ammo = clipSize;
         muzzleFlash = GetComponent<ParticleSystem>();
-        edgeCollider = GetComponent<EdgeCollider2D>();
     }
 
     public bool Shoot(Vector3 position, Vector2 direction, float angle, Rigidbody2D rigidbody) {

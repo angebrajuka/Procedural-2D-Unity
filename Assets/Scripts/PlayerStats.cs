@@ -10,7 +10,7 @@ public class PlayerStats : MonoBehaviour {
     
 
     // constant
-    public const float k_RUN_ACCELL = 40.0f;
+    public const float k_RUN_ACCELL = 70.0f;
 
 
 
@@ -105,10 +105,8 @@ public class PlayerStats : MonoBehaviour {
                     state = PlayerState.READY;
                     break;
                 case PlayerState.SWITCHING:
-                    currentGun.edgeCollider.isTrigger = true;
                     _currentGun = _nextGun;
                     currentGun = guns[_currentGun];
-                    currentGun.edgeCollider.isTrigger = false;
                     state = PlayerState.CYCLING;
                     playerHUD.UpdateAmmo();
                     playerHUD.UpdateHotbar();

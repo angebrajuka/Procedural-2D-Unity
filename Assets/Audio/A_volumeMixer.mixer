@@ -57,6 +57,8 @@ AudioMixerController:
     name: VolMusic
   - guid: 4dc14a6af41ef7548bdc430d9f90725a
     name: VolSFX
+  - guid: 476ac56e2202c7c4ca3b61a941b33866
+    name: PitchSFX
   m_AudioMixerGroupViews:
   - guids:
     - 0c9ed27c6949eba49a2835c73ce29eb1
@@ -148,11 +150,34 @@ AudioMixerGroupController:
   m_Pitch: 95305bc9bb553bf49916d780b2c4a037
   m_Send: 00000000000000000000000000000000
   m_Effects:
+  - {fileID: 6564245187199125482}
   - {fileID: -7498766407768178719}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &6564245187199125482
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: b070cc65bddae3f4cb4eaf21788564ce
+  m_EffectName: Pitch Shifter
+  m_MixLevel: 518eda81d32e5804c8b1db07e9f1828d
+  m_Parameters:
+  - m_ParameterName: Pitch
+    m_GUID: 476ac56e2202c7c4ca3b61a941b33866
+  - m_ParameterName: FFT size
+    m_GUID: b8af41a0dd9f8724ab8578dbf1ae9481
+  - m_ParameterName: Overlap
+    m_GUID: da7ceb8b528a8754fa8cecea21899d47
+  - m_ParameterName: Max channels
+    m_GUID: f58bdd57e8e10d54e8665ae7a48a211c
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &6789442692680342309
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
