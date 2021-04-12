@@ -51,7 +51,7 @@ public class PlayerStats : MonoBehaviour {
 
     // other
     public static PlayerStats playerStats;
-    public static Player player;
+    public static PlayerTarget playerTarget;
 
 
     void Start() {
@@ -85,7 +85,7 @@ public class PlayerStats : MonoBehaviour {
         state = PlayerState.RELOADING;
         gunTimer = currentGun.reloadTime;
         playerStats.playerHUD.UpdateAmmo();
-        AudioManager.PlayClip(player.transform.position, currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
+        AudioManager.PlayClip(playerTarget.transform.position, currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
     }
 
     void Update() {
@@ -109,7 +109,7 @@ public class PlayerStats : MonoBehaviour {
                     currentGun = guns[_currentGun];
                     state = PlayerState.CYCLING;
                     playerHUD.UpdateAmmo();
-                    playerHUD.UpdateHotbar();
+                    // playerHUD.UpdateHotbar();
                     break;
                 }
             }

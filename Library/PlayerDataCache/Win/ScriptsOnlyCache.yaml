@@ -9,19 +9,17 @@ ScriptsOnlyBuild:
     - EightDirectionAnimator
     - Enemy_Spider
     - Gun
-    - HUD_Button_Gun
     - HUD_Button_Item
     - ItemPickup
-    - Player
     - PlayerAnimator
     - PlayerHUD
     - PlayerInput
     - PlayerStats
+    - PlayerTarget
     - Sink
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.Tilemap.Editor.dll:
-    - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
     - UnityEditor.Tilemaps.GridPalettes
@@ -134,8 +132,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 11550}
     - Class: 114
       Script: {instanceID: 11566}
-    - Class: 114
-      Script: {instanceID: 11706}
     - Class: 114
       Script: {instanceID: 11716}
     - Class: 114
@@ -342,7 +338,7 @@ ScriptsOnlyBuild:
       Hash: 1310193ad780ec7a96d45b4f274ed2aa
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: Player
+    className: PlayerTarget
   - hash:
       serializedVersion: 2
       Hash: b7d58df3c6d92c60e3611c0a808aa0dc

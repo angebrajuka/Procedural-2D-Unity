@@ -47,8 +47,8 @@ public class Enemy_Spider : Target {
     public override void OnHeal(float heal) {}
 
 
-    void NewTarget() {
-        following = (Random.value > 0.4f);
+    void NewTarget(bool forceWander=false) {
+        following = !forceWander && (Random.value > 0.4f);
         
         dir = following ? PlayerInput.rigidbody.position-m_rigidbody.position : (Math.vectors[(int)Mathf.Floor(Random.value*8)]);
 
@@ -61,9 +61,10 @@ public class Enemy_Spider : Target {
 
     void OnCollisionStay2D(Collision2D other) {
         if(timer < 0.1f) {
-            dir *= -1;
-            m_animator.direction = Math.AngleToDir8(Math.NormalizedVecToAngle(dir));
-            timer = 0.2f;
+            // dir *= -1;
+            // m_animator.direction = Math.AngleToDir8(Math.NormalizedVecToAngle(dir));
+            // timer = 0.2f;
+            NewTarget(true);
         }
     }
 

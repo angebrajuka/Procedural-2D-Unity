@@ -20,6 +20,7 @@ public class PlayerInput : MonoBehaviour {
     // input
     private Vector2 input_move;
     private Vector2 mouse_offset;
+    private bool isWheelActive=false;
     // output
     public static float angle;
     public static byte direction8index;
@@ -27,7 +28,7 @@ public class PlayerInput : MonoBehaviour {
 
 
     // keybinds
-    public const int key_moveEast=0, key_moveNorth=1, key_moveWest=2, key_moveSouth=3, key_shoot=4, /*key_slot1=5, key_slot2=6, key_slot3=7, key_slot4=8, key_slot5=9, key_slot6=10,*/ key_reload=5, key_item=6, key_interact=7, key_drop=8, key_wheel=9;
+    public const int key_moveEast=0, key_moveNorth=1, key_moveWest=2, key_moveSouth=3, key_shoot=4, key_reload=5, key_item=6, key_interact=7, key_drop=8, key_wheel=9;
     public static KeyCode[] keybinds = new KeyCode[10];
     
     public static void DefaultKeybinds() {
@@ -36,17 +37,11 @@ public class PlayerInput : MonoBehaviour {
         keybinds[key_moveWest]  = KeyCode.A;
         keybinds[key_moveSouth] = KeyCode.S;
         keybinds[key_shoot]     = KeyCode.Mouse0;
-        // keybinds[key_slot1]     = KeyCode.Alpha1;
-        // keybinds[key_slot2]     = KeyCode.Alpha2;
-        // keybinds[key_slot3]     = KeyCode.Alpha3;
-        // keybinds[key_slot4]     = KeyCode.Alpha4;
-        // keybinds[key_slot5]     = KeyCode.Alpha5;
-        // keybinds[key_slot6]     = KeyCode.Alpha6;
         keybinds[key_reload]    = KeyCode.R;
         keybinds[key_item]      = KeyCode.F;
         keybinds[key_interact]  = KeyCode.E;
         keybinds[key_drop]      = KeyCode.P;
-        keybinds[key_wheel]     = KeyCode.Q;
+        keybinds[key_wheel]     = KeyCode.Mouse2;
     }
 
     public static void LoadKeybinds() {
@@ -71,13 +66,6 @@ public class PlayerInput : MonoBehaviour {
         DefaultKeybinds();
         rigidbody = GetComponent<Rigidbody2D>();
     }
-    
-    static Vector3 halfScreen;
-
-    void IgnoreCollisionsItem(Transform item) {
-        EdgeCollider2D c = item.GetComponent<EdgeCollider2D>();
-        Physics2D.IgnoreCollision(c, GetComponent<BoxCollider2D>());
-    }
 
     void RemoveCurrentItem() {
         PlayerStats.currentItem = Item.NONE;
@@ -89,10 +77,10 @@ public class PlayerInput : MonoBehaviour {
         
         // mouse look
         {
-            halfScreen.x = Screen.width/2;
-            halfScreen.y = Screen.height/2;
+            AspectRatio.halfScreen.x = Screen.width/2;
+            AspectRatio.halfScreen.y = Screen.height/2;
 
-            mouse_offset = Input.mousePosition-halfScreen;
+            mouse_offset = Input.mousePosition-AspectRatio.halfScreen;
             mouse_offset.Normalize();
             angle = Math.NormalizedVecToAngle(mouse_offset);
 
@@ -123,14 +111,19 @@ public class PlayerInput : MonoBehaviour {
         }
 
 
-        // switching
+        // switching (wheel)
         if(Input.GetKey(keybinds[key_wheel])) {
-            weaponWheel.SetActive(true);
+            if(!isWheelActive) {
+                weaponWheel.transform.position = new Vector3(Input.mousePosition.x+3, Input.mousePosition.y+3, 0);
+                isWheelActive = true;
+                weaponWheel.SetActive(true);
+            }
+
+            Vector3 wheelOffset = Input.mousePosition-weaponWheel.transform.position;
+            float angle = Math.VecToAngle(wheelOffset);
             
             Vector3 r = weaponWheelHighlight.eulerAngles;
-
             r.z = Mathf.Floor((angle+30)/60)*60;
-
             weaponWheelHighlight.eulerAngles = r;
 
             int preConvert = (int)r.z/60;
@@ -139,31 +132,18 @@ public class PlayerInput : MonoBehaviour {
             byte[] convert = {3, 2, 0, 1, 4, 5};
 
             PlayerStats._nextGun = convert[preConvert];
-
-            // Time.timeScale = 0.2f;
-            // AudioManager.PitchShift(0.2f);
-        } else {
+        } else if(isWheelActive){
             weaponWheel.SetActive(false);
-            // Time.timeScale = 1;
-            // AudioManager.PitchShift(1);
+            isWheelActive = false;
         }
-        
-        
-        
-        // old switching
-        // if(Input.GetKey(keybinds[key_slot1])) PlayerStats._nextGun = 0;
-        // if(Input.GetKey(keybinds[key_slot2])) PlayerStats._nextGun = 1;
-        // if(Input.GetKey(keybinds[key_slot3])) PlayerStats._nextGun = 2;
-        // if(Input.GetKey(keybinds[key_slot4])) PlayerStats._nextGun = 3;
-        // if(Input.GetKey(keybinds[key_slot5])) PlayerStats._nextGun = 4;
-        // if(Input.GetKey(keybinds[key_slot6])) PlayerStats._nextGun = 5;
-        // if(Input.mouseScrollDelta.y > 0) {
-        //     PlayerStats._nextGun --;
-        //     if(PlayerStats._nextGun < 0) PlayerStats._nextGun = 5;
-        // } else if(Input.mouseScrollDelta.y < 0) {
-        //     PlayerStats._nextGun ++;
-        //     if(PlayerStats._nextGun > 5) PlayerStats._nextGun = 0;
-        // }
+        // switching (scroll)
+        else if(Input.mouseScrollDelta.y > 0) {
+            PlayerStats._nextGun --;
+            if(PlayerStats._nextGun < 0) PlayerStats._nextGun = 5;
+        } else if(Input.mouseScrollDelta.y < 0) {
+            PlayerStats._nextGun ++;
+            if(PlayerStats._nextGun > 5) PlayerStats._nextGun = 0;
+        }
         
 
         // reload
@@ -180,22 +160,21 @@ public class PlayerInput : MonoBehaviour {
 
             switch(PlayerStats.currentItem) {
             case Item.BLADE:
-                Transform knife = Instantiate(itemPrefabs[(int)Item.BLADE], knifeThrowingPoint.position, Quaternion.identity);
-                // IgnoreCollisionsItem(knife);
-                Rigidbody2D rb = knife.GetComponent<Rigidbody2D>();
+                Transform blade = Instantiate(itemPrefabs[(int)Item.BLADE], knifeThrowingPoint.position, Quaternion.identity);
+                Rigidbody2D rb = blade.GetComponent<Rigidbody2D>();
                 rb.AddForce(mouse_offset*900);
                 rb.AddForce(rigidbody.velocity*50);
-                rb.AddTorque(1200);
+                rb.AddTorque(40);
 
                 break;
             case Item.BOMB:
 
                 break;
             case Item.MEDKIT:
-                PlayerStats.player.Heal(20);
+                PlayerStats.playerTarget.Heal(20);
                 break;
             case Item.STIMPACK:
-                PlayerStats.player.Heal(10);
+                PlayerStats.playerTarget.Heal(10);
                 break;
             case Item.COMPASS:
                 
@@ -233,13 +212,12 @@ public class PlayerInput : MonoBehaviour {
             item.GetComponent<ItemPickup>().item = PlayerStats.currentItem;
             RemoveCurrentItem();
             item.GetComponent<Rigidbody2D>().AddForce(new Vector2((Random.value-0.5f)*100, (Random.value-0.5f)*100));
-            IgnoreCollisionsItem(item);
         }
 
 
         // dev hacks
-        if(Input.GetKeyDown(KeyCode.Keypad4)) PlayerStats.player.Heal(1);
-        if(Input.GetKeyDown(KeyCode.Keypad1)) PlayerStats.player.Damage(1);
+        if(Input.GetKeyDown(KeyCode.Keypad4)) PlayerStats.playerTarget.Heal(1);
+        if(Input.GetKeyDown(KeyCode.Keypad1)) PlayerStats.playerTarget.Damage(1);
     }
 
 

@@ -21,17 +21,17 @@ public class PlayerHUD : MonoBehaviour {
         UpdateHealth();
     }
 
-    static readonly Vector2[] positionsHotbar = {   new Vector2(0, 125),
-                                                    new Vector2(0, 75),
-                                                    new Vector2(0, 25),
-                                                    new Vector2(0, -25),
-                                                    new Vector2(0, -75),
-                                                    new Vector2(0, -125),
-                                                    new Vector2(0, -175),
-                                                    new Vector2(0, -225) };
-    public void UpdateHotbar() {
-        highlight_gun.anchoredPosition = positionsHotbar[PlayerStats._currentGun];
-    }
+    // static readonly Vector2[] positionsHotbar = {   new Vector2(0, 125),
+    //                                                 new Vector2(0, 75),
+    //                                                 new Vector2(0, 25),
+    //                                                 new Vector2(0, -25),
+    //                                                 new Vector2(0, -75),
+    //                                                 new Vector2(0, -125),
+    //                                                 new Vector2(0, -175),
+    //                                                 new Vector2(0, -225) };
+    // public void UpdateHotbar() {
+    //     highlight_gun.anchoredPosition = positionsHotbar[PlayerStats._currentGun];
+    // }
 
     static readonly Vector2[] positionsItems = {    new Vector2(-25, 75),
                                                     new Vector2(25, 75),
@@ -61,7 +61,7 @@ public class PlayerHUD : MonoBehaviour {
     }
 
     public void UpdateHealth() {
-        bar_health.value = PlayerStats.player.health / PlayerStats.player.maxHealth;
+        bar_health.value = PlayerStats.playerTarget.health / PlayerStats.playerTarget.maxHealth;
     }
 
     public void UpdateCoins() {

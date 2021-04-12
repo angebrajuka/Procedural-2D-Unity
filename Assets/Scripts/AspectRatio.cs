@@ -3,13 +3,13 @@ using System.Collections.Generic;
  
 public class AspectRatio : MonoBehaviour {
  
-    private int ScreenSizeX = 0;
-    private int ScreenSizeY = 0;
+    public static Vector2 screenSize;
+    public static Vector3 halfScreen;
     private Camera cam;
 
     private void RescaleCamera() {
  
-        if (Screen.width == ScreenSizeX && Screen.height == ScreenSizeY) return;
+        if (Screen.width == screenSize.x && Screen.height == screenSize.y) return;
  
         float targetaspect = 16.0f / 9.0f;
         float windowaspect = (float)Screen.width / (float)Screen.height;
@@ -38,8 +38,9 @@ public class AspectRatio : MonoBehaviour {
              cam.rect = rect;
         }
  
-        ScreenSizeX = Screen.width;
-        ScreenSizeY = Screen.height;
+        screenSize.x = Screen.width;
+        screenSize.y = Screen.height;
+        halfScreen = screenSize / 2;
     }
  
     void OnPreCull() {
