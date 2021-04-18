@@ -11,10 +11,12 @@ public class PlayerInput : MonoBehaviour {
     public Transform[] itemPrefabs;
     public GameObject weaponWheel;
     public Transform weaponWheelHighlight;
+    public Sprite[] highlightSprites;
 
 
     // components
     new public static Rigidbody2D rigidbody;
+    public Image wheelHighlightRenderer;
 
 
     // input
@@ -28,8 +30,8 @@ public class PlayerInput : MonoBehaviour {
 
 
     // keybinds
-    public const int key_moveEast=0, key_moveNorth=1, key_moveWest=2, key_moveSouth=3, key_shoot=4, key_reload=5, key_item=6, key_interact=7, key_drop=8, key_wheel=9;
-    public static KeyCode[] keybinds = new KeyCode[10];
+    public const int key_moveEast=0, key_moveNorth=1, key_moveWest=2, key_moveSouth=3, key_shoot=4, key_reload=5, key_item=6, key_interact=7, key_drop=8, key_wheel=9, key_hotbar_0=10, key_hotbar_1=11, key_hotbar_2=12, key_hotbar_3=13, key_hotbar_4=14, key_hotbar_5=15;
+    public static KeyCode[] keybinds = new KeyCode[16];
     
     public static void DefaultKeybinds() {
         keybinds[key_moveEast]  = KeyCode.D;
@@ -42,36 +44,52 @@ public class PlayerInput : MonoBehaviour {
         keybinds[key_interact]  = KeyCode.E;
         keybinds[key_drop]      = KeyCode.P;
         keybinds[key_wheel]     = KeyCode.Mouse2;
+        keybinds[key_hotbar_0]  = KeyCode.Alpha1;
+        keybinds[key_hotbar_1]  = KeyCode.Alpha2;
+        keybinds[key_hotbar_2]  = KeyCode.Alpha3;
+        keybinds[key_hotbar_3]  = KeyCode.Alpha4;
+        keybinds[key_hotbar_4]  = KeyCode.Alpha5;
+        keybinds[key_hotbar_5]  = KeyCode.Alpha6;
     }
 
-    public static void LoadKeybinds() {
-        keybinds[key_moveEast]  = (KeyCode)PlayerPrefs.GetInt("key_moveEast");
-        keybinds[key_moveNorth] = (KeyCode)PlayerPrefs.GetInt("key_moveNorth");
-        keybinds[key_moveWest]  = (KeyCode)PlayerPrefs.GetInt("key_moveWest");
-        keybinds[key_moveSouth] = (KeyCode)PlayerPrefs.GetInt("key_moveSouth");
-        keybinds[key_shoot]     = (KeyCode)PlayerPrefs.GetInt("key_shoot");
-    }
+    // public static void LoadKeybinds() {
+    //     keybinds[key_moveEast]  = (KeyCode)PlayerPrefs.GetInt("key_moveEast");
+    //     keybinds[key_moveNorth] = (KeyCode)PlayerPrefs.GetInt("key_moveNorth");
+    //     keybinds[key_moveWest]  = (KeyCode)PlayerPrefs.GetInt("key_moveWest");
+    //     keybinds[key_moveSouth] = (KeyCode)PlayerPrefs.GetInt("key_moveSouth");
+    //     keybinds[key_shoot]     = (KeyCode)PlayerPrefs.GetInt("key_shoot");
+    // }
 
-    public static void SaveKeybinds() {
-        PlayerPrefs.SetInt("key_moveEast",  (int)keybinds[key_moveEast]);
-        PlayerPrefs.SetInt("key_moveNorth", (int)keybinds[key_moveNorth]);
-        PlayerPrefs.SetInt("key_moveWest",  (int)keybinds[key_moveWest]);
-        PlayerPrefs.SetInt("key_moveSouth", (int)keybinds[key_moveSouth]);
-        PlayerPrefs.SetInt("key_shoot",     (int)keybinds[key_shoot]);
-    }
+    // public static void SaveKeybinds() {
+    //     PlayerPrefs.SetInt("key_moveEast",  (int)keybinds[key_moveEast]);
+    //     PlayerPrefs.SetInt("key_moveNorth", (int)keybinds[key_moveNorth]);
+    //     PlayerPrefs.SetInt("key_moveWest",  (int)keybinds[key_moveWest]);
+    //     PlayerPrefs.SetInt("key_moveSouth", (int)keybinds[key_moveSouth]);
+    //     PlayerPrefs.SetInt("key_shoot",     (int)keybinds[key_shoot]);
+    // }
 
 
 
     void Start() {
         DefaultKeybinds();
         rigidbody = GetComponent<Rigidbody2D>();
+        wheelHighlightRenderer = weaponWheelHighlight.GetComponent<Image>();
     }
 
     void RemoveCurrentItem() {
         PlayerStats.currentItem = Item.NONE;
-        PlayerStats.items[PlayerStats._item] = Item.NONE;
-        PlayerStats.playerStats.playerHUD.UpdateItems();
+        PlayerStats.hotbar[PlayerStats._item] = Item.NONE;
+        PlayerStats.playerStats.playerHUD.UpdateHotbar();
     }
+
+    static readonly Vector2[] wheelPositions = {    new Vector2(2,-3),
+                                                    new Vector2(4, 0),
+                                                    new Vector2(-2, -3),
+                                                    new Vector2(-4, 0),
+                                                    new Vector2(2, 3),
+                                                    new Vector2(-2, 3) };
+
+    static readonly byte[] convert = {3, 2, 0, 1, 4, 5};
 
     void Update() {
         
@@ -114,36 +132,43 @@ public class PlayerInput : MonoBehaviour {
         // switching (wheel)
         if(Input.GetKey(keybinds[key_wheel])) {
             if(!isWheelActive) {
-                weaponWheel.transform.position = new Vector3(Input.mousePosition.x+3, Input.mousePosition.y+3, 0);
+                weaponWheel.transform.position = new Vector3(Input.mousePosition.x+wheelPositions[PlayerStats._currentGun].x, Input.mousePosition.y+wheelPositions[PlayerStats._currentGun].y, 0);
                 isWheelActive = true;
                 weaponWheel.SetActive(true);
             }
 
             Vector3 wheelOffset = Input.mousePosition-weaponWheel.transform.position;
             float angle = Math.VecToAngle(wheelOffset);
-            
-            Vector3 r = weaponWheelHighlight.eulerAngles;
-            r.z = Mathf.Floor((angle+30)/60)*60;
-            weaponWheelHighlight.eulerAngles = r;
 
-            int preConvert = (int)r.z/60;
+            int preConvert = (int)Mathf.Floor((angle+30)/60);
             if(preConvert > 5) preConvert = 0;
 
-            byte[] convert = {3, 2, 0, 1, 4, 5};
-
             PlayerStats._nextGun = convert[preConvert];
+            wheelHighlightRenderer.sprite = highlightSprites[preConvert];
         } else if(isWheelActive){
             weaponWheel.SetActive(false);
             isWheelActive = false;
         }
-        // switching (scroll)
-        else if(Input.mouseScrollDelta.y > 0) {
-            PlayerStats._nextGun --;
-            if(PlayerStats._nextGun < 0) PlayerStats._nextGun = 5;
+
+
+        int prevItem = PlayerStats._item;
+        // hotbar switching (scroll)
+        if(Input.mouseScrollDelta.y > 0) {
+            PlayerStats._item --;
+            if(PlayerStats._item < 0) PlayerStats._item = 5;
         } else if(Input.mouseScrollDelta.y < 0) {
-            PlayerStats._nextGun ++;
-            if(PlayerStats._nextGun > 5) PlayerStats._nextGun = 0;
+            PlayerStats._item ++;
+            if(PlayerStats._item > 5) PlayerStats._item = 0;
         }
+        // hotbar switching (keybinds)
+        if(Input.GetKey(keybinds[key_hotbar_0])) PlayerStats._item = 0;
+        if(Input.GetKey(keybinds[key_hotbar_1])) PlayerStats._item = 1;
+        if(Input.GetKey(keybinds[key_hotbar_2])) PlayerStats._item = 2;
+        if(Input.GetKey(keybinds[key_hotbar_3])) PlayerStats._item = 3;
+        if(Input.GetKey(keybinds[key_hotbar_4])) PlayerStats._item = 4;
+        if(Input.GetKey(keybinds[key_hotbar_5])) PlayerStats._item = 5;
+
+        if(prevItem != PlayerStats._item) PlayerStats.playerStats.playerHUD.UpdateHotbar();
         
 
         // reload
@@ -193,10 +218,10 @@ public class PlayerInput : MonoBehaviour {
         // interact
         if(Input.GetKeyDown(keybinds[key_interact])) {
             if(PlayerStats.interactItem != Item.NONE) {
-                for(int i=0; i < PlayerStats.items.Length; i++) {
-                    if(PlayerStats.items[i] == Item.NONE) {
-                        PlayerStats.items[i] = PlayerStats.interactItem;
-                        PlayerStats.playerStats.playerHUD.UpdateItems();
+                for(int i=0; i < PlayerStats.hotbar.Length; i++) {
+                    if(PlayerStats.hotbar[i] == Item.NONE) {
+                        PlayerStats.hotbar[i] = PlayerStats.interactItem;
+                        PlayerStats.playerStats.playerHUD.UpdateHotbar();
                         Destroy(PlayerStats.interactPickup.gameObject);
                         PlayerStats.interactPickup = null;
                         break;

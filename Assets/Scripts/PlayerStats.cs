@@ -24,12 +24,12 @@ public class PlayerStats : MonoBehaviour {
     public enum PlayerState:byte { READY=0, RELOADING=1, CYCLING=2, SWITCHING=4 }; public static PlayerState state;
     public static readonly Dictionary<Ammo, int> maxAmmo = new Dictionary<Ammo, int>{
            { Ammo.BULLETS, 200 },
-           { Ammo.SHELLS, 50 },
+           { Ammo.SHELLS, 36 },
            { Ammo.ENERGY, 300 }
         };
     public static Dictionary<Ammo, int> ammo = new Dictionary<Ammo, int>(){
             {Ammo.BULLETS, 50}, 
-            {Ammo.SHELLS, 20}, 
+            {Ammo.SHELLS, 12}, 
             {Ammo.ENERGY, 300}
         };
     public static Gun[] guns;
@@ -41,7 +41,7 @@ public class PlayerStats : MonoBehaviour {
 
 
     // items
-    public static Item[] items = {Item.BLADE, Item.NONE, Item.NONE, Item.NONE, Item.NONE, Item.NONE, Item.NONE, Item.NONE};
+    public static Item[] hotbar = {Item.BLADE, Item.BLADE, Item.BLADE, Item.BLADE, Item.BLADE, Item.BLADE};
     public static int _item;
     public static Item currentItem = Item.NONE;
     public static Item interactItem = Item.NONE;
@@ -62,7 +62,7 @@ public class PlayerStats : MonoBehaviour {
         currentGun = guns[_currentGun];
         gunTimer = 0;
         state = PlayerState.SWITCHING;
-        playerHUD.UpdateItems();
+        playerHUD.UpdateHotbar();
     }
 
     public static void Reload() {

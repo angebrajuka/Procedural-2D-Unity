@@ -7,10 +7,11 @@ public class PlayerHUD : MonoBehaviour {
 
     public Text bulletsTxt, shellsTxt, energyTxt;
     public Text currentGunAmmoTxt;
+    public Text currentReserveTxt;
     public Text interact;
     public Text textCoins;
     public Image[] inventoryCells;
-    public RectTransform highlight_gun, highlight_item;
+    public RectTransform highlight_item;
     public RectTransform ammoTxt;
     public Sprite[] sprite_items;
 
@@ -21,43 +22,26 @@ public class PlayerHUD : MonoBehaviour {
         UpdateHealth();
     }
 
-    // static readonly Vector2[] positionsHotbar = {   new Vector2(0, 125),
-    //                                                 new Vector2(0, 75),
-    //                                                 new Vector2(0, 25),
-    //                                                 new Vector2(0, -25),
-    //                                                 new Vector2(0, -75),
-    //                                                 new Vector2(0, -125),
-    //                                                 new Vector2(0, -175),
-    //                                                 new Vector2(0, -225) };
-    // public void UpdateHotbar() {
-    //     highlight_gun.anchoredPosition = positionsHotbar[PlayerStats._currentGun];
-    // }
-
-    static readonly Vector2[] positionsItems = {    new Vector2(-25, 75),
-                                                    new Vector2(25, 75),
-                                                    new Vector2(-25, 25),
-                                                    new Vector2(25, 25),
-                                                    new Vector2(-25, -25),
-                                                    new Vector2(25, -25),
-                                                    new Vector2(-25, -75),
-                                                    new Vector2(25, -75) };
-    public void UpdateItems() {
-        for(int i=0; i<PlayerStats.items.Length; i++) {
-            inventoryCells[i].sprite = sprite_items[(int)PlayerStats.items[i]];
+    static readonly Vector2[] positionsItems = {    new Vector2(0, 0),
+                                                    new Vector2(50, 0),
+                                                    new Vector2(100, 0),
+                                                    new Vector2(150, 0),
+                                                    new Vector2(200, 0),
+                                                    new Vector2(250, 0) };
+    public void UpdateHotbar() {
+        for(int i=0; i<PlayerStats.hotbar.Length; i++) {
+            inventoryCells[i].sprite = sprite_items[(int)PlayerStats.hotbar[i]];
         }
         highlight_item.anchoredPosition = positionsItems[PlayerStats._item];
-        PlayerStats.currentItem = PlayerStats.items[PlayerStats._item];
+        PlayerStats.currentItem = PlayerStats.hotbar[PlayerStats._item];
     }
 
-    public readonly Vector2[] positionsAmmo = { new Vector2(-71, 33),
-                                                new Vector2(-71, 0),
-                                                new Vector2(-71, -33) };
     public void UpdateAmmo() {
         bulletsTxt.text = PlayerStats.ammo[Ammo.BULLETS]+"";
         shellsTxt.text = PlayerStats.ammo[Ammo.SHELLS]+"";
         energyTxt.text = PlayerStats.ammo[Ammo.ENERGY]+"";
         currentGunAmmoTxt.text = PlayerStats.currentGun.ammo+"";
-        ammoTxt.anchoredPosition = positionsAmmo[(int)PlayerStats.currentGun.ammoType];
+        currentReserveTxt.text = PlayerStats.ammo[PlayerStats.currentGun.ammoType]+"";
     }
 
     public void UpdateHealth() {

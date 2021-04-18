@@ -9,7 +9,6 @@ ScriptsOnlyBuild:
     - EightDirectionAnimator
     - Enemy_Spider
     - Gun
-    - HUD_Button_Item
     - ItemPickup
     - PlayerAnimator
     - PlayerHUD
@@ -213,8 +212,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 15870}
     - Class: 114
-      Script: {instanceID: 15930}
-    - Class: 114
       Script: {instanceID: 16088}
     - Class: 114
       Script: {instanceID: 16092}
@@ -357,12 +354,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: PlayerQuitHandler
-  - hash:
-      serializedVersion: 2
-      Hash: b65d87088bd12138caf7650d89c19d89
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: HUD_Button_Gun
   - hash:
       serializedVersion: 2
       Hash: 9ac327467393cb6c8045a2fd90ff67e2
@@ -515,7 +506,7 @@ ScriptsOnlyBuild:
     className: AnimationTrack
   - hash:
       serializedVersion: 2
-      Hash: ad2bc770ad9e738df732f29fbc02112f
+      Hash: 44bcfaf4a14cf52c81b7893f4bc36aa6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerHUD
@@ -875,7 +866,7 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 86a77a7772c2b103cf8e58d37fca6f07
+      Hash: da1bf3b8dd86bddb06848415ee8bb972
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerInput
@@ -1083,12 +1074,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: PlayModeRunnerCallback
-  - hash:
-      serializedVersion: 2
-      Hash: 27be6db3daeab31041a26807b4113318
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: HUD_Button_Item
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
