@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 875, y: 521}
+  m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -46,7 +46,7 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 997
-  m_MinSize: {x: 875, y: 521}
+  m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -112,10 +112,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 678, y: 471}
-  m_MaxSize: {x: 14001, y: 14021}
+  m_MinSize: {x: 678, y: 492}
+  m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 8605
+  controlID: 5218
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -137,10 +137,10 @@ MonoBehaviour:
     y: 0
     width: 1559
     height: 947
-  m_MinSize: {x: 402, y: 471}
-  m_MaxSize: {x: 10000, y: 14021}
+  m_MinSize: {x: 402, y: 492}
+  m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 8606
+  controlID: 5223
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_MinSize: {x: 402, y: 221}
   m_MaxSize: {x: 8002, y: 4021}
   vertical: 0
-  controlID: 8607
+  controlID: 5224
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -396,9 +396,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: d2b4ffff42b5ffff70b6ffff52ddffff92ddffffd8ddffff1edeffff5edeffff50edffffc0edffffeeeeffff64fbfffffc6c0000aae80000cce80000ece80000fae8000010e900003ee900004ee9000076e900007ae900009ce90000cee90000fce900001aea00001eea000022ea00002cea000030ea000034ea000058ea00007cea00008eea0000aeea0000b4ea0000d8ea0000e4ea000004eb000012eb00001eeb000022eb00002eeb000050eb00005ceb00008aeb000092eb0000a2eb0000d0eb0000f6eb00004aec000056ec00006aec00007aec0000d4ec0000ecec0000f0ec000006ed00002ced000038ed00004eed000076ed000090ed0000b4ed0000f4ed00004aee00006aee00006eee000076ee000092ee0000beee0000c8ee0000ceee0000d6ee0000daee0000deee0000f8ee000010ef00003eef000050ef00006cef000070ef00007aef00009cef0000bcef0000caef0000ceef0000deef0000feef00002ef0000058f00000aaf00000b8f00000c2f00000
+      m_SelectedIDs: 92a60000
+      m_LastClickedID: 42642
+      m_ExpandedIDs: 58d4ffffc8d4fffffad5ffff64fbffff02a30000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -458,9 +458,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 2.9101996, y: -0.6002198, z: -0.31054688}
+    m_Target: {x: 530.8315, y: 296.31366, z: -0.42547265}
     speed: 2
-    m_Value: {x: 2.9101996, y: -0.6002198, z: -0.31054688}
+    m_Value: {x: 530.8315, y: 296.31366, z: -0.42547265}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -510,9 +510,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 5.1750035
+    m_Target: 119.96911
     speed: 2
-    m_Value: 5.233885
+    m_Value: 119.96911
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -602,20 +602,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/UI
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/UI
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\braju\workspaces\Unity-workspace\Caedis
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: e0460000
-    m_LastClickedID: 18144
-    m_ExpandedIDs: 0000000042400000a046000000ca9a3b
+    m_SelectedIDs: dc460000
+    m_LastClickedID: 18140
+    m_ExpandedIDs: 000000003e4000009446000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -643,7 +643,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000042400000a046000000ca9a3b
+    m_ExpandedIDs: 000000003e4000009446000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

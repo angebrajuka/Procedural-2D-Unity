@@ -11,12 +11,11 @@ public class PlayerInput : MonoBehaviour {
     public Transform[] itemPrefabs;
     public GameObject weaponWheel;
     public Transform weaponWheelHighlight;
-    public Sprite[] highlightSprites;
 
 
     // components
     new public static Rigidbody2D rigidbody;
-    public Image wheelHighlightRenderer;
+    [HideInInspector] public Image wheelHighlightRenderer;
 
 
     // input
@@ -143,8 +142,9 @@ public class PlayerInput : MonoBehaviour {
             int preConvert = (int)Mathf.Floor((angle+30)/60);
             if(preConvert > 5) preConvert = 0;
 
+            wheelHighlightRenderer.transform.eulerAngles = new Vector3(0, 0, preConvert*60);
+
             PlayerStats._nextGun = convert[preConvert];
-            wheelHighlightRenderer.sprite = highlightSprites[preConvert];
         } else if(isWheelActive){
             weaponWheel.SetActive(false);
             isWheelActive = false;
