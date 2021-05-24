@@ -41,9 +41,9 @@ public class PlayerStats : MonoBehaviour {
 
 
     // items
-    public static Item[] hotbar = {Item.BLADE, Item.BLADE, Item.BLADE, Item.BLADE, Item.BLADE, Item.BLADE};
-    public static int _item;
-    public static Item currentItem = Item.NONE;
+    // public static Item[] hotbar = {Item.BLADE, Item.BLADE, Item.BLADE, Item.BLADE, Item.BLADE, Item.BLADE};
+    // public static int _item;
+    public static Item currentItem = Item.BLADE;
     public static Item interactItem = Item.NONE;
     public static ItemPickup interactPickup;
     public static int interactPriority=0;
@@ -109,7 +109,7 @@ public class PlayerStats : MonoBehaviour {
                     currentGun = guns[_currentGun];
                     state = PlayerState.CYCLING;
                     playerHUD.UpdateAmmo();
-                    // playerHUD.UpdateHotbar();
+                    playerHUD.UpdateHotbar();
                     break;
                 }
             }

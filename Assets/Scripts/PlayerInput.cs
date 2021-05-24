@@ -29,7 +29,7 @@ public class PlayerInput : MonoBehaviour {
 
 
     // keybinds
-    public const int key_moveEast=0, key_moveNorth=1, key_moveWest=2, key_moveSouth=3, key_shoot=4, key_reload=5, key_item=6, key_interact=7, key_drop=8, key_wheel=9, key_hotbar_0=10, key_hotbar_1=11, key_hotbar_2=12, key_hotbar_3=13, key_hotbar_4=14, key_hotbar_5=15;
+    public const int key_moveEast=0, key_moveNorth=1, key_moveWest=2, key_moveSouth=3, key_shoot=4, key_reload=5, key_item=6, key_interact=7, key_drop=8, key_wheel=9, key_weapon_0=10, key_weapon_1=11, key_weapon_2=12, key_weapon_3=13, key_weapon_4=14, key_weapon_5=15;
     public static KeyCode[] keybinds = new KeyCode[16];
     
     public static void DefaultKeybinds() {
@@ -39,16 +39,16 @@ public class PlayerInput : MonoBehaviour {
         keybinds[key_moveSouth] = KeyCode.S;
         keybinds[key_shoot]     = KeyCode.Mouse0;
         keybinds[key_reload]    = KeyCode.R;
-        keybinds[key_item]      = KeyCode.F;
+        keybinds[key_item]      = KeyCode.Mouse1;
         keybinds[key_interact]  = KeyCode.E;
         keybinds[key_drop]      = KeyCode.P;
         keybinds[key_wheel]     = KeyCode.Mouse2;
-        keybinds[key_hotbar_0]  = KeyCode.Alpha1;
-        keybinds[key_hotbar_1]  = KeyCode.Alpha2;
-        keybinds[key_hotbar_2]  = KeyCode.Alpha3;
-        keybinds[key_hotbar_3]  = KeyCode.Alpha4;
-        keybinds[key_hotbar_4]  = KeyCode.Alpha5;
-        keybinds[key_hotbar_5]  = KeyCode.Alpha6;
+        keybinds[key_weapon_0]  = KeyCode.Alpha1;
+        keybinds[key_weapon_1]  = KeyCode.Alpha2;
+        keybinds[key_weapon_2]  = KeyCode.Alpha3;
+        keybinds[key_weapon_3]  = KeyCode.Alpha4;
+        keybinds[key_weapon_4]  = KeyCode.Alpha5;
+        keybinds[key_weapon_5]  = KeyCode.Alpha6;
     }
 
     // public static void LoadKeybinds() {
@@ -77,7 +77,6 @@ public class PlayerInput : MonoBehaviour {
 
     void RemoveCurrentItem() {
         PlayerStats.currentItem = Item.NONE;
-        PlayerStats.hotbar[PlayerStats._item] = Item.NONE;
         PlayerStats.playerStats.playerHUD.UpdateHotbar();
     }
 
@@ -150,25 +149,21 @@ public class PlayerInput : MonoBehaviour {
             isWheelActive = false;
         }
 
-
-        int prevItem = PlayerStats._item;
-        // hotbar switching (scroll)
+        // weapon switching (scroll)
         if(Input.mouseScrollDelta.y > 0) {
-            PlayerStats._item --;
-            if(PlayerStats._item < 0) PlayerStats._item = 5;
+            PlayerStats._nextGun --;
+            if(PlayerStats._nextGun < 0) PlayerStats._nextGun = 5;
         } else if(Input.mouseScrollDelta.y < 0) {
-            PlayerStats._item ++;
-            if(PlayerStats._item > 5) PlayerStats._item = 0;
+            PlayerStats._nextGun ++;
+            if(PlayerStats._nextGun > 5) PlayerStats._nextGun = 0;
         }
-        // hotbar switching (keybinds)
-        if(Input.GetKey(keybinds[key_hotbar_0])) PlayerStats._item = 0;
-        if(Input.GetKey(keybinds[key_hotbar_1])) PlayerStats._item = 1;
-        if(Input.GetKey(keybinds[key_hotbar_2])) PlayerStats._item = 2;
-        if(Input.GetKey(keybinds[key_hotbar_3])) PlayerStats._item = 3;
-        if(Input.GetKey(keybinds[key_hotbar_4])) PlayerStats._item = 4;
-        if(Input.GetKey(keybinds[key_hotbar_5])) PlayerStats._item = 5;
-
-        if(prevItem != PlayerStats._item) PlayerStats.playerStats.playerHUD.UpdateHotbar();
+        // weapon switching (keybinds)
+        if(Input.GetKey(keybinds[key_weapon_0])) PlayerStats._nextGun = 0;
+        if(Input.GetKey(keybinds[key_weapon_1])) PlayerStats._nextGun = 1;
+        if(Input.GetKey(keybinds[key_weapon_2])) PlayerStats._nextGun = 2;
+        if(Input.GetKey(keybinds[key_weapon_3])) PlayerStats._nextGun = 3;
+        if(Input.GetKey(keybinds[key_weapon_4])) PlayerStats._nextGun = 4;
+        if(Input.GetKey(keybinds[key_weapon_5])) PlayerStats._nextGun = 5;
         
 
         // reload
@@ -218,15 +213,23 @@ public class PlayerInput : MonoBehaviour {
         // interact
         if(Input.GetKeyDown(keybinds[key_interact])) {
             if(PlayerStats.interactItem != Item.NONE) {
-                for(int i=0; i < PlayerStats.hotbar.Length; i++) {
-                    if(PlayerStats.hotbar[i] == Item.NONE) {
-                        PlayerStats.hotbar[i] = PlayerStats.interactItem;
-                        PlayerStats.playerStats.playerHUD.UpdateHotbar();
-                        Destroy(PlayerStats.interactPickup.gameObject);
-                        PlayerStats.interactPickup = null;
-                        break;
-                    }
+                if(PlayerStats.currentItem == Item.NONE) {
+                    PlayerStats.currentItem = PlayerStats.interactItem;
+                    PlayerStats.playerStats.playerHUD.UpdateHotbar();
+                    Destroy(PlayerStats.interactPickup.gameObject);
+                    PlayerStats.interactPickup = null;
+                } else {
+                    //loop through inventory
                 }
+                // for(int i=0; i < PlayerStats.hotbar.Length; i++) {
+                //     if(PlayerStats.hotbar[i] == Item.NONE) {
+                //         PlayerStats.hotbar[i] = PlayerStats.interactItem;
+                //         // PlayerStats.playerStats.playerHUD.UpdateHotbar();
+                //         Destroy(PlayerStats.interactPickup.gameObject);
+                //         PlayerStats.interactPickup = null;
+                //         break;
+                //     }
+                // }
             }
         }
 
