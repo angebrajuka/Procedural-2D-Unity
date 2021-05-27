@@ -37,8 +37,8 @@ public class PlayerHUD : MonoBehaviour {
         bulletsTxt.text = PlayerStats.ammo[Ammo.BULLETS]+"";
         shellsTxt.text = PlayerStats.ammo[Ammo.SHELLS]+"";
         energyTxt.text = PlayerStats.ammo[Ammo.ENERGY]+"";
-        currentGunAmmoTxt.text = PlayerStats.currentGun.ammo+"";
-        currentReserveTxt.text = PlayerStats.ammo[PlayerStats.currentGun.ammoType]+"";
+        currentGunAmmoTxt.text = PlayerStats.currentGun.ammo+"";///"+PlayerStats.ammo[PlayerStats.currentGun.ammoType];
+        currentReserveTxt.text = "/"+PlayerStats.ammo[PlayerStats.currentGun.ammoType];
     }
 
     public void UpdateHealth() {

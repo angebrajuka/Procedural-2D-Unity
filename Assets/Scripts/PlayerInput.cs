@@ -149,14 +149,14 @@ public class PlayerInput : MonoBehaviour {
             isWheelActive = false;
         }
 
-        // weapon switching (scroll)
-        if(Input.mouseScrollDelta.y > 0) {
-            PlayerStats._nextGun --;
-            if(PlayerStats._nextGun < 0) PlayerStats._nextGun = 5;
-        } else if(Input.mouseScrollDelta.y < 0) {
-            PlayerStats._nextGun ++;
-            if(PlayerStats._nextGun > 5) PlayerStats._nextGun = 0;
-        }
+        // // weapon switching (scroll)
+        // if(Input.mouseScrollDelta.y > 0) {
+        //     PlayerStats._nextGun --;
+        //     if(PlayerStats._nextGun < 0) PlayerStats._nextGun = 5;
+        // } else if(Input.mouseScrollDelta.y < 0) {
+        //     PlayerStats._nextGun ++;
+        //     if(PlayerStats._nextGun > 5) PlayerStats._nextGun = 0;
+        // }
         // weapon switching (keybinds)
         if(Input.GetKey(keybinds[key_weapon_0])) PlayerStats._nextGun = 0;
         if(Input.GetKey(keybinds[key_weapon_1])) PlayerStats._nextGun = 1;
