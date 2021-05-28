@@ -41,8 +41,8 @@ public class PlayerStats : MonoBehaviour {
 
 
     // items
-    // public static Item[] hotbar = {Item.BLADE, Item.BLADE, Item.BLADE, Item.BLADE, Item.BLADE, Item.BLADE};
-    // public static int _item;
+    public static Item[] hotbar = new Item[12];
+    public static int _item;
     public static Item currentItem = Item.BLADE;
     public static Item interactItem = Item.NONE;
     public static ItemPickup interactPickup;
@@ -62,6 +62,10 @@ public class PlayerStats : MonoBehaviour {
         currentGun = guns[_currentGun];
         gunTimer = 0;
         state = PlayerState.SWITCHING;
+        for(int i=1; i<hotbar.Length; i++) {
+            hotbar[i] = Item.NONE;
+        }
+        hotbar[0] = Item.BLADE;
         playerHUD.UpdateHotbar();
     }
 

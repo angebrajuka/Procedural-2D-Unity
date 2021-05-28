@@ -10,9 +10,12 @@ public class PlayerHUD : MonoBehaviour {
     public Text currentReserveTxt;
     public Text interact;
     public Text textCoins;
-    public Image hotbarPrimary, hotbarSecondary;
+    public Image ammoImage;
+    public Image[] hotbar;
+    public RectTransform itemHighlight;
     public RectTransform ammoTxt;
     public Sprite[] sprite_items;
+    public Sprite[] ammoImages;
 
     public Slider bar_health;
 
@@ -29,15 +32,19 @@ public class PlayerHUD : MonoBehaviour {
     //                                                 new Vector2(250, 0) };
 
     public void UpdateHotbar() {
-        hotbarPrimary.sprite    = PlayerStats.currentGun.sprite;
-        hotbarSecondary.sprite  = sprite_items[(int)PlayerStats.currentItem];
+        ammoImage.sprite = ammoImages[(int)PlayerStats.currentGun.ammoType];
+        for(int i=0; i<PlayerStats.hotbar.Length; i++) {
+            hotbar[i].sprite = sprite_items[(int)PlayerStats.hotbar[i]];
+        }
+        itemHighlight.anchoredPosition = new Vector3(0, -50*PlayerStats._item, 0);
     }
 
     public void UpdateAmmo() {
         bulletsTxt.text = PlayerStats.ammo[Ammo.BULLETS]+"";
         shellsTxt.text = PlayerStats.ammo[Ammo.SHELLS]+"";
         energyTxt.text = PlayerStats.ammo[Ammo.ENERGY]+"";
-        currentGunAmmoTxt.text = PlayerStats.currentGun.ammo+"";///"+PlayerStats.ammo[PlayerStats.currentGun.ammoType];
+        currentGunAmmoTxt.text = PlayerStats.currentGun.ammo < 10 ? "0" : "";
+        currentGunAmmoTxt.text += PlayerStats.currentGun.ammo+"";
         currentReserveTxt.text = "/"+PlayerStats.ammo[PlayerStats.currentGun.ammoType];
     }
 

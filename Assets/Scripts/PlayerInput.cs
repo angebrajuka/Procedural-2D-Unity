@@ -76,6 +76,7 @@ public class PlayerInput : MonoBehaviour {
     }
 
     void RemoveCurrentItem() {
+        PlayerStats.hotbar[PlayerStats._item] = Item.NONE;
         PlayerStats.currentItem = Item.NONE;
         PlayerStats.playerStats.playerHUD.UpdateHotbar();
     }
@@ -149,14 +150,19 @@ public class PlayerInput : MonoBehaviour {
             isWheelActive = false;
         }
 
-        // // weapon switching (scroll)
-        // if(Input.mouseScrollDelta.y > 0) {
-        //     PlayerStats._nextGun --;
-        //     if(PlayerStats._nextGun < 0) PlayerStats._nextGun = 5;
-        // } else if(Input.mouseScrollDelta.y < 0) {
-        //     PlayerStats._nextGun ++;
-        //     if(PlayerStats._nextGun > 5) PlayerStats._nextGun = 0;
-        // }
+        // item switching (scroll)
+        if(Input.mouseScrollDelta.y != 0) {
+            if(Input.mouseScrollDelta.y > 0) {
+                PlayerStats._item --;
+                if(PlayerStats._item < 0) PlayerStats._item = 11;
+            } else {
+                PlayerStats._item ++;
+                if(PlayerStats._item > 11) PlayerStats._item = 0;
+            }
+            PlayerStats.currentItem = PlayerStats.hotbar[PlayerStats._item];
+            PlayerStats.playerStats.playerHUD.UpdateHotbar();
+        }
+
         // weapon switching (keybinds)
         if(Input.GetKey(keybinds[key_weapon_0])) PlayerStats._nextGun = 0;
         if(Input.GetKey(keybinds[key_weapon_1])) PlayerStats._nextGun = 1;
@@ -213,23 +219,24 @@ public class PlayerInput : MonoBehaviour {
         // interact
         if(Input.GetKeyDown(keybinds[key_interact])) {
             if(PlayerStats.interactItem != Item.NONE) {
-                if(PlayerStats.currentItem == Item.NONE) {
-                    PlayerStats.currentItem = PlayerStats.interactItem;
-                    PlayerStats.playerStats.playerHUD.UpdateHotbar();
-                    Destroy(PlayerStats.interactPickup.gameObject);
-                    PlayerStats.interactPickup = null;
-                } else {
-                    //loop through inventory
-                }
-                // for(int i=0; i < PlayerStats.hotbar.Length; i++) {
-                //     if(PlayerStats.hotbar[i] == Item.NONE) {
-                //         PlayerStats.hotbar[i] = PlayerStats.interactItem;
-                //         // PlayerStats.playerStats.playerHUD.UpdateHotbar();
-                //         Destroy(PlayerStats.interactPickup.gameObject);
-                //         PlayerStats.interactPickup = null;
-                //         break;
-                //     }
+                // if(PlayerStats.currentItem == Item.NONE) {
+                //     PlayerStats.currentItem = PlayerStats.interactItem;
+                //     PlayerStats.playerStats.playerHUD.UpdateHotbar();
+                //     Destroy(PlayerStats.interactPickup.gameObject);
+                //     PlayerStats.interactPickup = null;
+                // } else {
+                //     //loop through inventory
                 // }
+                for(int i=0; i < PlayerStats.hotbar.Length; i++) {
+                    if(PlayerStats.hotbar[i] == Item.NONE) {
+                        PlayerStats.hotbar[i] = PlayerStats.interactItem;
+                        PlayerStats.currentItem = PlayerStats.hotbar[i];
+                        PlayerStats.playerStats.playerHUD.UpdateHotbar();
+                        Destroy(PlayerStats.interactPickup.gameObject);
+                        PlayerStats.interactPickup = null;
+                        break;
+                    }
+                }
             }
         }
 

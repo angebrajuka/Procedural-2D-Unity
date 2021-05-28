@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Ammo {
-    BULLETS,
-    SHELLS,
-    ENERGY
+public enum Ammo:byte {
+    BULLETS=0,
+    SHELLS=1,
+    ENERGY=2
 }
 
 public class Gun : MonoBehaviour {
