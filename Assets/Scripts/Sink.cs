@@ -19,7 +19,7 @@ public class Sink : MonoBehaviour {
     }
 
     void OnTriggerStay2D(Collider2D other) {
-        if(other.gameObject.layer == 12 && !m_collider.IsTouchingLayers(1<<10) && m_rigidbody.velocity.magnitude < 2) {
+        if(other.gameObject.layer == 12 && m_rigidbody.velocity.magnitude < 2) {
             sink -= Time.deltaTime;
             if(sink <= 0) {
                 Destroy(this);

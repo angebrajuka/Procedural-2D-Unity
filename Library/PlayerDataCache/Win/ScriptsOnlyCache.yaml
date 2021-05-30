@@ -75,6 +75,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Image
     - UnityEngine.UI.LayoutElement
     - UnityEngine.UI.Mask
+    - UnityEngine.UI.Outline
     - UnityEngine.UI.ScrollRect
     - UnityEngine.UI.Scrollbar
     - UnityEngine.UI.Slider
@@ -211,6 +212,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 15830}
     - Class: 114
       Script: {instanceID: 15868}
+    - Class: 114
+      Script: {instanceID: 15984}
     - Class: 114
       Script: {instanceID: 16084}
     - Class: 114
@@ -506,7 +509,7 @@ ScriptsOnlyBuild:
     className: AnimationTrack
   - hash:
       serializedVersion: 2
-      Hash: 44bcfaf4a14cf52c81b7893f4bc36aa6
+      Hash: 0704a8f2034ec4ad6b9ca5bb9f5ae4c5
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerHUD
@@ -1016,7 +1019,7 @@ ScriptsOnlyBuild:
     className: TMP_StyleSheet
   - hash:
       serializedVersion: 2
-      Hash: 489759f4c0450eda85f9aa2301a59ec6
+      Hash: 7dcc1c580a3326b5f2ab0786461b4cd3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Gun
