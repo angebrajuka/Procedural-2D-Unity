@@ -90,6 +90,6 @@ public class Enemy_Spider : Target {
 
     void FixedUpdate() {
         m_rigidbody.velocity *= 0;
-        m_rigidbody.AddForce(dir*120);
+        m_rigidbody.AddForce(dir*320);
     }
 }

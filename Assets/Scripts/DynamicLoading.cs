@@ -14,8 +14,8 @@ public class DynamicLoading : MonoBehaviour {
     }
 
     void Update() {
-        currPos.x = (int)(player_rb.position.x/10);
-        currPos.y = (int)(player_rb.position.y/10);
+        currPos.x = (int)(player_rb.position.x/100);
+        currPos.y = (int)(player_rb.position.y/100);
 
         
         if(currPos != prevPos) {

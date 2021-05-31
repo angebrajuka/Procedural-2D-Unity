@@ -10,7 +10,7 @@ public class PlayerStats : MonoBehaviour {
     
 
     // constant
-    public const float k_RUN_ACCELL = 65.0f;
+    public const float k_RUN_ACCELL = 145.0f;
 
 
 

@@ -23,7 +23,7 @@ public class Coin : MonoBehaviour {
         if(other != null) {
             Vector2 dir = other.attachedRigidbody.position-m_rigidbody.position;
             dir.Normalize();
-            m_rigidbody.AddForce(dir*70);
+            m_rigidbody.AddForce(dir*140);
             if(Math.Closer(m_rigidbody.position, other.attachedRigidbody.position, 0.05f)) {
                 PlayerStats.coins ++;
                 PlayerStats.playerStats.playerHUD.UpdateCoins();
