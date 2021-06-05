@@ -17,6 +17,14 @@ public class PlayerAnimator : MonoBehaviour {
     // inputs
     public enum Mood:byte { HAPPY=0, ANGRY=1}; public static Mood mood;
 
+    public void BeginMelee() {
+        m_renderer_gun.enabled = false;
+    }
+
+    public void EndMelee() {
+        m_renderer_gun.enabled = true;
+    }
+
     void Start() {
         mood = Mood.HAPPY;
         // faces = new Sprite[][]{face_happy, face_angry};

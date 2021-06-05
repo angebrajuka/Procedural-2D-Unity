@@ -24,13 +24,6 @@ public class PlayerHUD : MonoBehaviour {
         UpdateHealth();
     }
 
-    // static readonly Vector2[] positionsItems = {    new Vector2(0, 0),
-    //                                                 new Vector2(50, 0),
-    //                                                 new Vector2(100, 0),
-    //                                                 new Vector2(150, 0),
-    //                                                 new Vector2(200, 0),
-    //                                                 new Vector2(250, 0) };
-
     public void UpdateHotbar() {
         ammoImage.sprite = ammoImages[(int)PlayerStats.currentGun.ammoType];
         for(int i=0; i<PlayerStats.hotbar.Length; i++) {

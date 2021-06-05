@@ -6,9 +6,8 @@ using UnityEngine.UI;
 public class PlayerInput : MonoBehaviour {
     
     // hierarchy
-    public Transform m_items;
-    public Transform knifeThrowingPoint;
-    public Transform[] itemPrefabs;
+    public Transform weapons;
+    public Transform prefab_bomb;
     public GameObject weaponWheel;
     public Transform weaponWheelHighlight;
 
@@ -101,7 +100,7 @@ public class PlayerInput : MonoBehaviour {
             mouse_offset.Normalize();
             angle = Math.NormalizedVecToAngle(mouse_offset);
 
-            m_items.eulerAngles = new Vector3(0, 0, angle);
+            weapons.eulerAngles = new Vector3(0, 0, angle);
         }
 
 
@@ -182,37 +181,33 @@ public class PlayerInput : MonoBehaviour {
         }
 
         //items
-        if(Input.GetKeyDown(keybinds[key_item])) {
+        if(PlayerStats.state == PlayerStats.PlayerState.READY && Input.GetKeyDown(keybinds[key_item])) {
 
             switch(PlayerStats.currentItem) {
             case Item.BLADE:
-                Transform blade = Instantiate(itemPrefabs[(int)Item.BLADE], knifeThrowingPoint.position, Quaternion.identity);
-                Rigidbody2D rb = blade.GetComponent<Rigidbody2D>();
-                rb.AddForce(mouse_offset*900);
-                rb.AddForce(rigidbody.velocity*50);
-                rb.AddTorque(40);
-
+                PlayerStats.BeginMelee();
                 break;
             case Item.BOMB:
-
+                Instantiate(prefab_bomb, rigidbody.position, Quaternion.identity);
+                RemoveCurrentItem();
                 break;
             case Item.MEDKIT:
                 PlayerStats.playerTarget.Heal(20);
+                RemoveCurrentItem();
                 break;
             case Item.STIMPACK:
                 PlayerStats.playerTarget.Heal(10);
+                RemoveCurrentItem();
                 break;
             case Item.COMPASS:
-                
+                RemoveCurrentItem();
                 break;
             case Item.POTION:
-
+                RemoveCurrentItem();
                 break;
             default:
                 break;
             }
-
-            RemoveCurrentItem();
         }
 
 
@@ -242,11 +237,11 @@ public class PlayerInput : MonoBehaviour {
 
         // drop
         if(Input.GetKeyDown(keybinds[key_drop]) && PlayerStats.currentItem != Item.NONE) {
-            Transform item = Instantiate(itemPrefabs[(int)PlayerStats.currentItem]);
-            item.position = rigidbody.position;
-            item.GetComponent<ItemPickup>().item = PlayerStats.currentItem;
-            RemoveCurrentItem();
-            item.GetComponent<Rigidbody2D>().AddForce(new Vector2((Random.value-0.5f)*100, (Random.value-0.5f)*100));
+            // Transform item = Instantiate(itemPrefabs[(int)PlayerStats.currentItem]);
+            // item.position = rigidbody.position;
+            // item.GetComponent<ItemPickup>().item = PlayerStats.currentItem;
+            // RemoveCurrentItem();
+            // item.GetComponent<Rigidbody2D>().AddForce(new Vector2((Random.value-0.5f)*100, (Random.value-0.5f)*100));
         }
 
 

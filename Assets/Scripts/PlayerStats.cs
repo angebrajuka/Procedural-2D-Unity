@@ -7,21 +7,32 @@ public class PlayerStats : MonoBehaviour {
     // hierarchy
     public Gun[] h_guns;
     public PlayerHUD playerHUD;
+    public Transform knifeRotationPoint;
+    public Transform knifeStart;
     
 
     // constant
     public const float k_RUN_ACCELL = 145.0f;
+    public const float k_KNIFE_SPEED = 500f;
+    public const float k_KNIFE_ARC = 70f;
+
 
 
 
     // upgrades + resources
     public static int coins=0;
+    public static float g_KNIFE_DAMAGE=6;
 
 
 
     // primary weapons
     public static float gunTimer;
-    public enum PlayerState:byte { READY=0, RELOADING=1, CYCLING=2, SWITCHING=4 }; public static PlayerState state;
+    public enum PlayerState:byte { 
+        READY=0, RELOADING=1, CYCLING=2, SWITCHING=4, MELEE
+    };
+    public static PlayerState state;
+    private static PlayerState lastState;
+
     public static readonly Dictionary<Ammo, int> maxAmmo = new Dictionary<Ammo, int>{
            { Ammo.BULLETS, 200 },
            { Ammo.SHELLS, 36 },
@@ -52,6 +63,7 @@ public class PlayerStats : MonoBehaviour {
     // other
     public static PlayerStats playerStats;
     public static PlayerTarget playerTarget;
+    private static sbyte knifeDirection;
 
 
     void Start() {
@@ -62,10 +74,11 @@ public class PlayerStats : MonoBehaviour {
         currentGun = guns[_currentGun];
         gunTimer = 0;
         state = PlayerState.SWITCHING;
-        for(int i=1; i<hotbar.Length; i++) {
+        for(int i=2; i<hotbar.Length; i++) {
             hotbar[i] = Item.NONE;
         }
         hotbar[0] = Item.BLADE;
+        hotbar[1] = Item.BOMB;
         playerHUD.UpdateHotbar();
     }
 
@@ -92,8 +105,28 @@ public class PlayerStats : MonoBehaviour {
         AudioManager.PlayClip(playerTarget.transform.position, currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
     }
 
+    public static void BeginMelee() {
+        lastState = state;
+        state = PlayerState.MELEE;
+        playerStats.knifeRotationPoint.gameObject.SetActive(true);
+        PlayerAnimator.playerAnimator.BeginMelee();
+        playerStats.knifeStart.localEulerAngles = Vector3.forward*PlayerInput.angle;
+        knifeDirection = Random.value>0.5f ? (sbyte)-1 : (sbyte)1;
+        playerStats.knifeRotationPoint.localEulerAngles = Vector3.forward*k_KNIFE_ARC*knifeDirection;
+    }
+
     void Update() {
         switch(state) {
+        case PlayerState.MELEE:
+            playerStats.knifeRotationPoint.localEulerAngles += Vector3.back*Time.deltaTime*k_KNIFE_SPEED*knifeDirection;
+            if(playerStats.knifeRotationPoint.localEulerAngles.z < 360-k_KNIFE_ARC && playerStats.knifeRotationPoint.localEulerAngles.z > k_KNIFE_ARC) {
+                // end melee
+
+                state = lastState;
+                playerStats.knifeRotationPoint.gameObject.SetActive(false);
+                PlayerAnimator.playerAnimator.EndMelee();
+            }
+            break;
         case PlayerState.READY:
             if(_nextGun != _currentGun) state = PlayerState.SWITCHING;
             else if(currentGun.ammo == 0) Reload();

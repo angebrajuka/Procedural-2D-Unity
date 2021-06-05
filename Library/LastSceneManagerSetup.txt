@@ -1,25 +1,65 @@
 sceneSetups:
 - path: Assets/Scenes/Player.unity
   isLoaded: 1
+  isActive: 1
+  isSubScene: 0
+- path: Assets/Scenes/1,1.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/1,2.unity
+  isLoaded: 0
   isActive: 0
   isSubScene: 0
 - path: Assets/Scenes/2,0.unity
-  isLoaded: 1
+  isLoaded: 0
   isActive: 0
   isSubScene: 0
 - path: Assets/Scenes/2,1.unity
-  isLoaded: 1
-  isActive: 1
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/2,2.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/2,3.unity
+  isLoaded: 0
+  isActive: 0
   isSubScene: 0
 - path: Assets/Scenes/3,0.unity
-  isLoaded: 1
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/3,1.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/3,2.unity
+  isLoaded: 0
   isActive: 0
   isSubScene: 0
 - path: Assets/Scenes/4,0.unity
-  isLoaded: 1
+  isLoaded: 0
   isActive: 0
   isSubScene: 0
-- path: Assets/Scenes/1,1.unity
-  isLoaded: 1
+- path: Assets/Scenes/4,1.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/4,2.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/5,0.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/5,1.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/1,3.unity
+  isLoaded: 0
   isActive: 0
   isSubScene: 0
