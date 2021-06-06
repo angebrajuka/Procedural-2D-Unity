@@ -9,6 +9,7 @@ public class PlayerStats : MonoBehaviour {
     public PlayerHUD playerHUD;
     public Transform knifeRotationPoint;
     public Transform knifeStart;
+    public LineRenderer line;
     
 
     // constant
@@ -74,11 +75,12 @@ public class PlayerStats : MonoBehaviour {
         currentGun = guns[_currentGun];
         gunTimer = 0;
         state = PlayerState.SWITCHING;
-        for(int i=2; i<hotbar.Length; i++) {
-            hotbar[i] = Item.NONE;
+        for(int i=3; i<hotbar.Length; i++) {
+            hotbar[i] = Item.BOMB;
         }
         hotbar[0] = Item.BLADE;
-        hotbar[1] = Item.BOMB;
+        hotbar[1] = Item.FISHING_ROD;
+        hotbar[2] = Item.FLASHLIGHT;
         playerHUD.UpdateHotbar();
     }
 
@@ -144,6 +146,7 @@ public class PlayerStats : MonoBehaviour {
                 case PlayerState.SWITCHING:
                     _currentGun = _nextGun;
                     currentGun = guns[_currentGun];
+                    line.SetPosition(1, Vector3.right*currentGun.range);
                     state = PlayerState.CYCLING;
                     playerHUD.UpdateAmmo();
                     playerHUD.UpdateHotbar();

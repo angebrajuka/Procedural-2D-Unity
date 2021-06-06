@@ -10,6 +10,8 @@ public class PlayerInput : MonoBehaviour {
     public Transform prefab_bomb;
     public GameObject weaponWheel;
     public Transform weaponWheelHighlight;
+    public GameObject line;
+    public GameObject ammo;
 
 
     // components
@@ -23,6 +25,7 @@ public class PlayerInput : MonoBehaviour {
     private bool isWheelActive=false;
     // output
     public static float angle;
+    public static float cursorDistance;
     public static byte direction8index;
 
 
@@ -97,6 +100,7 @@ public class PlayerInput : MonoBehaviour {
             AspectRatio.halfScreen.y = Screen.height/2;
 
             mouse_offset = Input.mousePosition-AspectRatio.halfScreen;
+            cursorDistance = mouse_offset.magnitude;
             mouse_offset.Normalize();
             angle = Math.NormalizedVecToAngle(mouse_offset);
 
@@ -133,6 +137,8 @@ public class PlayerInput : MonoBehaviour {
                 weaponWheel.transform.position = new Vector3(Input.mousePosition.x+wheelPositions[PlayerStats._currentGun].x, Input.mousePosition.y+wheelPositions[PlayerStats._currentGun].y, 0);
                 isWheelActive = true;
                 weaponWheel.SetActive(true);
+                ammo.SetActive(false);
+                line.SetActive(false);
             }
 
             Vector3 wheelOffset = Input.mousePosition-weaponWheel.transform.position;
@@ -146,6 +152,8 @@ public class PlayerInput : MonoBehaviour {
             PlayerStats._nextGun = convert[preConvert];
         } else if(isWheelActive){
             weaponWheel.SetActive(false);
+            ammo.SetActive(true);
+            line.SetActive(true);
             isWheelActive = false;
         }
 
@@ -204,6 +212,9 @@ public class PlayerInput : MonoBehaviour {
                 break;
             case Item.POTION:
                 RemoveCurrentItem();
+                break;
+            case Item.FISHING_ROD:
+                
                 break;
             default:
                 break;

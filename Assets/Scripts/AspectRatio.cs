@@ -23,7 +23,7 @@ public class AspectRatio : MonoBehaviour {
             rect.x = 0;
             rect.y = (1.0f - scaleheight) / 2.0f;
  
-             cam.rect = rect;
+            cam.rect = rect;
         } else {
              // add pillarbox
             float scalewidth = 1.0f / scaleheight;

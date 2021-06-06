@@ -27,10 +27,11 @@ public class Gun : MonoBehaviour {
     public float volume_shoot;
     public AudioClip audio_reload;
     public float volume_reload;
+    public Transform muzzleFlashPrefab;
     
 
     // components
-    ParticleSystem muzzleFlash;
+    ParticleSystem muzzleFlashParticleSystem;
 
 
     // stats
@@ -41,13 +42,13 @@ public class Gun : MonoBehaviour {
         secondsBetweenShots = 60.0f/rpm;
         damage /= bullets;
         ammo = clipSize;
-        muzzleFlash = GetComponent<ParticleSystem>();
+        muzzleFlashParticleSystem = GetComponent<ParticleSystem>();
     }
 
     public bool Shoot(Vector3 position, Vector2 direction, float angle, Rigidbody2D rigidbody) {
         AudioManager.PlayClip(position, audio_shoot, volume_shoot, Mixer.SFX);
-        muzzleFlash.Play();
-        muzzleFlash.Emit(70);
+        if(muzzleFlashParticleSystem != null) muzzleFlashParticleSystem.Play();
+        Instantiate(muzzleFlashPrefab, transform.position, transform.rotation, transform);
 
         rigidbody.AddForce(-direction*recoil);
         
