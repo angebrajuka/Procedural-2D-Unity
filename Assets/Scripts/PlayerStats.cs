@@ -22,7 +22,7 @@ public class PlayerStats : MonoBehaviour {
 
     // upgrades + resources
     public static int coins=0;
-    public static float g_KNIFE_DAMAGE=6;
+    public static float g_KNIFE_DAMAGE=4;
 
 
 
@@ -35,14 +35,14 @@ public class PlayerStats : MonoBehaviour {
     private static PlayerState lastState;
 
     public static readonly Dictionary<Ammo, int> maxAmmo = new Dictionary<Ammo, int>{
-           { Ammo.BULLETS, 200 },
-           { Ammo.SHELLS, 36 },
-           { Ammo.ENERGY, 300 }
+           { Ammo.BULLETS, 60 },
+           { Ammo.SHELLS, 12 },
+           { Ammo.ENERGY, 120 }
         };
-    public static Dictionary<Ammo, int> ammo = new Dictionary<Ammo, int>(){
-            {Ammo.BULLETS, 50}, 
-            {Ammo.SHELLS, 12}, 
-            {Ammo.ENERGY, 300}
+    public static Dictionary<Ammo, int> ammo = new Dictionary<Ammo, int>{
+            {Ammo.BULLETS, 20}, 
+            {Ammo.SHELLS, 8}, 
+            {Ammo.ENERGY, 60}
         };
     public static Gun[] guns;
     public static Gun currentGun;

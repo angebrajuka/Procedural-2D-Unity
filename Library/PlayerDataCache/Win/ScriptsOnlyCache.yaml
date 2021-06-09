@@ -6,6 +6,7 @@ ScriptsOnlyBuild:
     - Coin
     - Coin_Explosion
     - DaylightCycle
+    - DevConsole
     - DynamicLoading
     - EightDirectionAnimator
     - Enemy_Spider
@@ -55,7 +56,6 @@ ScriptsOnlyBuild:
     - UnityEngine.Rendering.UI.DebugUIHandlerVector4
     - UnityEngine.Rendering.UI.UIFoldout
     Unity.RenderPipelines.Universal.Editor.dll:
-    - UnityEditor.Experimental.Rendering.Universal.Path2D.ScriptablePathInspector
     - UnityEditor.Rendering.Universal.UniversalProjectSettings
     Unity.RenderPipelines.Universal.Runtime.dll:
     - UnityEngine.Experimental.Rendering.Universal.Light2D
@@ -79,6 +79,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.HorizontalLayoutGroup
     - UnityEngine.UI.Image
+    - UnityEngine.UI.InputField
     - UnityEngine.UI.LayoutElement
     - UnityEngine.UI.Mask
     - UnityEngine.UI.Outline
@@ -239,9 +240,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12338}
     - Class: 114
-      Script: {instanceID: 13324}
+      Script: {instanceID: 13326}
     - Class: 114
-      Script: {instanceID: 16150}
+      Script: {instanceID: 16154}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -477,7 +478,7 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 1839735485
       Script: {instanceID: 0}
-    Assets/Scenes/Player.unity:
+    Assets/Scenes/Main.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -549,81 +550,85 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12698}
     - Class: 114
-      Script: {instanceID: 12796}
+      Script: {instanceID: 12790}
     - Class: 114
-      Script: {instanceID: 12954}
+      Script: {instanceID: 12798}
     - Class: 114
-      Script: {instanceID: 13100}
+      Script: {instanceID: 12956}
     - Class: 114
-      Script: {instanceID: 13344}
+      Script: {instanceID: 13102}
     - Class: 114
-      Script: {instanceID: 13384}
+      Script: {instanceID: 13346}
     - Class: 114
-      Script: {instanceID: 13434}
+      Script: {instanceID: 13386}
     - Class: 114
-      Script: {instanceID: 13516}
+      Script: {instanceID: 13436}
     - Class: 114
-      Script: {instanceID: 13658}
+      Script: {instanceID: 13518}
     - Class: 114
-      Script: {instanceID: 13848}
+      Script: {instanceID: 13660}
     - Class: 114
-      Script: {instanceID: 14026}
+      Script: {instanceID: 13850}
     - Class: 114
-      Script: {instanceID: 14060}
+      Script: {instanceID: 14028}
     - Class: 114
-      Script: {instanceID: 14420}
+      Script: {instanceID: 14062}
     - Class: 114
-      Script: {instanceID: 14506}
+      Script: {instanceID: 14422}
     - Class: 114
-      Script: {instanceID: 14530}
+      Script: {instanceID: 14444}
     - Class: 114
-      Script: {instanceID: 14556}
+      Script: {instanceID: 14508}
     - Class: 114
-      Script: {instanceID: 14684}
+      Script: {instanceID: 14532}
     - Class: 114
-      Script: {instanceID: 14728}
+      Script: {instanceID: 14558}
     - Class: 114
-      Script: {instanceID: 14740}
+      Script: {instanceID: 14686}
     - Class: 114
-      Script: {instanceID: 15120}
+      Script: {instanceID: 14730}
     - Class: 114
-      Script: {instanceID: 15134}
+      Script: {instanceID: 14742}
     - Class: 114
-      Script: {instanceID: 15150}
+      Script: {instanceID: 15122}
     - Class: 114
-      Script: {instanceID: 15226}
+      Script: {instanceID: 15136}
     - Class: 114
-      Script: {instanceID: 15540}
+      Script: {instanceID: 15152}
     - Class: 114
-      Script: {instanceID: 15654}
+      Script: {instanceID: 15228}
     - Class: 114
-      Script: {instanceID: 15718}
+      Script: {instanceID: 15324}
     - Class: 114
-      Script: {instanceID: 15786}
+      Script: {instanceID: 15544}
     - Class: 114
-      Script: {instanceID: 15838}
+      Script: {instanceID: 15658}
     - Class: 114
-      Script: {instanceID: 15876}
+      Script: {instanceID: 15722}
     - Class: 114
-      Script: {instanceID: 15992}
+      Script: {instanceID: 15790}
     - Class: 114
-      Script: {instanceID: 16092}
+      Script: {instanceID: 15842}
+    - Class: 114
+      Script: {instanceID: 15880}
+    - Class: 114
+      Script: {instanceID: 15996}
     - Class: 114
       Script: {instanceID: 16096}
     - Class: 114
-      Script: {instanceID: 16140}
+      Script: {instanceID: 16100}
     - Class: 114
-      Script: {instanceID: 16168}
+      Script: {instanceID: 16144}
     - Class: 114
-      Script: {instanceID: 16206}
+      Script: {instanceID: 16172}
     - Class: 114
-      Script: {instanceID: 16230}
+      Script: {instanceID: 16210}
     - Class: 114
-      Script: {instanceID: 16310}
+      Script: {instanceID: 16234}
     - Class: 114
-      Script: {instanceID: 16316}
+      Script: {instanceID: 16314}
     - Class: 114
-      Script: {instanceID: 38598}
+      Script: {instanceID: 16320}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -909,7 +914,7 @@ ScriptsOnlyBuild:
     className: AnimationTrack
   - hash:
       serializedVersion: 2
-      Hash: 0704a8f2034ec4ad6b9ca5bb9f5ae4c5
+      Hash: c9094b90a5c8bbcd5bd1485d41f70e51
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerHUD
@@ -1003,6 +1008,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Shadow
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MuzzleFlash
   - hash:
       serializedVersion: 2
       Hash: 949a5890ce572ec240178521254b72e1
@@ -1275,7 +1286,7 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 5e887a8764b4a2749e41549977d85b56
+      Hash: 44045165ed9df08716688076f7da49b8
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerInput
@@ -1395,6 +1406,12 @@ ScriptsOnlyBuild:
     className: CinemachineUniversalPixelPerfect
   - hash:
       serializedVersion: 2
+      Hash: 3bc6c32d1db4388dc6bae42709cd2302
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DevConsole
+  - hash:
+      serializedVersion: 2
       Hash: 36112b0a16753cab0931521e4de67ef6
     assemblyName: Unity.RenderPipelines.Universal.Runtime.dll
     namespaceName: UnityEngine.Rendering.Universal
@@ -1437,7 +1454,7 @@ ScriptsOnlyBuild:
     className: DepthOfField
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 845128cd3b6d8e274bfd73d009c5c617
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: DaylightCycle
@@ -1627,15 +1644,9 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: MuzzleFlash
   platform: 5
   scenePathNames:
-  - Assets/Scenes/Player.unity
+  - Assets/Scenes/Main.unity
   - Assets/Scenes/2,0.unity
   - Assets/Scenes/2,1.unity
   - Assets/Scenes/3,0.unity

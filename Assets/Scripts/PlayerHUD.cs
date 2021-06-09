@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerHUD : MonoBehaviour {
 
-    public Text bulletsTxt, shellsTxt, energyTxt;
+    // public Text bulletsTxt, shellsTxt, energyTxt;
     public Text currentGunAmmoTxt;
     public Text currentReserveTxt;
     public Text interact;
@@ -33,9 +33,9 @@ public class PlayerHUD : MonoBehaviour {
     }
 
     public void UpdateAmmo() {
-        bulletsTxt.text = PlayerStats.ammo[Ammo.BULLETS]+"";
-        shellsTxt.text = PlayerStats.ammo[Ammo.SHELLS]+"";
-        energyTxt.text = PlayerStats.ammo[Ammo.ENERGY]+"";
+        // bulletsTxt.text = PlayerStats.ammo[Ammo.BULLETS]+"";
+        // shellsTxt.text = PlayerStats.ammo[Ammo.SHELLS]+"";
+        // energyTxt.text = PlayerStats.ammo[Ammo.ENERGY]+"";
         currentGunAmmoTxt.text = PlayerStats.currentGun.ammo < 10 ? "0" : "";
         currentGunAmmoTxt.text += PlayerStats.currentGun.ammo+"";
         currentReserveTxt.text = "/"+PlayerStats.ammo[PlayerStats.currentGun.ammoType];

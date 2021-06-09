@@ -5,16 +5,10 @@ using UnityEngine.Experimental.Rendering.LWRP;
 
 public class DaylightCycle : MonoBehaviour {
 
-    enum TimeOfDay:byte {
-        MORNING=0,
-        DAY=1,
-        EVENING=2,
-        NIGHT=3
-    } static TimeOfDay timeOfDay = TimeOfDay.MORNING;
+    const float k_MORNING=240, k_DAY=15, k_EVENING=135, k_NIGHT=150;
+    public float brightness_day, brightness_night;
 
-    float timer = 0;
-    static readonly float[] speeds = {0.0027f, 0, -0.0027f, 0};
-    static readonly float[] durations = {6, 120, 6, 90};
+    public static float time = k_DAY;
 
     UnityEngine.Experimental.Rendering.Universal.Light2D globalLight;
 
@@ -23,12 +17,12 @@ public class DaylightCycle : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        if(timer <= 0) {
-            timeOfDay ++;
-            if(timeOfDay > TimeOfDay.NIGHT) timeOfDay = TimeOfDay.MORNING;
-            timer = durations[(int)timeOfDay];
-        }
-        timer -= Time.fixedDeltaTime;
-        globalLight.intensity += speeds[(int)timeOfDay];
+        time += Time.fixedDeltaTime;
+        if(time >= k_MORNING) time = 0;
+        
+        globalLight.intensity = (time < k_DAY)      ? Mathf.Lerp(brightness_night, brightness_day, time/k_DAY)
+                              : (time < k_EVENING   ? brightness_day
+                              : (time < k_NIGHT     ? Mathf.Lerp(brightness_day, brightness_night, (time-k_EVENING)/(k_NIGHT-k_EVENING))
+                              :  brightness_night));
     }
 }

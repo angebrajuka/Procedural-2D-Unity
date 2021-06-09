@@ -8,21 +8,18 @@ public class PlayerInput : MonoBehaviour {
     // hierarchy
     public Transform weapons;
     public Transform prefab_bomb;
-    public GameObject weaponWheel;
-    public Transform weaponWheelHighlight;
     public GameObject line;
     public GameObject ammo;
 
 
     // components
     new public static Rigidbody2D rigidbody;
-    [HideInInspector] public Image wheelHighlightRenderer;
 
 
     // input
     private Vector2 input_move;
     private Vector2 mouse_offset;
-    private bool isWheelActive=false;
+
     // output
     public static float angle;
     public static float cursorDistance;
@@ -31,7 +28,7 @@ public class PlayerInput : MonoBehaviour {
 
 
     // keybinds
-    public const int key_moveEast=0, key_moveNorth=1, key_moveWest=2, key_moveSouth=3, key_shoot=4, key_reload=5, key_item=6, key_interact=7, key_drop=8, key_wheel=9, key_weapon_0=10, key_weapon_1=11, key_weapon_2=12, key_weapon_3=13, key_weapon_4=14, key_weapon_5=15;
+    public const int key_moveEast=0, key_moveNorth=1, key_moveWest=2, key_moveSouth=3, key_shoot=4, key_reload=5, key_item=6, key_interact=7, key_drop=8, key_=9, key_weapon_0=10, key_weapon_1=11, key_weapon_2=12, key_weapon_3=13, key_weapon_4=14, key_weapon_5=15;
     public static KeyCode[] keybinds = new KeyCode[16];
     
     public static void DefaultKeybinds() {
@@ -44,7 +41,7 @@ public class PlayerInput : MonoBehaviour {
         keybinds[key_item]      = KeyCode.Mouse1;
         keybinds[key_interact]  = KeyCode.E;
         keybinds[key_drop]      = KeyCode.P;
-        keybinds[key_wheel]     = KeyCode.Mouse2;
+        keybinds[key_]           = KeyCode.Z;
         keybinds[key_weapon_0]  = KeyCode.Alpha1;
         keybinds[key_weapon_1]  = KeyCode.Alpha2;
         keybinds[key_weapon_2]  = KeyCode.Alpha3;
@@ -74,7 +71,6 @@ public class PlayerInput : MonoBehaviour {
     void Start() {
         DefaultKeybinds();
         rigidbody = GetComponent<Rigidbody2D>();
-        wheelHighlightRenderer = weaponWheelHighlight.GetComponent<Image>();
     }
 
     void RemoveCurrentItem() {
@@ -82,15 +78,6 @@ public class PlayerInput : MonoBehaviour {
         PlayerStats.currentItem = Item.NONE;
         PlayerStats.playerStats.playerHUD.UpdateHotbar();
     }
-
-    static readonly Vector2[] wheelPositions = {    new Vector2(2,-3),
-                                                    new Vector2(4, 0),
-                                                    new Vector2(-2, -3),
-                                                    new Vector2(-4, 0),
-                                                    new Vector2(2, 3),
-                                                    new Vector2(-2, 3) };
-
-    static readonly byte[] convert = {3, 2, 0, 1, 4, 5};
 
     void Update() {
         
@@ -131,32 +118,6 @@ public class PlayerInput : MonoBehaviour {
         }
 
 
-        // switching (wheel)
-        if(Input.GetKey(keybinds[key_wheel])) {
-            if(!isWheelActive) {
-                weaponWheel.transform.position = new Vector3(Input.mousePosition.x+wheelPositions[PlayerStats._currentGun].x, Input.mousePosition.y+wheelPositions[PlayerStats._currentGun].y, 0);
-                isWheelActive = true;
-                weaponWheel.SetActive(true);
-                ammo.SetActive(false);
-                line.SetActive(false);
-            }
-
-            Vector3 wheelOffset = Input.mousePosition-weaponWheel.transform.position;
-            float angle = Math.VecToAngle(wheelOffset);
-
-            int preConvert = (int)Mathf.Floor((angle+30)/60);
-            if(preConvert > 5) preConvert = 0;
-
-            wheelHighlightRenderer.transform.eulerAngles = new Vector3(0, 0, preConvert*60);
-
-            PlayerStats._nextGun = convert[preConvert];
-        } else if(isWheelActive){
-            weaponWheel.SetActive(false);
-            ammo.SetActive(true);
-            line.SetActive(true);
-            isWheelActive = false;
-        }
-
         // item switching (scroll)
         if(Input.mouseScrollDelta.y != 0) {
             if(Input.mouseScrollDelta.y > 0) {
@@ -174,9 +135,6 @@ public class PlayerInput : MonoBehaviour {
         if(Input.GetKey(keybinds[key_weapon_0])) PlayerStats._nextGun = 0;
         if(Input.GetKey(keybinds[key_weapon_1])) PlayerStats._nextGun = 1;
         if(Input.GetKey(keybinds[key_weapon_2])) PlayerStats._nextGun = 2;
-        if(Input.GetKey(keybinds[key_weapon_3])) PlayerStats._nextGun = 3;
-        if(Input.GetKey(keybinds[key_weapon_4])) PlayerStats._nextGun = 4;
-        if(Input.GetKey(keybinds[key_weapon_5])) PlayerStats._nextGun = 5;
         
 
         // reload
@@ -254,11 +212,6 @@ public class PlayerInput : MonoBehaviour {
             // RemoveCurrentItem();
             // item.GetComponent<Rigidbody2D>().AddForce(new Vector2((Random.value-0.5f)*100, (Random.value-0.5f)*100));
         }
-
-
-        // dev hacks
-        if(Input.GetKeyDown(KeyCode.Keypad4)) PlayerStats.playerTarget.Heal(1);
-        if(Input.GetKeyDown(KeyCode.Keypad1)) PlayerStats.playerTarget.Damage(1);
     }
 
 
