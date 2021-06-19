@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1562518597343047302}
   - component: {fileID: 1562518597343047303}
+  - component: {fileID: 5394658922115554956}
   - component: {fileID: 1562518597343047300}
   - component: {fileID: 1175525847289564323}
   - component: {fileID: 1562518597343047301}
@@ -85,6 +86,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5394658922115554956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562518597343047322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0deff5c6b080194aa6ca15e4099c05a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 20
+  health: 20
+  damageable: 1
+  dead: 0
 --- !u!114 &1562518597343047300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,15 +114,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7cd465f1d04a68479348e3f91746c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
-  health: 20
-  damageable: 1
-  dead: 0
   m_animator: {fileID: 1175525847289564323}
   prefab_coinExplosion: {fileID: 2773630599371209418, guid: 60e0cd10d5ad18e4081ccfa7e6dd8fcf,
     type: 3}
+  awake: 0
   m_rigidbody: {fileID: 0}
   m_material: {fileID: 0}
+  m_target: {fileID: 0}
 --- !u!114 &1175525847289564323
 MonoBehaviour:
   m_ObjectHideFlags: 0

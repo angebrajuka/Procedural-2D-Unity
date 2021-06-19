@@ -58,6 +58,7 @@ public class AspectRatio : MonoBehaviour {
     void Start () {
         cam = GetComponent<Camera>();
         RescaleCamera();
+        OnPreCull();
     }
  
     void Update () {

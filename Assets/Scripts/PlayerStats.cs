@@ -6,10 +6,16 @@ public class PlayerStats : MonoBehaviour {
 
     // hierarchy
     public Gun[] h_guns;
-    public PlayerHUD playerHUD;
+    public Transform prefab_bomb;
     public Transform knifeRotationPoint;
     public Transform knifeStart;
     public LineRenderer line;
+
+    // components
+    public static Target target;
+    public static PlayerHUD hud;
+    public static Inventory inventory;
+new public static Rigidbody2D rigidbody;
     
 
     // constant
@@ -26,36 +32,37 @@ public class PlayerStats : MonoBehaviour {
 
 
 
-    // primary weapons
+    // weapons
     public static float gunTimer;
     public enum PlayerState:byte { 
-        READY=0, RELOADING=1, CYCLING=2, SWITCHING=4, MELEE
+        READY, RELOADING, CYCLING, MELEE
     };
     public static PlayerState state;
     private static PlayerState lastState;
 
     public static readonly Dictionary<Ammo, int> maxAmmo = new Dictionary<Ammo, int>{
-           { Ammo.BULLETS, 60 },
-           { Ammo.SHELLS, 12 },
-           { Ammo.ENERGY, 120 }
+            { Ammo.BULLETS_SMALL,   60  },
+            { Ammo.BULLETS_BIG,     40  },
+            { Ammo.SHELLS,          24  },
+            { Ammo.ENERGY,          120 }
         };
     public static Dictionary<Ammo, int> ammo = new Dictionary<Ammo, int>{
-            {Ammo.BULLETS, 20}, 
-            {Ammo.SHELLS, 8}, 
-            {Ammo.ENERGY, 60}
+            { Ammo.BULLETS_SMALL,   30  },
+            { Ammo.BULLETS_BIG,     20   }, 
+            { Ammo.SHELLS,          8   }, 
+            { Ammo.ENERGY,          60  }
         };
     public static Gun[] guns;
     public static Gun currentGun;
-    public static int _nextGun, _currentGun;
+    public static LinkedListNode<GridItem> currentGunItemNode;
     public static bool CanShoot() {
-        return state == PlayerState.READY && currentGun.ammo > 0;
+        return state == PlayerState.READY && currentGun != null && currentGun.ammo > 0;
     }
 
 
     // items
-    public static Item[] hotbar = new Item[12];
-    public static int _item;
-    public static Item currentItem = Item.BLADE;
+    public static Item currentItem = Item.NONE;
+    public static LinkedListNode<GridItem> currentItemNode;
     public static Item interactItem = Item.NONE;
     public static ItemPickup interactPickup;
     public static int interactPriority=0;
@@ -63,25 +70,27 @@ public class PlayerStats : MonoBehaviour {
 
     // other
     public static PlayerStats playerStats;
-    public static PlayerTarget playerTarget;
     private static sbyte knifeDirection;
 
 
     void Start() {
+        inventory = GetComponent<Inventory>();
+        target = GetComponent<Target>();
+        hud = GetComponent<PlayerHUD>();
+        rigidbody = GetComponent<Rigidbody2D>();
         playerStats = this;
         guns = h_guns;
-        _nextGun = 0;
-        _currentGun = 0;
-        currentGun = guns[_currentGun];
+        SwitchGun(-1);
         gunTimer = 0;
-        state = PlayerState.SWITCHING;
-        for(int i=3; i<hotbar.Length; i++) {
-            hotbar[i] = Item.BOMB;
-        }
-        hotbar[0] = Item.BLADE;
-        hotbar[1] = Item.FISHING_ROD;
-        hotbar[2] = Item.FLASHLIGHT;
-        playerHUD.UpdateHotbar();
+        state = PlayerState.CYCLING;
+        hud.UpdateHotbar();
+    }
+
+    public static void RemoveCurrentItem() {
+        Destroy(currentItemNode.Value.gameObject);
+        currentItemNode.List.Remove(currentItemNode);
+        currentItem = Item.NONE;
+        hud.UpdateHotbar();
     }
 
     public static void Reload() {
@@ -103,8 +112,8 @@ public class PlayerStats : MonoBehaviour {
 
         state = PlayerState.RELOADING;
         gunTimer = currentGun.reloadTime;
-        playerStats.playerHUD.UpdateAmmo();
-        AudioManager.PlayClip(playerTarget.transform.position, currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
+        hud.UpdateAmmo();
+        AudioManager.PlayClip(target.transform.position, currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
     }
 
     public static void BeginMelee() {
@@ -115,6 +124,20 @@ public class PlayerStats : MonoBehaviour {
         playerStats.knifeStart.localEulerAngles = Vector3.forward*PlayerInput.angle;
         knifeDirection = Random.value>0.5f ? (sbyte)-1 : (sbyte)1;
         playerStats.knifeRotationPoint.localEulerAngles = Vector3.forward*k_KNIFE_ARC*knifeDirection;
+    }
+
+    public static void SwitchGun(sbyte _gun) {
+        if(_gun == -1) {
+            currentGun = null;
+            playerStats.line.SetPosition(1, Vector3.zero);
+            state = PlayerState.READY;
+        } else {
+            currentGun = guns[_gun];
+            playerStats.line.SetPosition(1, Vector3.right*currentGun.range);
+            state = PlayerState.CYCLING;
+        }
+        hud.UpdateAmmo();
+        hud.UpdateHotbar();
     }
 
     void Update() {
@@ -130,8 +153,7 @@ public class PlayerStats : MonoBehaviour {
             }
             break;
         case PlayerState.READY:
-            if(_nextGun != _currentGun) state = PlayerState.SWITCHING;
-            else if(currentGun.ammo == 0) Reload();
+            if(currentGun != null && currentGun.ammo == 0) Reload();
             break;
         default:
             gunTimer -= Time.deltaTime;
@@ -142,14 +164,6 @@ public class PlayerStats : MonoBehaviour {
                     break;
                 case PlayerState.CYCLING:
                     state = PlayerState.READY;
-                    break;
-                case PlayerState.SWITCHING:
-                    _currentGun = _nextGun;
-                    currentGun = guns[_currentGun];
-                    line.SetPosition(1, Vector3.right*currentGun.range);
-                    state = PlayerState.CYCLING;
-                    playerHUD.UpdateAmmo();
-                    playerHUD.UpdateHotbar();
                     break;
                 }
             }

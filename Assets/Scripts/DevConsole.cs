@@ -9,9 +9,16 @@ public class DevConsole : MonoBehaviour {
     public InputField inputField;
     public Text textObject;
     public PlayerInput playerInput;
+    public Target target;
 
     [HideInInspector] public bool isActive=false;
 
+    static Target s_target;
+
+    void Start() {
+        s_target = target;
+        Disable();
+    }
 
 
     static bool Time(string[] args) {
@@ -35,10 +42,10 @@ public class DevConsole : MonoBehaviour {
     static bool Health(string[] args) {
         switch(args[0]) {
         case "add":
-            PlayerStats.playerTarget.Heal(float.Parse(args[1]));
+            s_target.Heal(float.Parse(args[1]));
             break;
         case "subtract":
-            PlayerStats.playerTarget.Damage(float.Parse(args[1]));
+            s_target.Damage(float.Parse(args[1]));
             break;
         default:
             return false;
@@ -49,11 +56,14 @@ public class DevConsole : MonoBehaviour {
 
     static bool Ammunition(string[] args) {
 
-        Ammo type = Ammo.BULLETS;
+        Ammo type = Ammo.BULLETS_SMALL;
         
         switch(args[0]) {
-        case "bullets":
-            type = Ammo.BULLETS;
+        case "bullets_small":
+            type = Ammo.BULLETS_SMALL;
+            break;
+        case "bullets_big":
+            type = Ammo.BULLETS_BIG;
             break;
         case "shells":
             type = Ammo.SHELLS;
@@ -75,8 +85,13 @@ public class DevConsole : MonoBehaviour {
             if(PlayerStats.ammo[type] > PlayerStats.maxAmmo[type]) PlayerStats.ammo[type] = PlayerStats.maxAmmo[type];
         }
 
-        PlayerStats.playerStats.playerHUD.UpdateAmmo();
+        PlayerStats.hud.UpdateAmmo();
         
+        return true;
+    }
+
+    static bool SetGun(string[] args) {
+        PlayerStats.SwitchGun(sbyte.Parse(args[0]));
         return true;
     }
 
@@ -85,21 +100,29 @@ public class DevConsole : MonoBehaviour {
     static readonly Dictionary<string, Func<string[], bool>> commands = new Dictionary<string, Func<string[], bool>>{
         {"time",        Time        },
         {"health",      Health      },
-        {"ammo",        Ammunition  }
+        {"ammo",        Ammunition  },
+        {"setgun",      SetGun      }
     };
 
-    void Clear() {
+    void Enable() {
+        isActive = true;
+        inputField.gameObject.SetActive(true);
+        playerInput.enabled = false;
         inputField.ActivateInputField();
         textObject.text = "";
+    }
+
+    void Disable() {
+        isActive = false;
+        inputField.gameObject.SetActive(false);
+        playerInput.enabled = true;
     }
 
     void Update() {
 
         if(Input.GetKeyDown(KeyCode.BackQuote)) {
-            isActive = !isActive;
-            inputField.gameObject.SetActive(isActive);
-            playerInput.enabled = !isActive;
-            if(isActive) Clear();
+            if(!isActive)   Enable();
+            else            Disable();
         }
     }
 
@@ -107,6 +130,6 @@ public class DevConsole : MonoBehaviour {
         string text = textObject.text.ToLower();
         string[] words = text.Split(new char[]{' '}, 2);
         try { commands[words[0]](words[1].Split(' ')); } catch {}
-        Clear();
+        Disable();
     }
 }

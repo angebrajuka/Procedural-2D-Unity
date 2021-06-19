@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Spider : Target {
+public class Enemy_Spider : MonoBehaviour {
     
 
     // hierarchy
@@ -14,6 +14,7 @@ public class Enemy_Spider : Target {
     // components
     [HideInInspector] public Rigidbody2D m_rigidbody;
     [HideInInspector] public Material m_material;
+    [HideInInspector] public Target m_target;
 
 
     // members
@@ -27,31 +28,33 @@ public class Enemy_Spider : Target {
     void Start() {
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_material = GetComponent<SpriteRenderer>().material;
+        m_target = GetComponent<Target>();
+        m_target.OnDamage = OnDamage;
+        m_target.OnKill = OnKill;
         timer = 0;
         animationTimer = 0;
         flash = 0;
     }
 
-
-    public override void OnDamage(float damage) {
+    public bool OnDamage(float damage) {
         Color c = m_animator.m_spriteRenderer.color;
         flash = 1;
         m_animator.m_spriteRenderer.color = c;
+        return true;
     }
 
-    public override void OnKill(float damage) {
+    public bool OnKill(float damage) {
         Transform coinExplosion = Instantiate(prefab_coinExplosion);
         coinExplosion.position = transform.position;
         Destroy(this.gameObject);
+        return true;
     }
-
-    public override void OnHeal(float heal) {}
 
 
     void NewTarget(bool forceWander=false) {
         following = !forceWander && (Random.value > 0.4f);
         
-        dir = following ? PlayerInput.rigidbody.position-m_rigidbody.position : (Math.vectors[(int)Mathf.Floor(Random.value*8)]);
+        dir = following ? PlayerInput.m_rigidbody.position-m_rigidbody.position : (Math.vectors[(int)Mathf.Floor(Random.value*8)]);
 
         m_animator.direction = Math.AngleToDir8(Math.NormalizedVecToAngle(dir));
         if(m_animator.direction >= 8) m_animator.direction = 0;

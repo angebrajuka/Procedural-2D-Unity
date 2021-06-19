@@ -1,17 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Target : MonoBehaviour
+public class Target : MonoBehaviour
 {
     public float maxHealth = 100;
     public float health = 100;
     public bool damageable = false;
     public bool dead = false;
 
-    public abstract void OnDamage(float damage);
-    public abstract void OnKill(float damage);
-    public abstract void OnHeal(float heal);
+    public static bool Default(float f) { return false; }
+
+    public Func<float, bool> OnDamage=Default;
+    public Func<float, bool> OnKill=Default;
+    public Func<float, bool> OnHeal=Default;
     
     public bool Damage(float damage) {
         if(damageable && !dead) {

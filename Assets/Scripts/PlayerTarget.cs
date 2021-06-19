@@ -2,23 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTarget : Target {
+public class PlayerTarget : MonoBehaviour {
 
-    public PlayerHUD playerHUD;
+    [HideInInspector] public Target m_target;
+    [HideInInspector] public PlayerHUD m_playerHUD;
 
     void Start() {
-        PlayerStats.playerTarget = this;
+        m_target = GetComponent<Target>();
+        m_playerHUD = GetComponent<PlayerHUD>();
+        m_target.OnDamage = OnDamage;
+        m_target.OnKill = OnKill;
+        m_target.OnHeal = OnHeal;
     }
 
-    public override void OnDamage(float damage) {
-        playerHUD.UpdateHealth();
+    public bool OnDamage(float damage) {
+        m_playerHUD.UpdateHealth();
+        return true;
     }
 
-    public override void OnKill(float damage) {
-        playerHUD.UpdateHealth();
+    public bool OnKill(float damage) {
+        m_playerHUD.UpdateHealth();
+        return true;
     }
 
-    public override void OnHeal(float heal) {
-        playerHUD.UpdateHealth();
+    public bool OnHeal(float heal) {
+        m_playerHUD.UpdateHealth();
+        return true;
     }
 }

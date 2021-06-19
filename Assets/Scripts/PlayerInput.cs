@@ -7,13 +7,13 @@ public class PlayerInput : MonoBehaviour {
     
     // hierarchy
     public Transform weapons;
-    public Transform prefab_bomb;
     public GameObject line;
-    public GameObject ammo;
+    public GameObject hud;
+    public Inventory inventory;
 
 
     // components
-    new public static Rigidbody2D rigidbody;
+    public static Rigidbody2D m_rigidbody;
 
 
     // input
@@ -28,8 +28,8 @@ public class PlayerInput : MonoBehaviour {
 
 
     // keybinds
-    public const int key_moveEast=0, key_moveNorth=1, key_moveWest=2, key_moveSouth=3, key_shoot=4, key_reload=5, key_item=6, key_interact=7, key_drop=8, key_=9, key_weapon_0=10, key_weapon_1=11, key_weapon_2=12, key_weapon_3=13, key_weapon_4=14, key_weapon_5=15;
-    public static KeyCode[] keybinds = new KeyCode[16];
+    public const int key_moveEast=0, key_moveNorth=1, key_moveWest=2, key_moveSouth=3, key_shoot=4, key_reload=5, key_item=6, key_interact=7, key_drop=8, key_inventory=9, key_i_equip=10, key_i_rotate=11;
+    public static KeyCode[] keybinds = new KeyCode[12];
     
     public static void DefaultKeybinds() {
         keybinds[key_moveEast]  = KeyCode.D;
@@ -39,15 +39,11 @@ public class PlayerInput : MonoBehaviour {
         keybinds[key_shoot]     = KeyCode.Mouse0;
         keybinds[key_reload]    = KeyCode.R;
         keybinds[key_item]      = KeyCode.Mouse1;
-        keybinds[key_interact]  = KeyCode.E;
+        keybinds[key_interact]  = KeyCode.F;
         keybinds[key_drop]      = KeyCode.P;
-        keybinds[key_]           = KeyCode.Z;
-        keybinds[key_weapon_0]  = KeyCode.Alpha1;
-        keybinds[key_weapon_1]  = KeyCode.Alpha2;
-        keybinds[key_weapon_2]  = KeyCode.Alpha3;
-        keybinds[key_weapon_3]  = KeyCode.Alpha4;
-        keybinds[key_weapon_4]  = KeyCode.Alpha5;
-        keybinds[key_weapon_5]  = KeyCode.Alpha6;
+        keybinds[key_inventory] = KeyCode.Tab;
+        keybinds[key_i_equip]   = KeyCode.E;
+        keybinds[key_i_rotate]  = KeyCode.R;
     }
 
     // public static void LoadKeybinds() {
@@ -70,13 +66,9 @@ public class PlayerInput : MonoBehaviour {
 
     void Start() {
         DefaultKeybinds();
-        rigidbody = GetComponent<Rigidbody2D>();
-    }
-
-    void RemoveCurrentItem() {
-        PlayerStats.hotbar[PlayerStats._item] = Item.NONE;
-        PlayerStats.currentItem = Item.NONE;
-        PlayerStats.playerStats.playerHUD.UpdateHotbar();
+        m_rigidbody = GetComponent<Rigidbody2D>();
+        PlayerStats.rigidbody = m_rigidbody;
+        PlayerStats.target = GetComponent<Target>();
     }
 
     void Update() {
@@ -118,65 +110,29 @@ public class PlayerInput : MonoBehaviour {
         }
 
 
-        // item switching (scroll)
-        if(Input.mouseScrollDelta.y != 0) {
-            if(Input.mouseScrollDelta.y > 0) {
-                PlayerStats._item --;
-                if(PlayerStats._item < 0) PlayerStats._item = 11;
-            } else {
-                PlayerStats._item ++;
-                if(PlayerStats._item > 11) PlayerStats._item = 0;
-            }
-            PlayerStats.currentItem = PlayerStats.hotbar[PlayerStats._item];
-            PlayerStats.playerStats.playerHUD.UpdateHotbar();
+        // inventory
+        if(Input.GetKeyDown(keybinds[key_inventory])) {
+            PauseHandler.Pause();
+            PauseHandler.Blur();
+            inventory.gameObject.SetActive(true);
+            inventory.Open();
+            // hud.SetActive(false);
+            enabled = false;
         }
-
-        // weapon switching (keybinds)
-        if(Input.GetKey(keybinds[key_weapon_0])) PlayerStats._nextGun = 0;
-        if(Input.GetKey(keybinds[key_weapon_1])) PlayerStats._nextGun = 1;
-        if(Input.GetKey(keybinds[key_weapon_2])) PlayerStats._nextGun = 2;
         
 
         // reload
         if(Input.GetKey(keybinds[key_reload])) PlayerStats.Reload();
 
         // pew pew
-        if(PlayerStats._currentGun == PlayerStats._nextGun && Input.GetKey(keybinds[key_shoot]) && PlayerStats.CanShoot()) {
-            PlayerStats.currentGun.Shoot(rigidbody.position, mouse_offset, angle, rigidbody);
-            PlayerStats.playerStats.playerHUD.UpdateAmmo();
+        if(Input.GetKey(keybinds[key_shoot]) && PlayerStats.CanShoot()) {
+            PlayerStats.currentGun.Shoot(m_rigidbody.position, mouse_offset, angle, m_rigidbody);
+            PlayerStats.hud.UpdateAmmo();
         }
 
         //items
         if(PlayerStats.state == PlayerStats.PlayerState.READY && Input.GetKeyDown(keybinds[key_item])) {
-
-            switch(PlayerStats.currentItem) {
-            case Item.BLADE:
-                PlayerStats.BeginMelee();
-                break;
-            case Item.BOMB:
-                Instantiate(prefab_bomb, rigidbody.position, Quaternion.identity);
-                RemoveCurrentItem();
-                break;
-            case Item.MEDKIT:
-                PlayerStats.playerTarget.Heal(20);
-                RemoveCurrentItem();
-                break;
-            case Item.STIMPACK:
-                PlayerStats.playerTarget.Heal(10);
-                RemoveCurrentItem();
-                break;
-            case Item.COMPASS:
-                RemoveCurrentItem();
-                break;
-            case Item.POTION:
-                RemoveCurrentItem();
-                break;
-            case Item.FISHING_ROD:
-                
-                break;
-            default:
-                break;
-            }
+            Items.items[(int)PlayerStats.currentItem].use();
         }
 
 
@@ -191,33 +147,24 @@ public class PlayerInput : MonoBehaviour {
                 // } else {
                 //     //loop through inventory
                 // }
-                for(int i=0; i < PlayerStats.hotbar.Length; i++) {
-                    if(PlayerStats.hotbar[i] == Item.NONE) {
-                        PlayerStats.hotbar[i] = PlayerStats.interactItem;
-                        PlayerStats.currentItem = PlayerStats.hotbar[i];
-                        PlayerStats.playerStats.playerHUD.UpdateHotbar();
-                        Destroy(PlayerStats.interactPickup.gameObject);
-                        PlayerStats.interactPickup = null;
-                        break;
-                    }
-                }
+                // for(int i=0; i < PlayerStats.hotbar.Length; i++) {
+                //     if(PlayerStats.hotbar[i] == Item.NONE) {
+                //         PlayerStats.hotbar[i] = PlayerStats.interactItem;
+                //         PlayerStats.currentItem = PlayerStats.hotbar[i];
+                //         PlayerStats.playerStats.playerHUD.UpdateHotbar();
+                //         Destroy(PlayerStats.interactPickup.gameObject);
+                //         PlayerStats.interactPickup = null;
+                //         break;
+                //     }
+                // }
             }
-        }
-
-        // drop
-        if(Input.GetKeyDown(keybinds[key_drop]) && PlayerStats.currentItem != Item.NONE) {
-            // Transform item = Instantiate(itemPrefabs[(int)PlayerStats.currentItem]);
-            // item.position = rigidbody.position;
-            // item.GetComponent<ItemPickup>().item = PlayerStats.currentItem;
-            // RemoveCurrentItem();
-            // item.GetComponent<Rigidbody2D>().AddForce(new Vector2((Random.value-0.5f)*100, (Random.value-0.5f)*100));
         }
     }
 
 
 
     void FixedUpdate() {
-        rigidbody.AddForce(input_move*PlayerStats.k_RUN_ACCELL);
+        m_rigidbody.AddForce(input_move*PlayerStats.k_RUN_ACCELL);
     }
 
 }

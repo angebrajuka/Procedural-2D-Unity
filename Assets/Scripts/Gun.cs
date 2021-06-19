@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum Ammo:byte {
-    BULLETS=0,
-    SHELLS=1,
-    ENERGY=2
+    BULLETS_SMALL=0,
+    BULLETS_BIG=1,
+    SHELLS=2,
+    ENERGY=3
 }
 
 public class Gun : MonoBehaviour {
@@ -48,7 +49,7 @@ public class Gun : MonoBehaviour {
     public bool Shoot(Vector3 position, Vector2 direction, float angle, Rigidbody2D rigidbody) {
         AudioManager.PlayClip(position, audio_shoot, volume_shoot, Mixer.SFX);
         if(muzzleFlashParticleSystem != null) muzzleFlashParticleSystem.Play();
-        Instantiate(muzzleFlashPrefab, transform.position, transform.rotation, transform);
+        if(muzzleFlashPrefab != null) Instantiate(muzzleFlashPrefab, transform.position, transform.rotation, transform);
 
         rigidbody.AddForce(-direction*recoil);
         
