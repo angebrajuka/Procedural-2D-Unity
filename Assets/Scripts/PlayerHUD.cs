@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerHUD : MonoBehaviour {
 
     // hierarchy
+new public Transform transform;
     public Text currentGunAmmoTxt;
     public Text currentReserveTxt;
     public Text interact;

@@ -66,7 +66,7 @@ public class AudioManager : MonoBehaviour {
         manager.mixer.SetFloat("PitchSFX", pitch);
     }
 
-    public static void PlayClip(Vector3 position, AudioClip clip, float volume, Mixer mixer, float spatialBlend=0.0f) {
+    public static GameObject PlayClip(Vector3 position, AudioClip clip, float volume, Mixer mixer, float spatialBlend=0.0f) {
         GameObject gameObject = new GameObject();
         gameObject.transform.position = position;
         AudioSource source = gameObject.AddComponent<AudioSource>();
@@ -86,5 +86,6 @@ public class AudioManager : MonoBehaviour {
         source.spatialBlend = spatialBlend;
         source.Play();
         Destroy(gameObject, clip.length+0.1f);
+        return gameObject;
     }
 }

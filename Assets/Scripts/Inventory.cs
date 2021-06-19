@@ -76,7 +76,7 @@ public class Inventory : MonoBehaviour {
             PauseHandler.UnPause();
             PauseHandler.UnBlur();
             playerInput.enabled = true;
-            // hud.SetActive(true);
+            PlayerStats.hud.transform.gameObject.SetActive(true);
             transform.gameObject.SetActive(false);
         }
     }

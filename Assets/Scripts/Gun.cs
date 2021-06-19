@@ -55,8 +55,7 @@ public class Gun : MonoBehaviour {
         
         
         ammo -= ammoPerShot;
-        PlayerStats.state = PlayerStats.PlayerState.CYCLING;
-        PlayerStats.gunTimer = secondsBetweenShots;
+        PlayerStats.gunRpmTimer = secondsBetweenShots;
 
         bool hit = false;
         for(int i=0; i<bullets; i++) {

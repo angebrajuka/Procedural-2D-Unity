@@ -26,7 +26,7 @@ public class PauseHandler : MonoBehaviour {
     }
 
     public static void Blur() {
-        focalLengthVal = 30;
+        focalLengthVal = 40;
         dofComponent.focalLength.value = 15;
     }
 

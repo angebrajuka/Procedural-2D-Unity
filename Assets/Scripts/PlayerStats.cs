@@ -33,12 +33,9 @@ new public static Rigidbody2D rigidbody;
 
 
     // weapons
-    public static float gunTimer;
-    public enum PlayerState:byte { 
-        READY, RELOADING, CYCLING, MELEE
-    };
-    public static PlayerState state;
-    private static PlayerState lastState;
+    public static float gunRpmTimer;
+    public static float gunReloadTimer;
+    public static GameObject reloadSound;
 
     public static readonly Dictionary<Ammo, int> maxAmmo = new Dictionary<Ammo, int>{
             { Ammo.BULLETS_SMALL,   60  },
@@ -56,11 +53,12 @@ new public static Rigidbody2D rigidbody;
     public static Gun currentGun;
     public static LinkedListNode<GridItem> currentGunItemNode;
     public static bool CanShoot() {
-        return state == PlayerState.READY && currentGun != null && currentGun.ammo > 0;
+        return gunRpmTimer <= 0 && currentGun != null && currentGun.ammo > 0 && gunReloadTimer <= 0;
     }
 
 
     // items
+    public static bool melee;
     public static Item currentItem = Item.NONE;
     public static LinkedListNode<GridItem> currentItemNode;
     public static Item interactItem = Item.NONE;
@@ -74,15 +72,16 @@ new public static Rigidbody2D rigidbody;
 
 
     void Start() {
+        playerStats = this;
         inventory = GetComponent<Inventory>();
         target = GetComponent<Target>();
         hud = GetComponent<PlayerHUD>();
         rigidbody = GetComponent<Rigidbody2D>();
-        playerStats = this;
         guns = h_guns;
         SwitchGun(-1);
-        gunTimer = 0;
-        state = PlayerState.CYCLING;
+        gunRpmTimer = 0;
+        gunReloadTimer = 0;
+        melee = false;
         hud.UpdateHotbar();
     }
 
@@ -93,8 +92,18 @@ new public static Rigidbody2D rigidbody;
         hud.UpdateHotbar();
     }
 
-    public static void Reload() {
-        if(currentGun.ammo == currentGun.clipSize || state != PlayerState.READY) return;
+    public static void BeginReload() {
+        if(currentGun.ammo == currentGun.clipSize|| gunReloadTimer > 0) return;
+        gunReloadTimer = currentGun.reloadTime;
+        reloadSound = AudioManager.PlayClip(target.transform.position, currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
+    }
+
+    public static void CancelReload() {
+        gunReloadTimer = 0;
+        Destroy(reloadSound);
+    }
+
+    public static void FinishReload() {
         int _ammo = ammo[currentGun.ammoType]/currentGun.ammoPerShot;
         int _clip = currentGun.ammo/currentGun.ammoPerShot;
         int _clipSize = currentGun.clipSize/currentGun.ammoPerShot;
@@ -105,20 +114,15 @@ new public static Rigidbody2D rigidbody;
             int num = _ammo*currentGun.ammoPerShot;
             currentGun.ammo += num;
             ammo[currentGun.ammoType] -= num;
-        } else {
-            state = PlayerState.READY;
-            return;
         }
 
-        state = PlayerState.RELOADING;
-        gunTimer = currentGun.reloadTime;
         hud.UpdateAmmo();
-        AudioManager.PlayClip(target.transform.position, currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
     }
 
     public static void BeginMelee() {
-        lastState = state;
-        state = PlayerState.MELEE;
+
+        CancelReload();
+        melee = true;
         playerStats.knifeRotationPoint.gameObject.SetActive(true);
         PlayerAnimator.playerAnimator.BeginMelee();
         playerStats.knifeStart.localEulerAngles = Vector3.forward*PlayerInput.angle;
@@ -127,47 +131,43 @@ new public static Rigidbody2D rigidbody;
     }
 
     public static void SwitchGun(sbyte _gun) {
+        
+        CancelReload();
+        
         if(_gun == -1) {
             currentGun = null;
             playerStats.line.SetPosition(1, Vector3.zero);
-            state = PlayerState.READY;
         } else {
             currentGun = guns[_gun];
             playerStats.line.SetPosition(1, Vector3.right*currentGun.range);
-            state = PlayerState.CYCLING;
         }
+
         hud.UpdateAmmo();
         hud.UpdateHotbar();
     }
 
     void Update() {
-        switch(state) {
-        case PlayerState.MELEE:
+        
+        if(melee) {
             playerStats.knifeRotationPoint.localEulerAngles += Vector3.back*Time.deltaTime*k_KNIFE_SPEED*knifeDirection;
             if(playerStats.knifeRotationPoint.localEulerAngles.z < 360-k_KNIFE_ARC && playerStats.knifeRotationPoint.localEulerAngles.z > k_KNIFE_ARC) {
                 // end melee
-
-                state = lastState;
                 playerStats.knifeRotationPoint.gameObject.SetActive(false);
                 PlayerAnimator.playerAnimator.EndMelee();
             }
-            break;
-        case PlayerState.READY:
-            if(currentGun != null && currentGun.ammo == 0) Reload();
-            break;
-        default:
-            gunTimer -= Time.deltaTime;
-            if(gunTimer <= 0) {
-                switch(state) {
-                case PlayerState.RELOADING:
-                    state = PlayerState.READY;
-                    break;
-                case PlayerState.CYCLING:
-                    state = PlayerState.READY;
-                    break;
-                }
+        }
+
+        if(currentGun != null && currentGun.ammo == 0) BeginReload();
+
+        if(gunReloadTimer > 0) {
+            gunReloadTimer -= Time.deltaTime;
+            if(gunReloadTimer <= 0) {
+                FinishReload();
             }
-            break;
+        }
+
+        if(gunRpmTimer > 0) {
+            gunRpmTimer -= Time.deltaTime;
         }
     }
 }

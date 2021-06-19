@@ -8,7 +8,6 @@ public class PlayerInput : MonoBehaviour {
     // hierarchy
     public Transform weapons;
     public GameObject line;
-    public GameObject hud;
     public Inventory inventory;
 
 
@@ -116,13 +115,14 @@ public class PlayerInput : MonoBehaviour {
             PauseHandler.Blur();
             inventory.gameObject.SetActive(true);
             inventory.Open();
-            // hud.SetActive(false);
+            if(PlayerStats.gunReloadTimer > 0) PlayerStats.CancelReload();
+            PlayerStats.hud.transform.gameObject.SetActive(false);
             enabled = false;
         }
         
 
         // reload
-        if(Input.GetKey(keybinds[key_reload])) PlayerStats.Reload();
+        if(Input.GetKey(keybinds[key_reload])) PlayerStats.BeginReload();
 
         // pew pew
         if(Input.GetKey(keybinds[key_shoot]) && PlayerStats.CanShoot()) {
@@ -131,7 +131,7 @@ public class PlayerInput : MonoBehaviour {
         }
 
         //items
-        if(PlayerStats.state == PlayerStats.PlayerState.READY && Input.GetKeyDown(keybinds[key_item])) {
+        if(Input.GetKeyDown(keybinds[key_item])) {
             Items.items[(int)PlayerStats.currentItem].use();
         }
 
