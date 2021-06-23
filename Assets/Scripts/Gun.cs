@@ -47,7 +47,7 @@ public class Gun : MonoBehaviour {
     }
 
     public bool Shoot(Vector3 position, Vector2 direction, float angle, Rigidbody2D rigidbody) {
-        AudioManager.PlayClip(position, audio_shoot, volume_shoot, Mixer.SFX);
+        AudioManager.PlayClip(audio_shoot, volume_shoot, Mixer.SFX, 0.5f, position);
         if(muzzleFlashParticleSystem != null) muzzleFlashParticleSystem.Play();
         if(muzzleFlashPrefab != null) Instantiate(muzzleFlashPrefab, transform.position, transform.rotation, transform);
 

@@ -10,29 +10,52 @@ public class Inventory : MonoBehaviour {
     public Transform grid;
     public PlayerInput playerInput;
     public Rigidbody2D player_rb;
+    public PlayerAnimator playerAnimator;
+
+    public static bool isOpen=false;
 
     public static LinkedList<GridItem> items = new LinkedList<GridItem>();
     public static readonly Vector2Int gridSize = new Vector2Int(9, 12);
     public const float cellSize = 384f/9f;
 
     void Add(Item item, int x, int y) {
-        GameObject gameObject = Instantiate(gridItemPrefab, grid);
+        GameObject gameObject = Instantiate(gridItemPrefab, Vector3.zero, Quaternion.identity, grid);
         GridItem gridItem = gameObject.GetComponent<GridItem>();
         gridItem.item = item;
         items.AddLast(gridItem);
         gridItem.node = items.Last;
+        gridItem.Start();
         gridItem.SetPos(x, y);
     }
 
-    void Start() {
-        Add(Item.FLASHLIGHT, 0, 0);
-        Add(Item.BOMB, 0, 1);
-        Add(Item.FISHING_ROD, 0, 3);
-        Add(Item.ENERGY_RIFLE, 3, 0);
+    public bool AutoAdd(Item item) {
+        
+        Add(item, 0, 0);
+        
+        for(int y=gridSize.y-1; y>=0; y--) {
+            for(int x=0; x<gridSize.x; x++) {
+                items.Last.Value.SetPos(x, y);
+                for(int i=0; i<2; i++) {
+                    if(!items.Last.Value.Collides() && items.Last.Value.WithinGrid()) {
+                        return true;
+                    }
+                    items.Last.Value.Rotate();
+                    items.Last.Value.SetPos(x, y);
+                }
+            }
+        }
+
+        Destroy(items.Last.Value.gameObject);
+        items.RemoveLast();
+
+        return false;
     }
 
     public void Open() {
-        
+        isOpen = true;
+        foreach(GridItem item in items) {
+            item.highlighted = false;
+        }
     }
 
     public void Close() {
@@ -66,18 +89,10 @@ public class Inventory : MonoBehaviour {
             }
             node = next;
         }
+
+        playerAnimator.UpdateGunImage();
+        isOpen = false;
     }
 
-    void Update() {    
-        // highlight.localPosition = Vector3.down*(PlayerStats._nextGun-1)*120+Vector3.left*160;
-
-        if(Input.GetKeyDown(PlayerInput.keybinds[PlayerInput.key_inventory])) {
-            Close();
-            PauseHandler.UnPause();
-            PauseHandler.UnBlur();
-            playerInput.enabled = true;
-            PlayerStats.hud.transform.gameObject.SetActive(true);
-            transform.gameObject.SetActive(false);
-        }
-    }
+    
 }

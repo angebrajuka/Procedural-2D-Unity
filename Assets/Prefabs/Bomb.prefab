@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6900202385868859474}
   - component: {fileID: 5760646732258281297}
   - component: {fileID: 4919964523419979720}
+  - component: {fileID: 8191570646610961821}
   m_Layer: 0
   m_Name: smoke
   m_TagString: Untagged
@@ -115,8 +116,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.4
-      minScalar: 0.2
+      scalar: 1
+      minScalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -168,8 +169,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 10
-      minScalar: 4
+      scalar: 3
+      minScalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3935,7 +3936,7 @@ ParticleSystem:
         m_RotationOrder: 4
     maxLights: 20
   TrailModule:
-    enabled: 1
+    enabled: 0
     mode: 0
     ratio: 1
     lifetime:
@@ -4768,7 +4769,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4812,6 +4813,18 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &8191570646610961821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333272474295703569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b5fa5609d767e4a934f3a9b1d6b86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2117585080163154564
 GameObject:
   m_ObjectHideFlags: 0
@@ -5055,6 +5068,7 @@ GameObject:
   - component: {fileID: 1276231812034109073}
   - component: {fileID: 4724047787007866432}
   - component: {fileID: 3455046668263879383}
+  - component: {fileID: 154404475395810041}
   m_Layer: 0
   m_Name: fragmentations
   m_TagString: Untagged
@@ -5276,8 +5290,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 70
-      minScalar: 50
+      scalar: 200
+      minScalar: 130
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -6083,7 +6097,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 6
+        scalar: 9
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -9856,6 +9870,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &154404475395810041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3754293384532799145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b5fa5609d767e4a934f3a9b1d6b86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8789696332807356408
 GameObject:
   m_ObjectHideFlags: 0
@@ -9867,6 +9893,7 @@ GameObject:
   - component: {fileID: 3305960580864678026}
   - component: {fileID: 5479607504352897400}
   - component: {fileID: 1246417655243818667}
+  - component: {fileID: 8063770226114462571}
   m_Layer: 0
   m_Name: fire
   m_TagString: Untagged
@@ -10077,8 +10104,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 0.9864793, b: 0, a: 0.8666667}
-      maxColor: {r: 1, g: 0.45385426, b: 0, a: 0.87058824}
+      minColor: {r: 1, g: 0.8503309, b: 0, a: 0.8666667}
+      maxColor: {r: 1, g: 0.3796172, b: 0, a: 0.87058824}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -12426,9 +12453,9 @@ ParticleSystem:
         m_RotationOrder: 4
     magnitude:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 3
-      minScalar: 1
+      minMaxState: 3
+      scalar: 18
+      minScalar: 8
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -14623,8 +14650,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14668,3 +14695,15 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &8063770226114462571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8789696332807356408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b5fa5609d767e4a934f3a9b1d6b86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

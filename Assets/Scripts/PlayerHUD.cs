@@ -13,17 +13,18 @@ new public Transform transform;
     public Text textCoins;
     public Image ammoImage;
     public Image currentItem;
-    public RectTransform itemHighlight;
     public RectTransform ammoTxt;
     public Sprite[] ammoImages;
-    // public Text bulletsTxt, shellsTxt, energyTxt;
+    public Text smallBulletsTxt, bigBulletsTxt, shellsTxt, energyTxt;
     public Slider bar_health;
+    public Image bar_health_fillRect;
 
     // components
     Target m_target;
 
     void Start() {
         m_target = GetComponent<Target>();
+        bar_health_fillRect = bar_health.fillRect.GetComponent<Image>();
         UpdateAmmo();
         UpdateHealth();
     }
@@ -40,9 +41,10 @@ new public Transform transform;
     }
 
     public void UpdateAmmo() {
-        // bulletsTxt.text = PlayerStats.ammo[Ammo.BULLETS]+"";
-        // shellsTxt.text = PlayerStats.ammo[Ammo.SHELLS]+"";
-        // energyTxt.text = PlayerStats.ammo[Ammo.ENERGY]+"";
+        smallBulletsTxt.text = PlayerStats.ammo[Ammo.BULLETS_SMALL]+"";
+        bigBulletsTxt.text = PlayerStats.ammo[Ammo.BULLETS_BIG]+"";
+        shellsTxt.text = PlayerStats.ammo[Ammo.SHELLS]+"";
+        energyTxt.text = PlayerStats.ammo[Ammo.ENERGY]+"";
         if(PlayerStats.currentGun == null) {
 
         } else {
@@ -54,6 +56,7 @@ new public Transform transform;
 
     public void UpdateHealth() {
         bar_health.value = m_target.health / m_target.maxHealth;
+        // bar_health_fillRect.color = new Color32((byte)(bar_health.value > 0.5f ? (1-bar_health.value)*510 : 255), (byte)(bar_health.value < 0.5f ? (bar_health.value)*510 : 255), 0, 100);
     }
 
     public void UpdateCoins() {

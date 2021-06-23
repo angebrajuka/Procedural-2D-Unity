@@ -5,17 +5,19 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour {
 
     // hierarchy
-    public Gun[] h_guns;
     public Transform prefab_bomb;
     public Transform knifeRotationPoint;
     public Transform knifeStart;
     public LineRenderer line;
+    public Transform weapons;
 
     // components
     public static Target target;
     public static PlayerHUD hud;
     public static Inventory inventory;
 new public static Rigidbody2D rigidbody;
+    public static PlayerAnimator playerAnimator;
+    public static PlayerInput playerInput;
     
 
     // constant
@@ -49,7 +51,7 @@ new public static Rigidbody2D rigidbody;
             { Ammo.SHELLS,          8   }, 
             { Ammo.ENERGY,          60  }
         };
-    public static Gun[] guns;
+    public static Gun[] guns = new Gun[9];
     public static Gun currentGun;
     public static LinkedListNode<GridItem> currentGunItemNode;
     public static bool CanShoot() {
@@ -77,7 +79,36 @@ new public static Rigidbody2D rigidbody;
         target = GetComponent<Target>();
         hud = GetComponent<PlayerHUD>();
         rigidbody = GetComponent<Rigidbody2D>();
-        guns = h_guns;
+        playerAnimator = GetComponent<PlayerAnimator>();
+        playerInput = GetComponent<PlayerInput>();
+
+        for(int i=0; i<guns.Length; i++) {
+            guns[i] = weapons.GetChild(i).GetComponent<Gun>();
+        }
+
+        // inventory.AutoAdd(Item.PISTOL);
+        // inventory.AutoAdd(Item.SMG);
+        // inventory.AutoAdd(Item.ASSAULT_RIFLE);
+        // inventory.AutoAdd(Item.DMR);
+        // inventory.AutoAdd(Item.SHOTGUN_PUMP);
+        // inventory.AutoAdd(Item.SHOTGUN_DOUBLE);
+        // inventory.AutoAdd(Item.SHOTGUN_AUTO);
+        // inventory.AutoAdd(Item.FLASHLIGHT);
+        // inventory.AutoAdd(Item.ENERGY_RAILGUN);
+        inventory.AutoAdd(Item.BOMB);
+        inventory.AutoAdd(Item.BOMB);
+        inventory.AutoAdd(Item.BOMB);
+        inventory.AutoAdd(Item.BOMB);
+        inventory.AutoAdd(Item.BOMB);
+        inventory.AutoAdd(Item.BOMB);
+        inventory.AutoAdd(Item.BOMB);
+        inventory.AutoAdd(Item.BOMB);
+        inventory.AutoAdd(Item.BOMB);
+        inventory.AutoAdd(Item.BOMB);
+        inventory.AutoAdd(Item.BOMB);
+        inventory.AutoAdd(Item.BOMB);
+        inventory.AutoAdd(Item.BOMB);
+
         SwitchGun(-1);
         gunRpmTimer = 0;
         gunReloadTimer = 0;
@@ -93,9 +124,9 @@ new public static Rigidbody2D rigidbody;
     }
 
     public static void BeginReload() {
-        if(currentGun.ammo == currentGun.clipSize|| gunReloadTimer > 0) return;
+        if(Inventory.isOpen || currentGun == null || currentGun.ammo == currentGun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || ammo[currentGun.ammoType] == 0) return;
         gunReloadTimer = currentGun.reloadTime;
-        reloadSound = AudioManager.PlayClip(target.transform.position, currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
+        reloadSound = AudioManager.PlayClip(currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
     }
 
     public static void CancelReload() {
@@ -141,6 +172,8 @@ new public static Rigidbody2D rigidbody;
             currentGun = guns[_gun];
             playerStats.line.SetPosition(1, Vector3.right*currentGun.range);
         }
+
+        playerAnimator.UpdateGunImage();
 
         hud.UpdateAmmo();
         hud.UpdateHotbar();

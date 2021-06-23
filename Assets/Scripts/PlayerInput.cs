@@ -3,12 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum Keybind:byte {
+    moveEast,
+    moveNorth,
+    moveWest,
+    moveSouth,
+    shoot,
+    reload,
+    item,
+    interact,
+    inventory,
+    i_equip,
+    i_rotate
+}
+
 public class PlayerInput : MonoBehaviour {
     
     // hierarchy
     public Transform weapons;
     public GameObject line;
-    public Inventory inventory;
+    public InventoryControls inventory;
 
 
     // components
@@ -27,50 +41,87 @@ public class PlayerInput : MonoBehaviour {
 
 
     // keybinds
-    public const int key_moveEast=0, key_moveNorth=1, key_moveWest=2, key_moveSouth=3, key_shoot=4, key_reload=5, key_item=6, key_interact=7, key_drop=8, key_inventory=9, key_i_equip=10, key_i_rotate=11;
-    public static KeyCode[] keybinds = new KeyCode[12];
+    public static Dictionary<Keybind, KeyCode>  keybinds = new Dictionary<Keybind, KeyCode>() {
+        {Keybind.moveEast,      KeyCode.D       },
+        {Keybind.moveNorth,     KeyCode.W       },
+        {Keybind.moveWest,      KeyCode.A       },
+        {Keybind.moveSouth,     KeyCode.S       },
+        {Keybind.shoot,         KeyCode.Mouse0  },
+        {Keybind.reload,        KeyCode.R       },
+        {Keybind.item,          KeyCode.Mouse1  },
+        {Keybind.interact,      KeyCode.F       },
+        {Keybind.inventory,     KeyCode.Tab     },
+        {Keybind.i_equip,       KeyCode.E       },
+        {Keybind.i_rotate,      KeyCode.R       },
+    };
+
+    public static Dictionary<Keybind, string>   keybindStrings = new Dictionary<Keybind, string>() {
+        {Keybind.moveEast,      "moveEast"  },
+        {Keybind.moveNorth,     "moveNorth" },
+        {Keybind.moveWest,      "moveWest"  },
+        {Keybind.moveSouth,     "moveSouth" },
+        {Keybind.shoot,         "shoot"     },
+        {Keybind.reload,        "reload"    },
+        {Keybind.item,          "item"      },
+        {Keybind.interact,      "interact"  },
+        {Keybind.inventory,     "inventory" },
+        {Keybind.i_equip,       "i_equip"   },
+        {Keybind.i_rotate,      "i_rotate"  },
+    };
     
     public static void DefaultKeybinds() {
-        keybinds[key_moveEast]  = KeyCode.D;
-        keybinds[key_moveNorth] = KeyCode.W;
-        keybinds[key_moveWest]  = KeyCode.A;
-        keybinds[key_moveSouth] = KeyCode.S;
-        keybinds[key_shoot]     = KeyCode.Mouse0;
-        keybinds[key_reload]    = KeyCode.R;
-        keybinds[key_item]      = KeyCode.Mouse1;
-        keybinds[key_interact]  = KeyCode.F;
-        keybinds[key_drop]      = KeyCode.P;
-        keybinds[key_inventory] = KeyCode.Tab;
-        keybinds[key_i_equip]   = KeyCode.E;
-        keybinds[key_i_rotate]  = KeyCode.R;
+        keybinds[Keybind.moveEast]  = KeyCode.D;
+        keybinds[Keybind.moveNorth] = KeyCode.W;
+        keybinds[Keybind.moveWest]  = KeyCode.A;
+        keybinds[Keybind.moveSouth] = KeyCode.S;
+        keybinds[Keybind.shoot]     = KeyCode.Mouse0;
+        keybinds[Keybind.reload]    = KeyCode.R;
+        keybinds[Keybind.item]      = KeyCode.Mouse1;
+        keybinds[Keybind.interact]  = KeyCode.F;
+        keybinds[Keybind.inventory] = KeyCode.Tab;
+        keybinds[Keybind.i_equip]   = KeyCode.E;
+        keybinds[Keybind.i_rotate]  = KeyCode.R;
     }
 
-    // public static void LoadKeybinds() {
-    //     keybinds[key_moveEast]  = (KeyCode)PlayerPrefs.GetInt("key_moveEast");
-    //     keybinds[key_moveNorth] = (KeyCode)PlayerPrefs.GetInt("key_moveNorth");
-    //     keybinds[key_moveWest]  = (KeyCode)PlayerPrefs.GetInt("key_moveWest");
-    //     keybinds[key_moveSouth] = (KeyCode)PlayerPrefs.GetInt("key_moveSouth");
-    //     keybinds[key_shoot]     = (KeyCode)PlayerPrefs.GetInt("key_shoot");
-    // }
+    public static void LoadKeybinds() {
+        
+        foreach(KeyValuePair<Keybind, string> pair in keybindStrings) {
+            if(!PlayerPrefs.HasKey(keybindStrings[pair.Key])) {
+                SaveKeybinds();
+            }
+            keybinds[pair.Key] = (KeyCode)PlayerPrefs.GetInt(keybindStrings[pair.Key]);
+        }
+    }
 
-    // public static void SaveKeybinds() {
-    //     PlayerPrefs.SetInt("key_moveEast",  (int)keybinds[key_moveEast]);
-    //     PlayerPrefs.SetInt("key_moveNorth", (int)keybinds[key_moveNorth]);
-    //     PlayerPrefs.SetInt("key_moveWest",  (int)keybinds[key_moveWest]);
-    //     PlayerPrefs.SetInt("key_moveSouth", (int)keybinds[key_moveSouth]);
-    //     PlayerPrefs.SetInt("key_shoot",     (int)keybinds[key_shoot]);
-    // }
+    public static void SaveKeybinds(bool one=false, Keybind bind=Keybind.moveEast) {
+        if(one) {
+            PlayerPrefs.SetInt(keybindStrings[bind], (int)keybinds[bind]);
+        } else {
+            foreach(KeyValuePair<Keybind, string> pair in keybindStrings) {
+                PlayerPrefs.SetInt(keybindStrings[pair.Key], (int)keybinds[pair.Key]);
+            }
+        }
+    }
 
 
 
     void Start() {
-        DefaultKeybinds();
         m_rigidbody = GetComponent<Rigidbody2D>();
         PlayerStats.rigidbody = m_rigidbody;
         PlayerStats.target = GetComponent<Target>();
     }
 
     void Update() {
+        
+        // pause
+        if(Input.GetKeyDown(KeyCode.Escape)) {
+            PauseHandler.Pause();
+            PauseHandler.Blur();
+            enabled = false;
+            MenuHandler.SetMenu(MenuHandler.menuMain);
+        }
+
+
         
         // mouse look
         {
@@ -91,10 +142,10 @@ public class PlayerInput : MonoBehaviour {
             input_move.x = 0;
             input_move.y = 0;
 
-            if(Input.GetKey(keybinds[key_moveEast]))  input_move.x ++;
-            if(Input.GetKey(keybinds[key_moveNorth])) input_move.y ++;
-            if(Input.GetKey(keybinds[key_moveWest]))  input_move.x --;
-            if(Input.GetKey(keybinds[key_moveSouth])) input_move.y --;
+            if(Input.GetKey(keybinds[Keybind.moveEast]))  input_move.x ++;
+            if(Input.GetKey(keybinds[Keybind.moveNorth])) input_move.y ++;
+            if(Input.GetKey(keybinds[Keybind.moveWest]))  input_move.x --;
+            if(Input.GetKey(keybinds[Keybind.moveSouth])) input_move.y --;
             
                 // rotate
                 if(input_move.x != 0 || input_move.y != 0)
@@ -110,11 +161,11 @@ public class PlayerInput : MonoBehaviour {
 
 
         // inventory
-        if(Input.GetKeyDown(keybinds[key_inventory])) {
+        if(Input.GetKeyDown(keybinds[Keybind.inventory])) {
             PauseHandler.Pause();
             PauseHandler.Blur();
             inventory.gameObject.SetActive(true);
-            inventory.Open();
+            PlayerStats.inventory.Open();
             if(PlayerStats.gunReloadTimer > 0) PlayerStats.CancelReload();
             PlayerStats.hud.transform.gameObject.SetActive(false);
             enabled = false;
@@ -122,23 +173,31 @@ public class PlayerInput : MonoBehaviour {
         
 
         // reload
-        if(Input.GetKey(keybinds[key_reload])) PlayerStats.BeginReload();
+        if(Input.GetKey(keybinds[Keybind.reload])) PlayerStats.BeginReload();
 
         // pew pew
-        if(Input.GetKey(keybinds[key_shoot]) && PlayerStats.CanShoot()) {
+        if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerStats.CanShoot()) {
             PlayerStats.currentGun.Shoot(m_rigidbody.position, mouse_offset, angle, m_rigidbody);
             PlayerStats.hud.UpdateAmmo();
         }
 
         //items
-        if(Input.GetKeyDown(keybinds[key_item])) {
+        if(Input.GetKeyDown(keybinds[Keybind.item])) {
             Items.items[(int)PlayerStats.currentItem].use();
         }
 
 
         // interact
-        if(Input.GetKeyDown(keybinds[key_interact])) {
+        if(Input.GetKeyDown(keybinds[Keybind.interact])) {
             if(PlayerStats.interactItem != Item.NONE) {
+                
+                if(PlayerStats.inventory.AutoAdd(PlayerStats.interactItem)) {
+                    Destroy(PlayerStats.interactPickup.gameObject);
+                    PlayerStats.interactPickup = null;
+                } else {
+                    // message or open inventory?
+                }
+
                 // if(PlayerStats.currentItem == Item.NONE) {
                 //     PlayerStats.currentItem = PlayerStats.interactItem;
                 //     PlayerStats.playerStats.playerHUD.UpdateHotbar();

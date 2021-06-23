@@ -31,13 +31,16 @@ public class PlayerAnimator : MonoBehaviour {
         playerAnimator = this;
     }
 
+    public void UpdateGunImage() {
+        m_renderer_gun.sprite = PlayerStats.currentGun == null ? null : PlayerStats.currentGun.sprite;
+    }
+
     void Update() {
         // m_renderer_body.sprite = body[PlayerInput.direction8index];
         // m_renderer_face.sprite = faces[(byte)mood][PlayerInput.direction8index];
         m_animator_body.direction = PlayerInput.direction8index;
         m_animator_face.direction = PlayerInput.direction8index;
         m_animator_face.state = (int)mood;
-        m_renderer_gun.sprite = PlayerStats.currentGun == null ? null : PlayerStats.currentGun.sprite;
         m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
         m_renderer_gun.sortingOrder = (PlayerInput.angle < 180 ? 3 : 6);
     }

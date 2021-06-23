@@ -15,6 +15,29 @@ public class DynamicLoading : MonoBehaviour {
     void Start() {
         player_rb = GetComponent<Rigidbody2D>();
         
+        LoadAll();
+    }
+
+    void Load(int x, int y) {
+        try {
+            SceneManager.LoadSceneAsync(x+","+y, LoadSceneMode.Additive);
+        } catch {}
+    }
+
+    void Unload(int x, int y) {
+        try {
+            SceneManager.UnloadSceneAsync(x+","+y);
+        } catch {}
+    }
+
+    void UnloadAll() {
+        Unload(bl.x, bl.y);
+        Unload(bl.x+1, bl.y);
+        Unload(bl.x, bl.y+1);
+        Unload(bl.x+1, bl.y+1);
+    }
+
+    void LoadAll() {
         int posX = (int)(player_rb.position.x/100);
         int posY = (int)(player_rb.position.y/100);
 
@@ -43,18 +66,6 @@ public class DynamicLoading : MonoBehaviour {
         for(int x=bl.x; x<=tr.x; x++)
             for(int y=bl.y; y<=tr.y; y++)
                 Load(x, y);
-    }
-
-    void Load(int x, int y) {
-        try {
-            SceneManager.LoadSceneAsync(x+","+y, LoadSceneMode.Additive);
-        } catch {}
-    }
-
-    void Unload(int x, int y) {
-        try {
-            SceneManager.UnloadSceneAsync(x+","+y);
-        } catch {}
     }
 
     void Update() {

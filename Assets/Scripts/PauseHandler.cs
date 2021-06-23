@@ -16,9 +16,10 @@ public class PauseHandler : MonoBehaviour {
     }
 
     public static void Pause() {
+        if(Time.timeScale == 0) return;
+        
         prevTimeScale = Time.timeScale;
         Time.timeScale = 0;
-        
     }
 
     public static void UnPause() {

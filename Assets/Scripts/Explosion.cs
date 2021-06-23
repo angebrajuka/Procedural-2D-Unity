@@ -8,10 +8,11 @@ public class Explosion : MonoBehaviour {
     private CircleCollider2D trigger;
     public UnityEngine.Experimental.Rendering.Universal.Light2D m_light;
 
-    void Start() {
+    void OnEnable() {
         trigger = GetComponent<CircleCollider2D>();
         Destroy(gameObject, 0.3f);
         Destroy(m_light.gameObject, 0.05f);
+        transform.DetachChildren();
     }
 
     void OnTriggerStay2D(Collider2D collider) {
@@ -27,10 +28,6 @@ public class Explosion : MonoBehaviour {
                 rb.AddForce(vec*200);
             }
         }
-    }
-
-    void OnEnable() {
-        Destroy(gameObject, 10);
     }
 
     void FixedUpdate() {

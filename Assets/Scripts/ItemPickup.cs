@@ -16,7 +16,7 @@ public class ItemPickup : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D other) {
         if(other.gameObject.layer == 8) {
-            PlayerStats.hud.interact.text = "press   <E>   to   loot";// + Items.names[(int)item];
+            PlayerStats.hud.interact.text = "press   <F>   to   loot";// + Items.names[(int)item];
             PlayerStats.interactItem = item;
             PlayerStats.interactPickup = this;
         }
