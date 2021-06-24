@@ -3,12 +3,13 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - AspectRatio
     - AudioSettings
+    - ButtonCancel
     - ButtonChangeMenu
-    - ButtonConfirmQuit
     - ButtonKeybind
     - ButtonLoad
+    - ButtonMenu
     - ButtonNewGame
-    - ButtonSave
+    - ButtonQuit
     - ButtonSounds
     - Coin
     - Coin_Explosion
@@ -30,7 +31,6 @@ ScriptsOnlyBuild:
     - Item_Bomb
     - Knife
     - Menu
-    - MenuConfirm
     - MuzzleFlash
     - PauseHandler
     - PlayerAnimator
@@ -556,8 +556,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11752}
     - Class: 114
-      Script: {instanceID: 11814}
-    - Class: 114
       Script: {instanceID: 11976}
     - Class: 114
       Script: {instanceID: 12018}
@@ -582,29 +580,29 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13412}
     - Class: 114
-      Script: {instanceID: 13444}
+      Script: {instanceID: 13456}
     - Class: 114
-      Script: {instanceID: 13458}
+      Script: {instanceID: 13538}
     - Class: 114
-      Script: {instanceID: 13540}
+      Script: {instanceID: 13680}
     - Class: 114
-      Script: {instanceID: 13682}
+      Script: {instanceID: 13948}
     - Class: 114
-      Script: {instanceID: 13950}
+      Script: {instanceID: 14084}
     - Class: 114
-      Script: {instanceID: 14086}
+      Script: {instanceID: 14446}
     - Class: 114
-      Script: {instanceID: 14448}
+      Script: {instanceID: 14532}
     - Class: 114
-      Script: {instanceID: 14534}
+      Script: {instanceID: 14556}
     - Class: 114
-      Script: {instanceID: 14558}
+      Script: {instanceID: 14710}
     - Class: 114
-      Script: {instanceID: 14712}
+      Script: {instanceID: 14754}
     - Class: 114
-      Script: {instanceID: 14756}
+      Script: {instanceID: 14766}
     - Class: 114
-      Script: {instanceID: 14768}
+      Script: {instanceID: 14780}
     - Class: 114
       Script: {instanceID: 15166}
     - Class: 114
@@ -614,29 +612,31 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 15580}
     - Class: 114
-      Script: {instanceID: 15826}
+      Script: {instanceID: 15698}
     - Class: 114
-      Script: {instanceID: 15878}
+      Script: {instanceID: 15828}
     - Class: 114
-      Script: {instanceID: 16040}
+      Script: {instanceID: 15880}
     - Class: 114
-      Script: {instanceID: 16074}
+      Script: {instanceID: 16042}
     - Class: 114
-      Script: {instanceID: 16134}
+      Script: {instanceID: 16076}
     - Class: 114
-      Script: {instanceID: 16138}
+      Script: {instanceID: 16136}
     - Class: 114
-      Script: {instanceID: 16182}
+      Script: {instanceID: 16140}
     - Class: 114
-      Script: {instanceID: 16210}
+      Script: {instanceID: 16184}
     - Class: 114
-      Script: {instanceID: 16222}
+      Script: {instanceID: 16212}
     - Class: 114
-      Script: {instanceID: 16272}
+      Script: {instanceID: 16224}
     - Class: 114
-      Script: {instanceID: 16352}
+      Script: {instanceID: 16274}
     - Class: 114
-      Script: {instanceID: 16358}
+      Script: {instanceID: 16354}
+    - Class: 114
+      Script: {instanceID: 16360}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -733,19 +733,19 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13426}
     - Class: 114
-      Script: {instanceID: 13788}
+      Script: {instanceID: 13786}
     - Class: 114
-      Script: {instanceID: 13810}
+      Script: {instanceID: 13808}
     - Class: 114
-      Script: {instanceID: 13874}
+      Script: {instanceID: 13872}
     - Class: 114
-      Script: {instanceID: 14016}
+      Script: {instanceID: 14014}
     - Class: 114
-      Script: {instanceID: 14232}
+      Script: {instanceID: 14230}
     - Class: 114
-      Script: {instanceID: 14470}
+      Script: {instanceID: 14468}
     - Class: 114
-      Script: {instanceID: 14584}
+      Script: {instanceID: 14582}
     - Class: 114
       Script: {instanceID: 14938}
     - Class: 114
@@ -761,17 +761,17 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 15694}
     - Class: 114
-      Script: {instanceID: 15742}
+      Script: {instanceID: 15744}
     - Class: 114
-      Script: {instanceID: 15758}
+      Script: {instanceID: 15760}
     - Class: 114
-      Script: {instanceID: 15916}
+      Script: {instanceID: 15918}
     - Class: 114
-      Script: {instanceID: 16032}
+      Script: {instanceID: 16034}
     - Class: 114
-      Script: {instanceID: 16182}
+      Script: {instanceID: 16184}
     - Class: 114
-      Script: {instanceID: 16272}
+      Script: {instanceID: 16274}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -1258,7 +1258,7 @@ ScriptsOnlyBuild:
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: ButtonConfirmQuit
+    className: ButtonQuit
   - hash:
       serializedVersion: 2
       Hash: b408ba03bcad62d28138866e7433e3e1
@@ -1301,12 +1301,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: DestroyParticleSystem
-  - hash:
-      serializedVersion: 2
-      Hash: 7ae17153a0e5e8fbe27baaf68d27b6ea
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: MenuConfirm
   - hash:
       serializedVersion: 2
       Hash: 51b05e403ce1da1805851f42af02f4bb
@@ -1549,6 +1543,12 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerButton
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ButtonMenu
+  - hash:
+      serializedVersion: 2
       Hash: bd6ef05d66b03d8ec02070599e13afac
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1651,7 +1651,7 @@ ScriptsOnlyBuild:
     className: InventoryControls
   - hash:
       serializedVersion: 2
-      Hash: 6cff2665253bd245610e0756d0e167b0
+      Hash: 61d969818fd34a4af356cb4e9533944b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Init
@@ -1697,6 +1697,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Gun
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ButtonCancel
   - hash:
       serializedVersion: 2
       Hash: c5bfd0f6f4664318b8b9f50d88408421
@@ -1849,7 +1855,7 @@ ScriptsOnlyBuild:
     className: SignalEmitter
   - hash:
       serializedVersion: 2
-      Hash: 7ae17153a0e5e8fbe27baaf68d27b6ea
+      Hash: 0f914236017ff3f5ec5a2cdc4d962845
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Menu

@@ -11,6 +11,7 @@ public class ButtonNewGame : MonoBehaviour {
         PauseHandler.UnBlur();
         PauseHandler.UnPause();
         Inventory.items.Clear();
+        MenuHandler.currentMenuPrefab = null;
         SceneManager.LoadScene("Player", LoadSceneMode.Single);
     }
 }

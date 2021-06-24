@@ -1,100 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &821865560036139231
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1623492214728485672}
-  - component: {fileID: 7422061952301690914}
-  - component: {fileID: 4585170240742996349}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1623492214728485672
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821865560036139231}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4644366840894728112}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000030517578, y: 50}
-  m_SizeDelta: {x: 1000, y: 110}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &7422061952301690914
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821865560036139231}
-  m_CullTransparentMesh: 0
---- !u!114 &4585170240742996349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821865560036139231}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: f9066cb62e8233a4d9dd6ae2f4074972, type: 3}
-    m_FontSize: 40
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 40
-    m_Alignment: 1
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1.5
-  m_Text: 'Are You Sure?
-
-    Any unsaved progress will be lost'
---- !u!114 &3572560379973072174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 891854217151229734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f672376d7eca1e45a446056a6b1886d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prevMenu: {fileID: 0}
-  canUseEsc: 1
---- !u!114 &7457238667021819498
+--- !u!114 &1200710692501073127
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2521991018012811099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c214d05804e0f5d4ba55a605bd7e24ad, type: 3}
+  m_Script: {fileID: 11500000, guid: b483f9dd2b5e42842bf6a32b4deefc61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menu: {fileID: 0}
 --- !u!1001 &4344640334819443018
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -122,7 +27,7 @@ PrefabInstance:
     - target: {fileID: 891517369409612745, guid: 92751e19e2517164d984a845fe67bcd3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3471083386079342188, guid: 92751e19e2517164d984a845fe67bcd3,
         type: 3}
@@ -137,12 +42,19 @@ PrefabInstance:
     - target: {fileID: 7433675097898214263, guid: 92751e19e2517164d984a845fe67bcd3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8331057264361955630, guid: 92751e19e2517164d984a845fe67bcd3,
         type: 3}
       propertyPath: m_Text
-      value: 
+      value: 'Are You Sure?
+
+        Any unsaved progress will be lost'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8331057264361955630, guid: 92751e19e2517164d984a845fe67bcd3,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8952971708338104058, guid: 92751e19e2517164d984a845fe67bcd3,
         type: 3}
@@ -249,21 +161,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8491452267277696105, guid: 92751e19e2517164d984a845fe67bcd3, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92751e19e2517164d984a845fe67bcd3, type: 3}
---- !u!1 &891854217151229734 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3471083386079342188, guid: 92751e19e2517164d984a845fe67bcd3,
-    type: 3}
-  m_PrefabInstance: {fileID: 4344640334819443018}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &4644366840894728112 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8952971708338104058, guid: 92751e19e2517164d984a845fe67bcd3,
-    type: 3}
-  m_PrefabInstance: {fileID: 4344640334819443018}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3464408373233937027 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 891517369409612745, guid: 92751e19e2517164d984a845fe67bcd3,
@@ -375,7 +274,7 @@ PrefabInstance:
     - target: {fileID: 9040080000987120958, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9040080000987120958, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
@@ -415,11 +314,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 7457238667021819498}
+      objectReference: {fileID: 1200710692501073127}
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnButtonPress
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9040080000987120958, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
@@ -509,7 +408,7 @@ PrefabInstance:
     - target: {fileID: 9040080000987120958, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -240
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 9040080000987120958, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}

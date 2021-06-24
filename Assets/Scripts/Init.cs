@@ -14,6 +14,7 @@ public class Init : MonoBehaviour {
     public AudioMixerGroup h_mixer_menu;
 
     public GameObject h_menuMain;
+    public GameObject h_menuPause;
 
 
     static bool init=false;
@@ -32,9 +33,12 @@ public class Init : MonoBehaviour {
             AudioManager.LoadAudioSettings();
 
             MenuHandler.menuMain = h_menuMain;
+            MenuHandler.menuPause = h_menuPause;
 
             PlayerInput.LoadKeybinds();
         }
+
+        MenuHandler.SetMenu(MenuHandler.menuMain);
         
         Destroy(gameObject);
     }

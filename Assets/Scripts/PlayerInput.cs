@@ -118,7 +118,7 @@ public class PlayerInput : MonoBehaviour {
             PauseHandler.Pause();
             PauseHandler.Blur();
             enabled = false;
-            MenuHandler.SetMenu(MenuHandler.menuMain);
+            MenuHandler.SetMenu(MenuHandler.menuPause);
         }
 
 

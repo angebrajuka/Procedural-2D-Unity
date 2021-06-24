@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2754,7 +2754,7 @@ MonoBehaviour:
   volume_shoot: 0.5
   audio_reload: {fileID: 8300000, guid: 239126eee6503cf41b2ecbd40162e581, type: 3}
   volume_reload: 0.6
-  muzzleFlashPrefab: {fileID: 818606567540708658, guid: 34a0546428496994e859dadf697510d0,
+  muzzleFlashPrefab: {fileID: 1616051307232338703, guid: 0aef59b0f3ff3d1439bc4503a0b7ca71,
     type: 3}
   secondsBetweenShots: 0
   ammo: 0
