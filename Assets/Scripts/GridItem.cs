@@ -5,15 +5,18 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
-    
+[System.Serializable]
+public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{    
     public bool highlighted;
 
-    public void OnPointerEnter(PointerEventData eventData) {
+    public void OnPointerEnter(PointerEventData eventData)
+    {
         highlighted = true;
     }
 
-    public void OnPointerExit(PointerEventData eventData) {
+    public void OnPointerExit(PointerEventData eventData)
+    {
         highlighted = false;
     }
     
@@ -24,7 +27,8 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     RectTransform image;
     bool rotated;
 
-    public void Start() {
+    public void Start()
+    {
         if(rectTransform != null) return;
         rotated = false;
         highlighted = false;
@@ -42,17 +46,22 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     int GetWidth()  { return (int)Mathf.Round(rectTransform.sizeDelta.x/Inventory.cellSize); }
     int GetHeight() { return (int)Mathf.Round(rectTransform.sizeDelta.y/Inventory.cellSize); }
 
-    public bool WithinGrid() {
+    public bool WithinGrid()
+    {
         return (GetX() >= 0 && GetY() >= 0 && GetX()+GetWidth() <= Inventory.gridSize.x && GetY()+GetHeight() <= Inventory.gridSize.y);
     }
 
-    public void SetPos(int x, int y) {
+    public void SetPos(int x, int y)
+    {
         rectTransform.localPosition = Vector3.right*Inventory.cellSize*(x+GetWidth()/2f) + Vector3.up*Inventory.cellSize*(y+GetHeight()/2f);
     }
 
-    public bool Collides() {
-        foreach(GridItem item in Inventory.items) {
+    public bool Collides()
+    {
+        foreach(GridItem item in Inventory.items)
+        {
             if(item == this) continue;
+            
             if(GetX()+GetWidth() > item.GetX() && GetX() < item.GetX()+item.GetWidth() && GetY()+GetHeight() > item.GetY() && GetY() < item.GetY()+item.GetHeight())
                 return true;
         }
@@ -60,48 +69,66 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         return false;
     }
 
-    public void OnClick() {
-        if(followMouse) {
+    public void OnClick()
+    {
+        if(followMouse)
+        {
             if(Collides()) return;
-            if(WithinGrid()) {
-                SetPos(GetX(), GetY());
-            }
-        } else {
+            if(WithinGrid()) SetPos(GetX(), GetY());
+        }
+        else
+        {
             transform.SetAsLastSibling();
         }
 
         followMouse=!followMouse;
     }
 
-    public void Rotate() {
+    public void Rotate()
+    {
         rotated = !rotated;
         image.eulerAngles = Vector3.back*90-image.eulerAngles;
         Vector2 size = rectTransform.sizeDelta;
         rectTransform.sizeDelta = new Vector2(size.y, size.x);
     }
 
-    void Update() {
-        if(followMouse) {
+    void Update()
+    {
+        if(followMouse)
+        {
             rectTransform.position = Input.mousePosition;
-            if(Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_rotate])) {
+            if(Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_rotate]))
+            {
                 Rotate();
             }
-        } else if(highlighted) {
-            if(Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_equip])) {
-                if(Items.items[(int)item].gun == -1) {
-                    if(PlayerStats.currentItem == item) {
+        }
+        else if(highlighted)
+        {
+            if(Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_equip]))
+            {
+                if(Items.items[(int)item].gun == -1)
+                {
+                    if(PlayerStats.currentItem == item)
+                    {
                         PlayerStats.currentItem = Item.NONE;
                         PlayerStats.currentItemNode = null;
-                    } else {
+                    }
+                    else
+                    {
                         PlayerStats.currentItem = item;
                         PlayerStats.currentItemNode = node;
                     }
                     PlayerStats.hud.UpdateHotbar();
-                } else {
-                    if(PlayerStats.currentGunItemNode == node) {
+                }
+                else
+                {
+                    if(PlayerStats.currentGunItemNode == node)
+                    {
                         PlayerStats.SwitchGun(-1);
                         PlayerStats.currentGunItemNode = null;
-                    } else {
+                    }
+                    else
+                    {
                         PlayerStats.SwitchGun(Items.items[(int)item].gun);
                         PlayerStats.currentGunItemNode = node;
                     }

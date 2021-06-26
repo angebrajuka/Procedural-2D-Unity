@@ -3,24 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.LWRP;
 
-public class Explosion : MonoBehaviour {
-
+public class Explosion : MonoBehaviour
+{
     private CircleCollider2D trigger;
     public UnityEngine.Experimental.Rendering.Universal.Light2D m_light;
 
-    void OnEnable() {
+    void OnEnable()
+    {
         trigger = GetComponent<CircleCollider2D>();
         Destroy(gameObject, 0.3f);
         Destroy(m_light.gameObject, 0.05f);
         transform.DetachChildren();
     }
 
-    void OnTriggerStay2D(Collider2D collider) {
+    void OnTriggerStay2D(Collider2D collider)
+    {
         Target target = collider.transform.GetComponent<Target>();
-        if(target != null) {
+        if(target != null)
+        {
             target.Damage(2);
             Rigidbody2D rb = collider.transform.GetComponent<Rigidbody2D>();
-            if(rb != null) {
+            if(rb != null)
+            {
                 Vector3 vec = rb.position;
                 vec.x -= transform.position.x;
                 vec.y -= transform.position.y;
@@ -30,7 +34,8 @@ public class Explosion : MonoBehaviour {
         }
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         trigger.radius += 0.4f;
     }
 }

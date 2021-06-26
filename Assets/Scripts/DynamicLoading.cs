@@ -4,58 +4,73 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DynamicLoading : MonoBehaviour {
-
+public class DynamicLoading : MonoBehaviour
+{
     [HideInInspector]
     public Rigidbody2D player_rb;
     private Vector2Int currPos=Vector2Int.zero;
     private Vector2Int prevPos=Vector2Int.zero;
     private Vector2Int bl=Vector2Int.zero, tr=Vector2Int.zero;
     
-    void Start() {
+    void Start()
+    {
         player_rb = GetComponent<Rigidbody2D>();
         
         LoadAll();
     }
 
-    void Load(int x, int y) {
-        try {
+    void Load(int x, int y)
+    {
+        try
+        {
             SceneManager.LoadSceneAsync(x+","+y, LoadSceneMode.Additive);
-        } catch {}
+        }
+        catch {}
     }
 
-    void Unload(int x, int y) {
-        try {
+    void Unload(int x, int y)
+    {
+        try
+        {
             SceneManager.UnloadSceneAsync(x+","+y);
-        } catch {}
+        }
+        catch {}
     }
 
-    void UnloadAll() {
+    void UnloadAll()
+    {
         Unload(bl.x, bl.y);
         Unload(bl.x+1, bl.y);
         Unload(bl.x, bl.y+1);
         Unload(bl.x+1, bl.y+1);
     }
 
-    void LoadAll() {
+    void LoadAll()
+    {
         int posX = (int)(player_rb.position.x/100);
         int posY = (int)(player_rb.position.y/100);
 
         int alignX = (int)(player_rb.position.x/50)-posX;
         int alignY = (int)(player_rb.position.y/50)-posY;
 
-        if(alignX == 0) {
+        if(alignX == 0)
+        {
             tr.x = posX;
             bl.x = posX-1;
-        } else {
+        }
+        else
+        {
             bl.x = posX;
             tr.x = posX+1;
         }
 
-        if(alignY == 0) {
+        if(alignY == 0)
+        {
             tr.y = posY;
             bl.y = posY-1;
-        } else {
+        }
+        else
+        {
             bl.y = posY;
             tr.y = posY+1;
         }
@@ -68,16 +83,17 @@ public class DynamicLoading : MonoBehaviour {
                 Load(x, y);
     }
 
-    void Update() {
-        
+    void Update()
+    {    
         currPos.x = (int)(player_rb.position.x*3/100);
         currPos.y = (int)(player_rb.position.y*3/100);
         
-        if(currPos != prevPos) {
-
+        if(currPos != prevPos)
+        {
             Application.backgroundLoadingPriority = ThreadPriority.Low;
             
-            if((currPos.x+1)/3 > tr.x) {
+            if((currPos.x+1)/3 > tr.x)
+            {
                 // load to right
 
                 for(int y=bl.y; y<=tr.y; y++)
@@ -89,7 +105,9 @@ public class DynamicLoading : MonoBehaviour {
                 for(int y=bl.y; y<=tr.y; y++)
                     Load(tr.x, y);
 
-            } else if((currPos.x-1)/3 < bl.x) {
+            }
+            else if((currPos.x-1)/3 < bl.x)
+            {
                 // load to left
 
                 for(int y=bl.y; y<=tr.y; y++)
@@ -101,7 +119,9 @@ public class DynamicLoading : MonoBehaviour {
                 for(int y=bl.y; y<=tr.y; y++)
                     Load(bl.x, y);
 
-            } else if((currPos.y+1)/3 > tr.y) {
+            }
+            else if((currPos.y+1)/3 > tr.y)
+            {
                 // load up
 
                 for(int x=bl.x; x<=tr.x; x++)
@@ -113,7 +133,9 @@ public class DynamicLoading : MonoBehaviour {
                 for(int x=bl.x; x<=tr.x; x++)
                     Load(x, tr.y);
 
-            } else if((currPos.y-1)/3 < bl.y) {
+            }
+            else if((currPos.y-1)/3 < bl.y)
+            {
                 // load down
 
                 for(int x=bl.x; x<=tr.x; x++)

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour {
-
+public class Inventory : MonoBehaviour
+{
     public GameObject gridItemPrefab;
     public GameObject itemPickupPrefab;
     public Transform grid;
@@ -18,7 +18,8 @@ public class Inventory : MonoBehaviour {
     public static readonly Vector2Int gridSize = new Vector2Int(9, 12);
     public const float cellSize = 384f/9f;
 
-    void Add(Item item, int x, int y) {
+    void Add(Item item, int x, int y)
+    {
         GameObject gameObject = Instantiate(gridItemPrefab, Vector3.zero, Quaternion.identity, grid);
         GridItem gridItem = gameObject.GetComponent<GridItem>();
         gridItem.item = item;
@@ -28,15 +29,19 @@ public class Inventory : MonoBehaviour {
         gridItem.SetPos(x, y);
     }
 
-    public bool AutoAdd(Item item) {
-        
+    public bool AutoAdd(Item item)
+    {    
         Add(item, 0, 0);
         
-        for(int y=gridSize.y-1; y>=0; y--) {
-            for(int x=0; x<gridSize.x; x++) {
+        for(int y=gridSize.y-1; y>=0; y--)
+        {
+            for(int x=0; x<gridSize.x; x++)
+            {
                 items.Last.Value.SetPos(x, y);
-                for(int i=0; i<2; i++) {
-                    if(!items.Last.Value.Collides() && items.Last.Value.WithinGrid()) {
+                for(int i=0; i<2; i++)
+                {
+                    if(!items.Last.Value.Collides() && items.Last.Value.WithinGrid())
+                    {
                         return true;
                     }
                     items.Last.Value.Rotate();
@@ -51,33 +56,40 @@ public class Inventory : MonoBehaviour {
         return false;
     }
 
-    public void Open() {
+    public void Open()
+    {
         isOpen = true;
-        foreach(GridItem item in items) {
+        foreach(GridItem item in items)
+        {
             item.highlighted = false;
         }
     }
 
-    public void Close() {
+    public void Close()
+    {
         LinkedListNode<GridItem> node = items.First;
         LinkedListNode<GridItem> next;
-        while(node != null) {
+        
+        while(node != null)
+        {
             next = node.Next;
-            if(!node.Value.WithinGrid() || node.Value.followMouse) {
-                
+            if(!node.Value.WithinGrid() || node.Value.followMouse)
+            {
                 // DROP
 
-                if(PlayerStats.currentItemNode == node) {
+                if(PlayerStats.currentItemNode == node)
+                {
                     PlayerStats.currentItem = Item.NONE;
                     PlayerStats.currentItemNode = null;
                     PlayerStats.hud.UpdateHotbar();
-                } else if(PlayerStats.currentGunItemNode == node) {
+                }
+                else if(PlayerStats.currentGunItemNode == node)
+                {
                     PlayerStats.currentGun = null;
                     PlayerStats.currentGunItemNode = null;
                     PlayerStats.hud.UpdateHotbar();
                     PlayerStats.hud.UpdateAmmo();
                 }
-
 
                 GameObject item = Instantiate(itemPickupPrefab, player_rb.position, Quaternion.identity);
                 item.GetComponent<ItemPickup>().item = node.Value.item;
@@ -93,6 +105,4 @@ public class Inventory : MonoBehaviour {
         playerAnimator.UpdateGunImage();
         isOpen = false;
     }
-
-    
 }

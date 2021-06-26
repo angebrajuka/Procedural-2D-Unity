@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EightDirectionAnimator : MonoBehaviour {
-
+public class EightDirectionAnimator : MonoBehaviour
+{
     // hierarchy
     public Sprite[] sprites;
     public int state;
@@ -13,12 +13,14 @@ public class EightDirectionAnimator : MonoBehaviour {
     public void Enable()    { m_spriteRenderer.enabled = true; }
     public void Disable()   { m_spriteRenderer.enabled = false; }
 
-    void Start() {
+    void Start()
+    {
         state = 0;
         direction = 0;
     }
 
-    void Update() {
+    void Update()
+    {
         m_spriteRenderer.sprite = sprites[8*state+direction];
     }
 }

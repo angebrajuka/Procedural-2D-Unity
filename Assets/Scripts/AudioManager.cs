@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public enum Mixer {
+public enum Mixer
+{
     MUSIC,
     SFX,
     MENU
 }
 
-public class AudioManager : MonoBehaviour {
-    
-    // static
+public static class AudioManager
+{
     public static AudioMixer mixer;
     public static AudioMixerGroup mixer_master;
     public static AudioMixerGroup mixer_music;
@@ -21,7 +21,8 @@ public class AudioManager : MonoBehaviour {
     public static float volMenuMusicDiff;
 
 
-    public static void DefaultSettings() {
+    public static void DefaultSettings()
+    {
         volMaster = 0.5f;
         volMusic = 0.5f;
         volSFX = 0.5f;
@@ -29,7 +30,8 @@ public class AudioManager : MonoBehaviour {
         volMenuMusicDiff = 1.0f;
     }
 
-    public static void UpdateAudioSettings() {
+    public static void UpdateAudioSettings()
+    {
         mixer.SetFloat("VolMaster", Mathf.Log10(volMaster) * 20);
         mixer.SetFloat("VolMusic", Mathf.Log10(volMusic*volMenuMusicDiff) * 20);
         mixer.SetFloat("VolSFX", Mathf.Log10(volSFX) * 20);
@@ -37,35 +39,42 @@ public class AudioManager : MonoBehaviour {
         SaveAudioSettings();
     }
 
-    public static void LoadAudioSettings() {
-        try {
+    public static void LoadAudioSettings()
+    {
+        try
+        {
             volMaster = PlayerPrefs.GetFloat("VolMaster");
             volMusic = PlayerPrefs.GetFloat("VolMusic");
             volSFX = PlayerPrefs.GetFloat("VolSFX");
             volMenu = PlayerPrefs.GetFloat("VolMenu");
-        } catch {
+        }
+        catch
+        {
             DefaultSettings();
         }
         UpdateAudioSettings();
     }
 
-    public static void SaveAudioSettings() {
+    public static void SaveAudioSettings()
+    {
         PlayerPrefs.SetFloat("VolMaster", volMaster);
         PlayerPrefs.SetFloat("VolMusic", volMusic);
         PlayerPrefs.SetFloat("VolSFX", volSFX);
         PlayerPrefs.SetFloat("VolMenu", volMenu);
     }
 
-    public static void PitchShift(float pitch) {
+    public static void PitchShift(float pitch)
+    {
         mixer.SetFloat("PitchSFX", pitch);
     }
 
-    public static GameObject PlayClip(AudioClip clip, float volume, Mixer mixer, float spatialBlend=0.0f, Vector3 position=default(Vector3)) {
-
+    public static GameObject PlayClip(AudioClip clip, float volume, Mixer mixer, float spatialBlend=0.0f, Vector3 position=default(Vector3))
+    {
         GameObject gameObject = new GameObject();
         gameObject.transform.position = position;
         AudioSource source = gameObject.AddComponent<AudioSource>();
-        switch(mixer) {
+        switch(mixer)
+        {
         case Mixer.SFX:
             source.outputAudioMixerGroup = mixer_sfx;
             break;
@@ -80,7 +89,7 @@ public class AudioManager : MonoBehaviour {
         source.volume = volume;
         source.spatialBlend = spatialBlend;
         source.Play();
-        Destroy(gameObject, clip.length+0.1f);
+        MonoBehaviour.Destroy(gameObject, clip.length+0.1f);
         return gameObject;
     }
 }

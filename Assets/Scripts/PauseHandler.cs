@@ -4,38 +4,44 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-public class PauseHandler : MonoBehaviour {
-
+public class PauseHandler : MonoBehaviour
+{
     static DepthOfField dofComponent;
     static float prevTimeScale = 1;
     static int focalLengthVal=1;
 
-    void Start() {
+    void Start()
+    {
         Volume volume = GetComponent<Volume>();
         volume.profile.TryGet<DepthOfField>(out dofComponent);
     }
 
-    public static void Pause() {
+    public static void Pause()
+    {
         if(Time.timeScale == 0) return;
         
         prevTimeScale = Time.timeScale;
         Time.timeScale = 0;
     }
 
-    public static void UnPause() {
+    public static void UnPause()
+    {
         Time.timeScale = prevTimeScale;
     }
 
-    public static void Blur() {
+    public static void Blur()
+    {
         focalLengthVal = 40;
         dofComponent.focalLength.value = 15;
     }
 
-    public static void UnBlur() {
+    public static void UnBlur()
+    {
         focalLengthVal = 1;
     }
 
-    void Update() {
+    void Update()
+    {
         dofComponent.focalLength.value = Mathf.Lerp(dofComponent.focalLength.value, focalLengthVal, Time.unscaledDeltaTime*4);
     }
 }

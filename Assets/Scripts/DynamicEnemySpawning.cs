@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DynamicEnemySpawning : MonoBehaviour {
+public class DynamicEnemySpawning : MonoBehaviour
+{
 
     
 
-    void Update() {
+    void Update()
+    {
         
     }
 }

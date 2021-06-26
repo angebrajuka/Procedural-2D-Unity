@@ -1,21 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
  
-public class AspectRatio : MonoBehaviour {
- 
+public class AspectRatio : MonoBehaviour
+{
     public static Vector2 screenSize;
     public static Vector3 halfScreen;
     private Camera cam;
 
-    private void RescaleCamera() {
- 
+    private void RescaleCamera()
+    {
         if (Screen.width == screenSize.x && Screen.height == screenSize.y) return;
  
         float targetaspect = 16.0f / 9.0f;
         float windowaspect = (float)Screen.width / (float)Screen.height;
         float scaleheight = windowaspect / targetaspect;
  
-        if (scaleheight < 1.0f) {
+        if (scaleheight < 1.0f)
+        {
             Rect rect = cam.rect;
  
             rect.width = 1.0f;
@@ -24,8 +25,10 @@ public class AspectRatio : MonoBehaviour {
             rect.y = (1.0f - scaleheight) / 2.0f;
  
             cam.rect = rect;
-        } else {
-             // add pillarbox
+        }
+        else
+        {
+            // add pillarbox
             float scalewidth = 1.0f / scaleheight;
  
             Rect rect = cam.rect;
@@ -35,7 +38,7 @@ public class AspectRatio : MonoBehaviour {
             rect.x = (1.0f - scalewidth) / 2.0f;
             rect.y = 0;
  
-             cam.rect = rect;
+            cam.rect = rect;
         }
  
         screenSize.x = Screen.width;
@@ -43,8 +46,10 @@ public class AspectRatio : MonoBehaviour {
         halfScreen = screenSize / 2;
     }
  
-    void OnPreCull() {
+    void OnPreCull()
+    {
         if (Application.isEditor) return;
+
         Rect wp = Camera.main.rect;
         Rect nr = new Rect(0, 0, 1, 1);
  
@@ -55,13 +60,15 @@ public class AspectRatio : MonoBehaviour {
  
     }
  
-    void Start () {
+    void Start ()
+    {
         cam = GetComponent<Camera>();
         RescaleCamera();
         OnPreCull();
     }
  
-    void Update () {
+    void Update ()
+    {
         RescaleCamera();
     }
 }

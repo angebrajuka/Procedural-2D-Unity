@@ -2,30 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Spider {
-    
-    public static bool OnStart(Enemy self) {
+public class Enemy_Spider
+{    
+    public static bool OnStart(Enemy self)
+    {
 
 
 
         return true;
     }
 
-    public static bool OnOnDamage(Enemy self) {
+    public static bool OnOnDamage(Enemy self)
+    {
 
 
 
         return true;
     }
 
-    public static bool OnOnKill(Enemy self) {
+    public static bool OnOnKill(Enemy self)
+    {
 
 
 
         return true;
     }
 
-    public static bool CalcPath(Enemy self) {
+    public static bool CalcPath(Enemy self)
+    {
 
 
 

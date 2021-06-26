@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-public enum Item:byte {
+public enum Item:byte
+{
     NONE,
     BLADE,
     BOMB,
@@ -26,14 +27,16 @@ public enum Item:byte {
     ENERGY_RAILGUN
 }
 
-public struct ItemStats {
+public struct ItemStats
+{
     public string name;
     public Vector2Int size;
     public sbyte gun;
     public Func<bool> use;
     public Sprite sprite;
 
-    public ItemStats(string name, Vector2Int size, sbyte gun, Func<bool> use) {
+    public ItemStats(string name, Vector2Int size, sbyte gun, Func<bool> use)
+    {
         this.name = name;
         this.size = size;
         this.gun = gun;
@@ -42,49 +45,58 @@ public struct ItemStats {
     }
 }
 
-public class Items {
-
-    public static bool UseNone() {
+public class Items 
+{
+    public static bool UseNone()
+    {
         return true;
     }
 
-    public static bool UseBlade() {
+    public static bool UseBlade()
+    {
         PlayerStats.BeginMelee();
         return true;
     }
 
-    public static bool UseBomb() {
+    public static bool UseBomb()
+    {
         MonoBehaviour.Instantiate(PlayerStats.playerStats.prefab_bomb, PlayerStats.rigidbody.position, Quaternion.identity);
         PlayerStats.RemoveCurrentItem();
         return true;
     }
 
-    public static bool UseMedkit() {
+    public static bool UseMedkit()
+    {
         PlayerStats.target.Heal(20);
         PlayerStats.RemoveCurrentItem();
         return true;
     }
 
-    public static bool UseStimpack() {
+    public static bool UseStimpack()
+    {
         PlayerStats.target.Heal(10);
         PlayerStats.RemoveCurrentItem();
         return true;
     }
 
-    public static bool UseCompass() {
+    public static bool UseCompass()
+    {
         return true;
     }
 
-    public static bool UsePotion() {
+    public static bool UsePotion()
+    {
         PlayerStats.RemoveCurrentItem();
         return true;
     }
 
-    public static bool UseFishingRod() {
+    public static bool UseFishingRod()
+    {
         return true;
     }
 
-    public static readonly ItemStats[] items = new ItemStats[] {
+    public static readonly ItemStats[] items = new ItemStats[]
+    {
         new ItemStats("NONE",           new Vector2Int(0, 0),   -1, UseNone),
         new ItemStats("BLADE",          new Vector2Int(2, 1),   -1, UseBlade),
         new ItemStats("BOMB",           new Vector2Int(2, 2),   -1, UseBomb),

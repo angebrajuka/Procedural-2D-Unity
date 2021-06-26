@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &1123264557438027188
+--- !u!114 &6182132684724437726
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5052372419126611203}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbe9c91612c6b4745976eef41a5d7b64, type: 3}
+  m_Script: {fileID: 11500000, guid: c214d05804e0f5d4ba55a605bd7e24ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menu: {fileID: 8698599626930866073, guid: 920bad59bdd44a74b9f9bb911753bdda, type: 3}
 --- !u!114 &6177810780927385642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,11 +272,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1123264557438027188}
+      objectReference: {fileID: 6182132684724437726}
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClick
+      value: OnButtonPress
       objectReference: {fileID: 0}
     - target: {fileID: 8493925532410144254, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}

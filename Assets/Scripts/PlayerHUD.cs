@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHUD : MonoBehaviour {
-
+public class PlayerHUD : MonoBehaviour
+{
     // hierarchy
 new public Transform transform;
     public Text currentGunAmmoTxt;
@@ -22,17 +22,22 @@ new public Transform transform;
     // components
     Target m_target;
 
-    void Start() {
+    void Start()
+    {
         m_target = GetComponent<Target>();
         bar_health_fillRect = bar_health.fillRect.GetComponent<Image>();
         UpdateAmmo();
         UpdateHealth();
     }
 
-    public void UpdateHotbar() {
-        if(PlayerStats.currentGun == null) {
+    public void UpdateHotbar()
+    {
+        if(PlayerStats.currentGun == null)
+        {
             ammoTxt.gameObject.SetActive(false);
-        } else {
+        }
+        else
+        {
             ammoTxt.gameObject.SetActive(true);
             ammoImage.sprite = ammoImages[(int)PlayerStats.currentGun.ammoType];
         }
@@ -40,26 +45,32 @@ new public Transform transform;
         currentItem.sprite = Items.items[(int)PlayerStats.currentItem].sprite;
     }
 
-    public void UpdateAmmo() {
+    public void UpdateAmmo()
+    {
         smallBulletsTxt.text = PlayerStats.ammo[Ammo.BULLETS_SMALL]+"";
         bigBulletsTxt.text = PlayerStats.ammo[Ammo.BULLETS_BIG]+"";
         shellsTxt.text = PlayerStats.ammo[Ammo.SHELLS]+"";
         energyTxt.text = PlayerStats.ammo[Ammo.ENERGY]+"";
-        if(PlayerStats.currentGun == null) {
+        if(PlayerStats.currentGun == null)
+        {
 
-        } else {
+        }
+        else
+        {
             currentGunAmmoTxt.text = PlayerStats.currentGun.ammo < 10 ? "0" : "";
             currentGunAmmoTxt.text += PlayerStats.currentGun.ammo+"";
             currentReserveTxt.text = "/"+PlayerStats.ammo[PlayerStats.currentGun.ammoType];
         }
     }
 
-    public void UpdateHealth() {
+    public void UpdateHealth()
+    {
         bar_health.value = m_target.health / m_target.maxHealth;
         // bar_health_fillRect.color = new Color32((byte)(bar_health.value > 0.5f ? (1-bar_health.value)*510 : 255), (byte)(bar_health.value < 0.5f ? (bar_health.value)*510 : 255), 0, 100);
     }
 
-    public void UpdateCoins() {
+    public void UpdateCoins()
+    {
         textCoins.text = ""+PlayerStats.coins;
     }
 }

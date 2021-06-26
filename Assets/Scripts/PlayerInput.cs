@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum Keybind:byte {
+public enum Keybind:byte
+{
     moveEast,
     moveNorth,
     moveWest,
@@ -17,8 +18,8 @@ public enum Keybind:byte {
     i_rotate
 }
 
-public class PlayerInput : MonoBehaviour {
-    
+public class PlayerInput : MonoBehaviour
+{    
     // hierarchy
     public Transform weapons;
     public GameObject line;
@@ -41,7 +42,8 @@ public class PlayerInput : MonoBehaviour {
 
 
     // keybinds
-    public static Dictionary<Keybind, KeyCode>  keybinds = new Dictionary<Keybind, KeyCode>() {
+    public static Dictionary<Keybind, KeyCode>  keybinds = new Dictionary<Keybind, KeyCode>()
+    {
         {Keybind.moveEast,      KeyCode.D       },
         {Keybind.moveNorth,     KeyCode.W       },
         {Keybind.moveWest,      KeyCode.A       },
@@ -55,7 +57,8 @@ public class PlayerInput : MonoBehaviour {
         {Keybind.i_rotate,      KeyCode.R       },
     };
 
-    public static Dictionary<Keybind, string>   keybindStrings = new Dictionary<Keybind, string>() {
+    public static Dictionary<Keybind, string>   keybindStrings = new Dictionary<Keybind, string>()
+    {
         {Keybind.moveEast,      "moveEast"  },
         {Keybind.moveNorth,     "moveNorth" },
         {Keybind.moveWest,      "moveWest"  },
@@ -69,7 +72,8 @@ public class PlayerInput : MonoBehaviour {
         {Keybind.i_rotate,      "i_rotate"  },
     };
     
-    public static void DefaultKeybinds() {
+    public static void DefaultKeybinds()
+    {
         keybinds[Keybind.moveEast]  = KeyCode.D;
         keybinds[Keybind.moveNorth] = KeyCode.W;
         keybinds[Keybind.moveWest]  = KeyCode.A;
@@ -83,21 +87,28 @@ public class PlayerInput : MonoBehaviour {
         keybinds[Keybind.i_rotate]  = KeyCode.R;
     }
 
-    public static void LoadKeybinds() {
-        
-        foreach(KeyValuePair<Keybind, string> pair in keybindStrings) {
-            if(!PlayerPrefs.HasKey(keybindStrings[pair.Key])) {
+    public static void LoadKeybinds()
+    {    
+        foreach(KeyValuePair<Keybind, string> pair in keybindStrings)
+        {
+            if(!PlayerPrefs.HasKey(keybindStrings[pair.Key]))
+            {
                 SaveKeybinds();
             }
             keybinds[pair.Key] = (KeyCode)PlayerPrefs.GetInt(keybindStrings[pair.Key]);
         }
     }
 
-    public static void SaveKeybinds(bool one=false, Keybind bind=Keybind.moveEast) {
-        if(one) {
+    public static void SaveKeybinds(bool one=false, Keybind bind=Keybind.moveEast)
+    {
+        if(one)
+        {
             PlayerPrefs.SetInt(keybindStrings[bind], (int)keybinds[bind]);
-        } else {
-            foreach(KeyValuePair<Keybind, string> pair in keybindStrings) {
+        }
+        else
+        {
+            foreach(KeyValuePair<Keybind, string> pair in keybindStrings)
+            {
                 PlayerPrefs.SetInt(keybindStrings[pair.Key], (int)keybinds[pair.Key]);
             }
         }
@@ -105,19 +116,22 @@ public class PlayerInput : MonoBehaviour {
 
 
 
-    void Start() {
+    void Start()
+    {
         m_rigidbody = GetComponent<Rigidbody2D>();
         PlayerStats.rigidbody = m_rigidbody;
         PlayerStats.target = GetComponent<Target>();
     }
 
-    void Update() {
-        
+    void Update()
+    {
         // pause
-        if(Input.GetKeyDown(KeyCode.Escape)) {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
             PauseHandler.Pause();
             PauseHandler.Blur();
             enabled = false;
+            MenuHandler.prevMenu.Clear();
             MenuHandler.SetMenu(MenuHandler.menuPause);
         }
 
@@ -148,25 +162,26 @@ public class PlayerInput : MonoBehaviour {
             if(Input.GetKey(keybinds[Keybind.moveSouth])) input_move.y --;
             
                 // rotate
-                if(input_move.x != 0 || input_move.y != 0)
-                    direction8index = Math.directions8[(int)-input_move.y+1, (int)input_move.x+1];
-                else
-                    direction8index = Math.directions8[(int)-Mathf.Round(mouse_offset.y)+1, (int)Mathf.Round(mouse_offset.x)+1];
+                if(input_move.x != 0 || input_move.y != 0)  direction8index = Math.directions8[(int)-input_move.y+1, (int)input_move.x+1];
+                else                                        direction8index = Math.directions8[(int)-Mathf.Round(mouse_offset.y)+1, (int)Mathf.Round(mouse_offset.x)+1];
 
             input_move.Normalize();
 
-            if(Input.GetKey(KeyCode.Space)) PlayerAnimator.mood = PlayerAnimator.Mood.ANGRY;
-            else PlayerAnimator.mood = PlayerAnimator.Mood.HAPPY;
+            if(Input.GetKey(KeyCode.Space))     PlayerAnimator.mood = PlayerAnimator.Mood.ANGRY;
+            else                                PlayerAnimator.mood = PlayerAnimator.Mood.HAPPY;
         }
 
 
         // inventory
-        if(Input.GetKeyDown(keybinds[Keybind.inventory])) {
+        if(Input.GetKeyDown(keybinds[Keybind.inventory]))
+        {
             PauseHandler.Pause();
             PauseHandler.Blur();
             inventory.gameObject.SetActive(true);
             PlayerStats.inventory.Open();
+            
             if(PlayerStats.gunReloadTimer > 0) PlayerStats.CancelReload();
+            
             PlayerStats.hud.transform.gameObject.SetActive(false);
             enabled = false;
         }
@@ -176,25 +191,31 @@ public class PlayerInput : MonoBehaviour {
         if(Input.GetKey(keybinds[Keybind.reload])) PlayerStats.BeginReload();
 
         // pew pew
-        if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerStats.CanShoot()) {
+        if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerStats.CanShoot())
+        {
             PlayerStats.currentGun.Shoot(m_rigidbody.position, mouse_offset, angle, m_rigidbody);
             PlayerStats.hud.UpdateAmmo();
         }
 
         //items
-        if(Input.GetKeyDown(keybinds[Keybind.item])) {
+        if(Input.GetKeyDown(keybinds[Keybind.item]))
+        {
             Items.items[(int)PlayerStats.currentItem].use();
         }
 
 
         // interact
-        if(Input.GetKeyDown(keybinds[Keybind.interact])) {
-            if(PlayerStats.interactItem != Item.NONE) {
-                
-                if(PlayerStats.inventory.AutoAdd(PlayerStats.interactItem)) {
+        if(Input.GetKeyDown(keybinds[Keybind.interact]))
+        {
+            if(PlayerStats.interactItem != Item.NONE)
+            {
+                if(PlayerStats.inventory.AutoAdd(PlayerStats.interactItem))
+                {
                     Destroy(PlayerStats.interactPickup.gameObject);
                     PlayerStats.interactPickup = null;
-                } else {
+                }
+                else
+                {
                     // message or open inventory?
                 }
 
@@ -222,8 +243,8 @@ public class PlayerInput : MonoBehaviour {
 
 
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         m_rigidbody.AddForce(input_move*PlayerStats.k_RUN_ACCELL);
     }
-
 }

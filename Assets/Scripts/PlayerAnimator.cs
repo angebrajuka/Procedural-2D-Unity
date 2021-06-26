@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour {
-
+public class PlayerAnimator : MonoBehaviour
+{
     // hierarchy
     public EightDirectionAnimator m_animator_body;
     public EightDirectionAnimator m_animator_face;
@@ -17,25 +17,30 @@ public class PlayerAnimator : MonoBehaviour {
     // inputs
     public enum Mood:byte { HAPPY=0, ANGRY=1}; public static Mood mood;
 
-    public void BeginMelee() {
+    public void BeginMelee()
+    {
         m_renderer_gun.enabled = false;
     }
 
-    public void EndMelee() {
+    public void EndMelee()
+    {
         m_renderer_gun.enabled = true;
     }
 
-    void Start() {
+    void Start()
+    {
         mood = Mood.HAPPY;
         // faces = new Sprite[][]{face_happy, face_angry};
         playerAnimator = this;
     }
 
-    public void UpdateGunImage() {
+    public void UpdateGunImage()
+    {
         m_renderer_gun.sprite = PlayerStats.currentGun == null ? null : PlayerStats.currentGun.sprite;
     }
 
-    void Update() {
+    void Update()
+    {
         // m_renderer_body.sprite = body[PlayerInput.direction8index];
         // m_renderer_face.sprite = faces[(byte)mood][PlayerInput.direction8index];
         m_animator_body.direction = PlayerInput.direction8index;

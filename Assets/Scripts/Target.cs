@@ -16,11 +16,15 @@ public class Target : MonoBehaviour
     public Func<float, bool> OnKill=Default;
     public Func<float, bool> OnHeal=Default;
     
-    public bool Damage(float damage) {
-        if(damageable && !dead) {
+    public bool Damage(float damage)
+    {
+        if(damageable && !dead)
+        {
             health -= damage;
             OnDamage(damage);
-            if(health <= 0) {
+            
+            if(health <= 0)
+            {
                 dead = true;
                 OnKill(damage);
             }
@@ -30,11 +34,14 @@ public class Target : MonoBehaviour
         return false;
     }
 
-    public bool Heal(float heal) {
-        if(damageable) {
+    public bool Heal(float heal)
+    {
+        if(damageable)
+        {
             health += heal;
             OnHeal(heal);
-            if(health > maxHealth) {
+            if(health > maxHealth)
+            {
                 health = maxHealth;
                 return true;
             }

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.LWRP;
 
-public class DaylightCycle : MonoBehaviour {
-
+public class DaylightCycle : MonoBehaviour
+{
     const float k_MORNING=240, k_DAY=15, k_EVENING=135, k_NIGHT=150;
     public float brightness_day, brightness_night;
 
@@ -12,11 +12,13 @@ public class DaylightCycle : MonoBehaviour {
 
     UnityEngine.Experimental.Rendering.Universal.Light2D globalLight;
 
-    void Start() {
+    void Start()
+    {
         globalLight = GetComponent<UnityEngine.Experimental.Rendering.Universal.Light2D>();
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         time += Time.fixedDeltaTime;
         if(time >= k_MORNING) time = 0;
         

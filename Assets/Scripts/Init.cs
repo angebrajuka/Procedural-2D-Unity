@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 
-public class Init : MonoBehaviour {
-
+public class Init : MonoBehaviour
+{
     // hierarchy
     public AudioMixer h_mixer;
     public AudioMixerGroup h_mixer_master;
@@ -19,10 +19,10 @@ public class Init : MonoBehaviour {
 
     static bool init=false;
     
-    void Start() {
-
-        if(!init) {
-            
+    void Start()
+    {
+        if(!init)
+        {
             init = true;
             
             AudioManager.mixer = h_mixer;

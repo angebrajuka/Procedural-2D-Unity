@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTarget : MonoBehaviour {
-
+public class PlayerTarget : MonoBehaviour
+{
     [HideInInspector] public Target m_target;
     [HideInInspector] public PlayerHUD m_playerHUD;
 
-    void Start() {
+    void Start()
+    {
         m_target = GetComponent<Target>();
         m_playerHUD = GetComponent<PlayerHUD>();
         m_target.OnDamage = OnDamage;
@@ -15,17 +16,20 @@ public class PlayerTarget : MonoBehaviour {
         m_target.OnHeal = OnHeal;
     }
 
-    public bool OnDamage(float damage) {
+    public bool OnDamage(float damage)
+    {
         m_playerHUD.UpdateHealth();
         return true;
     }
 
-    public bool OnKill(float damage) {
+    public bool OnKill(float damage)
+    {
         m_playerHUD.UpdateHealth();
         return true;
     }
 
-    public bool OnHeal(float heal) {
+    public bool OnHeal(float heal)
+    {
         m_playerHUD.UpdateHealth();
         return true;
     }
