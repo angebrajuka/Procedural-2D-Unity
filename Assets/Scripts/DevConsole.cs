@@ -105,13 +105,27 @@ public class DevConsole : MonoBehaviour
     }
 
 
+    static bool Teleport(string[] args)
+    {
+        if(Int32.TryParse(args[0], out int x) && Int32.TryParse(args[1], out int y))
+        {
+            PlayerStats.rigidbody.position = new Vector3(x, y, 0);
+
+            return true;
+        }
+
+        return false;
+    }
+
+
 
     static readonly Dictionary<string, Func<string[], bool>> commands = new Dictionary<string, Func<string[], bool>>
     {
         {"time",        Time        },
         {"health",      Health      },
         {"ammo",        Ammunition  },
-        {"setgun",      SetGun      }
+        {"setgun",      SetGun      },
+        {"tp",          Teleport    }
     };
 
     void Enable()

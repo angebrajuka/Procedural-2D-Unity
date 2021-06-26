@@ -9,146 +9,71 @@ public class DynamicLoading : MonoBehaviour
     [HideInInspector]
     public Rigidbody2D player_rb;
     private Vector2Int currPos=Vector2Int.zero;
-    private Vector2Int prevPos=Vector2Int.zero;
-    private Vector2Int bl=Vector2Int.zero, tr=Vector2Int.zero;
-    
+    private Vector2Int prevPos=Vector2Int.one*-100;
+    // private Vector2Int bl=Vector2Int.zero, tr=Vector2Int.zero;
+    private HashSet<(int, int)> loaded;
+    private HashSet<(int, int)> validScenes;
+
     void Start()
     {
-        player_rb = GetComponent<Rigidbody2D>();
+        loaded = new HashSet<(int, int)>();
+        validScenes = new HashSet<(int, int)>();
         
-        LoadAll();
-    }
-
-    void Load(int x, int y)
-    {
-        try
+        for(int i=2; i<SceneManager.sceneCountInBuildSettings; i++)
         {
-            SceneManager.LoadSceneAsync(x+","+y, LoadSceneMode.Additive);
+            string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+            int slash = scenePath.LastIndexOf("/");
+            int comma = scenePath.LastIndexOf(",");
+            int dot = scenePath.LastIndexOf(".");
+            
+            if(Int32.TryParse(scenePath.Substring(slash+1, comma-slash-1), out int x) && Int32.TryParse(scenePath.Substring(comma+1, dot-comma-1), out int y))
+            {
+                validScenes.Add((x, y));
+            }
         }
-        catch {}
+
+        player_rb = GetComponent<Rigidbody2D>();
     }
 
-    void Unload(int x, int y)
-    {
-        try
-        {
-            SceneManager.UnloadSceneAsync(x+","+y);
-        }
-        catch {}
-    }
-
-    void UnloadAll()
-    {
-        Unload(bl.x, bl.y);
-        Unload(bl.x+1, bl.y);
-        Unload(bl.x, bl.y+1);
-        Unload(bl.x+1, bl.y+1);
-    }
+    string Name(int x, int y) { return x+","+y; }
 
     void LoadAll()
     {
-        int posX = (int)(player_rb.position.x/100);
-        int posY = (int)(player_rb.position.y/100);
+        int posX = (int)Mathf.Floor(player_rb.position.x/100);
+        int posY = (int)Mathf.Floor(player_rb.position.y/100);
 
-        int alignX = (int)(player_rb.position.x/50)-posX;
-        int alignY = (int)(player_rb.position.y/50)-posY;
-
-        if(alignX == 0)
-        {
-            tr.x = posX;
-            bl.x = posX-1;
-        }
-        else
-        {
-            bl.x = posX;
-            tr.x = posX+1;
-        }
-
-        if(alignY == 0)
-        {
-            tr.y = posY;
-            bl.y = posY-1;
-        }
-        else
-        {
-            bl.y = posY;
-            tr.y = posY+1;
-        }
         
-        bl = new Vector2Int(2, 0);
-        tr = new Vector2Int(3, 1);
-
-        for(int x=bl.x; x<=tr.x; x++)
-            for(int y=bl.y; y<=tr.y; y++)
-                Load(x, y);
+        for(int x=posX-1; x<=posX+1; x++)
+        {
+            for(int y=posY-1; y<=posY+1; y++)
+            {
+                if(!loaded.Contains((x, y)) && validScenes.Contains((x, y))) {
+                    SceneManager.LoadSceneAsync(Name(x, y), LoadSceneMode.Additive);
+                    loaded.Add((x, y));
+                }
+            }
+        }
     }
 
     void Update()
     {    
-        currPos.x = (int)(player_rb.position.x*3/100);
-        currPos.y = (int)(player_rb.position.y*3/100);
+        currPos.x = (int)(player_rb.position.x/100);
+        currPos.y = (int)(player_rb.position.y/100);    // each scene is split into 9 chunks, prevents crossing back and forth across a line to load and unload too fast
         
         if(currPos != prevPos)
         {
             Application.backgroundLoadingPriority = ThreadPriority.Low;
-            
-            if((currPos.x+1)/3 > tr.x)
+
+            loaded.RemoveWhere(delegate((int x, int y) tuple)
             {
-                // load to right
+                if(Mathf.Abs(tuple.x-currPos.x) > 2 || Mathf.Abs(tuple.y-currPos.y) > 2) {
+                    try { SceneManager.UnloadSceneAsync(Name(tuple.x, tuple.y)); } catch {}
+                    return true;
+                }
+                return false;
+            });
 
-                for(int y=bl.y; y<=tr.y; y++)
-                    Unload(bl.x, y);
-                
-                bl.x++;
-                tr.x++;
-
-                for(int y=bl.y; y<=tr.y; y++)
-                    Load(tr.x, y);
-
-            }
-            else if((currPos.x-1)/3 < bl.x)
-            {
-                // load to left
-
-                for(int y=bl.y; y<=tr.y; y++)
-                    Unload(tr.x, y);
-                
-                tr.x--;
-                bl.x--;
-                
-                for(int y=bl.y; y<=tr.y; y++)
-                    Load(bl.x, y);
-
-            }
-            else if((currPos.y+1)/3 > tr.y)
-            {
-                // load up
-
-                for(int x=bl.x; x<=tr.x; x++)
-                    Unload(x, bl.y);
-                
-                bl.y++;
-                tr.y++;
-                
-                for(int x=bl.x; x<=tr.x; x++)
-                    Load(x, tr.y);
-
-            }
-            else if((currPos.y-1)/3 < bl.y)
-            {
-                // load down
-
-                for(int x=bl.x; x<=tr.x; x++)
-                    Unload(x, tr.y);
-                
-                tr.y--;
-                bl.y--;
-
-                for(int x=bl.x; x<=tr.x; x++)
-                    Load(x, bl.y);
-            }
-
-            // print(currPos);
+            LoadAll();
         }
 
         prevPos.x = currPos.x;
