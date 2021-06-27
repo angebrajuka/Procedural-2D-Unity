@@ -4456,6 +4456,7 @@ GameObject:
   - component: {fileID: 2141963375}
   - component: {fileID: 2141963376}
   - component: {fileID: 2141963377}
+  - component: {fileID: 2141963378}
   m_Layer: 8
   m_Name: Flashlight
   m_TagString: Untagged
@@ -4529,3 +4530,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbfc820f72a7d14faa24d82dc0539d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickeringLight: {fileID: 2141963378}
+--- !u!114 &2141963378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141963374}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79aeb678ad4c3ff41bfb84f3f725b95b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  light: {fileID: 2141963376}
+  maxIncrease: 0
+  maxDecrease: 0
+  intensityRange: 0.2
+  timingAverage: 0.06
+  timingRange: 0.03
+  changeSpeed: 0.3
+  averageRadius: 40
+  averageIntensity: 0.47
+  useBeginningRadiusAndIntensity: 0

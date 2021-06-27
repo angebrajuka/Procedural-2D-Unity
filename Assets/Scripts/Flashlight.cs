@@ -6,6 +6,7 @@ using UnityEngine.Experimental.Rendering.LWRP;
 public class Flashlight : MonoBehaviour
 {
     private UnityEngine.Experimental.Rendering.Universal.Light2D flashlight;
+    public FlickeringLight flickeringLight;
 
     void Start()
     {
@@ -15,5 +16,6 @@ public class Flashlight : MonoBehaviour
     void Update()
     {
         flashlight.intensity = Mathf.Lerp(flashlight.intensity, PlayerStats.currentItem==Item.FLASHLIGHT ? 0.47f : 0, 0.16f);
+        flickeringLight.enabled = PlayerStats.currentItem==Item.FLASHLIGHT;
     }
 }
