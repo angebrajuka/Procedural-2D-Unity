@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 663343109273254613, guid: e2915b2ef9e6cc449a35360058d12a32, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -118,6 +118,7 @@ MonoBehaviour:
   prefab_coinExplosion: {fileID: 2773630599371209418, guid: 60e0cd10d5ad18e4081ccfa7e6dd8fcf,
     type: 3}
   awake: 0
+  type: 0
   m_rigidbody: {fileID: 0}
   m_material: {fileID: 0}
   m_target: {fileID: 0}

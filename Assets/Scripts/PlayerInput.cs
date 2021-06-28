@@ -166,9 +166,6 @@ public class PlayerInput : MonoBehaviour
                 else                                        direction8index = Math.directions8[(int)-Mathf.Round(mouse_offset.y)+1, (int)Mathf.Round(mouse_offset.x)+1];
 
             input_move.Normalize();
-
-            if(Input.GetKey(KeyCode.Space))     PlayerAnimator.mood = PlayerAnimator.Mood.ANGRY;
-            else                                PlayerAnimator.mood = PlayerAnimator.Mood.HAPPY;
         }
 
 
