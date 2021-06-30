@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1562518597343047301}
   - component: {fileID: 1562518597343047297}
   m_Layer: 0
-  m_Name: Enemy_Spider
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy_Spider
 {    
-    public static bool OnStart(Enemy self)
+    public static bool OnStart(EnemyObject self)
     {
 
 
@@ -12,7 +12,7 @@ public class Enemy_Spider
         return true;
     }
 
-    public static bool OnOnDamage(Enemy self)
+    public static bool OnOnDamage(EnemyObject self)
     {
 
 
@@ -20,7 +20,7 @@ public class Enemy_Spider
         return true;
     }
 
-    public static bool OnOnKill(Enemy self)
+    public static bool OnOnKill(EnemyObject self)
     {
 
 
@@ -28,7 +28,7 @@ public class Enemy_Spider
         return true;
     }
 
-    public static bool CalcPath(Enemy self)
+    public static bool CalcPath(EnemyObject self)
     {
 
 

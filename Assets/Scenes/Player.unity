@@ -676,7 +676,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2e7c39b519059f418e6f61a51364307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  h_enemyPrefab: {fileID: 0}
+  enemyPrefab: {fileID: 1562518597343047322, guid: d3a2a2af39dd3674ba3b374ea4a35dd0,
+    type: 3}
+  totalDifficulty: 0
 --- !u!1 &151855384
 GameObject:
   m_ObjectHideFlags: 0
