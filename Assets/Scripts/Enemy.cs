@@ -6,13 +6,15 @@ using System;
 
 public struct EnemyFunctions
 {
+    public int difficulty;
     public Func<Enemy, bool> OnStart;
     public Func<Enemy, bool> OnOnDamage;
     public Func<Enemy, bool> OnOnKill;
     public Func<Enemy, bool> CalcPath;
 
-    public EnemyFunctions(Func<Enemy, bool> OnStart, Func<Enemy, bool> OnOnDamage, Func<Enemy, bool> OnOnKill, Func<Enemy, bool> CalcPath)
+    public EnemyFunctions(int difficulty, Func<Enemy, bool> OnStart, Func<Enemy, bool> OnOnDamage, Func<Enemy, bool> OnOnKill, Func<Enemy, bool> CalcPath)
     {
+        this.difficulty = difficulty;
         this.OnStart = OnStart;
         this.OnOnDamage = OnOnDamage;
         this.OnOnKill = OnOnKill;
@@ -29,7 +31,7 @@ public class Enemy : MonoBehaviour
 {
     public static EnemyFunctions[] enemyFunctions = new EnemyFunctions[]
     {
-        new EnemyFunctions(Enemy_Spider.OnStart, Enemy_Spider.OnOnDamage, Enemy_Spider.OnOnKill, Enemy_Spider.CalcPath)
+        new EnemyFunctions(5, Enemy_Spider.OnStart, Enemy_Spider.OnOnDamage, Enemy_Spider.OnOnKill, Enemy_Spider.CalcPath)
     };    
 
     // hierarchy

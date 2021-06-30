@@ -10,6 +10,7 @@ public class DynamicLoading : MonoBehaviour
     public Rigidbody2D player_rb;
     private Vector2Int currPos=Vector2Int.zero;
     private Vector2Int prevPos=Vector2Int.one*-100;
+    public const int chunkSize=50;
     private const int mapWidth=100;
     private const int mapHeight=150;
     private HashSet<(int, int)> loadedScenes;
@@ -44,8 +45,8 @@ public class DynamicLoading : MonoBehaviour
 
     void LoadAll()
     {
-        int posX = (int)Mathf.Floor(player_rb.position.x/100);
-        int posY = (int)Mathf.Floor(player_rb.position.y/100);
+        int posX = (int)Mathf.Floor(player_rb.position.x/chunkSize);
+        int posY = (int)Mathf.Floor(player_rb.position.y/chunkSize);
 
         for(int x=Mathf.Max(posX-1, 0); x<=Mathf.Min(posX+1, mapWidth-1); x++)
         {
@@ -61,8 +62,8 @@ public class DynamicLoading : MonoBehaviour
 
     void Update()
     {    
-        currPos.x = (int)(player_rb.position.x/100);
-        currPos.y = (int)(player_rb.position.y/100);    // each scene is split into 9 chunks, prevents crossing back and forth across a line to load and unload too fast
+        currPos.x = (int)(player_rb.position.x/chunkSize);
+        currPos.y = (int)(player_rb.position.y/chunkSize);
         
         if(currPos != prevPos)
         {
@@ -71,7 +72,7 @@ public class DynamicLoading : MonoBehaviour
             loadedScenes.RemoveWhere(delegate((int x, int y) tuple)
             {
                 if(Mathf.Abs(tuple.x-currPos.x) > 2 || Mathf.Abs(tuple.y-currPos.y) > 2) {
-                    try { SceneManager.UnloadSceneAsync(Name(tuple.x, tuple.y)); } catch {}
+                    SceneManager.UnloadSceneAsync(Name(tuple.x, tuple.y));
                     return true;
                 }
                 return false;
