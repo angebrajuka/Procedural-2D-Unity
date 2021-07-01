@@ -42,7 +42,7 @@ public struct ItemStats
         this.gun = gun;
         this.use = use;
         // this.sprite = Resources.Load<Sprite>((gun == -1 ? "UI/item_" : "Sprites/gun_") + name);
-        this.sprite = Resources.Load<Sprite>("UI/item_" + name);
+        this.sprite = Resources.Load<Sprite>("Sprites/item_" + name);
     }
 }
 

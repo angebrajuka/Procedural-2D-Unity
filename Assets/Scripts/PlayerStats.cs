@@ -8,7 +8,6 @@ public class PlayerStats : MonoBehaviour
     public Transform prefab_bomb;
     public Transform knifeRotationPoint;
     public Transform knifeStart;
-    public LineRenderer line;
     public Transform weapons;
 
     // components
@@ -54,6 +53,7 @@ new public static Rigidbody2D rigidbody;
         { Ammo.ENERGY,          60  }
     };
     public static Gun[] guns = new Gun[9];
+    public static int _currentGun;
     public static Gun currentGun;
     public static LinkedListNode<GridItem> currentGunItemNode;
     
@@ -202,15 +202,14 @@ new public static Rigidbody2D rigidbody;
     {
         CancelReload();
         
+        _currentGun = _gun;
         if(_gun == -1)
         {
             currentGun = null;
-            playerStats.line.SetPosition(1, Vector3.zero);
         }
         else
         {
             currentGun = guns[_gun];
-            playerStats.line.SetPosition(1, Vector3.right*currentGun.range);
         }
 
         playerAnimator.UpdateGunImage();

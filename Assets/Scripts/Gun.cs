@@ -24,30 +24,39 @@ public class Gun : MonoBehaviour
     public float reloadTime;
     public float recoil;
     public int bullets;
-    public Sprite sprite;
     public AudioClip audio_shoot;
     public float volume_shoot;
     public AudioClip audio_reload;
     public float volume_reload;
     public Transform muzzleFlashPrefab;
-    public Transform bulletTrailPrefab;
 
 
     // stats
     [HideInInspector] public float secondsBetweenShots;
     [HideInInspector] public int ammo;
 
+    // components
+    public Transform barrelTip;
+
     protected void Start()
     {
         secondsBetweenShots = 60.0f/rpm;
         damage /= bullets;
         ammo = clipSize;
+        barrelTip = transform.GetChild(0);
     }
 
     public bool Shoot(Vector3 position, Vector2 direction, float angle, Rigidbody2D rigidbody)
     {
         AudioManager.PlayClip(audio_shoot, volume_shoot, Mixer.SFX, 0.5f, position);
-        if(muzzleFlashPrefab != null) Instantiate(muzzleFlashPrefab, transform.position, transform.rotation, transform);
+        if(muzzleFlashPrefab != null)
+        {
+            Transform flash = Instantiate(muzzleFlashPrefab, barrelTip.position, transform.rotation, transform);
+            Vector3 vec = flash.localScale;
+            vec.x /= transform.localScale.x;
+            vec.y /= transform.localScale.y;
+            flash.localScale = vec;
+        }
 
         rigidbody.AddForce(-direction*recoil);
         
@@ -88,17 +97,17 @@ public class Gun : MonoBehaviour
             }
         }
 
-        if(bulletTrailPrefab != null)
-        {
-            Transform trail = Instantiate(bulletTrailPrefab, transform.position, bulletTrailPrefab.rotation);
-            trail.localEulerAngles *= angle;
-            Transform child = trail.GetChild(0);
-            child.localPosition += Vector3.right*range/2;
+        // if(bulletTrailPrefab != null)
+        // {
+        //     Transform trail = Instantiate(bulletTrailPrefab, barrelTip.position, bulletTrailPrefab.rotation);
+        //     trail.localEulerAngles *= angle;
+        //     Transform child = trail.GetChild(0);
+        //     child.localPosition += Vector3.right*range/2;
             
-            ParticleSystem ps = child.GetComponent<ParticleSystem>();
-            ParticleSystem.ShapeModule shape = ps.shape;
-            shape.scale += Vector3.right*range;
-        }
+        //     ParticleSystem ps = child.GetComponent<ParticleSystem>();
+        //     ParticleSystem.ShapeModule shape = ps.shape;
+        //     shape.scale += Vector3.right*range;
+        // }
 
         return false;
     }

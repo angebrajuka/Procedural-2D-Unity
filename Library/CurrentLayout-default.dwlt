@@ -112,10 +112,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 678, y: 492}
+  m_MinSize: {x: 679, y: 492}
   m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 7688
+  controlID: 28914
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -137,10 +137,10 @@ MonoBehaviour:
     y: 0
     width: 1399
     height: 947
-  m_MinSize: {x: 402, y: 492}
+  m_MinSize: {x: 403, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 7652
+  controlID: 28812
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -162,10 +162,10 @@ MonoBehaviour:
     y: 0
     width: 1399
     height: 672
-  m_MinSize: {x: 402, y: 221}
-  m_MaxSize: {x: 8002, y: 4021}
+  m_MinSize: {x: 403, y: 221}
+  m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 7653
+  controlID: 28813
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -396,9 +396,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 9e330000
       m_LastClickedID: 0
-      m_ExpandedIDs: 5cfbffff1a420000
+      m_ExpandedIDs: 5a71feffca71feff2c73feff3073feff3473feff3873feff3c73feff4073feff4473feff4873feff4c73feff5073feff5473feff5873feff5c73feff6073feff6473feff6873feff6c73feff7073feff7473feff7873feff7c73feffd673feffda73feffde73feffea73feff2c74feffa089feff108afeff728bfeff768bfeff7a8bfeff7e8bfeff828bfeff868bfeff8a8bfeff8e8bfeff928bfeff968bfeff9a8bfeff9e8bfeffa28bfeffa68bfeffaa8bfeffae8bfeffb28bfeffb68bfeffba8bfeffbe8bfeffc28bfeff1c8cfeff208cfeff248cfeff308cfeff728cfeff5cfbffffdc420000e40b01009e0c0100
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -458,9 +458,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 382.64444, y: 280.5, z: 0}
+    m_Target: {x: 329.75018, y: 25.634647, z: -0.99477243}
     speed: 2
-    m_Value: {x: 0.0037313194, y: 0.09776116, z: -0.036017545}
+    m_Value: {x: 329.75018, y: 25.634647, z: -0.99477243}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -510,9 +510,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 166.22223
+    m_Target: 5.528545
     speed: 2
-    m_Value: 9.55
+    m_Value: 5.528545
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -602,20 +602,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\braju\workspaces\Unity-workspace\Caedis
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: d2400000
-    m_LastClickedID: 16594
-    m_ExpandedIDs: 00000000d2400000ac45000000ca9a3b
+    m_SelectedIDs: d0450000
+    m_LastClickedID: 17872
+    m_ExpandedIDs: 00000000d0400000aa45000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -643,7 +643,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000d2400000ac45000000ca9a3b
+    m_ExpandedIDs: 00000000d0400000aa45000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -695,7 +695,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 4}
     m_GridSize: 64
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 209

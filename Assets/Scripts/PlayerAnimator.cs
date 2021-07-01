@@ -7,18 +7,19 @@ public class PlayerAnimator : MonoBehaviour
     // hierarchy
     public EightDirectionAnimator m_animator_body;
     public SpriteRenderer m_renderer_gun;
+    public SpriteRenderer[] m_renderers_guns;
 
     // static reference
     [HideInInspector] public static PlayerAnimator playerAnimator;
 
     public void BeginMelee()
     {
-        m_renderer_gun.enabled = false;
+        if(m_renderer_gun != null) m_renderer_gun.enabled = false;
     }
 
     public void EndMelee()
     {
-        m_renderer_gun.enabled = true;
+        if(m_renderer_gun != null) m_renderer_gun.enabled = true;
     }
 
     void Start()
@@ -28,12 +29,20 @@ public class PlayerAnimator : MonoBehaviour
 
     public void UpdateGunImage()
     {
-        m_renderer_gun.sprite = PlayerStats.currentGun == null ? null : PlayerStats.currentGun.sprite;
+        if(m_renderer_gun != null) m_renderer_gun.enabled = false;
+        m_renderer_gun = PlayerStats._currentGun == -1 ? null : m_renderers_guns[PlayerStats._currentGun];
+        if(m_renderer_gun != null) m_renderer_gun.enabled = true;
     }
 
     void Update()
     {
         m_animator_body.direction = PlayerInput.direction8index;
-        m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
+        if(m_renderer_gun != null)
+        {
+            m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
+            Vector3 position = PlayerStats.currentGun.barrelTip.localPosition;
+            position.y = Mathf.Abs(position.y) * (m_renderer_gun.flipY ? -1 : 1);
+            PlayerStats.currentGun.barrelTip.localPosition = position;
+        }
     }
 }
