@@ -30,10 +30,7 @@ public class Gun : MonoBehaviour
     public AudioClip audio_reload;
     public float volume_reload;
     public Transform muzzleFlashPrefab;
-    
-
-    // components
-    ParticleSystem muzzleFlashParticleSystem;
+    public Transform bulletTrailPrefab;
 
 
     // stats
@@ -45,13 +42,11 @@ public class Gun : MonoBehaviour
         secondsBetweenShots = 60.0f/rpm;
         damage /= bullets;
         ammo = clipSize;
-        muzzleFlashParticleSystem = GetComponent<ParticleSystem>();
     }
 
     public bool Shoot(Vector3 position, Vector2 direction, float angle, Rigidbody2D rigidbody)
     {
         AudioManager.PlayClip(audio_shoot, volume_shoot, Mixer.SFX, 0.5f, position);
-        if(muzzleFlashParticleSystem != null) muzzleFlashParticleSystem.Play();
         if(muzzleFlashPrefab != null) Instantiate(muzzleFlashPrefab, transform.position, transform.rotation, transform);
 
         rigidbody.AddForce(-direction*recoil);
@@ -91,6 +86,18 @@ public class Gun : MonoBehaviour
                 raycast.transform.GetComponent<Rigidbody2D>().AddForceAtPosition(direction*100, raycast.point);
                 return target.Damage(damage);
             }
+        }
+
+        if(bulletTrailPrefab != null)
+        {
+            Transform trail = Instantiate(bulletTrailPrefab, transform.position, bulletTrailPrefab.rotation);
+            trail.localEulerAngles *= angle;
+            Transform child = trail.GetChild(0);
+            child.localPosition += Vector3.right*range/2;
+            
+            ParticleSystem ps = child.GetComponent<ParticleSystem>();
+            ParticleSystem.ShapeModule shape = ps.shape;
+            shape.scale += Vector3.right*range;
         }
 
         return false;

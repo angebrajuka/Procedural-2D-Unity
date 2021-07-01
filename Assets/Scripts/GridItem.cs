@@ -22,14 +22,18 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     
     public Item item;
     RectTransform rectTransform;
+    RectTransform grid;
     public bool followMouse;
     public LinkedListNode<GridItem> node;
     RectTransform image;
+    EventTrigger eventTrigger;
     bool rotated;
 
     public void Start()
     {
+        grid = transform.parent.GetComponent<RectTransform>();
         if(rectTransform != null) return;
+        eventTrigger = GetComponent<EventTrigger>();
         rotated = false;
         highlighted = false;
         followMouse = false;
@@ -46,9 +50,20 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     int GetWidth()  { return (int)Mathf.Round(rectTransform.sizeDelta.x/Inventory.cellSize); }
     int GetHeight() { return (int)Mathf.Round(rectTransform.sizeDelta.y/Inventory.cellSize); }
 
+    float RawX()        { return rectTransform.localPosition.x; }
+    float RawY()        { return rectTransform.localPosition.y; }
+    float RawWidth()    { return rectTransform.sizeDelta.x; }
+    float RawHeight()   { return rectTransform.sizeDelta.y; }
+
+
     public bool WithinGrid()
     {
         return (GetX() >= 0 && GetY() >= 0 && GetX()+GetWidth() <= Inventory.gridSize.x && GetY()+GetHeight() <= Inventory.gridSize.y);
+    }
+
+    public bool WithinGridRaw()
+    {
+        return (RawX()+RawWidth()/2 > 0 && RawX()-RawWidth()/2 < grid.sizeDelta.x && RawY()+RawHeight()/2 > 0 && RawY()-RawHeight()/2 < grid.sizeDelta.y);
     }
 
     public void SetPos(int x, int y)
@@ -73,7 +88,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if(followMouse)
         {
-            if(Collides()) return;
+            if(Collides() || (WithinGridRaw() && !WithinGrid())) return;
             if(WithinGrid()) SetPos(GetX(), GetY());
         }
         else
@@ -82,6 +97,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
 
         followMouse=!followMouse;
+        eventTrigger.enabled = !followMouse;
     }
 
     public void Rotate()

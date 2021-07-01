@@ -41,7 +41,8 @@ public struct ItemStats
         this.size = size;
         this.gun = gun;
         this.use = use;
-        this.sprite = Resources.Load<Sprite>((gun == -1 ? "UI/item_" : "Sprites/gun_") + name);
+        // this.sprite = Resources.Load<Sprite>((gun == -1 ? "UI/item_" : "Sprites/gun_") + name);
+        this.sprite = Resources.Load<Sprite>("UI/item_" + name);
     }
 }
 
@@ -107,7 +108,7 @@ public class Items
         new ItemStats("FISHING_ROD",    new Vector2Int(3, 3),   -1, UseFishingRod),
         new ItemStats("FLASHLIGHT",     new Vector2Int(2, 1),   -1, UseNone),
         new ItemStats("PISTOL",         new Vector2Int(3, 2),   0,  UseNone),
-        new ItemStats("SMG",            new Vector2Int(5, 3),   1,  UseNone),
+        new ItemStats("SMG",            new Vector2Int(4, 3),   1,  UseNone),
         new ItemStats("ASSAULT_RIFLE",  new Vector2Int(6, 3),   2,  UseNone),
         new ItemStats("DMR",            new Vector2Int(7, 3),   3,  UseNone),
         new ItemStats("SHOTGUN_PUMP",   new Vector2Int(6, 3),   4,  UseNone),
