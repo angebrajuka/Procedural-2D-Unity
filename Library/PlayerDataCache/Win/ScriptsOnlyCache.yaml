@@ -13,8 +13,6 @@ ScriptsOnlyBuild:
     - ButtonQuit
     - ButtonSave
     - ButtonSounds
-    - Coin
-    - Coin_Explosion
     - DaylightCycle
     - DestroyParticleSystem
     - DevConsole
@@ -37,6 +35,7 @@ ScriptsOnlyBuild:
     - MuzzleFlash
     - PauseHandler
     - PlayerAnimator
+    - PlayerEnergyDrain
     - PlayerHUD
     - PlayerInput
     - PlayerStats
@@ -358,8 +357,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12004}
     - Class: 114
-      Script: {instanceID: 12366}
-    - Class: 114
       Script: {instanceID: 12404}
     - Class: 114
       Script: {instanceID: 12564}
@@ -369,8 +366,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 12826}
     - Class: 114
       Script: {instanceID: 13214}
-    - Class: 114
-      Script: {instanceID: 13372}
     - Class: 114
       Script: {instanceID: 13394}
     - Class: 114
@@ -421,6 +416,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 16268}
     - Class: 114
       Script: {instanceID: 16358}
+    - Class: 114
+      Script: {instanceID: 28168}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1528,12 +1525,6 @@ ScriptsOnlyBuild:
     className: AdvancedRuleOverrideTile
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Coin
-  - hash:
-      serializedVersion: 2
       Hash: fc29f975ab35a5033d05bcfda3c82435
     assemblyName: Unity.2D.Tilemap.Extras.dll
     namespaceName: UnityEngine
@@ -1546,7 +1537,7 @@ ScriptsOnlyBuild:
     className: AnimationTrack
   - hash:
       serializedVersion: 2
-      Hash: 9e2ba3769b5c61f8452d0427fa44f1f0
+      Hash: ff62664e85f688866c73420454d485da
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerHUD
@@ -2050,7 +2041,7 @@ ScriptsOnlyBuild:
     className: ButtonMenu
   - hash:
       serializedVersion: 2
-      Hash: bd6ef05d66b03d8ec02070599e13afac
+      Hash: 7eb729f86c719daac864696fac39eab6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EnemyObject
@@ -2438,6 +2429,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlayerEnergyDrain
   platform: 5
   scenePathNames:
   - Assets/Scenes/MainMenu.unity

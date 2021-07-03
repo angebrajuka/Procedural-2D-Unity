@@ -6,7 +6,6 @@ public class EnemyObject : MonoBehaviour
 {
     // hierarchy
     public EightDirectionAnimator m_animator;
-    public Transform prefab_coinExplosion;
     public bool awake;
     public EnemyType type;
     
@@ -49,8 +48,6 @@ public class EnemyObject : MonoBehaviour
 
     public bool OnKill(float damage)
     {
-        Transform coinExplosion = Instantiate(prefab_coinExplosion);
-        coinExplosion.position = transform.position;
         Enemy.enemies[(int)type].OnOnKill(this);
         Destroy(this.gameObject);
         return true;

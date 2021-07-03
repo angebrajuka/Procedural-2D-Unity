@@ -172,6 +172,7 @@ public class PlayerInput : MonoBehaviour
         // inventory
         if(Input.GetKeyDown(keybinds[Keybind.inventory]))
         {
+            PlayerStats.EndMelee();
             PauseHandler.Pause();
             PauseHandler.Blur();
             inventory.gameObject.SetActive(true);
@@ -195,7 +196,7 @@ public class PlayerInput : MonoBehaviour
         }
 
         //items
-        if(Input.GetKeyDown(keybinds[Keybind.item]))
+        if(Input.GetKeyDown(keybinds[Keybind.item]) && !PlayerStats.melee)
         {
             Items.items[(int)PlayerStats.currentItem].use();
         }

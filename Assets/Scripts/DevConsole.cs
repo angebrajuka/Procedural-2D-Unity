@@ -24,16 +24,18 @@ public class DevConsole : MonoBehaviour
 
     static bool Time(string[] args)
     {
+        float amount = float.Parse(args[1]);
+
         switch(args[0])
         {
         case "set":
-            DaylightCycle.time = float.Parse(args[1]);
+            DaylightCycle.time = amount;
             break;
         case "add":
-            DaylightCycle.time += float.Parse(args[1]);
+            DaylightCycle.time += amount;
             break;
         case "subtract":
-            DaylightCycle.time -= float.Parse(args[1]);
+            DaylightCycle.time -= amount;
             break;
         default:
             return false;
@@ -44,17 +46,40 @@ public class DevConsole : MonoBehaviour
 
     static bool Health(string[] args)
     {
+        float amount = float.Parse(args[1]);
+
         switch(args[0])
         {
         case "add":
-            s_target.Heal(float.Parse(args[1]));
+            s_target.Heal(amount);
             break;
-        case "subtract":
-            s_target.Damage(float.Parse(args[1]));
+        case "sub":
+            s_target.Damage(amount);
             break;
         default:
             return false;
         }
+    
+        return true;
+    }
+
+    static bool Energy(string[] args)
+    {
+        float amount = float.Parse(args[1]);
+
+        switch(args[0])
+        {
+        case "set":
+            PlayerStats.energy = amount;
+            break;
+        case "add":
+            PlayerStats.energy += amount;
+            break;
+        default:
+            return false;
+        }
+
+        PlayerStats.hud.UpdateEnergy();
     
         return true;
     }
@@ -123,6 +148,7 @@ public class DevConsole : MonoBehaviour
     {
         {"time",        Time        },
         {"health",      Health      },
+        {"energy",      Energy      },
         {"ammo",        Ammunition  },
         {"setgun",      SetGun      },
         {"tp",          Teleport    }

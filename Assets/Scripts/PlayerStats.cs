@@ -28,8 +28,8 @@ new public static Rigidbody2D rigidbody;
 
 
     // upgrades + resources
-    public static int coins=0;
     public static float g_KNIFE_DAMAGE=4;
+    public static float energyMax, energy;
 
 
 
@@ -142,6 +142,8 @@ new public static Rigidbody2D rigidbody;
         gunRpmTimer = 0;
         gunReloadTimer = 0;
         melee = false;
+        energyMax = 50;
+        energy = energyMax;
         hud.UpdateHotbar();
     }
 
@@ -198,6 +200,12 @@ new public static Rigidbody2D rigidbody;
         playerStats.knifeRotationPoint.localEulerAngles = Vector3.forward*k_KNIFE_ARC*knifeDirection;
     }
 
+    public static void EndMelee() {
+        playerStats.knifeRotationPoint.gameObject.SetActive(false);
+        PlayerAnimator.playerAnimator.EndMelee();
+        melee = false;
+    }
+
     public static void SwitchGun(sbyte _gun)
     {
         CancelReload();
@@ -226,9 +234,7 @@ new public static Rigidbody2D rigidbody;
             
             if(playerStats.knifeRotationPoint.localEulerAngles.z < 360-k_KNIFE_ARC && playerStats.knifeRotationPoint.localEulerAngles.z > k_KNIFE_ARC)
             {
-                // end melee
-                playerStats.knifeRotationPoint.gameObject.SetActive(false);
-                PlayerAnimator.playerAnimator.EndMelee();
+                EndMelee();
             }
         }
 
