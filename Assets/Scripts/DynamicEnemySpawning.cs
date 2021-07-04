@@ -36,37 +36,63 @@ public class DynamicEnemySpawning : MonoBehaviour
 {
     // hierarchy
     public GameObject enemyPrefab;
+    public static GameObject s_enemyPrefab;
 
     // stats
-    public LinkedList<EnemyObject> enemyObjects;
-    public int totalDifficulty;
+    public static LinkedList<EnemyObject> enemyObjects;
+    public static int totalDifficulty;
+    public static float timer;
+    public const float minRadius=30, maxRadius=45;
 
     void Start()
     {
+        s_enemyPrefab = enemyPrefab;
         enemyObjects = new LinkedList<EnemyObject>();
         totalDifficulty = 0;
     }
 
-    public void Spawn(EnemyType type) {
+    public static void Spawn(EnemyType type, bool autoPosition=true, Vector2 position=default(Vector2))
+    {
+        if(autoPosition)
+        {
+            position = new Vector2(0, 0);
+            float radius = UnityEngine.Random.value * (maxRadius-minRadius) + minRadius;
+            position.x = (UnityEngine.Random.value-0.5f) * radius * 2;
+            position.y = Mathf.Sqrt(radius*radius - position.x*position.x) * (UnityEngine.Random.value > 0.5f ? 1 : -1);
+            position += PlayerStats.rigidbody.position;
+        }
         Enemy enemy = Enemy.enemies[(int)type];
-        GameObject gameObject = Instantiate(enemyPrefab, PlayerStats.rigidbody.position, Quaternion.identity);
+        GameObject gameObject = Instantiate(s_enemyPrefab, position, Quaternion.identity);
         EnemyObject enemyObject = gameObject.GetComponent<EnemyObject>();
         enemyObjects.AddLast(enemyObject);
         totalDifficulty += enemy.difficulty;
     }
 
-    public void DeSpawn(EnemyObject enemyObject) {
+    public static void DeSpawn(EnemyObject enemyObject)
+    {
+        OnKilled(enemyObject);
+        Destroy(enemyObject);
+    }
+
+    public static void OnKilled(EnemyObject enemyObject)
+    {
         Enemy enemy = Enemy.enemies[(int)enemyObject.type];
 
         totalDifficulty -= enemy.difficulty;
+
+        enemyObjects.Remove(enemyObject);
     }
 
     void Update()
     {
-        if(DaylightCycle.time > 140 || DaylightCycle.time < 5)
+        if(DaylightCycle.time > (DaylightCycle.k_EVENING + DaylightCycle.k_NIGHT) / 2 || DaylightCycle.time < DaylightCycle.k_DAY / 2)
         {
-            if(enemyObjects.Count < 1)
+            timer -= Time.deltaTime;
+
+            if(totalDifficulty < 100 && timer <= 0)
             {
+                timer = UnityEngine.Random.value*0+0.5f;
+
                 Spawn(EnemyType.SPIDER);
             }
         }

@@ -49,6 +49,7 @@ public class EnemyObject : MonoBehaviour
     public bool OnKill(float damage)
     {
         Enemy.enemies[(int)type].OnOnKill(this);
+        DynamicEnemySpawning.OnKilled(this);
         Destroy(this.gameObject);
         return true;
     }

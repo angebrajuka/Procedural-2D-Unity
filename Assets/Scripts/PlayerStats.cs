@@ -11,33 +11,28 @@ public class PlayerStats : MonoBehaviour
     public Transform weapons;
 
     // components
+    public static PlayerStats playerStats;
     public static Target target;
     public static PlayerHUD hud;
     public static Inventory inventory;
 new public static Rigidbody2D rigidbody;
     public static PlayerAnimator playerAnimator;
     public static PlayerInput playerInput;
-    
+
 
     // constant
     public const float k_RUN_ACCELL = 145.0f;
     public const float k_KNIFE_SPEED = 500f;
     public const float k_KNIFE_ARC = 70f;
 
-
-
-
     // upgrades + resources
     public static float g_KNIFE_DAMAGE=4;
     public static float energyMax, energy;
-
-
 
     // weapons
     public static float gunRpmTimer;
     public static float gunReloadTimer;
     public static GameObject reloadSound;
-
     public static readonly Dictionary<Ammo, int> maxAmmo = new Dictionary<Ammo, int>
     {
         { Ammo.BULLETS_SMALL,   60  },
@@ -56,15 +51,10 @@ new public static Rigidbody2D rigidbody;
     public static int _currentGun;
     public static Gun currentGun;
     public static LinkedListNode<GridItem> currentGunItemNode;
-    
-
-
-    public static bool CanShoot() { return gunRpmTimer <= 0 && currentGun != null && currentGun.ammo > 0 && gunReloadTimer <= 0; }
-
-
 
     // items
     public static bool melee;
+    private static sbyte knifeDirection;
     public static Item currentItem = Item.NONE;
     public static LinkedListNode<GridItem> currentItemNode;
     public static Item interactItem = Item.NONE;
@@ -72,9 +62,9 @@ new public static Rigidbody2D rigidbody;
     public static int interactPriority=0;
 
 
-    // other
-    public static PlayerStats playerStats;
-    private static sbyte knifeDirection;
+    // global
+    public static byte difficulty;
+    public static byte save;
 
 
     void Start()
@@ -95,14 +85,14 @@ new public static Rigidbody2D rigidbody;
         Inventory.items.Clear();
 
 
-        inventory.AutoAdd(Item.BLADE);
-        inventory.AutoAdd(Item.BOMB);
+        // inventory.AutoAdd(Item.BLADE);
+        // inventory.AutoAdd(Item.BOMB);
         // inventory.AutoAdd(Item.MEDKIT);
         // inventory.AutoAdd(Item.STIMPACK);
         // inventory.AutoAdd(Item.COMPASS);
         // inventory.AutoAdd(Item.POTION);
-        inventory.AutoAdd(Item.FISHING_ROD);
-        inventory.AutoAdd(Item.FLASHLIGHT);
+        // inventory.AutoAdd(Item.FISHING_ROD);
+        // inventory.AutoAdd(Item.FLASHLIGHT);
         inventory.AutoAdd(Item.PISTOL);
         inventory.AutoAdd(Item.SMG);
         inventory.AutoAdd(Item.ASSAULT_RIFLE);
@@ -112,31 +102,6 @@ new public static Rigidbody2D rigidbody;
         inventory.AutoAdd(Item.SHOTGUN_AUTO);
         inventory.AutoAdd(Item.ENERGY_RIFLE);
         inventory.AutoAdd(Item.ENERGY_RAILGUN);
-
-        // inventory.AutoAdd(Item.PISTOL);
-        // inventory.AutoAdd(Item.SMG);
-        // inventory.AutoAdd(Item.ASSAULT_RIFLE);
-        // inventory.AutoAdd(Item.DMR);
-        // inventory.AutoAdd(Item.SHOTGUN_PUMP);
-        // inventory.AutoAdd(Item.SHOTGUN_DOUBLE);
-        // inventory.AutoAdd(Item.SHOTGUN_AUTO);
-        // inventory.AutoAdd(Item.FLASHLIGHT);
-        // inventory.AutoAdd(Item.ENERGY_RAILGUN);
-        // inventory.AutoAdd(Item.SMG);
-        // inventory.AutoAdd(Item.PISTOL);
-        // inventory.AutoAdd(Item.BOMB);
-        // inventory.AutoAdd(Item.BOMB);
-        // inventory.AutoAdd(Item.BOMB);
-        // inventory.AutoAdd(Item.BOMB);
-        // inventory.AutoAdd(Item.BOMB);
-        // inventory.AutoAdd(Item.BOMB);
-        // inventory.AutoAdd(Item.BOMB);
-        // inventory.AutoAdd(Item.BOMB);
-        // inventory.AutoAdd(Item.BOMB);
-        // inventory.AutoAdd(Item.BOMB);
-        // inventory.AutoAdd(Item.BOMB);
-        // inventory.AutoAdd(Item.BOMB);
-        // inventory.AutoAdd(Item.BOMB);
 
         SwitchGun(-1);
         gunRpmTimer = 0;
@@ -224,6 +189,11 @@ new public static Rigidbody2D rigidbody;
 
         hud.UpdateAmmo();
         hud.UpdateHotbar();
+    }
+
+    public static bool CanShoot()
+    {
+        return gunRpmTimer <= 0 && currentGun != null && currentGun.ammo > 0 && gunReloadTimer <= 0;
     }
 
     void Update()

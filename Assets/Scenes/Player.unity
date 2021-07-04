@@ -725,7 +725,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 1562518597343047322, guid: d3a2a2af39dd3674ba3b374ea4a35dd0,
     type: 3}
-  totalDifficulty: 0
 --- !u!1 &151829636
 GameObject:
   m_ObjectHideFlags: 0
