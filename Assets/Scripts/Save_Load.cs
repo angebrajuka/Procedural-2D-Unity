@@ -51,11 +51,13 @@ public static class Save_Load
             FileStream stream = new FileStream(filePath, FileMode.Open);
 
             SaveData data = formatter.Deserialize(stream) as SaveData;
+            data.Load();
             stream.Close();
         }
         else
         {
             Debug.LogError("file not found at '"+filePath+"'");
+            Application.Quit();
         }
     }
 }

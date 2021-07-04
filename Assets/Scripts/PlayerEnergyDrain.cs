@@ -12,9 +12,9 @@ public class PlayerEnergyDrain : MonoBehaviour
             PlayerStats.energy = Mathf.Min(PlayerStats.energy, PlayerStats.energyMax);
             PlayerStats.hud.UpdateEnergy();
         }
-        else if(PlayerStats.energy > 0 && PlayerStats.currentItem == Item.FLASHLIGHT)
+        else if(PlayerStats.energy > 0)
         {
-            PlayerStats.energy -= Time.deltaTime;
+            PlayerStats.energy -= Time.deltaTime * ((PlayerStats.currentItem == Item.FLASHLIGHT ? 1 : 0) + (PlayerStats.sprinting ? 1 : 0));
             PlayerStats.energy = Mathf.Max(PlayerStats.energy, 0);
             PlayerStats.hud.UpdateEnergy();
         }

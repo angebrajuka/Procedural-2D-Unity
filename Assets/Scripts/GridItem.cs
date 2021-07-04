@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-[System.Serializable]
 public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {    
     public bool highlighted;
@@ -27,7 +26,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public LinkedListNode<GridItem> node;
     RectTransform image;
     EventTrigger eventTrigger;
-    bool rotated;
+    public bool rotated;
 
     public void Start()
     {
@@ -45,10 +44,10 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         child.GetComponent<Image>().sprite = Items.items[(int)item].sprite;
     }
 
-    int GetX()      { return (int)Mathf.Round((rectTransform.localPosition.x-rectTransform.sizeDelta.x/2)/Inventory.cellSize); }
-    int GetY()      { return (int)Mathf.Round((rectTransform.localPosition.y-rectTransform.sizeDelta.y/2)/Inventory.cellSize); }
-    int GetWidth()  { return (int)Mathf.Round(rectTransform.sizeDelta.x/Inventory.cellSize); }
-    int GetHeight() { return (int)Mathf.Round(rectTransform.sizeDelta.y/Inventory.cellSize); }
+    public int GetX()       { return (int)Mathf.Round((rectTransform.localPosition.x-rectTransform.sizeDelta.x/2)/Inventory.cellSize); }
+    public int GetY()       { return (int)Mathf.Round((rectTransform.localPosition.y-rectTransform.sizeDelta.y/2)/Inventory.cellSize); }
+    int GetWidth()          { return (int)Mathf.Round(rectTransform.sizeDelta.x/Inventory.cellSize); }
+    int GetHeight()         { return (int)Mathf.Round(rectTransform.sizeDelta.y/Inventory.cellSize); }
 
     float RawX()        { return rectTransform.localPosition.x; }
     float RawY()        { return rectTransform.localPosition.y; }
@@ -73,7 +72,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public bool Collides()
     {
-        foreach(GridItem item in Inventory.items)
+        foreach(GridItem item in PlayerStats.inventory.items)
         {
             if(item == this) continue;
             
@@ -102,10 +101,13 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void Rotate()
     {
+        int x=GetX();
+        int y=GetY();
         rotated = !rotated;
         image.eulerAngles = Vector3.back*90-image.eulerAngles;
         Vector2 size = rectTransform.sizeDelta;
         rectTransform.sizeDelta = new Vector2(size.y, size.x);
+        if(!followMouse) SetPos(x, y);
     }
 
     void Update()

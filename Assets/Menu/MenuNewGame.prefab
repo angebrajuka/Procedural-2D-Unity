@@ -123,7 +123,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 271129933323499592}
+      objectReference: {fileID: 6508285656769920067}
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -425,7 +425,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 271129933323499592}
+      objectReference: {fileID: 5145731638103270228}
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -565,7 +565,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 271129933323499592}
+      objectReference: {fileID: 7238728745972916785}
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -845,7 +845,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 271129933323499592}
+      objectReference: {fileID: 3728702253144594038}
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -985,7 +985,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 271129933323499592}
+      objectReference: {fileID: 1486226709091401186}
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName

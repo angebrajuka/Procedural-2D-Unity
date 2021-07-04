@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ButtonDifficulty : MonoBehaviour
 {
@@ -10,9 +9,7 @@ public class ButtonDifficulty : MonoBehaviour
     public void OnClick()
     {
         PlayerStats.difficulty = difficulty;
-        PauseHandler.UnBlur();
-        PauseHandler.UnPause();
-        MenuHandler.currentMenuPrefab = null;
-        SceneManager.LoadScene("Player", LoadSceneMode.Single);
+        PlayerStats.load = false;
+        MenuHandler.Start();
     }
 }

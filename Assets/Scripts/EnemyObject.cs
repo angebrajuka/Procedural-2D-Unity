@@ -59,7 +59,7 @@ public class EnemyObject : MonoBehaviour
     {
         following = !forceWander && (UnityEngine.Random.value > 0.4f);
         
-        targetMovement = following ? PlayerInput.m_rigidbody.position-m_rigidbody.position : (Math.vectors[(int)Mathf.Floor(UnityEngine.Random.value*8)]);
+        targetMovement = following ? PlayerStats.rigidbody.position-m_rigidbody.position : (Math.vectors[(int)Mathf.Floor(UnityEngine.Random.value*8)]);
 
         m_animator.direction = Math.AngleToDir8(Math.NormalizedVecToAngle(targetMovement));
         if(m_animator.direction >= 8) m_animator.direction = 0;

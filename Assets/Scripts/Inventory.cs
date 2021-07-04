@@ -12,13 +12,13 @@ public class Inventory : MonoBehaviour
     public Rigidbody2D player_rb;
     public PlayerAnimator playerAnimator;
 
-    public static bool isOpen=false;
+    public bool isOpen=false;
 
-    public static LinkedList<GridItem> items = new LinkedList<GridItem>();
+    public LinkedList<GridItem> items = new LinkedList<GridItem>();
     public static readonly Vector2Int gridSize = new Vector2Int(9, 12);
     public const float cellSize = 384f/9f;
 
-    void Add(Item item, int x, int y)
+    public void Add(Item item, int x, int y)
     {
         GameObject gameObject = Instantiate(gridItemPrefab, Vector3.zero, Quaternion.identity, grid);
         GridItem gridItem = gameObject.GetComponent<GridItem>();
@@ -27,6 +27,18 @@ public class Inventory : MonoBehaviour
         gridItem.node = items.Last;
         gridItem.Start();
         gridItem.SetPos(x, y);
+    }
+
+    public void Clear()
+    {
+        LinkedListNode<GridItem> node = items.First;
+        while(items.Count > 0)
+        {
+            if(node.Value.gameObject != null) Destroy(node.Value.gameObject);
+
+            node = node.Next;
+            items.RemoveFirst();
+        }
     }
 
     public bool AutoAdd(Item item)

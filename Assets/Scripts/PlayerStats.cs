@@ -22,6 +22,7 @@ new public static Rigidbody2D rigidbody;
 
     // constant
     public const float k_RUN_ACCELL = 145.0f;
+    public const float k_SPRINT_MULTIPLIER = 1.5f;
     public const float k_KNIFE_SPEED = 500f;
     public const float k_KNIFE_ARC = 70f;
 
@@ -61,10 +62,14 @@ new public static Rigidbody2D rigidbody;
     public static ItemPickup interactPickup;
     public static int interactPriority=0;
 
+    //state
+    public static bool sprinting;
+
 
     // global
     public static byte difficulty;
     public static byte save;
+    public static bool load;
 
 
     void Start()
@@ -82,33 +87,43 @@ new public static Rigidbody2D rigidbody;
             guns[i] = weapons.GetChild(i).GetComponent<Gun>();
         }
 
-        Inventory.items.Clear();
-
-
-        // inventory.AutoAdd(Item.BLADE);
-        // inventory.AutoAdd(Item.BOMB);
-        // inventory.AutoAdd(Item.MEDKIT);
-        // inventory.AutoAdd(Item.STIMPACK);
-        // inventory.AutoAdd(Item.COMPASS);
-        // inventory.AutoAdd(Item.POTION);
-        // inventory.AutoAdd(Item.FISHING_ROD);
-        // inventory.AutoAdd(Item.FLASHLIGHT);
-        inventory.AutoAdd(Item.PISTOL);
-        inventory.AutoAdd(Item.SMG);
-        inventory.AutoAdd(Item.ASSAULT_RIFLE);
-        inventory.AutoAdd(Item.DMR);
-        inventory.AutoAdd(Item.SHOTGUN_PUMP);
-        inventory.AutoAdd(Item.SHOTGUN_DOUBLE);
-        inventory.AutoAdd(Item.SHOTGUN_AUTO);
-        inventory.AutoAdd(Item.ENERGY_RIFLE);
-        inventory.AutoAdd(Item.ENERGY_RAILGUN);
-
         SwitchGun(-1);
         gunRpmTimer = 0;
         gunReloadTimer = 0;
         melee = false;
         energyMax = 50;
-        energy = energyMax;
+
+        if(load)
+        {
+            Save_Load.Load(save);
+        }
+        else
+        {
+            energy = energyMax;
+
+            inventory.items.Clear();
+
+            // inventory.AutoAdd(Item.BLADE);
+            // inventory.AutoAdd(Item.BOMB);
+            // inventory.AutoAdd(Item.MEDKIT);
+            // inventory.AutoAdd(Item.STIMPACK);
+            // inventory.AutoAdd(Item.COMPASS);
+            // inventory.AutoAdd(Item.POTION);
+            // inventory.AutoAdd(Item.FISHING_ROD);
+            // inventory.AutoAdd(Item.FLASHLIGHT);
+            inventory.AutoAdd(Item.PISTOL);
+            inventory.AutoAdd(Item.SMG);
+            inventory.AutoAdd(Item.ASSAULT_RIFLE);
+            inventory.AutoAdd(Item.DMR);
+            inventory.AutoAdd(Item.SHOTGUN_PUMP);
+            inventory.AutoAdd(Item.SHOTGUN_DOUBLE);
+            inventory.AutoAdd(Item.SHOTGUN_AUTO);
+            inventory.AutoAdd(Item.ENERGY_RIFLE);
+            inventory.AutoAdd(Item.ENERGY_RAILGUN);
+
+            Save_Load.Save(save);
+        }
+        
         hud.UpdateHotbar();
     }
 
@@ -122,7 +137,7 @@ new public static Rigidbody2D rigidbody;
 
     public static void BeginReload()
     {
-        if(Inventory.isOpen || currentGun == null || currentGun.ammo == currentGun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || ammo[currentGun.ammoType] == 0) return;
+        if(inventory.isOpen || currentGun == null || currentGun.ammo == currentGun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || ammo[currentGun.ammoType] == 0) return;
         gunReloadTimer = currentGun.reloadTime;
         reloadSound = AudioManager.PlayClip(currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
     }

@@ -9,6 +9,7 @@ public enum Keybind:byte
     moveNorth,
     moveWest,
     moveSouth,
+    sprint,
     shoot,
     reload,
     item,
@@ -26,10 +27,6 @@ public class PlayerInput : MonoBehaviour
     public InventoryControls inventory;
 
 
-    // components
-    public static Rigidbody2D m_rigidbody;
-
-
     // input
     private Vector2 input_move;
     private Vector2 mouse_offset;
@@ -42,58 +39,54 @@ public class PlayerInput : MonoBehaviour
 
 
     // keybinds
-    public static Dictionary<Keybind, KeyCode>  keybinds = new Dictionary<Keybind, KeyCode>()
-    {
-        {Keybind.moveEast,      KeyCode.D       },
-        {Keybind.moveNorth,     KeyCode.W       },
-        {Keybind.moveWest,      KeyCode.A       },
-        {Keybind.moveSouth,     KeyCode.S       },
-        {Keybind.shoot,         KeyCode.Mouse0  },
-        {Keybind.reload,        KeyCode.R       },
-        {Keybind.item,          KeyCode.Mouse1  },
-        {Keybind.interact,      KeyCode.F       },
-        {Keybind.inventory,     KeyCode.Tab     },
-        {Keybind.i_equip,       KeyCode.E       },
-        {Keybind.i_rotate,      KeyCode.R       },
-    };
+    public static Dictionary<Keybind, KeyCode> keybinds = null;
 
-    public static Dictionary<Keybind, string>   keybindStrings = new Dictionary<Keybind, string>()
+    public static Dictionary<Keybind, string> keybindStrings = new Dictionary<Keybind, string>()
     {
-        {Keybind.moveEast,      "moveEast"  },
-        {Keybind.moveNorth,     "moveNorth" },
-        {Keybind.moveWest,      "moveWest"  },
-        {Keybind.moveSouth,     "moveSouth" },
-        {Keybind.shoot,         "shoot"     },
-        {Keybind.reload,        "reload"    },
-        {Keybind.item,          "item"      },
-        {Keybind.interact,      "interact"  },
-        {Keybind.inventory,     "inventory" },
-        {Keybind.i_equip,       "i_equip"   },
-        {Keybind.i_rotate,      "i_rotate"  },
+        {Keybind.moveEast,      "move east"             },
+        {Keybind.moveNorth,     "move north"            },
+        {Keybind.moveWest,      "move west"             },
+        {Keybind.moveSouth,     "move south"            },
+        {Keybind.sprint,        "sprint"                },
+        {Keybind.shoot,         "shoot"                 },
+        {Keybind.reload,        "reload"                },
+        {Keybind.item,          "use item"              },
+        {Keybind.interact,      "interact"              },
+        {Keybind.inventory,     "open inventory"        },
+        {Keybind.i_equip,       "inventory equip item"  },
+        {Keybind.i_rotate,      "inventory rotate item" },
     };
     
     public static void DefaultKeybinds()
     {
-        keybinds[Keybind.moveEast]  = KeyCode.D;
-        keybinds[Keybind.moveNorth] = KeyCode.W;
-        keybinds[Keybind.moveWest]  = KeyCode.A;
-        keybinds[Keybind.moveSouth] = KeyCode.S;
-        keybinds[Keybind.shoot]     = KeyCode.Mouse0;
-        keybinds[Keybind.reload]    = KeyCode.R;
-        keybinds[Keybind.item]      = KeyCode.Mouse1;
-        keybinds[Keybind.interact]  = KeyCode.F;
-        keybinds[Keybind.inventory] = KeyCode.Tab;
-        keybinds[Keybind.i_equip]   = KeyCode.E;
-        keybinds[Keybind.i_rotate]  = KeyCode.R;
+        keybinds = new Dictionary<Keybind, KeyCode>()
+        {
+            {Keybind.moveEast,      KeyCode.D           },
+            {Keybind.moveNorth,     KeyCode.W           },
+            {Keybind.moveWest,      KeyCode.A           },
+            {Keybind.moveSouth,     KeyCode.S           },
+            {Keybind.sprint,        KeyCode.LeftControl },
+            {Keybind.shoot,         KeyCode.Mouse0      },
+            {Keybind.reload,        KeyCode.R           },
+            {Keybind.item,          KeyCode.Mouse1      },
+            {Keybind.interact,      KeyCode.F           },
+            {Keybind.inventory,     KeyCode.Tab         },
+            {Keybind.i_equip,       KeyCode.E           },
+            {Keybind.i_rotate,      KeyCode.R           },
+        };
     }
 
     public static void LoadKeybinds()
-    {    
+    {
+        if(keybinds == null)
+        {
+            DefaultKeybinds();
+        }
         foreach(KeyValuePair<Keybind, string> pair in keybindStrings)
         {
             if(!PlayerPrefs.HasKey(keybindStrings[pair.Key]))
             {
-                SaveKeybinds();
+                SaveKeybinds(true, pair.Key);
             }
             keybinds[pair.Key] = (KeyCode)PlayerPrefs.GetInt(keybindStrings[pair.Key]);
         }
@@ -118,9 +111,7 @@ public class PlayerInput : MonoBehaviour
 
     void Start()
     {
-        m_rigidbody = GetComponent<Rigidbody2D>();
-        PlayerStats.rigidbody = m_rigidbody;
-        PlayerStats.target = GetComponent<Target>();
+        PlayerStats.sprinting = false;
     }
 
     void Update()
@@ -166,6 +157,8 @@ public class PlayerInput : MonoBehaviour
                 else                                        direction8index = Math.directions8[(int)-Mathf.Round(mouse_offset.y)+1, (int)Mathf.Round(mouse_offset.x)+1];
 
             input_move.Normalize();
+
+            PlayerStats.sprinting = Input.GetKey(keybinds[Keybind.sprint]) && PlayerStats.energy > 0;
         }
 
 
@@ -191,7 +184,7 @@ public class PlayerInput : MonoBehaviour
         // pew pew
         if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerStats.CanShoot())
         {
-            PlayerStats.currentGun.Shoot(m_rigidbody.position, mouse_offset, angle, m_rigidbody);
+            PlayerStats.currentGun.Shoot(PlayerStats.rigidbody.position, mouse_offset, angle, PlayerStats.rigidbody);
             PlayerStats.hud.UpdateAmmo();
         }
 
@@ -243,6 +236,6 @@ public class PlayerInput : MonoBehaviour
 
     void FixedUpdate()
     {
-        m_rigidbody.AddForce(input_move*PlayerStats.k_RUN_ACCELL);
+        PlayerStats.rigidbody.AddForce(input_move * (PlayerStats.sprinting ? PlayerStats.k_SPRINT_MULTIPLIER : 1) * PlayerStats.k_RUN_ACCELL);
     }
 }

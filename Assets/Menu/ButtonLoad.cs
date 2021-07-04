@@ -1,13 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ButtonLoad : MonoBehaviour {
     
-    public int save;
+    public byte save;
+    [HideInInspector] public bool empty = true;
 
-    public void OnButtonPress() {
-
+    public void OnButtonPress()
+    {
+        if(!empty)
+        {
+            PlayerStats.load = true;
+            PlayerStats.save = save;
+            MenuHandler.Start();
+        }
     }
 }

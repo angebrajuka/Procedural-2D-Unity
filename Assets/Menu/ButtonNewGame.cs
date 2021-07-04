@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ButtonNewGame : MonoBehaviour
 {
-    public byte save;
+    public int save;
     public GameObject difficultyMenu;
 
     public void OnClick()
     {
-        PlayerStats.save = save;
+        PlayerStats.save = (byte)save;
         MenuHandler.SetMenu(difficultyMenu);
     }
 }
