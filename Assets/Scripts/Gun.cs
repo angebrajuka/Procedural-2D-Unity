@@ -2,19 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Ammo:byte
-{
-    BULLETS_SMALL=0,
-    BULLETS_BIG=1,
-    SHELLS=2,
-    ENERGY=3
-}
-
 public class Gun : MonoBehaviour
 {
     // Hierarchy
     public string gunName;
-    public Ammo ammoType;
+    public Item ammoType;
     public float damage;
     public float rpm;
     public float spread;

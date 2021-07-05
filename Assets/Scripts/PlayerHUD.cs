@@ -14,7 +14,7 @@ new public Transform transform;
     public Image currentItem;
     public RectTransform ammoTxt;
     public Sprite[] ammoImages;
-    public Text smallBulletsTxt, bigBulletsTxt, shellsTxt, energyTxt;
+    // public Text smallBulletsTxt, bigBulletsTxt, shellsTxt, energyTxt;
     public Slider bar_health;
     public Image bar_health_fillRect;
     public Slider bar_energy;
@@ -41,7 +41,7 @@ new public Transform transform;
         else
         {
             ammoTxt.gameObject.SetActive(true);
-            ammoImage.sprite = ammoImages[(int)PlayerStats.currentGun.ammoType];
+            ammoImage.sprite = ammoImages[(int)PlayerStats.currentGun.ammoType-(int)Item.BULLETS_SMALL];
         }
 
         ItemStats item = Items.items[(int)PlayerStats.currentItem];
@@ -52,19 +52,15 @@ new public Transform transform;
 
     public void UpdateAmmo()
     {
-        smallBulletsTxt.text = PlayerStats.ammo[Ammo.BULLETS_SMALL]+"";
-        bigBulletsTxt.text = PlayerStats.ammo[Ammo.BULLETS_BIG]+"";
-        shellsTxt.text = PlayerStats.ammo[Ammo.SHELLS]+"";
-        energyTxt.text = PlayerStats.ammo[Ammo.ENERGY]+"";
-        if(PlayerStats.currentGun == null)
-        {
-
-        }
-        else
+        // smallBulletsTxt.text = PlayerStats.inventory.GetTotalCount(Item.BULLETS_SMALL)+"";
+        // bigBulletsTxt.text = PlayerStats.inventory.GetTotalCount(Item.BULLETS_LARGE)+"";
+        // shellsTxt.text = PlayerStats.inventory.GetTotalCount(Item.SHELLS)+"";
+        // energyTxt.text = PlayerStats.inventory.GetTotalCount(Item.PLASMA)+"";
+        if(PlayerStats.currentGun != null)
         {
             currentGunAmmoTxt.text = PlayerStats.currentGun.ammo < 10 ? "0" : "";
             currentGunAmmoTxt.text += PlayerStats.currentGun.ammo+"";
-            currentReserveTxt.text = "/"+PlayerStats.ammo[PlayerStats.currentGun.ammoType];
+            currentReserveTxt.text = "/"+PlayerStats.inventory.GetTotalCount(PlayerStats.currentGun.ammoType);
         }
     }
 

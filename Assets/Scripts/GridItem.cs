@@ -20,6 +20,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     
     public Item item;
+    public int count=1;
     RectTransform rectTransform;
     RectTransform grid;
     public bool followMouse;
@@ -42,6 +43,14 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         image = child.GetComponent<RectTransform>();
         image.sizeDelta = rectTransform.sizeDelta;
         child.GetComponent<Image>().sprite = Items.items[(int)item].sprite;
+        UpdateCount();
+    }
+
+    public void UpdateCount()
+    {
+        Text countText = transform.GetChild(0).GetChild(4).GetComponent<Text>();
+        if(count == 1)  countText.text = "";
+        else            countText.text = ""+count;
     }
 
     public int GetX()       { return (int)Mathf.Round((rectTransform.localPosition.x-rectTransform.sizeDelta.x/2)/Inventory.cellSize); }
@@ -70,24 +79,25 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         rectTransform.localPosition = Vector3.right*Inventory.cellSize*(x+GetWidth()/2f) + Vector3.up*Inventory.cellSize*(y+GetHeight()/2f);
     }
 
-    public bool Collides()
+    public LinkedListNode<GridItem> Collides()
     {
-        foreach(GridItem item in PlayerStats.inventory.items)
+        LinkedListNode<GridItem> other = PlayerStats.inventory.items.First;
+        while(other != null)
         {
-            if(item == this) continue;
+            if(other.Value != this && GetX()+GetWidth() > other.Value.GetX() && GetX() < other.Value.GetX()+other.Value.GetWidth() && GetY()+GetHeight() > other.Value.GetY() && GetY() < other.Value.GetY()+other.Value.GetHeight())
+                return other;
             
-            if(GetX()+GetWidth() > item.GetX() && GetX() < item.GetX()+item.GetWidth() && GetY()+GetHeight() > item.GetY() && GetY() < item.GetY()+item.GetHeight())
-                return true;
+            other = other.Next;
         }
 
-        return false;
+        return null;
     }
 
     public void OnClick()
     {
         if(followMouse)
         {
-            if(Collides() || (WithinGridRaw() && !WithinGrid())) return;
+            if(Collides() != null || (WithinGridRaw() && !WithinGrid())) return;
             if(WithinGrid()) SetPos(GetX(), GetY());
         }
         else
@@ -122,7 +132,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         else if(highlighted)
         {
-            if(Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_equip]))
+            if(Items.items[(int)item].equipable && Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_equip]))
             {
                 if(Items.items[(int)item].gun == -1)
                 {

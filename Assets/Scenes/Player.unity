@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -629,10 +629,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6bb7dde38e7870c4e84c6569800b1c46, type: 3}
   - {fileID: 21300000, guid: 3a1922961fa9f0245959e12f517b0665, type: 3}
   - {fileID: 21300000, guid: a24b7011f12a0994f9c3b73eeca6db21, type: 3}
-  smallBulletsTxt: {fileID: 659684915}
-  bigBulletsTxt: {fileID: 1335216136}
-  shellsTxt: {fileID: 151855386}
-  energyTxt: {fileID: 1558956123}
   bar_health: {fileID: 1090475408}
   bar_health_fillRect: {fileID: 0}
   bar_energy: {fileID: 1911229657}
@@ -711,6 +707,7 @@ MonoBehaviour:
   playerInput: {fileID: 139271157}
   player_rb: {fileID: 139271154}
   playerAnimator: {fileID: 139271158}
+  isOpen: 0
 --- !u!114 &139271168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1490,7 +1487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunName: Auto Shotgun
-  ammoType: 2
+  ammoType: 11
   damage: 60
   rpm: 320
   spread: 10
@@ -1679,7 +1676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunName: SMG
-  ammoType: 0
+  ammoType: 9
   damage: 4
   rpm: 900
   spread: 0.5
@@ -1765,7 +1762,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &386467214
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2522,7 +2519,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunName: DMR
-  ammoType: 1
+  ammoType: 10
   damage: 100
   rpm: 120
   spread: 0
@@ -2851,7 +2848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunName: Assault Rifle
-  ammoType: 1
+  ammoType: 10
   damage: 5
   rpm: 500
   spread: 0.2
@@ -3131,7 +3128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunName: Energy Railgun
-  ammoType: 3
+  ammoType: 12
   damage: 200
   rpm: 100
   spread: 0.02
@@ -3246,7 +3243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunName: Pistol
-  ammoType: 0
+  ammoType: 9
   damage: 3
   rpm: 300
   spread: 0.05
@@ -3427,7 +3424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunName: Pump Action Shotgun
-  ammoType: 2
+  ammoType: 11
   damage: 75
   rpm: 220
   spread: 10
@@ -4062,7 +4059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunName: Energy Rifle
-  ammoType: 3
+  ammoType: 12
   damage: 14
   rpm: 700
   spread: 0.1
@@ -4513,7 +4510,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -416, y: -256}
+  m_AnchoredPosition: {x: -192, y: -256}
   m_SizeDelta: {x: 384, y: 512}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1605577597
@@ -4747,7 +4744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunName: Double Barrel Shotgun
-  ammoType: 2
+  ammoType: 11
   damage: 75
   rpm: 150
   spread: 10

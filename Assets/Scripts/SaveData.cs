@@ -8,7 +8,6 @@ public class SaveData
     byte difficulty;
     GridItemSerializable[] inventoryItems;
     float health, energy;
-    int[] ammo;
     float[] position;
 
     public SaveData()
@@ -26,16 +25,6 @@ public class SaveData
         health = PlayerStats.target.health;
         energy = PlayerStats.energy;
 
-        {
-            ammo = new int[PlayerStats.ammo.Count];
-            int i=0;
-            foreach(KeyValuePair<Ammo, int> ammoPair in PlayerStats.ammo)
-            {
-                ammo[i] = ammoPair.Value;
-                i ++;
-            }
-        }
-
         position = new float[2];
         position[0] = PlayerStats.rigidbody.position.x;
         position[1] = PlayerStats.rigidbody.position.y;
@@ -50,19 +39,12 @@ public class SaveData
         {
             PlayerStats.inventory.Add((Item)inventoryItems[i].item, inventoryItems[i].x, inventoryItems[i].y);
             if(inventoryItems[i].rotated) PlayerStats.inventory.items.Last.Value.Rotate();
+            PlayerStats.inventory.items.Last.Value.count = inventoryItems[i].count;
+            PlayerStats.inventory.items.Last.Value.UpdateCount();
         }
 
         PlayerStats.target.health = health;
         PlayerStats.energy = energy;
-
-        {
-            int i=0;
-            foreach(KeyValuePair<Ammo, int> ammoPair in PlayerStats.maxAmmo)
-            {
-                PlayerStats.ammo[ammoPair.Key] = ammo[i];
-                i ++;
-            }
-        }
 
         PlayerStats.rigidbody.MovePosition(new Vector2(position[0], position[1]));
     }

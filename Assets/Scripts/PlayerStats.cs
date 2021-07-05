@@ -34,20 +34,6 @@ new public static Rigidbody2D rigidbody;
     public static float gunRpmTimer;
     public static float gunReloadTimer;
     public static GameObject reloadSound;
-    public static readonly Dictionary<Ammo, int> maxAmmo = new Dictionary<Ammo, int>
-    {
-        { Ammo.BULLETS_SMALL,   60  },
-        { Ammo.BULLETS_BIG,     40  },
-        { Ammo.SHELLS,          24  },
-        { Ammo.ENERGY,          120 }
-    };
-    public static Dictionary<Ammo, int> ammo = new Dictionary<Ammo, int>
-    {
-        { Ammo.BULLETS_SMALL,   30  },
-        { Ammo.BULLETS_BIG,     20   }, 
-        { Ammo.SHELLS,          8   }, 
-        { Ammo.ENERGY,          60  }
-    };
     public static Gun[] guns = new Gun[9];
     public static int _currentGun;
     public static Gun currentGun;
@@ -111,15 +97,21 @@ new public static Rigidbody2D rigidbody;
             // inventory.AutoAdd(Item.POTION);
             // inventory.AutoAdd(Item.FISHING_ROD);
             // inventory.AutoAdd(Item.FLASHLIGHT);
-            inventory.AutoAdd(Item.PISTOL);
+            // inventory.AutoAdd(Item.PISTOL);
             inventory.AutoAdd(Item.SMG);
             inventory.AutoAdd(Item.ASSAULT_RIFLE);
             inventory.AutoAdd(Item.DMR);
+
             inventory.AutoAdd(Item.SHOTGUN_PUMP);
-            inventory.AutoAdd(Item.SHOTGUN_DOUBLE);
-            inventory.AutoAdd(Item.SHOTGUN_AUTO);
-            inventory.AutoAdd(Item.ENERGY_RIFLE);
+            // inventory.AutoAdd(Item.SHOTGUN_DOUBLE);
+            // inventory.AutoAdd(Item.SHOTGUN_AUTO);
+            // inventory.AutoAdd(Item.ENERGY_RIFLE);
             inventory.AutoAdd(Item.ENERGY_RAILGUN);
+
+            inventory.AutoAdd(Item.BULLETS_SMALL, 20);
+            inventory.AutoAdd(Item.BULLETS_LARGE, 20);
+            inventory.AutoAdd(Item.SHELLS, 16);
+            inventory.AutoAdd(Item.PLASMA, 60);
 
             Save_Load.Save(save);
         }
@@ -137,7 +129,7 @@ new public static Rigidbody2D rigidbody;
 
     public static void BeginReload()
     {
-        if(inventory.isOpen || currentGun == null || currentGun.ammo == currentGun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || ammo[currentGun.ammoType] == 0) return;
+        if(inventory.isOpen || currentGun == null || currentGun.ammo == currentGun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || inventory.GetTotalCount(currentGun.ammoType) == 0) return;
         gunReloadTimer = currentGun.reloadTime;
         reloadSound = AudioManager.PlayClip(currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
     }
@@ -150,20 +142,20 @@ new public static Rigidbody2D rigidbody;
 
     public static void FinishReload()
     {
-        int _ammo = ammo[currentGun.ammoType]/currentGun.ammoPerShot;
+        int _ammo = inventory.GetTotalCount(currentGun.ammoType)/currentGun.ammoPerShot;
         int _clip = currentGun.ammo/currentGun.ammoPerShot;
         int _clipSize = currentGun.clipSize/currentGun.ammoPerShot;
         
         if(_ammo > _clipSize - _clip)
         {
-            ammo[currentGun.ammoType] -= (_clipSize - _clip)*currentGun.ammoPerShot;
+            inventory.RemoveItemCount(currentGun.ammoType, (_clipSize - _clip)*currentGun.ammoPerShot);
             currentGun.ammo = currentGun.clipSize;
         }
         else if(_ammo > 0)
         {
             int num = _ammo*currentGun.ammoPerShot;
             currentGun.ammo += num;
-            ammo[currentGun.ammoType] -= num;
+            inventory.RemoveItemCount(currentGun.ammoType, num);
         }
 
         hud.UpdateAmmo();

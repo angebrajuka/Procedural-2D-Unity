@@ -18,15 +18,19 @@ public class Inventory : MonoBehaviour
     public static readonly Vector2Int gridSize = new Vector2Int(9, 12);
     public const float cellSize = 384f/9f;
 
-    public void Add(Item item, int x, int y)
+    public void Add(Item item, int x, int y, int count=1)
     {
         GameObject gameObject = Instantiate(gridItemPrefab, Vector3.zero, Quaternion.identity, grid);
         GridItem gridItem = gameObject.GetComponent<GridItem>();
         gridItem.item = item;
+        gridItem.count = count;
         items.AddLast(gridItem);
         gridItem.node = items.Last;
         gridItem.Start();
         gridItem.SetPos(x, y);
+
+        PlayerStats.hud.UpdateHotbar();
+        PlayerStats.hud.UpdateAmmo();
     }
 
     public void Clear()
@@ -39,22 +43,44 @@ public class Inventory : MonoBehaviour
             node = node.Next;
             items.RemoveFirst();
         }
+
+        PlayerStats.hud.UpdateAmmo();
     }
 
-    public bool AutoAdd(Item item)
-    {    
-        Add(item, 0, 0);
-        
+    public bool AutoAdd(Item item, int count=1)
+    {
+        ItemStats itemStats = Items.items[(int)item];
+        if(count < itemStats.maxStack)
+        {
+            foreach(GridItem other in items)
+            {
+                if(other.item == item && other.count < itemStats.maxStack)
+                {
+                    other.count += count;
+                    count = other.count - itemStats.maxStack;
+                    other.count = Mathf.Min(itemStats.maxStack, other.count);
+                    other.UpdateCount();
+                    if(count <= 0) return true;
+                }
+            }
+        }
+
+        Add(item, 0, 0, Mathf.Min(count, itemStats.maxStack));
+        GridItem gridItem = items.Last.Value;
+        count -= gridItem.count;
         for(int y=gridSize.y-1; y>=0; y--)
         {
             for(int x=0; x<gridSize.x; x++)
             {
-                items.Last.Value.SetPos(x, y);
+                gridItem.SetPos(x, y);
                 for(int i=0; i<2; i++)
                 {
-                    if(!items.Last.Value.Collides() && items.Last.Value.WithinGrid())
+                    if(items.Last.Value.Collides() == null && items.Last.Value.WithinGrid())
                     {
-                        return true;
+                        if(count == 0)
+                            return true;
+
+                        return AutoAdd(item, count);
                     }
                     items.Last.Value.Rotate();
                     items.Last.Value.SetPos(x, y);
@@ -66,6 +92,79 @@ public class Inventory : MonoBehaviour
         items.RemoveLast();
 
         return false;
+    }
+
+    public int GetTotalCount(Item item)
+    {
+        int amount = 0;
+        
+        foreach(GridItem gridItem in items)
+        {
+            if(gridItem.item == item)
+            {
+                amount += gridItem.count;
+            }
+        }
+
+        return amount;
+    }
+
+    public void RemoveItemCount(Item item, int amount)
+    {
+        LinkedList<GridItem> sorted = new LinkedList<GridItem>();
+        LinkedListNode<GridItem> node = items.First;
+        while(node != null)
+        {
+            if(node.Value.item == item)
+            {
+                if(sorted.Count == 0)
+                {
+                    sorted.AddFirst(node.Value);
+                }
+                else
+                {
+                    LinkedListNode<GridItem> sortedNode = sorted.First;
+                    while(sortedNode != null)
+                    {
+                        if(node.Value.count < sortedNode.Value.count)
+                        {
+                            sorted.AddBefore(sortedNode, node.Value);
+                        }
+                        else if(sortedNode.Next == null)
+                        {
+                            sorted.AddAfter(sortedNode, node.Value);
+                            break;
+                        }
+                        sortedNode = sortedNode.Next;
+                    }
+                }
+            }
+
+            node = node.Next;
+        }
+
+        node = sorted.First;
+        while(node != null)
+        {
+            GridItem gridItem = node.Value;
+            if(gridItem.count > amount)
+            {
+                gridItem.count -= amount;
+                gridItem.UpdateCount();
+                PlayerStats.hud.UpdateAmmo();
+                return;
+            }
+            else
+            {
+                amount -= gridItem.count;
+                Destroy(gridItem.gameObject);
+                items.Remove(node.Value);
+            }
+            node = node.Next;
+
+        }
+
+        PlayerStats.hud.UpdateAmmo();
     }
 
     public void Open()
@@ -93,26 +192,30 @@ public class Inventory : MonoBehaviour
                 {
                     PlayerStats.currentItem = Item.NONE;
                     PlayerStats.currentItemNode = null;
-                    PlayerStats.hud.UpdateHotbar();
                 }
                 else if(PlayerStats.currentGunItemNode == node)
                 {
                     PlayerStats.currentGun = null;
+                    PlayerStats._currentGun = -1;
                     PlayerStats.currentGunItemNode = null;
-                    PlayerStats.hud.UpdateHotbar();
-                    PlayerStats.hud.UpdateAmmo();
+                    PlayerStats.playerAnimator.UpdateGunImage();
                 }
 
                 GameObject item = Instantiate(itemPickupPrefab, player_rb.position, Quaternion.identity);
-                item.GetComponent<ItemPickup>().item = node.Value.item;
+                ItemPickup pickup = item.GetComponent<ItemPickup>();
+                pickup.item = node.Value.item;
+                pickup.count = node.Value.count;
                 SpriteRenderer sprite = item.GetComponent<SpriteRenderer>();
                 sprite.sprite = Items.items[(int)node.Value.item].sprite;
                 item.GetComponent<Rigidbody2D>().AddForce(new Vector2((Random.value-0.5f)*100, (Random.value-0.5f)*100));
                 Destroy(node.Value.gameObject);
-                node.List.Remove(node);
+                items.Remove(node);
             }
             node = next;
         }
+
+        PlayerStats.hud.UpdateHotbar();
+        PlayerStats.hud.UpdateAmmo();
 
         playerAnimator.UpdateGunImage();
         isOpen = false;

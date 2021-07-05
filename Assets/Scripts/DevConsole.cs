@@ -84,42 +84,15 @@ public class DevConsole : MonoBehaviour
         return true;
     }
 
-    static bool Ammunition(string[] args)
+    static bool AutoAddItem(string[] args)
     {
-        Ammo type = Ammo.BULLETS_SMALL;
-        
-        switch(args[0])
-        {
-        case "bullets_small":
-            type = Ammo.BULLETS_SMALL;
-            break;
-        case "bullets_big":
-            type = Ammo.BULLETS_BIG;
-            break;
-        case "shells":
-            type = Ammo.SHELLS;
-            break;
-        case "energy":
-            type = Ammo.ENERGY;
-            break;
-        case "max":
-            foreach(KeyValuePair<Ammo, int> pair in PlayerStats.maxAmmo)
-            {
-                PlayerStats.ammo[pair.Key] = pair.Value;
-            }
-            break;
-        default:
-            return false;
-        }
+        int itemID = Int32.Parse(args[0]);
+        int count = Int32.Parse(args[1]);
 
-        if(args[0] != "max")
-        {
-            PlayerStats.ammo[type] = Int32.Parse(args[1]);
-            if(PlayerStats.ammo[type] > PlayerStats.maxAmmo[type]) PlayerStats.ammo[type] = PlayerStats.maxAmmo[type];
-        }
+        if(itemID >= (int)Item.LAST || itemID <= (int)Item.NONE) return false;
 
-        PlayerStats.hud.UpdateAmmo();
-        
+        PlayerStats.inventory.AutoAdd((Item)itemID, count);
+
         return true;
     }
 
@@ -149,7 +122,7 @@ public class DevConsole : MonoBehaviour
         {"time",        Time        },
         {"health",      Health      },
         {"energy",      Energy      },
-        {"ammo",        Ammunition  },
+        {"give",        AutoAddItem },
         {"setgun",      SetGun      },
         {"tp",          Teleport    }
     };

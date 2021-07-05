@@ -200,7 +200,7 @@ public class PlayerInput : MonoBehaviour
         {
             if(PlayerStats.interactItem != Item.NONE)
             {
-                if(PlayerStats.inventory.AutoAdd(PlayerStats.interactItem))
+                if(PlayerStats.inventory.AutoAdd(PlayerStats.interactItem, PlayerStats.interactPickup.count))
                 {
                     Destroy(PlayerStats.interactPickup.gameObject);
                     PlayerStats.interactPickup = null;

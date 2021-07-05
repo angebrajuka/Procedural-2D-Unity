@@ -8,6 +8,7 @@ public class GridItemSerializable
     public byte item;
     public int x, y;
     public bool rotated;
+    public int count;
 
     public GridItemSerializable(GridItem gridItem)
     {
@@ -15,5 +16,6 @@ public class GridItemSerializable
         x = gridItem.GetX();
         y = gridItem.GetY();
         rotated = gridItem.rotated;
+        count = gridItem.count;
     }
 }

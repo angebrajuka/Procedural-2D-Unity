@@ -10,6 +10,8 @@ public class ItemPickup : MonoBehaviour
     // components
     Rigidbody2D m_rigidbody;
 
+    public int count;
+
     void Start()
     {
         m_rigidbody = GetComponent<Rigidbody2D>();
