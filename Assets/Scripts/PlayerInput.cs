@@ -10,9 +10,10 @@ public enum Keybind:byte
     moveWest,
     moveSouth,
     sprint,
+    flashlight,
     shoot,
     reload,
-    item,
+    // item,
     interact,
     inventory,
     i_equip,
@@ -34,7 +35,7 @@ public class PlayerInput : MonoBehaviour
     // output
     public static float angle;
     public static float cursorDistance;
-    public static byte direction8index;
+    public static byte direction4index;
 
 
 
@@ -48,9 +49,10 @@ public class PlayerInput : MonoBehaviour
         {Keybind.moveWest,      "move west"             },
         {Keybind.moveSouth,     "move south"            },
         {Keybind.sprint,        "sprint"                },
+        {Keybind.flashlight,    "flashlight"            },
         {Keybind.shoot,         "shoot"                 },
         {Keybind.reload,        "reload"                },
-        {Keybind.item,          "use item"              },
+        // {Keybind.item,          "use item"              },
         {Keybind.interact,      "interact"              },
         {Keybind.inventory,     "open inventory"        },
         {Keybind.i_equip,       "inventory equip item"  },
@@ -66,9 +68,10 @@ public class PlayerInput : MonoBehaviour
             {Keybind.moveWest,      KeyCode.A           },
             {Keybind.moveSouth,     KeyCode.S           },
             {Keybind.sprint,        KeyCode.LeftControl },
+            {Keybind.flashlight,    KeyCode.LeftShift   },
             {Keybind.shoot,         KeyCode.Mouse0      },
             {Keybind.reload,        KeyCode.R           },
-            {Keybind.item,          KeyCode.Mouse1      },
+            // {Keybind.item,          KeyCode.Mouse1      },
             {Keybind.interact,      KeyCode.F           },
             {Keybind.inventory,     KeyCode.Tab         },
             {Keybind.i_equip,       KeyCode.E           },
@@ -112,6 +115,7 @@ public class PlayerInput : MonoBehaviour
     void Start()
     {
         PlayerStats.sprinting = false;
+        PlayerStats.flashlight = false;
     }
 
     void Update()
@@ -153,13 +157,16 @@ public class PlayerInput : MonoBehaviour
             if(Input.GetKey(keybinds[Keybind.moveSouth])) input_move.y --;
             
                 // rotate
-                if(input_move.x != 0 || input_move.y != 0)  direction8index = Math.directions8[(int)-input_move.y+1, (int)input_move.x+1];
-                else                                        direction8index = Math.directions8[(int)-Mathf.Round(mouse_offset.y)+1, (int)Mathf.Round(mouse_offset.x)+1];
+                if(input_move.x != 0 || input_move.y != 0)  direction4index = Math.directions4[(int)-input_move.y+1, (int)input_move.x+1];
+                else                                        direction4index = Math.directions4[(int)-Mathf.Round(mouse_offset.y)+1, (int)Mathf.Round(mouse_offset.x)+1];
 
             input_move.Normalize();
-
-            PlayerStats.sprinting = Input.GetKey(keybinds[Keybind.sprint]) && PlayerStats.energy > 0;
         }
+
+
+        // battery consumption
+        PlayerStats.sprinting = Input.GetKey(keybinds[Keybind.sprint]) && PlayerStats.energy > 0;
+        PlayerStats.flashlight = !PlayerStats.sprinting && PlayerStats.energy > 0 && (Input.GetKeyDown(keybinds[Keybind.flashlight]) ? !PlayerStats.flashlight : PlayerStats.flashlight);
 
 
         // inventory
@@ -182,17 +189,25 @@ public class PlayerInput : MonoBehaviour
         if(Input.GetKey(keybinds[Keybind.reload])) PlayerStats.BeginReload();
 
         // pew pew
-        if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerStats.CanShoot())
+        if(Input.GetKey(keybinds[Keybind.shoot]))
         {
-            PlayerStats.currentGun.Shoot(PlayerStats.rigidbody.position, mouse_offset, angle, PlayerStats.rigidbody);
-            PlayerStats.hud.UpdateAmmo();
+            ItemStats item = Items.items[(int)PlayerStats.currentItem];
+            if(item.gun == -1 && PlayerStats.CanShoot())
+            {
+                PlayerStats.currentGun.Shoot(PlayerStats.rigidbody.position, mouse_offset, angle, PlayerStats.rigidbody);
+                PlayerStats.hud.UpdateAmmo();
+            }
+            else if(!PlayerStats.melee)
+            {
+                item.use();
+            }
         }
 
-        //items
-        if(Input.GetKeyDown(keybinds[Keybind.item]) && !PlayerStats.melee)
-        {
-            Items.items[(int)PlayerStats.currentItem].use();
-        }
+        // //items
+        // if(Input.GetKeyDown(keybinds[Keybind.item]) && !PlayerStats.melee)
+        // {
+        //     Items.items[(int)PlayerStats.currentItem].use();
+        // }
 
 
         // interact

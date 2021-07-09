@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyObject : MonoBehaviour
 {
     // hierarchy
-    public EightDirectionAnimator m_animator;
+    public FourDirectionAnimator m_animator;
     public bool awake;
     public EnemyType type;
     
@@ -61,8 +61,8 @@ public class EnemyObject : MonoBehaviour
         
         targetMovement = following ? PlayerStats.rigidbody.position-m_rigidbody.position : (Math.vectors[(int)Mathf.Floor(UnityEngine.Random.value*8)]);
 
-        m_animator.direction = Math.AngleToDir8(Math.NormalizedVecToAngle(targetMovement));
-        if(m_animator.direction >= 8) m_animator.direction = 0;
+        m_animator.direction = Math.AngleToDir4(Math.NormalizedVecToAngle(targetMovement));
+        if(m_animator.direction >= 4) m_animator.direction = 0;
         targetMovement = Math.vectors[m_animator.direction];
         
         timer = UnityEngine.Random.value+0.2f;

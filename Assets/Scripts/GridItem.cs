@@ -134,31 +134,23 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             if(Items.items[(int)item].equipable && Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_equip]))
             {
-                if(Items.items[(int)item].gun == -1)
+                if(PlayerStats.currentItemNode == node)
                 {
-                    if(PlayerStats.currentItem == item)
-                    {
-                        PlayerStats.currentItem = Item.NONE;
-                        PlayerStats.currentItemNode = null;
-                    }
-                    else
-                    {
-                        PlayerStats.currentItem = item;
-                        PlayerStats.currentItemNode = node;
-                    }
-                    PlayerStats.hud.UpdateHotbar();
+                    PlayerStats.currentItem = Item.NONE;
+                    PlayerStats.SwitchGun(-1, true);
                 }
                 else
                 {
-                    if(PlayerStats.currentGunItemNode == node)
+                    PlayerStats.currentItemNode = node;
+                    if(Items.items[(int)item].gun == -1)
                     {
-                        PlayerStats.SwitchGun(-1);
-                        PlayerStats.currentGunItemNode = null;
+                        PlayerStats.currentItem = item;
+                        PlayerStats.SwitchGun(-1, false);
+                        PlayerStats.hud.UpdateHotbar();
                     }
                     else
                     {
-                        PlayerStats.SwitchGun(Items.items[(int)item].gun);
-                        PlayerStats.currentGunItemNode = node;
+                        PlayerStats.SwitchGun(Items.items[(int)item].gun, false);
                     }
                 }
             }

@@ -14,7 +14,6 @@ public enum Item:byte
     COMPASS,
     POTION,
     FISHING_ROD,
-    FLASHLIGHT,
 
     BULLETS_SMALL,
     BULLETS_LARGE,
@@ -116,7 +115,6 @@ public class Items
         new ItemStats("COMPASS",        new Vector2Int(2, 2),   -1, 1,  true,   UseCompass),
         new ItemStats("POTION",         new Vector2Int(2, 3),   -1, 1,  true,   UsePotion),
         new ItemStats("FISHING_ROD",    new Vector2Int(3, 3),   -1, 1,  true,   UseFishingRod),
-        new ItemStats("FLASHLIGHT",     new Vector2Int(2, 1),   -1, 1,  true,   UseNone),
 
         new ItemStats("BULLETS_SMALL",  new Vector2Int(1, 1),   -1, 30, false,  UseNone),
         new ItemStats("BULLETS_LARGE",  new Vector2Int(1, 1),   -1, 20, false,  UseNone),

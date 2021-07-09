@@ -15,6 +15,7 @@ public class Init : MonoBehaviour
 
     public GameObject h_menuMain;
     public GameObject h_menuPause;
+    public bool setMenu;
 
 
     static bool init=false;
@@ -38,7 +39,7 @@ public class Init : MonoBehaviour
             PlayerInput.LoadKeybinds();
         }
 
-        MenuHandler.SetMenu(MenuHandler.menuMain);
+        if(setMenu) MenuHandler.SetMenu(MenuHandler.menuMain);
         
         Destroy(gameObject);
     }

@@ -15,7 +15,7 @@ public class Flashlight : MonoBehaviour
 
     void Update()
     {
-        flashlight.intensity = Mathf.Lerp(flashlight.intensity, PlayerStats.currentItem==Item.FLASHLIGHT ? 0.47f : 0, 0.16f);
-        flickeringLight.enabled = PlayerStats.currentItem==Item.FLASHLIGHT;
+        flashlight.intensity = Mathf.Lerp(flashlight.intensity, PlayerStats.flashlight ? 0.47f : 0, 0.16f);
+        flickeringLight.enabled = PlayerStats.flashlight;
     }
 }

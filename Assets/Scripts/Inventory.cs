@@ -190,16 +190,26 @@ public class Inventory : MonoBehaviour
 
                 if(PlayerStats.currentItemNode == node)
                 {
-                    PlayerStats.currentItem = Item.NONE;
                     PlayerStats.currentItemNode = null;
+                    if(Items.items[(int)PlayerStats.currentItemNode.Value.item].gun == -1)
+                    {
+                        PlayerStats.currentItem = Item.NONE;
+                    }
+                    else
+                    {
+                        PlayerStats.currentGun = null;
+                        PlayerStats._currentGun = -1;
+                        // PlayerStats.currentGunItemNode = null;
+                        PlayerStats.playerAnimator.UpdateGunImage();
+                    }
                 }
-                else if(PlayerStats.currentGunItemNode == node)
-                {
-                    PlayerStats.currentGun = null;
-                    PlayerStats._currentGun = -1;
-                    PlayerStats.currentGunItemNode = null;
-                    PlayerStats.playerAnimator.UpdateGunImage();
-                }
+                // else if(PlayerStats.currentGunItemNode == node)
+                // {
+                //     PlayerStats.currentGun = null;
+                //     PlayerStats._currentGun = -1;
+                //     PlayerStats.currentGunItemNode = null;
+                //     PlayerStats.playerAnimator.UpdateGunImage();
+                // }
 
                 GameObject item = Instantiate(itemPickupPrefab, player_rb.position, Quaternion.identity);
                 ItemPickup pickup = item.GetComponent<ItemPickup>();

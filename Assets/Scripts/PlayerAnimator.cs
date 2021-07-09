@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     // hierarchy
-    public EightDirectionAnimator m_animator_body;
+    public FourDirectionAnimator m_animator_body;
     public SpriteRenderer m_renderer_gun;
     public SpriteRenderer[] m_renderers_guns;
 
@@ -36,7 +36,7 @@ public class PlayerAnimator : MonoBehaviour
 
     void Update()
     {
-        m_animator_body.direction = PlayerInput.direction8index;
+        m_animator_body.direction = PlayerInput.direction4index;
         if(m_renderer_gun != null)
         {
             m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);

@@ -6,8 +6,8 @@ public class Gun : MonoBehaviour
 {
     // Hierarchy
     public string gunName;
-    public Item ammoType;
     public float damage;
+    public byte h_ammoType;
     public float rpm;
     public float spread;
     public float range;
@@ -25,6 +25,7 @@ public class Gun : MonoBehaviour
 
     // stats
     [HideInInspector] public float secondsBetweenShots;
+    [HideInInspector] public Item ammoType;
     [HideInInspector] public int ammo;
 
     // components
@@ -32,6 +33,7 @@ public class Gun : MonoBehaviour
 
     protected void Start()
     {
+        ammoType = (Item)(h_ammoType+(int)Item.BULLETS_SMALL);
         secondsBetweenShots = 60.0f/rpm;
         damage /= bullets;
         ammo = clipSize;

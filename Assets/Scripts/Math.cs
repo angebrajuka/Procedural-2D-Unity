@@ -19,11 +19,11 @@ public class Math
         return angle;
     }
 
-    public static readonly byte[,] directions8 =
+    public static readonly byte[,] directions4 =
     {
-        {3, 2, 1}, 
-        {4, 6, 0}, 
-        {5, 6, 7}
+        {2, 1, 0}, 
+        {2, 3, 0}, 
+        {2, 3, 0}
     };
     
     public static readonly Vector2[] vectors =
@@ -38,7 +38,7 @@ public class Math
         new Vector2(ROOT_ONE_HALF, -ROOT_ONE_HALF)
     };
     
-    public static int AngleToDir8(float angle)
+    public static int AngleToDir4(float angle)
     {
         angle /= 45;
         if(angle < 0) angle = 0;

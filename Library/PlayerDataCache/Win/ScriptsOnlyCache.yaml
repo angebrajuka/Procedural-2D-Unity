@@ -19,11 +19,11 @@ ScriptsOnlyBuild:
     - DevConsole
     - DynamicEnemySpawning
     - DynamicLoading
-    - EightDirectionAnimator
     - EnemyObject
     - Explosion
     - Flashlight
     - FlickeringLight
+    - FourDirectionAnimator
     - GridItem
     - Gun
     - Init
@@ -352,6 +352,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11390}
     - Class: 114
+      Script: {instanceID: 11392}
+    - Class: 114
       Script: {instanceID: 11448}
     - Class: 114
       Script: {instanceID: 11500}
@@ -360,31 +362,53 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11564}
     - Class: 114
+      Script: {instanceID: 11610}
+    - Class: 114
       Script: {instanceID: 11968}
     - Class: 114
       Script: {instanceID: 11986}
     - Class: 114
       Script: {instanceID: 12006}
     - Class: 114
+      Script: {instanceID: 12028}
+    - Class: 114
+      Script: {instanceID: 12058}
+    - Class: 114
       Script: {instanceID: 12406}
+    - Class: 114
+      Script: {instanceID: 12556}
     - Class: 114
       Script: {instanceID: 12568}
     - Class: 114
       Script: {instanceID: 12680}
     - Class: 114
+      Script: {instanceID: 12738}
+    - Class: 114
       Script: {instanceID: 12830}
+    - Class: 114
+      Script: {instanceID: 13032}
     - Class: 114
       Script: {instanceID: 13220}
     - Class: 114
+      Script: {instanceID: 13322}
+    - Class: 114
+      Script: {instanceID: 13388}
+    - Class: 114
       Script: {instanceID: 13400}
     - Class: 114
+      Script: {instanceID: 13452}
+    - Class: 114
       Script: {instanceID: 13466}
+    - Class: 114
+      Script: {instanceID: 13580}
     - Class: 114
       Script: {instanceID: 13836}
     - Class: 114
       Script: {instanceID: 13858}
     - Class: 114
       Script: {instanceID: 13922}
+    - Class: 114
+      Script: {instanceID: 14002}
     - Class: 114
       Script: {instanceID: 14042}
     - Class: 114
@@ -408,7 +432,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 15424}
     - Class: 114
+      Script: {instanceID: 15438}
+    - Class: 114
       Script: {instanceID: 15440}
+    - Class: 114
+      Script: {instanceID: 15558}
     - Class: 114
       Script: {instanceID: 15782}
     - Class: 114
@@ -420,9 +448,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 16122}
     - Class: 114
+      Script: {instanceID: 16132}
+    - Class: 114
       Script: {instanceID: 16166}
     - Class: 114
       Script: {instanceID: 16276}
+    - Class: 114
+      Script: {instanceID: 16292}
+    - Class: 114
+      Script: {instanceID: 16318}
     - Class: 114
       Script: {instanceID: 16368}
     - Class: 114
@@ -448,6 +482,12 @@ ScriptsOnlyBuild:
     - Class: 223
       Script: {instanceID: 0}
     - Class: 224
+      Script: {instanceID: 0}
+    - Class: 241
+      Script: {instanceID: 0}
+    - Class: 243
+      Script: {instanceID: 0}
+    - Class: 245
       Script: {instanceID: 0}
     Assets/Scenes/chunks/10,0.unity:
     - Class: 1
@@ -1459,7 +1499,7 @@ ScriptsOnlyBuild:
       Hash: e79b9bfc4e26a65e420d8d2c5ea292ae
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: EightDirectionAnimator
+    className: FourDirectionAnimator
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -1768,7 +1808,7 @@ ScriptsOnlyBuild:
     className: ButtonNewGame
   - hash:
       serializedVersion: 2
-      Hash: 397f02c9244f8979c72765a2961ef17d
+      Hash: 83c7900454786db2d019cfe7afab73c3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerAnimator
@@ -2074,7 +2114,7 @@ ScriptsOnlyBuild:
     className: ButtonMenu
   - hash:
       serializedVersion: 2
-      Hash: 7eb729f86c719daac864696fac39eab6
+      Hash: 2e5acde3ce1060f261632ec893e629db
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EnemyObject
@@ -2194,7 +2234,7 @@ ScriptsOnlyBuild:
     className: InventoryControls
   - hash:
       serializedVersion: 2
-      Hash: 61d969818fd34a4af356cb4e9533944b
+      Hash: 4d907bfc8fa91a8d16ee2a36a4d278be
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Init
@@ -2248,7 +2288,7 @@ ScriptsOnlyBuild:
     className: TMP_StyleSheet
   - hash:
       serializedVersion: 2
-      Hash: f4c6f52544d974cb0683500f556f17ae
+      Hash: 80267f5f7db6014aa663f49f072d7a8d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Gun

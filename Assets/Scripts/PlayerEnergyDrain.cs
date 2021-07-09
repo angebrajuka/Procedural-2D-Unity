@@ -6,17 +6,10 @@ public class PlayerEnergyDrain : MonoBehaviour
 {
     void Update()
     {
-        if(DaylightCycle.time > DaylightCycle.k_DAY && DaylightCycle.time < DaylightCycle.k_EVENING && PlayerStats.energy < PlayerStats.energyMax)
-        {
-            PlayerStats.energy += Time.deltaTime;
-            PlayerStats.energy = Mathf.Min(PlayerStats.energy, PlayerStats.energyMax);
-            PlayerStats.hud.UpdateEnergy();
-        }
-        else if(PlayerStats.energy > 0)
-        {
-            PlayerStats.energy -= Time.deltaTime * ((PlayerStats.currentItem == Item.FLASHLIGHT ? 1 : 0) + (PlayerStats.sprinting ? 1 : 0));
-            PlayerStats.energy = Mathf.Max(PlayerStats.energy, 0);
-            PlayerStats.hud.UpdateEnergy();
-        }
+        PlayerStats.energy += ((DaylightCycle.time > DaylightCycle.k_DAY && DaylightCycle.time < DaylightCycle.k_EVENING && PlayerStats.energy < PlayerStats.energyMax) ? Time.deltaTime : 0)
+                            - ((PlayerStats.energy > 0) ? (Time.deltaTime * ((PlayerStats.flashlight ? 2 : 0) + (PlayerStats.sprinting ? 5 : 0))) : 0);
+
+        PlayerStats.energy = Mathf.Clamp(PlayerStats.energy, 0, PlayerStats.energyMax);
+        PlayerStats.hud.UpdateEnergy();
     }
 }

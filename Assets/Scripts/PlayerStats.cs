@@ -37,7 +37,6 @@ new public static Rigidbody2D rigidbody;
     public static Gun[] guns = new Gun[9];
     public static int _currentGun;
     public static Gun currentGun;
-    public static LinkedListNode<GridItem> currentGunItemNode;
 
     // items
     public static bool melee;
@@ -50,6 +49,7 @@ new public static Rigidbody2D rigidbody;
 
     //state
     public static bool sprinting;
+    public static bool flashlight;
 
 
     // global
@@ -73,7 +73,7 @@ new public static Rigidbody2D rigidbody;
             guns[i] = weapons.GetChild(i).GetComponent<Gun>();
         }
 
-        SwitchGun(-1);
+        SwitchGun(-1, true);
         gunRpmTimer = 0;
         gunReloadTimer = 0;
         melee = false;
@@ -178,7 +178,7 @@ new public static Rigidbody2D rigidbody;
         melee = false;
     }
 
-    public static void SwitchGun(sbyte _gun)
+    public static void SwitchGun(sbyte _gun, bool nullNode)
     {
         CancelReload();
         
@@ -190,7 +190,10 @@ new public static Rigidbody2D rigidbody;
         else
         {
             currentGun = guns[_gun];
+            currentItem = Item.NONE;
         }
+
+        if(nullNode) currentItemNode = null;
 
         playerAnimator.UpdateGunImage();
 
