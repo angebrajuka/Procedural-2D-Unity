@@ -18,12 +18,13 @@ public class Inventory : MonoBehaviour
     public static readonly Vector2Int gridSize = new Vector2Int(9, 12);
     public const float cellSize = 384f/9f;
 
-    public void Add(Item item, int x, int y, int count=1)
+    public void Add(Item item, int x, int y, int count=1, int ammo=0)
     {
         GameObject gameObject = Instantiate(gridItemPrefab, Vector3.zero, Quaternion.identity, grid);
         GridItem gridItem = gameObject.GetComponent<GridItem>();
         gridItem.item = item;
         gridItem.count = count;
+        gridItem.ammo = ammo;
         items.AddLast(gridItem);
         gridItem.node = items.Last;
         gridItem.Start();
@@ -47,7 +48,7 @@ public class Inventory : MonoBehaviour
         PlayerStats.hud.UpdateAmmo();
     }
 
-    public bool AutoAdd(Item item, int count=1)
+    public bool AutoAdd(Item item, int count=1, int ammo=0)
     {
         ItemStats itemStats = Items.items[(int)item];
         if(count < itemStats.maxStack)
@@ -65,7 +66,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        Add(item, 0, 0, Mathf.Min(count, itemStats.maxStack));
+        Add(item, 0, 0, Mathf.Min(count, itemStats.maxStack), ammo);
         GridItem gridItem = items.Last.Value;
         count -= gridItem.count;
         for(int y=gridSize.y-1; y>=0; y--)
@@ -190,7 +191,6 @@ public class Inventory : MonoBehaviour
 
                 if(PlayerStats.currentItemNode == node)
                 {
-                    PlayerStats.currentItemNode = null;
                     if(Items.items[(int)PlayerStats.currentItemNode.Value.item].gun == -1)
                     {
                         PlayerStats.currentItem = Item.NONE;
@@ -199,22 +199,16 @@ public class Inventory : MonoBehaviour
                     {
                         PlayerStats.currentGun = null;
                         PlayerStats._currentGun = -1;
-                        // PlayerStats.currentGunItemNode = null;
-                        PlayerStats.playerAnimator.UpdateGunImage();
                     }
+                    PlayerStats.currentItemNode = null;
+                    PlayerStats.playerAnimator.UpdateGunImage();
                 }
-                // else if(PlayerStats.currentGunItemNode == node)
-                // {
-                //     PlayerStats.currentGun = null;
-                //     PlayerStats._currentGun = -1;
-                //     PlayerStats.currentGunItemNode = null;
-                //     PlayerStats.playerAnimator.UpdateGunImage();
-                // }
 
                 GameObject item = Instantiate(itemPickupPrefab, player_rb.position, Quaternion.identity);
                 ItemPickup pickup = item.GetComponent<ItemPickup>();
                 pickup.item = node.Value.item;
                 pickup.count = node.Value.count;
+                pickup.ammo = node.Value.ammo;
                 SpriteRenderer sprite = item.GetComponent<SpriteRenderer>();
                 sprite.sprite = Items.items[(int)node.Value.item].sprite;
                 item.GetComponent<Rigidbody2D>().AddForce(new Vector2((Random.value-0.5f)*100, (Random.value-0.5f)*100));

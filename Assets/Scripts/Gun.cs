@@ -26,7 +26,6 @@ public class Gun : MonoBehaviour
     // stats
     [HideInInspector] public float secondsBetweenShots;
     [HideInInspector] public Item ammoType;
-    [HideInInspector] public int ammo;
 
     // components
     public Transform barrelTip;
@@ -36,7 +35,6 @@ public class Gun : MonoBehaviour
         ammoType = (Item)(h_ammoType+(int)Item.BULLETS_SMALL);
         secondsBetweenShots = 60.0f/rpm;
         damage /= bullets;
-        ammo = clipSize;
         barrelTip = transform.GetChild(0);
     }
 
@@ -55,7 +53,7 @@ public class Gun : MonoBehaviour
         rigidbody.AddForce(-direction*recoil);
         
         
-        ammo -= ammoPerShot;
+        PlayerStats.SetAmmo(PlayerStats.GetAmmo()-ammoPerShot);
         PlayerStats.gunRpmTimer = secondsBetweenShots;
 
         bool hit = false;

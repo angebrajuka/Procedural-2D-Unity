@@ -21,6 +21,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     
     public Item item;
     public int count=1;
+    public int ammo=0;
     RectTransform rectTransform;
     RectTransform grid;
     public bool followMouse;

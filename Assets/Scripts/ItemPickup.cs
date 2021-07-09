@@ -11,6 +11,7 @@ public class ItemPickup : MonoBehaviour
     Rigidbody2D m_rigidbody;
 
     public int count;
+    public int ammo=0;
 
     void Start()
     {

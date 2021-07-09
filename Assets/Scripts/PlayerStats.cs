@@ -129,7 +129,7 @@ new public static Rigidbody2D rigidbody;
 
     public static void BeginReload()
     {
-        if(inventory.isOpen || currentGun == null || currentGun.ammo == currentGun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || inventory.GetTotalCount(currentGun.ammoType) == 0) return;
+        if(inventory.isOpen || currentGun == null || GetAmmo() == currentGun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || inventory.GetTotalCount(currentGun.ammoType) == 0) return;
         gunReloadTimer = currentGun.reloadTime;
         reloadSound = AudioManager.PlayClip(currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
     }
@@ -143,18 +143,18 @@ new public static Rigidbody2D rigidbody;
     public static void FinishReload()
     {
         int _ammo = inventory.GetTotalCount(currentGun.ammoType)/currentGun.ammoPerShot;
-        int _clip = currentGun.ammo/currentGun.ammoPerShot;
+        int _clip = GetAmmo()/currentGun.ammoPerShot;
         int _clipSize = currentGun.clipSize/currentGun.ammoPerShot;
         
         if(_ammo > _clipSize - _clip)
         {
             inventory.RemoveItemCount(currentGun.ammoType, (_clipSize - _clip)*currentGun.ammoPerShot);
-            currentGun.ammo = currentGun.clipSize;
+            SetAmmo(currentGun.clipSize);
         }
         else if(_ammo > 0)
         {
             int num = _ammo*currentGun.ammoPerShot;
-            currentGun.ammo += num;
+            SetAmmo(GetAmmo()+num);
             inventory.RemoveItemCount(currentGun.ammoType, num);
         }
 
@@ -201,9 +201,19 @@ new public static Rigidbody2D rigidbody;
         hud.UpdateHotbar();
     }
 
+    public static void SetAmmo(int ammo)
+    {
+        if(currentItemNode != null) currentItemNode.Value.ammo = ammo;
+    }
+
+    public static int GetAmmo()
+    {
+        return currentItemNode == null ? 0 : currentItemNode.Value.ammo;
+    }
+
     public static bool CanShoot()
     {
-        return gunRpmTimer <= 0 && currentGun != null && currentGun.ammo > 0 && gunReloadTimer <= 0;
+        return gunRpmTimer <= 0 && currentGun != null && GetAmmo() > 0 && gunReloadTimer <= 0;
     }
 
     void Update()
@@ -218,7 +228,7 @@ new public static Rigidbody2D rigidbody;
             }
         }
 
-        if(currentGun != null && currentGun.ammo == 0) BeginReload();
+        if(currentGun != null && GetAmmo() == 0) BeginReload();
 
         if(gunReloadTimer > 0)
         {

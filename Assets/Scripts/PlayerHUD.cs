@@ -58,8 +58,8 @@ new public Transform transform;
         // energyTxt.text = PlayerStats.inventory.GetTotalCount(Item.PLASMA)+"";
         if(PlayerStats.currentGun != null)
         {
-            currentGunAmmoTxt.text = PlayerStats.currentGun.ammo < 10 ? "0" : "";
-            currentGunAmmoTxt.text += PlayerStats.currentGun.ammo+"";
+            currentGunAmmoTxt.text = PlayerStats.GetAmmo() < 10 ? "0" : "";
+            currentGunAmmoTxt.text += PlayerStats.GetAmmo()+"";
             currentReserveTxt.text = "/"+PlayerStats.inventory.GetTotalCount(PlayerStats.currentGun.ammoType);
         }
     }

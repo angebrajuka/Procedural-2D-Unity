@@ -157,8 +157,9 @@ public class PlayerInput : MonoBehaviour
             if(Input.GetKey(keybinds[Keybind.moveSouth])) input_move.y --;
             
                 // rotate
-                if(input_move.x != 0 || input_move.y != 0)  direction4index = Math.directions4[(int)-input_move.y+1, (int)input_move.x+1];
-                else                                        direction4index = Math.directions4[(int)-Mathf.Round(mouse_offset.y)+1, (int)Mathf.Round(mouse_offset.x)+1];
+                // if(input_move.x != 0 || input_move.y != 0)  direction4index = Math.directions4[(int)-input_move.y+1, (int)input_move.x+1];
+                // else                                        
+                direction4index = Math.directions4[(int)-Mathf.Round(mouse_offset.y)+1, (int)Mathf.Round(mouse_offset.x)+1];
 
             input_move.Normalize();
         }
@@ -203,19 +204,13 @@ public class PlayerInput : MonoBehaviour
             }
         }
 
-        // //items
-        // if(Input.GetKeyDown(keybinds[Keybind.item]) && !PlayerStats.melee)
-        // {
-        //     Items.items[(int)PlayerStats.currentItem].use();
-        // }
-
 
         // interact
         if(Input.GetKeyDown(keybinds[Keybind.interact]))
         {
             if(PlayerStats.interactItem != Item.NONE)
             {
-                if(PlayerStats.inventory.AutoAdd(PlayerStats.interactItem, PlayerStats.interactPickup.count))
+                if(PlayerStats.inventory.AutoAdd(PlayerStats.interactItem, PlayerStats.interactPickup.count, PlayerStats.interactPickup.ammo))
                 {
                     Destroy(PlayerStats.interactPickup.gameObject);
                     PlayerStats.interactPickup = null;
