@@ -22,11 +22,15 @@ public class PauseHandler : MonoBehaviour
         
         prevTimeScale = Time.timeScale;
         Time.timeScale = 0;
+
+        AudioManager.PauseAllAudio();
     }
 
     public static void UnPause()
     {
         Time.timeScale = prevTimeScale;
+
+        AudioManager.ResumeAllAudio();
     }
 
     public static void Blur()

@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour
     public static readonly Vector2Int gridSize = new Vector2Int(9, 12);
     public const float cellSize = 384f/9f;
 
-    public void Add(Item item, int x, int y, int count=1, int ammo=0)
+    public GridItem Add(Item item, int x, int y, int count=1, int ammo=0)
     {
         GameObject gameObject = Instantiate(gridItemPrefab, Vector3.zero, Quaternion.identity, grid);
         GridItem gridItem = gameObject.GetComponent<GridItem>();
@@ -32,6 +32,22 @@ public class Inventory : MonoBehaviour
 
         PlayerStats.hud.UpdateHotbar();
         PlayerStats.hud.UpdateAmmo();
+        return gridItem;
+    }
+
+    public void Equip(LinkedListNode<GridItem> node)
+    {
+        PlayerStats.currentItemNode = node;
+        if(Items.items[(int)node.Value.item].gun == -1)
+        {
+            PlayerStats.currentItem = node.Value.item;
+            PlayerStats.SwitchGun(-1, false);
+            PlayerStats.hud.UpdateHotbar();
+        }
+        else
+        {
+            PlayerStats.SwitchGun(Items.items[(int)node.Value.item].gun, false);
+        }
     }
 
     public void Clear()

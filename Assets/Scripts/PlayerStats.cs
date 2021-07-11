@@ -81,6 +81,7 @@ new public static Rigidbody2D rigidbody;
 
         if(load)
         {
+            PauseHandler.Pause();
             Save_Load.Load(save);
         }
         else

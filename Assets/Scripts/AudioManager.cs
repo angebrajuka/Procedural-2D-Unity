@@ -68,6 +68,31 @@ public static class AudioManager
         mixer.SetFloat("PitchSFX", pitch);
     }
 
+    static List<AudioSource> audioSources;
+    public static void PauseAllAudio()
+    {
+        audioSources = new List<AudioSource>(Object.FindObjectsOfType(typeof(AudioSource)) as AudioSource[]);
+        for(int i=0; i<audioSources.Count; i++)
+        {
+            if(!audioSources[i].isPlaying || audioSources[i].transform.tag == "Music")
+            {
+                audioSources.RemoveAt(i);
+                i--;
+            }
+            else
+            {
+                audioSources[i].Pause();
+            }
+        }
+    }
+    public static void ResumeAllAudio()
+    {
+        if(audioSources != null) foreach(AudioSource a in audioSources)
+        {
+            if(a != null) a.Play();
+        }
+    }
+
     public static GameObject PlayClip(AudioClip clip, float volume, Mixer mixer, float spatialBlend=0.0f, Vector3 position=default(Vector3))
     {
         GameObject gameObject = new GameObject();

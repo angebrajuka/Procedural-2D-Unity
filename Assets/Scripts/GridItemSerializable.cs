@@ -9,13 +9,18 @@ public class GridItemSerializable
     public int x, y;
     public bool rotated;
     public int count;
+    public int ammo;
+    public bool equipped;
 
-    public GridItemSerializable(GridItem gridItem)
+    public GridItemSerializable(LinkedListNode<GridItem> node)
     {
+        GridItem gridItem = node.Value;
         item = (byte)gridItem.item;
         x = gridItem.GetX();
         y = gridItem.GetY();
         rotated = gridItem.rotated;
         count = gridItem.count;
+        ammo = gridItem.ammo;
+        equipped = (PlayerStats.currentItemNode == node);
     }
 }

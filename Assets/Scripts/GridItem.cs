@@ -142,17 +142,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 }
                 else
                 {
-                    PlayerStats.currentItemNode = node;
-                    if(Items.items[(int)item].gun == -1)
-                    {
-                        PlayerStats.currentItem = item;
-                        PlayerStats.SwitchGun(-1, false);
-                        PlayerStats.hud.UpdateHotbar();
-                    }
-                    else
-                    {
-                        PlayerStats.SwitchGun(Items.items[(int)item].gun, false);
-                    }
+                    PlayerStats.inventory.Equip(node);
                 }
             }
         }
