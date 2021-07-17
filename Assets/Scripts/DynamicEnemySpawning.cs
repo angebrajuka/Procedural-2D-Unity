@@ -40,7 +40,7 @@ public class DynamicEnemySpawning : MonoBehaviour
 
     // stats
     public static LinkedList<EnemyObject> enemyObjects;
-    public static int totalDifficulty;
+    public static int totalDifficulty=0;
     public static float timer;
     public const float minRadius=30, maxRadius=45;
 
@@ -49,6 +49,16 @@ public class DynamicEnemySpawning : MonoBehaviour
         s_enemyPrefab = enemyPrefab;
         enemyObjects = new LinkedList<EnemyObject>();
         totalDifficulty = 0;
+    }
+
+    public static int GetDifficultyValue()
+    {
+        return PlayerStats.difficulty * 40 + 30;
+    }
+
+    public static float GetDynamicDifficulty()
+    {
+        return (float)totalDifficulty / GetDifficultyValue();
     }
 
     public static void Spawn(EnemyType type, bool autoPosition=true, Vector2 position=default(Vector2))
@@ -89,7 +99,7 @@ public class DynamicEnemySpawning : MonoBehaviour
         {
             timer -= Time.deltaTime;
 
-            if(totalDifficulty < 100 && timer <= 0)
+            if(totalDifficulty < GetDifficultyValue() && timer <= 0)
             {
                 timer = UnityEngine.Random.value*0+0.5f;
 

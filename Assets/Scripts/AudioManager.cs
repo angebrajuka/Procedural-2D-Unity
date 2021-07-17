@@ -14,7 +14,6 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
     public static float volMaster, volMusic, volSFX, volMenu;
-    public static float volMenuMusicDiff;
 
     // hierarchy
     public AudioMixer mixer;
@@ -35,13 +34,12 @@ public class AudioManager : MonoBehaviour
         volMusic = 0.5f;
         volSFX = 0.5f;
         volMenu = 0.5f;
-        volMenuMusicDiff = 1.0f;
     }
 
     public static void UpdateAudioSettings()
     {
         instance.mixer.SetFloat("VolMaster", Mathf.Log10(volMaster) * 20);
-        instance.mixer.SetFloat("VolMusic", Mathf.Log10(volMusic*volMenuMusicDiff) * 20);
+        instance.mixer.SetFloat("VolMusic", Mathf.Log10(volMusic) * 20);
         instance.mixer.SetFloat("VolSFX", Mathf.Log10(volSFX) * 20);
         instance.mixer.SetFloat("VolMenu", Mathf.Log10(volMenu) * 20);
         SaveAudioSettings();

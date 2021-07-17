@@ -40,9 +40,4 @@ public class AudioSettings : MonoBehaviour {
         AudioManager.volMenu = sliderMenu.value;
         AudioManager.UpdateAudioSettings();
     }
-
-    public void OnButtonPress() {
-        AudioManager.DefaultSettings();
-        UpdateSliders();
-    }
 }

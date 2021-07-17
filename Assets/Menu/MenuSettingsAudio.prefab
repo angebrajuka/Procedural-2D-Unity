@@ -210,22 +210,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6679669878628520281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1219589053089303890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3689d1eeea87d4d4c9e2d5253c2bc2d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sliderMaster: {fileID: 6783606135825105411}
-  sliderMusic: {fileID: 5113729743042600102}
-  sliderSFX: {fileID: 2028798879949824139}
-  sliderMenu: {fileID: 4784612279431599366}
 --- !u!1 &1675899890887904344
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,6 +399,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6679669878628520281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219589053089303890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3689d1eeea87d4d4c9e2d5253c2bc2d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sliderMaster: {fileID: 6783606135825105411}
+  sliderMusic: {fileID: 5113729743042600102}
+  sliderSFX: {fileID: 2028798879949824139}
+  sliderMenu: {fileID: 4784612279431599366}
 --- !u!1 &2744027847807075556
 GameObject:
   m_ObjectHideFlags: 0
