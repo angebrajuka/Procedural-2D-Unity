@@ -19,11 +19,11 @@ public class Math
         return angle;
     }
 
-    public static readonly byte[,] directions4 =
+    public static readonly byte[,] directions =
     {
-        {2, 1, 0}, 
-        {2, 3, 0}, 
-        {2, 3, 0}
+        {1, 0, 0}, 
+        {1, 0, 0}, 
+        {1, 1, 0}
     };
     
     public static readonly Vector2[] vectors =
@@ -38,11 +38,10 @@ public class Math
         new Vector2(ROOT_ONE_HALF, -ROOT_ONE_HALF)
     };
     
-    public static int AngleToDir4(float angle)
+    public static int AngleToDir(float angle)
     {
-        angle /= 45;
-        if(angle < 0) angle = 0;
-        return (int)Mathf.Round(angle);
+        angle %= 360;
+        return (angle >= 90 && angle <= 270) ? 1 : 0;
     }
 
     public static bool Closer(Vector2 pos1, Vector2 pos2, float distance)

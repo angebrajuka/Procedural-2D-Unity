@@ -9,7 +9,7 @@ public class DynamicLoading : MonoBehaviour
     [HideInInspector]
     public Rigidbody2D player_rb;
     private Vector2Int currPos=Vector2Int.zero;
-    private Vector2Int prevPos=Vector2Int.one*-100;
+    private Vector2Int prevPos;
     public const int chunkSize=50;
     public static readonly Vector2Int mapSize = new Vector2Int(20, 30); // chunks
     private HashSet<(int, int)> loadedScenes;
@@ -57,6 +57,20 @@ public class DynamicLoading : MonoBehaviour
                 }
             }
         }
+    }
+
+    void OnDisable()
+    {
+        foreach((int x, int y) tuple in loadedScenes)
+        {
+            SceneManager.UnloadSceneAsync(Name(tuple.x, tuple.y));
+        }
+        loadedScenes.Clear();
+    }
+
+    void OnEnable()
+    {
+        prevPos=Vector2Int.one*-100;
     }
 
     void Update()

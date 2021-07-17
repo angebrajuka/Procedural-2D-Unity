@@ -9,6 +9,6 @@ public class ButtonSaveAndQuit : MonoBehaviour
     {
         Save_Load.Save(PlayerStats.save);
         PauseHandler.UnPause();
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        MenuHandler.MainMenu();
     }
 }

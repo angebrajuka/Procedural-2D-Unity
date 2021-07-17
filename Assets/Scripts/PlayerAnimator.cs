@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     // hierarchy
-    public FourDirectionAnimator m_animator_body;
+    public TwoDirectionAnimator m_animator_body;
     public SpriteRenderer m_renderer_gun;
     public SpriteRenderer[] m_renderers_guns;
 
-    // static reference
-    [HideInInspector] public static PlayerAnimator playerAnimator;
+    // input
+    public static int direction=0;
 
     public void BeginMelee()
     {
@@ -22,11 +22,6 @@ public class PlayerAnimator : MonoBehaviour
         if(m_renderer_gun != null) m_renderer_gun.enabled = true;
     }
 
-    void Start()
-    {
-        playerAnimator = this;
-    }
-
     public void UpdateGunImage()
     {
         if(m_renderer_gun != null) m_renderer_gun.enabled = false;
@@ -36,7 +31,7 @@ public class PlayerAnimator : MonoBehaviour
 
     void Update()
     {
-        m_animator_body.direction = PlayerInput.direction4index;
+        m_animator_body.direction = direction;
         if(m_renderer_gun != null)
         {
             m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);

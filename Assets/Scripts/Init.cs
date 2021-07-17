@@ -7,15 +7,12 @@ using UnityEngine.Audio;
 public class Init : MonoBehaviour
 {
     // hierarchy
-    public AudioMixer h_mixer;
-    public AudioMixerGroup h_mixer_master;
-    public AudioMixerGroup h_mixer_music;
-    public AudioMixerGroup h_mixer_sfx;
-    public AudioMixerGroup h_mixer_menu;
-
     public GameObject h_menuMain;
     public GameObject h_menuPause;
     public bool setMenu;
+
+    public GameObject mainMenuObject;
+    public GameObject gameWorldObject;
 
 
     static bool init=false;
@@ -25,18 +22,14 @@ public class Init : MonoBehaviour
         if(!init)
         {
             init = true;
-            
-            AudioManager.mixer = h_mixer;
-            AudioManager.mixer_master = h_mixer_master;
-            AudioManager.mixer_music = h_mixer_music;
-            AudioManager.mixer_sfx = h_mixer_sfx;
-            AudioManager.mixer_menu = h_mixer_menu;
-            AudioManager.LoadAudioSettings();
 
             MenuHandler.menuMain = h_menuMain;
             MenuHandler.menuPause = h_menuPause;
 
             PlayerInput.LoadKeybinds();
+
+            MenuHandler.mainMenuObject = mainMenuObject;
+            MenuHandler.gameWorldObject = gameWorldObject;
         }
 
         if(setMenu) MenuHandler.SetMenu(MenuHandler.menuMain);

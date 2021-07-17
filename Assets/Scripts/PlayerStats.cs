@@ -60,18 +60,26 @@ new public static Rigidbody2D rigidbody;
 
     void Start()
     {
-        playerStats = this;
-        inventory = GetComponent<Inventory>();
-        target = GetComponent<Target>();
-        hud = GetComponent<PlayerHUD>();
-        rigidbody = GetComponent<Rigidbody2D>();
-        playerAnimator = GetComponent<PlayerAnimator>();
-        playerInput = GetComponent<PlayerInput>();
-
-        for(int i=0; i<guns.Length; i++)
+        if(playerStats != this)
         {
-            guns[i] = weapons.GetChild(i).GetComponent<Gun>();
+            playerStats = this;
+            inventory = GetComponent<Inventory>();
+            target = GetComponent<Target>();
+            hud = GetComponent<PlayerHUD>();
+            rigidbody = GetComponent<Rigidbody2D>();
+            playerAnimator = GetComponent<PlayerAnimator>();
+            playerInput = GetComponent<PlayerInput>();
+
+            for(int i=0; i<guns.Length; i++)
+            {
+                guns[i] = weapons.GetChild(i).GetComponent<Gun>();
+            }
         }
+    }
+
+    void OnEnable()
+    {
+        Start();
 
         SwitchGun(-1, true);
         gunRpmTimer = 0;
@@ -118,6 +126,7 @@ new public static Rigidbody2D rigidbody;
         }
         
         hud.UpdateHotbar();
+        playerInput.enabled = true;
     }
 
     public static void RemoveCurrentItem()
@@ -167,7 +176,7 @@ new public static Rigidbody2D rigidbody;
         CancelReload();
         melee = true;
         playerStats.knifeRotationPoint.gameObject.SetActive(true);
-        PlayerAnimator.playerAnimator.BeginMelee();
+        playerAnimator.BeginMelee();
         playerStats.knifeStart.localEulerAngles = Vector3.forward*PlayerInput.angle;
         knifeDirection = Random.value>0.5f ? (sbyte)-1 : (sbyte)1;
         playerStats.knifeRotationPoint.localEulerAngles = Vector3.forward*k_KNIFE_ARC*knifeDirection;
@@ -175,7 +184,7 @@ new public static Rigidbody2D rigidbody;
 
     public static void EndMelee() {
         playerStats.knifeRotationPoint.gameObject.SetActive(false);
-        PlayerAnimator.playerAnimator.EndMelee();
+        playerAnimator.EndMelee();
         melee = false;
     }
 

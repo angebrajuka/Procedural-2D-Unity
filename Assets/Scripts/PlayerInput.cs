@@ -24,7 +24,6 @@ public class PlayerInput : MonoBehaviour
 {    
     // hierarchy
     public Transform weapons;
-    public GameObject line;
     public InventoryControls inventory;
 
 
@@ -35,7 +34,6 @@ public class PlayerInput : MonoBehaviour
     // output
     public static float angle;
     public static float cursorDistance;
-    public static byte direction4index;
 
 
 
@@ -155,11 +153,8 @@ public class PlayerInput : MonoBehaviour
             if(Input.GetKey(keybinds[Keybind.moveNorth])) input_move.y ++;
             if(Input.GetKey(keybinds[Keybind.moveWest]))  input_move.x --;
             if(Input.GetKey(keybinds[Keybind.moveSouth])) input_move.y --;
-            
-                // rotate
-                // if(input_move.x != 0 || input_move.y != 0)  direction4index = Math.directions4[(int)-input_move.y+1, (int)input_move.x+1];
-                // else                                        
-                direction4index = Math.directions4[(int)-Mathf.Round(mouse_offset.y)+1, (int)Mathf.Round(mouse_offset.x)+1];
+                                 
+            PlayerAnimator.direction = Math.AngleToDir(angle);
 
             input_move.Normalize();
         }

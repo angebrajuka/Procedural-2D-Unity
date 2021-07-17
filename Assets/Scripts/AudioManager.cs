@@ -10,16 +10,24 @@ public enum Mixer
     MENU
 }
 
-public static class AudioManager
+public class AudioManager : MonoBehaviour
 {
-    public static AudioMixer mixer;
-    public static AudioMixerGroup mixer_master;
-    public static AudioMixerGroup mixer_music;
-    public static AudioMixerGroup mixer_sfx;
-    public static AudioMixerGroup mixer_menu;
+    public static AudioManager instance;
     public static float volMaster, volMusic, volSFX, volMenu;
     public static float volMenuMusicDiff;
 
+    // hierarchy
+    public AudioMixer mixer;
+    public AudioMixerGroup mixer_master;
+    public AudioMixerGroup mixer_music;
+    public AudioMixerGroup mixer_sfx;
+    public AudioMixerGroup mixer_menu;
+
+    void Start()
+    {
+        instance = this;
+        LoadAudioSettings();
+    }
 
     public static void DefaultSettings()
     {
@@ -32,10 +40,10 @@ public static class AudioManager
 
     public static void UpdateAudioSettings()
     {
-        mixer.SetFloat("VolMaster", Mathf.Log10(volMaster) * 20);
-        mixer.SetFloat("VolMusic", Mathf.Log10(volMusic*volMenuMusicDiff) * 20);
-        mixer.SetFloat("VolSFX", Mathf.Log10(volSFX) * 20);
-        mixer.SetFloat("VolMenu", Mathf.Log10(volMenu) * 20);
+        instance.mixer.SetFloat("VolMaster", Mathf.Log10(volMaster) * 20);
+        instance.mixer.SetFloat("VolMusic", Mathf.Log10(volMusic*volMenuMusicDiff) * 20);
+        instance.mixer.SetFloat("VolSFX", Mathf.Log10(volSFX) * 20);
+        instance.mixer.SetFloat("VolMenu", Mathf.Log10(volMenu) * 20);
         SaveAudioSettings();
     }
 
@@ -65,49 +73,40 @@ public static class AudioManager
 
     public static void PitchShift(float pitch)
     {
-        mixer.SetFloat("PitchSFX", pitch);
+        instance.mixer.SetFloat("PitchSFX", pitch);
     }
 
-    static List<AudioSource> audioSources;
     public static void PauseAllAudio()
     {
-        audioSources = new List<AudioSource>(Object.FindObjectsOfType(typeof(AudioSource)) as AudioSource[]);
-        for(int i=0; i<audioSources.Count; i++)
+        for(int i=0; i<instance.transform.childCount; i++)
         {
-            if(!audioSources[i].isPlaying || audioSources[i].transform.tag == "Music")
-            {
-                audioSources.RemoveAt(i);
-                i--;
-            }
-            else
-            {
-                audioSources[i].Pause();
-            }
+            instance.transform.GetChild(i).GetComponent<AudioSource>().Pause();
         }
     }
     public static void ResumeAllAudio()
     {
-        if(audioSources != null) foreach(AudioSource a in audioSources)
+        for(int i=0; i<instance.transform.childCount; i++)
         {
-            if(a != null) a.Play();
+            instance.transform.GetChild(i).GetComponent<AudioSource>().Play();
         }
     }
 
     public static GameObject PlayClip(AudioClip clip, float volume, Mixer mixer, float spatialBlend=0.0f, Vector3 position=default(Vector3))
     {
         GameObject gameObject = new GameObject();
+        gameObject.transform.parent = instance.transform;
         gameObject.transform.position = position;
         AudioSource source = gameObject.AddComponent<AudioSource>();
         switch(mixer)
         {
         case Mixer.SFX:
-            source.outputAudioMixerGroup = mixer_sfx;
+            source.outputAudioMixerGroup = instance.mixer_sfx;
             break;
         case Mixer.MENU:
-            source.outputAudioMixerGroup = mixer_menu;
+            source.outputAudioMixerGroup = instance.mixer_menu;
             break;
         case Mixer.MUSIC:
-            source.outputAudioMixerGroup = mixer_music;
+            source.outputAudioMixerGroup = instance.mixer_music;
             break;
         }
         source.clip = clip;
