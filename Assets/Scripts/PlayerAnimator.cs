@@ -12,6 +12,8 @@ public class PlayerAnimator : MonoBehaviour
     // input
     public static int direction=0;
 
+    float walkTimer=0;
+
     public void BeginMelee()
     {
         if(m_renderer_gun != null) m_renderer_gun.enabled = false;
@@ -29,9 +31,27 @@ public class PlayerAnimator : MonoBehaviour
         if(m_renderer_gun != null) m_renderer_gun.enabled = true;
     }
 
+    static readonly int[] convert = {0, 1, 0, 2};
+
     void Update()
     {
+        if(PlayerStats.rigidbody.velocity.magnitude >= 0.01f)
+        {
+            walkTimer += PlayerStats.rigidbody.velocity.magnitude * Time.deltaTime;
+            if(walkTimer >= 4)
+            {
+                walkTimer = 0;
+            }
+            m_animator_body.state = convert[(int)Mathf.Floor(walkTimer)];
+        }
+        else
+        {
+            walkTimer = 0;
+            m_animator_body.state = 0;
+        }
+
         m_animator_body.direction = direction;
+
         if(m_renderer_gun != null)
         {
             m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);

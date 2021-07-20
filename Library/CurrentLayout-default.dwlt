@@ -115,7 +115,7 @@ MonoBehaviour:
   m_MinSize: {x: 678, y: 492}
   m_MaxSize: {x: 14001, y: 14042}
   vertical: 0
-  controlID: 222
+  controlID: 4085
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 227
+  controlID: 4159
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 228
+  controlID: 4160
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -398,7 +398,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 30f0ffff88f0fffff2f1fffff6f1fffffaf1fffffef1ffff02f2ffff06f2ffff0af2ffff0ef2ffff12f2ffff16f2ffff1af2ffff1ef2ffff22f2ffff26f2ffff2af2ffff2ef2ffff32f2ffff36f2ffff3af2ffff3ef2ffff42f2ffff9cf2ffffa0f2ffffa4f2ffffacf2ffff50fbffff
+      m_ExpandedIDs: 1e82ffff7682ffffe083ffffe483ffffe883ffffec83fffff083fffff483fffff883fffffc83ffff0084ffff0484ffff0884ffff0c84ffff1084ffff1484ffff1884ffff1c84ffff2084ffff2484ffff2884ffff2c84ffff3084ffff8a84ffff8e84ffff9284ffff9a84ffff40fbffff1a42000060430000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -602,20 +602,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Menu
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Menu
+  - Assets/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\braju\workspaces\Unity-workspace\Caedis
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 3e4d0000
-    m_LastClickedID: 19774
-    m_ExpandedIDs: 00000000dc400000304d000000ca9a3b
+    m_SelectedIDs: 4e4d0000
+    m_LastClickedID: 19790
+    m_ExpandedIDs: 00000000de400000344d000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -643,7 +643,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000dc400000304d000000ca9a3b
+    m_ExpandedIDs: 00000000de400000344d000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -670,7 +670,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000da790000d03a0000a241000042490000a4390000b0670000046a00002e760100000000003242000086440000aa440000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -695,7 +695,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 93}
     m_GridSize: 64
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 209
