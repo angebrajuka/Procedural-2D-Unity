@@ -6,25 +6,27 @@ using UnityEngine.SceneManagement;
 
 public class DynamicLoading : MonoBehaviour
 {
+    public GameObject prefab_chunk;
+
     [HideInInspector]
     public Rigidbody2D player_rb;
     private Vector2Int currPos=Vector2Int.zero;
     private Vector2Int prevPos;
     public const int chunkSize=50;
     public static readonly Vector2Int mapSize = new Vector2Int(20, 30); // chunks
-    private HashSet<(int, int)> loadedScenes;
-    private BitArray validScenes;
+    private Dictionary<(int x, int y), GameObject> loadedChunks;
+    private BitArray validChunks;
 
     bool IsValid(int x, int y) {
-        return validScenes.Get(y*mapSize.x+x);
+        return validChunks.Get(y*mapSize.x+x);
     }
 
     void Start()
     {
-        loadedScenes = new HashSet<(int, int)>();
-        validScenes = new BitArray(mapSize.x*mapSize.y);
+        loadedChunks = new Dictionary<(int, int), GameObject>();
+        validChunks = new BitArray(mapSize.x*mapSize.y);
         
-        for(int i=2; i<SceneManager.sceneCountInBuildSettings; i++)
+        for(int i=1; i<SceneManager.sceneCountInBuildSettings; i++)
         {
             string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
             int slash = scenePath.LastIndexOf("/");
@@ -33,7 +35,7 @@ public class DynamicLoading : MonoBehaviour
             
             if(Int32.TryParse(scenePath.Substring(slash+1, comma-slash-1), out int x) && Int32.TryParse(scenePath.Substring(comma+1, dot-comma-1), out int y))
             {
-                validScenes.Set(y*mapSize.x+x, true);
+                validChunks.Set(y*mapSize.x+x, true);
             }
         }
 
@@ -51,21 +53,38 @@ public class DynamicLoading : MonoBehaviour
         {
             for(int y=Mathf.Max(posY-1, 0); y<=Mathf.Min(posY+1, mapSize.y-1); y++)
             {
-                if(!loadedScenes.Contains((x, y)) && IsValid(x, y)) {
-                    SceneManager.LoadSceneAsync(Name(x, y), LoadSceneMode.Additive);
-                    loadedScenes.Add((x, y));
+                if(!loadedChunks.ContainsKey((x, y))) {
+                    
+                    loadedChunks.Add((x, y), Instantiate(prefab_chunk, new Vector3(x*chunkSize, y*chunkSize, 0), Quaternion.identity));
+                    
+                    if(IsValid(x, y))
+                    {
+                        // replace with fileIO
+                        SceneManager.LoadSceneAsync(Name(x, y), LoadSceneMode.Additive);
+                    }
+                    else
+                    {
+                        // replace with default chunk
+                    }
                 }
             }
         }
     }
 
+    void UnloadChunk(int x, int y)
+    {
+        Destroy(loadedChunks[(x, y)]);
+        if(IsValid(x, y))
+            SceneManager.UnloadSceneAsync(Name(x, y));
+    }
+
     void OnDisable()
     {
-        foreach((int x, int y) tuple in loadedScenes)
+        foreach(KeyValuePair<(int x, int y), GameObject> chunk in loadedChunks)
         {
-            SceneManager.UnloadSceneAsync(Name(tuple.x, tuple.y));
+            UnloadChunk(chunk.Key.x, chunk.Key.y);
         }
-        loadedScenes.Clear();
+        loadedChunks.Clear();
     }
 
     void OnEnable()
@@ -82,14 +101,22 @@ public class DynamicLoading : MonoBehaviour
         {
             Application.backgroundLoadingPriority = ThreadPriority.Low;
 
-            loadedScenes.RemoveWhere(delegate((int x, int y) tuple)
+            LinkedList<(int x, int y)> toUnload = new LinkedList<(int x, int y)>();
+            foreach(var chunk in loadedChunks)
             {
-                if(Mathf.Abs(tuple.x-currPos.x) > 2 || Mathf.Abs(tuple.y-currPos.y) > 2) {
-                    SceneManager.UnloadSceneAsync(Name(tuple.x, tuple.y));
-                    return true;
+                if(Mathf.Abs(chunk.Key.x-currPos.x) > 2 || Mathf.Abs(chunk.Key.y-currPos.y) > 2)
+                {
+                    toUnload.AddLast(chunk.Key);
                 }
-                return false;
-            });
+            };
+
+            foreach((int x, int y) key in toUnload)
+            {
+                UnloadChunk(key.x, key.y);
+                loadedChunks.Remove(key);
+            }
+
+            
 
             LoadAll();
         }
