@@ -17,9 +17,9 @@ public class DynamicLoading : MonoBehaviour
     public const int chunkSize=50;
     public static readonly Vector2Int mapSize = new Vector2Int(20, 30); // chunks
     private Dictionary<(int x, int y), GameObject> loadedChunks;
-    private BitArray validChunks;
+    private static BitArray validChunks;
 
-    bool IsValid(int x, int y) {
+    public static bool IsValid(int x, int y) {
         return validChunks.Get(y*mapSize.x+x);
     }
 
@@ -48,41 +48,14 @@ public class DynamicLoading : MonoBehaviour
 
     public GameObject InstantiateChunk(int x, int y)
     {
-        return Instantiate(prefab_chunk, new Vector3(x*chunkSize, y*chunkSize, 0), Quaternion.identity);
-    }
+        GameObject gameObject = Instantiate(prefab_chunk, new Vector3(x*chunkSize, y*chunkSize, 0), Quaternion.identity);
+        Chunk chunk = gameObject.GetComponent<Chunk>();
 
-    public void LoadChunk(int x, int y, GameObject chunk)
-    {
-        var tilemap = chunk.transform.GetChild(0).GetComponent<Tilemap>();
-        Vector3Int pos = new Vector3Int(0, 0, 0);
-        int[] tileIndex = new int[chunkSize*chunkSize];
+        chunk.x = x;
+        chunk.y = y;
+        chunk.dynamicLoader = this;
 
-        if(IsValid(x, y))
-        {
-            TextAsset chunkData = (TextAsset)Resources.Load("Chunks/"+DynamicLoading.Name(x, y));
-            string[] txt = chunkData.text.Split(',');
-            
-            for(int i=0; i<txt.Length; i++)
-            {
-                try
-                {
-                    tileIndex[i] = Int32.Parse(txt[i]);
-                }
-                catch
-                {
-                    Debug.Log("Error");
-                }
-            }
-        }
-
-        for(pos.x=0; pos.x<chunkSize; pos.x++)
-        {
-            for(pos.y=0; pos.y<chunkSize; pos.y++)
-            {
-                tilemap.SetTile(pos, tiles[tileIndex[pos.y+chunkSize*pos.x]]);
-            }
-        }
-        tilemap.RefreshAllTiles();
+        return gameObject;
     }
 
     void LoadAll()
@@ -98,7 +71,6 @@ public class DynamicLoading : MonoBehaviour
                 {
                     GameObject chunk = InstantiateChunk(x, y);
                     loadedChunks.Add((x, y), chunk);
-                    LoadChunk(x, y, chunk);
                 }
             }
         }

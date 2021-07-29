@@ -19,7 +19,6 @@ public class _EditorChunkLoading : MonoBehaviour
     {
         dynamicLoader.Start();
         loadedChunk = dynamicLoader.InstantiateChunk(x, y);
-        dynamicLoader.LoadChunk(x, y, loadedChunk);
     }
 
     public void Save()
