@@ -11,7 +11,7 @@ public class ChunkLoading : Editor
         DrawDefaultInspector();
         _EditorChunkLoading script = (_EditorChunkLoading)target;
 
-        if(GUILayout.Button("load chunk"))
+        if(GUILayout.Button("new/load chunk"))
         {
             script.Load();
         }

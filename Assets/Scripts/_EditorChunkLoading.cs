@@ -19,6 +19,14 @@ public class _EditorChunkLoading : MonoBehaviour
     {
         dynamicLoader.Start();
         loadedChunk = dynamicLoader.InstantiateChunk(x, y);
+        Chunk chunk = loadedChunk.GetComponent<Chunk>();
+        chunk.x = x;
+        chunk.y = y;
+        chunk._Start(true);
+        for(int i=0; i<DynamicLoading.chunkSize; i++)
+        {
+            chunk.FixedUpdate();
+        }
     }
 
     public void Save()

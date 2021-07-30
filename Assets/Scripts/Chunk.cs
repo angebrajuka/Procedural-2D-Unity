@@ -16,7 +16,7 @@ public class Chunk : MonoBehaviour
     ResourceRequest request;
     bool loaded;
 
-    void Start()
+    public void _Start(bool editor)
     {
         loaded = false;
         isValid = DynamicLoading.IsValid(x, y);
@@ -25,11 +25,23 @@ public class Chunk : MonoBehaviour
 
         if(isValid)
         {
-            request = Resources.LoadAsync("Chunks/"+DynamicLoading.Name(x, y), typeof(TextAsset));
+            if(editor)
+            {
+                txt = ((TextAsset)Resources.Load("Chunks/"+DynamicLoading.Name(x, y), typeof(TextAsset))).text.Split(',');
+            }
+            else
+            {
+                request = Resources.LoadAsync("Chunks/"+DynamicLoading.Name(x, y), typeof(TextAsset));
+            }
         }
     }
 
-    void FixedUpdate()
+    void Start()
+    {
+        _Start(false);
+    }
+    
+    public void FixedUpdate()
     {
         if(request != null && request.isDone && txt == null)
         {

@@ -23,7 +23,6 @@ public class DynamicLoading : MonoBehaviour
         return validChunks.Get(y*mapSize.x+x);
     }
 
-    [ExecuteInEditMode]
     public void Start()
     {
         loadedChunks = new Dictionary<(int, int), GameObject>();
