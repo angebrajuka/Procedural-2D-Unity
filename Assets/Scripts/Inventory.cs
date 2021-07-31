@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour
     public Rigidbody2D player_rb;
     public PlayerAnimator playerAnimator;
 
-    public bool isOpen=false;
+    [HideInInspector] public bool isOpen=false;
 
     public LinkedList<GridItem> items = new LinkedList<GridItem>();
     public static readonly Vector2Int gridSize = new Vector2Int(9, 12);

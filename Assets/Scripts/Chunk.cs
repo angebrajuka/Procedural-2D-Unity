@@ -9,7 +9,7 @@ public class Chunk : MonoBehaviour
     public int x, y;
     public DynamicLoading dynamicLoader;
     
-    Tilemap m_tilemap;
+    public Tilemap m_tilemap;
     bool isValid;
     Vector3Int pos;
     string[] txt;
@@ -57,6 +57,7 @@ public class Chunk : MonoBehaviour
                     if(isValid)
                     {
                         tile = Int32.Parse(txt[pos.x*DynamicLoading.chunkSize + pos.y]);
+                        if(tile == -1) tile = 0;
                     }
                     m_tilemap.SetTile(pos, dynamicLoader.tiles[tile]);
                 }

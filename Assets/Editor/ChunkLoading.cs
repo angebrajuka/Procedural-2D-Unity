@@ -9,7 +9,7 @@ public class ChunkLoading : Editor
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
-        _EditorChunkLoading script = (_EditorChunkLoading)target;
+        var script = (_EditorChunkLoading)target;
 
         if(GUILayout.Button("new/load chunk"))
         {

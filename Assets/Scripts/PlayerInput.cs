@@ -28,7 +28,7 @@ public class PlayerInput : MonoBehaviour
 
 
     // input
-    private Vector2 input_move;
+    [HideInInspector] public static Vector2 input_move;
     private Vector2 mouse_offset;
 
     // output
@@ -127,8 +127,6 @@ public class PlayerInput : MonoBehaviour
             MenuHandler.prevMenu.Clear();
             MenuHandler.SetMenu(MenuHandler.menuPause);
         }
-
-
         
         // mouse look
         {
@@ -143,7 +141,6 @@ public class PlayerInput : MonoBehaviour
             weapons.eulerAngles = new Vector3(0, 0, angle);
         }
 
-
         // movement
         {
             input_move.x = 0;
@@ -153,17 +150,25 @@ public class PlayerInput : MonoBehaviour
             if(Input.GetKey(keybinds[Keybind.moveNorth])) input_move.y ++;
             if(Input.GetKey(keybinds[Keybind.moveWest]))  input_move.x --;
             if(Input.GetKey(keybinds[Keybind.moveSouth])) input_move.y --;
-                                 
-            PlayerAnimator.direction = Math.AngleToDir(angle);
-
+            
             input_move.Normalize();
         }
 
+        // facing
+        {
+            if(input_move.x == 0)
+            {
+                PlayerAnimator.direction = Input.mousePosition.x > (Screen.width / 2) ? 0 : 1;
+            }
+            else
+            {
+                PlayerAnimator.direction = input_move.x > 0 ? 0 : 1;
+            }
+        }
 
         // battery consumption
         PlayerStats.sprinting = Input.GetKey(keybinds[Keybind.sprint]) && PlayerStats.energy > 0;
         PlayerStats.flashlight = !PlayerStats.sprinting && PlayerStats.energy > 0 && (Input.GetKeyDown(keybinds[Keybind.flashlight]) ? !PlayerStats.flashlight : PlayerStats.flashlight);
-
 
         // inventory
         if(Input.GetKeyDown(keybinds[Keybind.inventory]))
@@ -180,7 +185,6 @@ public class PlayerInput : MonoBehaviour
             enabled = false;
         }
         
-
         // reload
         if(Input.GetKey(keybinds[Keybind.reload])) PlayerStats.BeginReload();
 
@@ -198,7 +202,6 @@ public class PlayerInput : MonoBehaviour
                 item.use();
             }
         }
-
 
         // interact
         if(Input.GetKeyDown(keybinds[Keybind.interact]))
@@ -236,8 +239,6 @@ public class PlayerInput : MonoBehaviour
             }
         }
     }
-
-
 
     void FixedUpdate()
     {

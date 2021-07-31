@@ -6,10 +6,14 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu]
 public class AdvancedRuleTile : RuleTile<AdvancedRuleTile.Neighbor>
 {
+    public TileBase[] tiles;
+
     public class Neighbor : RuleTile.TilingRule.Neighbor
     {
-        // public const int Any = 3;
-        // public const int ThisOrNothing = 4;
+        public const int Grass = 3;
+        public const int Path = 4;
+        public const int Dirt = 5;
+        public const int Sand = 6;
     }
 
     public override bool RuleMatch(int neighbor, TileBase tile)
@@ -19,7 +23,12 @@ public class AdvancedRuleTile : RuleTile<AdvancedRuleTile.Neighbor>
         case Neighbor.This:
             return tile == this || tile == null;
         case Neighbor.NotThis:
-            return tile != this;
+            return tile != this && tile != null;
+        case Neighbor.Grass:
+        case Neighbor.Path:
+        case Neighbor.Dirt:
+        case Neighbor.Sand:
+            return tile == tiles[neighbor-Neighbor.Grass];
         }
         return base.RuleMatch(neighbor, tile);
     }

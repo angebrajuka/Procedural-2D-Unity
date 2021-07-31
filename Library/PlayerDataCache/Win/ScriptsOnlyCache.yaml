@@ -48,16 +48,28 @@ ScriptsOnlyBuild:
     - Target
     - TwoDirectionAnimator
     - _EditorChunkLoading
+    - _EditorTextureGen
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.Tilemap.Editor.dll:
+    - UnityEditor.Tilemaps.GridBrush
+    - UnityEditor.Tilemaps.GridBrushEditor
+    - UnityEditor.Tilemaps.GridPaintPaletteClipboard
+    - UnityEditor.Tilemaps.GridPaintPaletteWindow
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
     - UnityEditor.Tilemaps.GridPalettes
+    - UnityEditor.Tilemaps.PaintableSceneViewGrid
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.TileDragAndDropManager
-    Unity.2D.Tilemap.Extras.dll:
-    - UnityEngine.RuleTile
+    Unity.2D.Tilemap.Extras.Editor.dll:
+    - UnityEditor.Tilemaps.CoordinateBrush
+    - UnityEditor.Tilemaps.GameObjectBrush
+    - UnityEditor.Tilemaps.GroupBrush
+    - UnityEditor.Tilemaps.LineBrush
+    - UnityEditor.Tilemaps.RandomBrush
+    - UnityEditor.Tilemaps.TintBrush
+    - UnityEditor.Tilemaps.TintBrushSmooth
     Unity.RenderPipelines.Core.Runtime.dll:
     - UnityEngine.Rendering.UI.DebugUIHandlerBitField
     - UnityEngine.Rendering.UI.DebugUIHandlerButton
@@ -220,8 +232,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12272}
     - Class: 114
-      Script: {instanceID: 12372}
-    - Class: 114
       Script: {instanceID: 12406}
     - Class: 114
       Script: {instanceID: 12558}
@@ -363,6 +373,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 16458}
     - Class: 114
       Script: {instanceID: 16464}
+    - Class: 114
+      Script: {instanceID: 19966}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -858,7 +870,7 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAsset
   - hash:
       serializedVersion: 2
-      Hash: 52b3a90534becea262d8c68d24cf55de
+      Hash: ed02134c8b261a558d5b42f008f46fdf
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Chunk
@@ -1500,7 +1512,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: fc29f975ab35a5033d05bcfda3c82435
+      Hash: 04ad77dd6b4dc31fb3e185f0f262ea82
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AdvancedRuleTile
@@ -1642,6 +1654,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 1c546151093562772918cc265cdc6c05
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: _EditorTextureGen
   platform: 5
   scenePathNames:
   - Assets/Scenes/AlwaysLoaded.unity

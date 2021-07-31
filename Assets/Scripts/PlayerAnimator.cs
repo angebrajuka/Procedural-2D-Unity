@@ -35,7 +35,7 @@ public class PlayerAnimator : MonoBehaviour
 
     void Update()
     {
-        if(PlayerStats.rigidbody.velocity.magnitude >= 0.01f)
+        if(PlayerInput.input_move.x != 0 || PlayerInput.input_move.y != 0)
         {
             walkTimer += PlayerStats.rigidbody.velocity.magnitude * Time.deltaTime;
             if(walkTimer >= 4)
@@ -46,7 +46,7 @@ public class PlayerAnimator : MonoBehaviour
         }
         else
         {
-            walkTimer = 0;
+            walkTimer = 0.99f;
             m_animator_body.state = 0;
         }
 
