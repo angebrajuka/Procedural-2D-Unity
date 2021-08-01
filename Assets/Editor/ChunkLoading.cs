@@ -23,5 +23,13 @@ public class ChunkLoading : Editor
         {
             script.GetValidChunks();
         }
+        if(GUILayout.Button("load all"))
+        {
+            script.LoadAll();
+        }
+        if(GUILayout.Button("save all"))
+        {
+            script.SaveAll();
+        }
     }
 }

@@ -19,6 +19,7 @@ public class _EditorChunkLoading : MonoBehaviour
     {
         dynamicLoader.Start();
         loadedChunk = dynamicLoader.InstantiateChunk(x, y);
+        loadedChunk.transform.SetParent(transform);
         Chunk chunk = loadedChunk.GetComponent<Chunk>();
         chunk.x = x;
         chunk.y = y;
@@ -33,6 +34,8 @@ public class _EditorChunkLoading : MonoBehaviour
 
     public void Save()
     {
+        dynamicLoader.Start();
+
         StreamWriter file;
         string path = Application.dataPath+"/Resources/Chunks/"+DynamicLoading.Name(x, y)+".txt";
         if(File.Exists(path))
@@ -47,7 +50,7 @@ public class _EditorChunkLoading : MonoBehaviour
         {
             for(pos.y=0; pos.y<DynamicLoading.chunkSize; pos.y++)
             {
-                file.Write(Array.IndexOf(dynamicLoader.tiles, tilemap.GetTile(pos))+"");
+                file.Write(Array.IndexOf(DynamicLoading.tiles, tilemap.GetTile(pos))+"");
                 if(pos.x != DynamicLoading.chunkSize-1 || pos.y != DynamicLoading.chunkSize-1) file.Write(",");
             }
         }
@@ -68,6 +71,34 @@ public class _EditorChunkLoading : MonoBehaviour
         }
         file.Close();
         AssetDatabase.Refresh();
+    }
+
+    public void LoadAll()
+    {
+        string[] files = Directory.GetFiles(Application.dataPath+"/Resources/Chunks", "*.txt");
+        foreach(var name in files)
+        {
+            string pair = name.Substring(name.LastIndexOf('\\')+1, name.LastIndexOf('.')-name.LastIndexOf('\\')-1);
+            int x = Int32.Parse(pair.Substring(0, pair.LastIndexOf(',')));
+            int y = Int32.Parse(pair.Substring(pair.LastIndexOf(',')+1));
+            
+            this.x = x;
+            this.y = y;
+            Load();
+        }
+    }
+
+    public void SaveAll()
+    {
+        for(int i=0; i<transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            Chunk chunk = child.GetComponent<Chunk>();
+            x = chunk.x;
+            y = chunk.y;
+            loadedChunk = child.gameObject;
+            Save();
+        }
     }
 }
 

@@ -288,7 +288,5 @@ MonoBehaviour:
     - {x: 1, y: 0, z: 0}
     - {x: 0, y: -1, z: 0}
     m_RuleTransform: 0
-  tiles:
+  connectingTiles:
   - {fileID: 11400000, guid: 5b9d7baa5b208b94d955f95accba008e, type: 2}
-  - {fileID: 11400000}
-  - {fileID: 11400000, guid: 3e2e3c21c7fb4bf4fbd50e60fa61a7e8, type: 2}

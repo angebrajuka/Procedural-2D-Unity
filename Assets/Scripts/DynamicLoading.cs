@@ -4,11 +4,12 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
+using System.IO;
 
 public class DynamicLoading : MonoBehaviour
 {
     public GameObject prefab_chunk;
-    public TileBase[] tiles;
+    public TileBase defaultTile;
 
     [HideInInspector]
     public Rigidbody2D player_rb;
@@ -18,6 +19,7 @@ public class DynamicLoading : MonoBehaviour
     public static readonly Vector2Int mapSize = new Vector2Int(20, 30); // chunks
     private Dictionary<(int x, int y), GameObject> loadedChunks;
     private static BitArray validChunks;
+    public static TileBase[] tiles;
 
     public static bool IsValid(int x, int y) {
         return validChunks.Get(y*mapSize.x+x);
@@ -25,6 +27,13 @@ public class DynamicLoading : MonoBehaviour
 
     public void Start()
     {
+        UnityEngine.Object[] objTiles = Resources.LoadAll("Tiles/Ground", typeof(TileBase));
+        tiles = new TileBase[objTiles.Length];
+        for(int i=0; i<objTiles.Length; i++)
+        {
+            tiles[i] = (TileBase)objTiles[i];
+        }
+
         loadedChunks = new Dictionary<(int, int), GameObject>();
         validChunks = new BitArray(mapSize.x*mapSize.y);
 

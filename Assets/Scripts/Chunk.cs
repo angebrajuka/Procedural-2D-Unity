@@ -32,6 +32,7 @@ public class Chunk : MonoBehaviour
             else
             {
                 request = Resources.LoadAsync("Chunks/"+DynamicLoading.Name(x, y), typeof(TextAsset));
+                txt = null;
             }
         }
     }
@@ -53,13 +54,13 @@ public class Chunk : MonoBehaviour
             {
                 if(pos.x < DynamicLoading.chunkSize && pos.y < DynamicLoading.chunkSize)
                 {
-                    int tile = 0;
+                    int tile = Array.IndexOf(DynamicLoading.tiles, dynamicLoader.defaultTile);
                     if(isValid)
                     {
                         tile = Int32.Parse(txt[pos.x*DynamicLoading.chunkSize + pos.y]);
                         if(tile == -1) tile = 0;
                     }
-                    m_tilemap.SetTile(pos, dynamicLoader.tiles[tile]);
+                    m_tilemap.SetTile(pos, DynamicLoading.tiles[tile]);
                 }
                 if(pos.x > 0 && pos.y > 0)
                 {
