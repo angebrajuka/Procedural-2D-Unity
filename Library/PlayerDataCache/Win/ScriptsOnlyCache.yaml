@@ -94,7 +94,6 @@ ScriptsOnlyBuild:
     - UnityEngine.Rendering.Universal.PostProcessData
     - UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
     - UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset
-    - UnityEngine.Rendering.Universal.UniversalRenderPipelineEditorResources
     - UnityEngine.Rendering.Universal.Vignette
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
@@ -887,7 +886,7 @@ ScriptsOnlyBuild:
     className: FilmGrain
   - hash:
       serializedVersion: 2
-      Hash: ef9d8b80099b7421c628b1b1ea9ee40b
+      Hash: d6eb9db74571aec9f5b24fb29dd983cd
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Inventory
@@ -1457,7 +1456,7 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerCanvas
   - hash:
       serializedVersion: 2
-      Hash: ba28656ef5002c88c3318188cc06fa6f
+      Hash: 501f75d36bc59b03667d14e10f18cab7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerStats
@@ -1499,7 +1498,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: ae4d40055d13610982a191c8f5e1a2e0
+      Hash: f96b41b68d5488cb45b0cd1b3da4ff00
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AdvancedRuleTile

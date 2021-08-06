@@ -39,7 +39,7 @@ public class DynamicEnemySpawning : MonoBehaviour
     public static GameObject s_enemyPrefab;
 
     // stats
-    public static LinkedList<EnemyObject> enemyObjects;
+    public static LinkedList<EnemyObject> enemyObjects = new LinkedList<EnemyObject>();
     public static int totalDifficulty=0;
     public static float timer;
     public const float minRadius=30, maxRadius=45;
@@ -47,8 +47,15 @@ public class DynamicEnemySpawning : MonoBehaviour
     void Start()
     {
         s_enemyPrefab = enemyPrefab;
-        enemyObjects = new LinkedList<EnemyObject>();
         totalDifficulty = 0;
+    }
+
+    public static void Reset()
+    {
+        while(enemyObjects.Count > 0)
+        {
+            DeSpawn(enemyObjects.First.Value);
+        }
     }
 
     public static int GetDifficultyValue()
@@ -81,7 +88,7 @@ public class DynamicEnemySpawning : MonoBehaviour
     public static void DeSpawn(EnemyObject enemyObject)
     {
         OnKilled(enemyObject);
-        Destroy(enemyObject);
+        Destroy(enemyObject.gameObject);
     }
 
     public static void OnKilled(EnemyObject enemyObject)

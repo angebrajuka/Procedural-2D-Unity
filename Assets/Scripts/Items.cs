@@ -70,7 +70,7 @@ public class Items
 
     public static bool UseBomb()
     {
-        MonoBehaviour.Instantiate(PlayerStats.playerStats.prefab_bomb, PlayerStats.rigidbody.position, Quaternion.identity);
+        MonoBehaviour.Instantiate(PlayerStats.instance.prefab_bomb, PlayerStats.rigidbody.position, Quaternion.identity);
         PlayerStats.RemoveCurrentItem();
         return true;
     }

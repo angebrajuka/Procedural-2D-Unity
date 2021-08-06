@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour
     public PlayerInput playerInput;
     public Rigidbody2D player_rb;
     public PlayerAnimator playerAnimator;
+    public Transform entities;
 
     [HideInInspector] public bool isOpen=false;
 
@@ -221,6 +222,7 @@ public class Inventory : MonoBehaviour
                 }
 
                 GameObject item = Instantiate(itemPickupPrefab, player_rb.position, Quaternion.identity);
+                item.transform.parent = entities;
                 ItemPickup pickup = item.GetComponent<ItemPickup>();
                 pickup.item = node.Value.item;
                 pickup.count = node.Value.count;

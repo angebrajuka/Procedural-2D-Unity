@@ -9,9 +9,10 @@ public class PlayerStats : MonoBehaviour
     public Transform knifeRotationPoint;
     public Transform knifeStart;
     public Transform weapons;
+    public Transform entities;
 
     // components
-    public static PlayerStats playerStats;
+    public static PlayerStats instance;
     public static Target target;
     public static PlayerHUD hud;
     public static Inventory inventory;
@@ -60,9 +61,9 @@ new public static Rigidbody2D rigidbody;
 
     void Start()
     {
-        if(playerStats != this)
+        if(instance != this)
         {
-            playerStats = this;
+            instance = this;
             inventory = GetComponent<Inventory>();
             target = GetComponent<Target>();
             hud = GetComponent<PlayerHUD>();
@@ -79,6 +80,8 @@ new public static Rigidbody2D rigidbody;
 
     void OnEnable()
     {
+        Debug.Log("enable");
+
         Start();
 
         SwitchGun(-1, true);
@@ -94,9 +97,22 @@ new public static Rigidbody2D rigidbody;
         }
         else
         {
+            rigidbody.position = new Vector2(325, 25);
+            
+            while(entities.childCount > 0)
+            {
+                Transform child = entities.GetChild(0);
+                child.SetParent(null);
+                Destroy(child.gameObject);
+            }
+
+            DynamicEnemySpawning.Reset();
+
+            DaylightCycle.time = DaylightCycle.k_DAY*2f/3f;
+
             energy = energyMax;
 
-            inventory.items.Clear();
+            inventory.Clear();
 
             // inventory.AutoAdd(Item.BLADE);
             // inventory.AutoAdd(Item.BOMB);
@@ -175,15 +191,15 @@ new public static Rigidbody2D rigidbody;
     {
         CancelReload();
         melee = true;
-        playerStats.knifeRotationPoint.gameObject.SetActive(true);
+        instance.knifeRotationPoint.gameObject.SetActive(true);
         playerAnimator.BeginMelee();
-        playerStats.knifeStart.localEulerAngles = Vector3.forward*PlayerInput.angle;
+        instance.knifeStart.localEulerAngles = Vector3.forward*PlayerInput.angle;
         knifeDirection = Random.value>0.5f ? (sbyte)-1 : (sbyte)1;
-        playerStats.knifeRotationPoint.localEulerAngles = Vector3.forward*k_KNIFE_ARC*knifeDirection;
+        instance.knifeRotationPoint.localEulerAngles = Vector3.forward*k_KNIFE_ARC*knifeDirection;
     }
 
     public static void EndMelee() {
-        playerStats.knifeRotationPoint.gameObject.SetActive(false);
+        instance.knifeRotationPoint.gameObject.SetActive(false);
         playerAnimator.EndMelee();
         melee = false;
     }
@@ -230,9 +246,9 @@ new public static Rigidbody2D rigidbody;
     {
         if(melee)
         {
-            playerStats.knifeRotationPoint.localEulerAngles += Vector3.back*Time.deltaTime*k_KNIFE_SPEED*knifeDirection;
+            instance.knifeRotationPoint.localEulerAngles += Vector3.back*Time.deltaTime*k_KNIFE_SPEED*knifeDirection;
             
-            if(playerStats.knifeRotationPoint.localEulerAngles.z < 360-k_KNIFE_ARC && playerStats.knifeRotationPoint.localEulerAngles.z > k_KNIFE_ARC)
+            if(instance.knifeRotationPoint.localEulerAngles.z < 360-k_KNIFE_ARC && instance.knifeRotationPoint.localEulerAngles.z > k_KNIFE_ARC)
             {
                 EndMelee();
             }

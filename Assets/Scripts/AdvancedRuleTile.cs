@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 [CreateAssetMenu]
 public class AdvancedRuleTile : RuleTile<AdvancedRuleTile.Neighbor>
 {
     public TileBase[] connectingTiles;
+    public TileBase[] any;
 
     public class Neighbor : RuleTile.TilingRule.Neighbor
     {
@@ -15,6 +17,7 @@ public class AdvancedRuleTile : RuleTile<AdvancedRuleTile.Neighbor>
         public const int Two = 5;
         public const int Three = 6;
         public const int Four = 7;
+        public const int Any = 8;
     }
 
     public override bool RuleMatch(int neighbor, TileBase tile)
@@ -31,6 +34,8 @@ public class AdvancedRuleTile : RuleTile<AdvancedRuleTile.Neighbor>
         case Neighbor.Three:
         case Neighbor.Four:
             return tile == connectingTiles[neighbor-Neighbor.Zero];
+        case Neighbor.Any:
+            return any.Contains(tile);
         }
         return base.RuleMatch(neighbor, tile);
     }
