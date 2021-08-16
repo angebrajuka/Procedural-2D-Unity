@@ -11,7 +11,7 @@ public class MusicManager : MonoBehaviour
     int prevClip=-1;
     float timer;
 
-    void Start()
+    public void Init()
     {
         m_audioSource = GetComponent<AudioSource>();
 

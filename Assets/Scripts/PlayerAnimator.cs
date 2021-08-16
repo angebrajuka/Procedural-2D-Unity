@@ -54,6 +54,7 @@ public class PlayerAnimator : MonoBehaviour
 
         if(m_renderer_gun != null)
         {
+            Debug.Log(m_renderer_gun);
             m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
             Vector3 position = PlayerStats.currentGun.barrelTip.localPosition;
             position.y = Mathf.Abs(position.y) * (m_renderer_gun.flipY ? -1 : 1);

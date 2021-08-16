@@ -15,7 +15,7 @@ public class DevConsole : MonoBehaviour
 
     static Target s_target;
 
-    void Start()
+    public void Init()
     {
         s_target = target;
         Disable();

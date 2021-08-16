@@ -7,9 +7,14 @@ using UnityEngine.Audio;
 public class Init : MonoBehaviour
 {
     // hierarchy
+    public AudioManager audioManager;
+    public MusicManager musicManager;
     public GameObject h_menuMain;
     public GameObject h_menuPause;
     public bool setMenu;
+    public PlayerStats playerStats;
+    public PauseHandler pauseHandler;
+    public DevConsole devConsole;
 
     public GameObject mainMenuObject;
     public GameObject gameWorldObject;
@@ -26,6 +31,12 @@ public class Init : MonoBehaviour
             MenuHandler.menuMain = h_menuMain;
             MenuHandler.menuPause = h_menuPause;
 
+            audioManager.Init();
+            musicManager.Init();
+            pauseHandler.Init();
+            devConsole.Init();
+
+            playerStats.Init();
             PlayerInput.LoadKeybinds();
 
             MenuHandler.mainMenuObject = mainMenuObject;

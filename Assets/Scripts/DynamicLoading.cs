@@ -127,4 +127,14 @@ public class DynamicLoading : MonoBehaviour
         prevPos.x = currPos.x;
         prevPos.y = currPos.y;
     }
+
+    public void CheckLoaded()
+    {
+        foreach(var pair in loadedChunks)
+        {
+            if(!pair.Value.GetComponent<Chunk>().loaded) return;
+        }
+
+        PauseHandler.UnPause();
+    }
 }

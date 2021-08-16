@@ -14,7 +14,7 @@ public class Chunk : MonoBehaviour
     Vector3Int pos;
     string[] txt;
     ResourceRequest request;
-    bool loaded;
+    public bool loaded;
 
     public void _Start(bool editor)
     {
@@ -42,7 +42,7 @@ public class Chunk : MonoBehaviour
         _Start(false);
     }
     
-    public void FixedUpdate()
+    public void Update()
     {
         if(request != null && request.isDone && txt == null)
         {
@@ -73,6 +73,7 @@ public class Chunk : MonoBehaviour
             {
                 loaded = true;
                 enabled = false;
+                dynamicLoader.CheckLoaded();
             }
         }
     }

@@ -6,29 +6,51 @@ using UnityEngine.Rendering.Universal;
 
 public class PauseHandler : MonoBehaviour
 {
+    public Volume volume;
     static DepthOfField dofComponent;
-    static float prevTimeScale = 1;
     static int focalLengthVal=1;
+    static Dictionary<Rigidbody2D, Vector3> rb_vels;
 
-    void Start()
+    public void Init()
     {
-        Volume volume = GetComponent<Volume>();
         volume.profile.TryGet<DepthOfField>(out dofComponent);
+        rb_vels = new Dictionary<Rigidbody2D, Vector3>();
+    }
+
+    public static void FreezePhysics()
+    {
+        rb_vels.Clear();
+        Rigidbody2D[] rb = Rigidbody.FindObjectsOfType(typeof(Rigidbody2D)) as Rigidbody2D[];
+        foreach(Rigidbody2D body in rb)
+        {
+            rb_vels.Add(body, body.velocity);
+            body.velocity *= 0;
+        }
+    }
+
+    public static void UnfreezePhysics()
+    {
+        foreach(KeyValuePair<Rigidbody2D, Vector3> pair in rb_vels)
+        {
+            pair.Key.velocity = pair.Value;
+        }
     }
 
     public static void Pause()
     {
-        if(Time.timeScale == 0) return;
-        
-        prevTimeScale = Time.timeScale;
-        Time.timeScale = 0;
+        FreezePhysics();
+        PlayerStats.playerInput.enabled = false;
+        Debug.Log(PlayerStats.playerInput.enabled);
+        PlayerStats.playerAnimator.enabled = false;
 
         AudioManager.PauseAllAudio();
     }
 
     public static void UnPause()
     {
-        Time.timeScale = prevTimeScale;
+        UnfreezePhysics();
+        PlayerStats.playerInput.enabled = true;
+        PlayerStats.playerAnimator.enabled = true;
 
         AudioManager.ResumeAllAudio();
     }

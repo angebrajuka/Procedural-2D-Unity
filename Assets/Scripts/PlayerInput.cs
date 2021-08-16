@@ -108,14 +108,6 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-
-
-    void Start()
-    {
-        PlayerStats.sprinting = false;
-        PlayerStats.flashlight = false;
-    }
-
     void Update()
     {
         // pause
@@ -123,7 +115,6 @@ public class PlayerInput : MonoBehaviour
         {
             PauseHandler.Pause();
             PauseHandler.Blur();
-            enabled = false;
             MenuHandler.prevMenu.Clear();
             MenuHandler.SetMenu(MenuHandler.menuPause);
         }
@@ -182,7 +173,6 @@ public class PlayerInput : MonoBehaviour
             if(PlayerStats.gunReloadTimer > 0) PlayerStats.CancelReload();
             
             PlayerStats.hud.transform.gameObject.SetActive(false);
-            enabled = false;
         }
         
         // reload

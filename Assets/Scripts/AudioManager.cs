@@ -22,7 +22,7 @@ public class AudioManager : MonoBehaviour
     public AudioMixerGroup mixer_sfx;
     public AudioMixerGroup mixer_menu;
 
-    void Start()
+    public void Init()
     {
         instance = this;
         LoadAudioSettings();
@@ -85,7 +85,8 @@ public class AudioManager : MonoBehaviour
     {
         for(int i=0; i<instance.transform.childCount; i++)
         {
-            instance.transform.GetChild(i).GetComponent<AudioSource>().Play();
+            AudioSource audioSource = instance.transform.GetChild(i).GetComponent<AudioSource>();
+            audioSource.UnPause();
         }
     }
 

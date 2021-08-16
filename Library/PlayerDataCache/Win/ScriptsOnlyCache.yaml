@@ -94,9 +94,16 @@ ScriptsOnlyBuild:
     - UnityEngine.Rendering.Universal.PostProcessData
     - UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
     - UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset
+    - UnityEngine.Rendering.Universal.UniversalRenderPipelineEditorResources
     - UnityEngine.Rendering.Universal.Vignette
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
+    UnityEditor.Graphs.dll:
+    - UnityEditor.Graphs.AnimationBlendTree.Graph
+    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.Graph
+    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -856,7 +863,7 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAsset
   - hash:
       serializedVersion: 2
-      Hash: ed02134c8b261a558d5b42f008f46fdf
+      Hash: 1ef1ae72de5869f38569b36a63982514
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Chunk
@@ -1006,7 +1013,7 @@ ScriptsOnlyBuild:
     className: ItemPickup
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 5c1737006a25f5c5f863be1470b039db
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PauseHandler
@@ -1360,7 +1367,7 @@ ScriptsOnlyBuild:
     className: InventoryControls
   - hash:
       serializedVersion: 2
-      Hash: 463c2e805436e5fc1b6beadf369f9a39
+      Hash: b91ddd1405a05bbdbd2c53482967bbe9
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Init

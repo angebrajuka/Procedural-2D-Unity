@@ -26,7 +26,7 @@ public class _EditorChunkLoading : MonoBehaviour
         chunk._Start(true);
         for(int i=0; i<DynamicLoading.chunkSize; i++)
         {
-            chunk.FixedUpdate();
+            chunk.Update();
         }
 
         chunk.m_tilemap.gameObject.name = "Ground "+x+","+y;

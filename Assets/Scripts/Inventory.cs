@@ -214,8 +214,7 @@ public class Inventory : MonoBehaviour
                     }
                     else
                     {
-                        PlayerStats.currentGun = null;
-                        PlayerStats._currentGun = -1;
+                        PlayerStats.SwitchGun(-1, false);
                     }
                     PlayerStats.currentItemNode = null;
                     PlayerStats.playerAnimator.UpdateGunImage();

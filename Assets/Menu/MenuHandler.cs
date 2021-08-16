@@ -47,13 +47,12 @@ public class MenuHandler
 
     public static void Start()
     {
-        PauseHandler.UnBlur();
-        PauseHandler.UnPause();
         currentMenuPrefab = null;
         MonoBehaviour.Destroy(currentMenu);
         currentMenu = null;
         mainMenuObject.SetActive(false);
         gameWorldObject.SetActive(true);
+        PlayerStats.instance.Reset();
     }
 
     public static void MainMenu()

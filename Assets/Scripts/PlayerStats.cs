@@ -49,40 +49,37 @@ new public static Rigidbody2D rigidbody;
     public static int interactPriority=0;
 
     //state
-    public static bool sprinting;
-    public static bool flashlight;
+    public static bool sprinting=false;
+    public static bool flashlight=false;
 
 
     // global
     public static byte difficulty;
     public static byte save;
-    public static bool load;
+    public static bool load=false;
 
 
-    void Start()
+    public void Init()
     {
-        if(instance != this)
-        {
-            instance = this;
-            inventory = GetComponent<Inventory>();
-            target = GetComponent<Target>();
-            hud = GetComponent<PlayerHUD>();
-            rigidbody = GetComponent<Rigidbody2D>();
-            playerAnimator = GetComponent<PlayerAnimator>();
-            playerInput = GetComponent<PlayerInput>();
+        instance = this;
+        inventory = GetComponent<Inventory>();
+        target = GetComponent<Target>();
+        hud = GetComponent<PlayerHUD>();
+        rigidbody = GetComponent<Rigidbody2D>();
+        playerAnimator = GetComponent<PlayerAnimator>();
+        playerInput = GetComponent<PlayerInput>();
 
-            for(int i=0; i<guns.Length; i++)
-            {
-                guns[i] = weapons.GetChild(i).GetComponent<Gun>();
-            }
+        for(int i=0; i<guns.Length; i++)
+        {
+            guns[i] = weapons.GetChild(i).GetComponent<Gun>();
         }
+
+        Reset();
     }
 
-    void OnEnable()
+    public void Reset()
     {
-        Debug.Log("enable");
-
-        Start();
+        PauseHandler.Pause();
 
         SwitchGun(-1, true);
         gunRpmTimer = 0;
@@ -92,7 +89,6 @@ new public static Rigidbody2D rigidbody;
 
         if(load)
         {
-            PauseHandler.Pause();
             Save_Load.Load(save);
         }
         else
@@ -142,7 +138,6 @@ new public static Rigidbody2D rigidbody;
         }
         
         hud.UpdateHotbar();
-        playerInput.enabled = true;
     }
 
     public static void RemoveCurrentItem()
