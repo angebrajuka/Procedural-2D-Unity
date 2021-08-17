@@ -41,18 +41,18 @@ public class MenuHandler
         {
             prevMenu.Clear();
         }
-        
-        currentMenuPrefab = menu;
     }
 
     public static void Start()
     {
+        FadeTransition.SetAlpha(1);
         currentMenuPrefab = null;
-        MonoBehaviour.Destroy(currentMenu);
+        if(currentMenu != null) MonoBehaviour.Destroy(currentMenu);
         currentMenu = null;
         mainMenuObject.SetActive(false);
         gameWorldObject.SetActive(true);
         PlayerStats.instance.Reset();
+        PlayerStats.loadingFirstChunks = true;
     }
 
     public static void MainMenu()
@@ -60,5 +60,6 @@ public class MenuHandler
         gameWorldObject.SetActive(false);
         mainMenuObject.SetActive(true);
         SetMenu(menuMain);
+        PauseHandler.UnBlur();
     }
 }

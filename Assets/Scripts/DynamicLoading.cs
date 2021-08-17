@@ -25,7 +25,7 @@ public class DynamicLoading : MonoBehaviour
         return validChunks.Get(y*mapSize.x+x);
     }
 
-    public void Start()
+    public void Init()
     {
         UnityEngine.Object[] objTiles = Resources.LoadAll("Tiles/Ground", typeof(TileBase));
         tiles = new TileBase[objTiles.Length];
@@ -130,11 +130,21 @@ public class DynamicLoading : MonoBehaviour
 
     public void CheckLoaded()
     {
+        if(!PlayerStats.loadingFirstChunks) return;
+
         foreach(var pair in loadedChunks)
         {
             if(!pair.Value.GetComponent<Chunk>().loaded) return;
         }
 
+        FadeTransition.Fade(true, OnFadeComplete);
+        PlayerStats.loadingFirstChunks = false;
+    }
+
+    public static bool OnFadeComplete()
+    {
         PauseHandler.UnPause();
+        PauseHandler.UnBlur();
+        return true;
     }
 }

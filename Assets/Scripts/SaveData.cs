@@ -58,7 +58,5 @@ public class SaveData
         DaylightCycle.time = timeOfDay;
 
         PlayerStats.rigidbody.MovePosition(new Vector2(position[0], position[1]));
-
-        PauseHandler.UnPause();
     }
 }

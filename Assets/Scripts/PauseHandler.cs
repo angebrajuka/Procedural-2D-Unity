@@ -10,11 +10,13 @@ public class PauseHandler : MonoBehaviour
     static DepthOfField dofComponent;
     static int focalLengthVal=1;
     static Dictionary<Rigidbody2D, Vector3> rb_vels;
+    public static bool paused;
 
     public void Init()
     {
         volume.profile.TryGet<DepthOfField>(out dofComponent);
         rb_vels = new Dictionary<Rigidbody2D, Vector3>();
+        paused = false;
     }
 
     public static void FreezePhysics()
@@ -38,9 +40,10 @@ public class PauseHandler : MonoBehaviour
 
     public static void Pause()
     {
+        paused = true;
+
         FreezePhysics();
         PlayerStats.playerInput.enabled = false;
-        Debug.Log(PlayerStats.playerInput.enabled);
         PlayerStats.playerAnimator.enabled = false;
 
         AudioManager.PauseAllAudio();
@@ -53,6 +56,8 @@ public class PauseHandler : MonoBehaviour
         PlayerStats.playerAnimator.enabled = true;
 
         AudioManager.ResumeAllAudio();
+
+        paused = false;
     }
 
     public static void Blur()

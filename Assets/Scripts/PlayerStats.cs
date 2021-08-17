@@ -57,6 +57,7 @@ new public static Rigidbody2D rigidbody;
     public static byte difficulty;
     public static byte save;
     public static bool load=false;
+    public static bool loadingFirstChunks=true;
 
 
     public void Init()
@@ -73,13 +74,12 @@ new public static Rigidbody2D rigidbody;
         {
             guns[i] = weapons.GetChild(i).GetComponent<Gun>();
         }
-
-        Reset();
     }
 
     public void Reset()
     {
         PauseHandler.Pause();
+        PauseHandler.Blur();
 
         SwitchGun(-1, true);
         gunRpmTimer = 0;

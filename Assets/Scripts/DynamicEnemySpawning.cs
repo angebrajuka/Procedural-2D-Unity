@@ -44,7 +44,7 @@ public class DynamicEnemySpawning : MonoBehaviour
     public static float timer;
     public const float minRadius=30, maxRadius=45;
 
-    void Start()
+    public void Init()
     {
         s_enemyPrefab = enemyPrefab;
         totalDifficulty = 0;

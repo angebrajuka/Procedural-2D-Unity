@@ -17,7 +17,7 @@ public class _EditorChunkLoading : MonoBehaviour
 
     public void Load()
     {
-        dynamicLoader.Start();
+        dynamicLoader.Init();
         loadedChunk = dynamicLoader.InstantiateChunk(x, y);
         loadedChunk.transform.SetParent(transform);
         Chunk chunk = loadedChunk.GetComponent<Chunk>();
@@ -34,7 +34,7 @@ public class _EditorChunkLoading : MonoBehaviour
 
     public void Save()
     {
-        dynamicLoader.Start();
+        dynamicLoader.Init();
 
         StreamWriter file;
         string path = Application.dataPath+"/Resources/Chunks/"+DynamicLoading.Name(x, y)+".txt";

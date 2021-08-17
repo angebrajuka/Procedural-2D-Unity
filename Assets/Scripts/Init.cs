@@ -15,6 +15,10 @@ public class Init : MonoBehaviour
     public PlayerStats playerStats;
     public PauseHandler pauseHandler;
     public DevConsole devConsole;
+    public DaylightCycle daylightCycle;
+    public DynamicEnemySpawning dynamicEnemySpawning;
+    public DynamicLoading dynamicLoading;
+    public FadeTransition fadeTransition;
 
     public GameObject mainMenuObject;
     public GameObject gameWorldObject;
@@ -35,6 +39,10 @@ public class Init : MonoBehaviour
             musicManager.Init();
             pauseHandler.Init();
             devConsole.Init();
+            daylightCycle.Init();
+            dynamicEnemySpawning.Init();
+            dynamicLoading.Init();
+            fadeTransition.Init();
 
             playerStats.Init();
             PlayerInput.LoadKeybinds();
@@ -43,8 +51,15 @@ public class Init : MonoBehaviour
             MenuHandler.gameWorldObject = gameWorldObject;
         }
 
-        if(setMenu) MenuHandler.SetMenu(MenuHandler.menuMain);
-        
+        if(setMenu)
+        {
+            MenuHandler.SetMenu(MenuHandler.menuMain);
+        }
+        else
+        {
+            MenuHandler.Start();
+        }
+
         Destroy(gameObject);
     }
 }

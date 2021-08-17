@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Menu : MonoBehaviour {
-
-    // public GameObject prevMenu;
+public class Menu : MonoBehaviour
+{
 
     public bool canUseEsc=true;
 
-    void Start() {
+    void Start()
+    {
         if(MenuHandler.currentMenu == null) MenuHandler.currentMenu = gameObject;
     }
 
-    void Update() {
-        if(canUseEsc && Input.GetKeyDown(KeyCode.Escape)) {
-            if(!MenuHandler.Back() && PlayerStats.playerInput != null) {
+    void Update()
+    {
+        if(canUseEsc && Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(!MenuHandler.Back() && PlayerStats.playerInput != null)
+            {
                 PauseHandler.UnPause();
                 PauseHandler.UnBlur();
                 Destroy(gameObject);
