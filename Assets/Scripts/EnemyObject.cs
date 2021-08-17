@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyObject : MonoBehaviour
 {
     // hierarchy
-    public TwoDirectionAnimator m_animator;
+    public SpriteRenderer m_renderer;
     public bool awake;
     public EnemyType type;
     
@@ -21,7 +21,6 @@ public class EnemyObject : MonoBehaviour
     public Vector2 targetMovement;
     float timer;
     bool following;
-    float animationTimer;
     float flash;
 
 
@@ -33,7 +32,6 @@ public class EnemyObject : MonoBehaviour
         m_target.OnDamage = OnDamage;
         m_target.OnKill = OnKill;
         timer = 0;
-        animationTimer = 0;
         flash = 0;
     }
 
@@ -61,9 +59,9 @@ public class EnemyObject : MonoBehaviour
         
         targetMovement = following ? PlayerStats.rigidbody.position-m_rigidbody.position : (Math.vectors[(int)Mathf.Floor(UnityEngine.Random.value*8)]);
 
-        m_animator.direction = Math.AngleToDir(Math.NormalizedVecToAngle(targetMovement));
-        if(m_animator.direction >= 4) m_animator.direction = 0;
-        targetMovement = Math.vectors[m_animator.direction];
+        // m_animator.direction = Math.AngleToDir(Math.NormalizedVecToAngle(targetMovement));
+        // if(m_animator.direction >= 4) m_animator.direction = 0;
+        // targetMovement = Math.vectors[m_animator.direction];
         
         timer = UnityEngine.Random.value+0.2f;
     }
@@ -86,13 +84,13 @@ public class EnemyObject : MonoBehaviour
             NewTarget();
         }
 
-        animationTimer += Time.deltaTime;
-        if(animationTimer > 0.05f)
-        {
-            animationTimer = 0;
-            m_animator.state ++;
-            if(m_animator.state > 3) m_animator.state = 0;
-        }
+        // animationTimer += Time.deltaTime;
+        // if(animationTimer > 0.05f)
+        // {
+        //     animationTimer = 0;
+        //     m_animator.state ++;
+        //     if(m_animator.state > 3) m_animator.state = 0;
+        // }
         
         timer -= Time.deltaTime;
 

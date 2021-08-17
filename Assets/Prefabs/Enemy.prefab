@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1562518597343047303}
   - component: {fileID: 5394658922115554956}
   - component: {fileID: 1562518597343047300}
-  - component: {fileID: 1175525847289564323}
   - component: {fileID: 1562518597343047301}
   - component: {fileID: 1562518597343047297}
   m_Layer: 0
@@ -114,41 +113,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26c9e62b1f7590049a1fc17f3adfabb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_animator: {fileID: 1175525847289564323}
+  m_renderer: {fileID: 0}
   awake: 0
   type: 0
   m_rigidbody: {fileID: 0}
   m_material: {fileID: 0}
   m_target: {fileID: 0}
   targetMovement: {x: 0, y: 0}
---- !u!114 &1175525847289564323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1562518597343047322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0bb3ee111b207c46bd981a731eb71d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprites:
-  - {fileID: 663343109273254613, guid: e2915b2ef9e6cc449a35360058d12a32, type: 3}
-  - {fileID: -4166317670162538884, guid: e2915b2ef9e6cc449a35360058d12a32, type: 3}
-  - {fileID: 3565796957893515861, guid: e2915b2ef9e6cc449a35360058d12a32, type: 3}
-  - {fileID: -4937748757233780918, guid: e2915b2ef9e6cc449a35360058d12a32, type: 3}
-  - {fileID: 6866591616732292042, guid: e2915b2ef9e6cc449a35360058d12a32, type: 3}
-  - {fileID: 1860540837047134171, guid: e2915b2ef9e6cc449a35360058d12a32, type: 3}
-  - {fileID: 663343109273254613, guid: e2915b2ef9e6cc449a35360058d12a32, type: 3}
-  - {fileID: -4166317670162538884, guid: e2915b2ef9e6cc449a35360058d12a32, type: 3}
-  - {fileID: 3565796957893515861, guid: e2915b2ef9e6cc449a35360058d12a32, type: 3}
-  - {fileID: -7371377718194791542, guid: e2915b2ef9e6cc449a35360058d12a32, type: 3}
-  - {fileID: -7677890818087970170, guid: e2915b2ef9e6cc449a35360058d12a32, type: 3}
-  - {fileID: -1787740995911864829, guid: e2915b2ef9e6cc449a35360058d12a32, type: 3}
-  state: 0
-  direction: 0
-  m_spriteRenderer: {fileID: 1562518597343047303}
 --- !u!61 &1562518597343047301
 BoxCollider2D:
   m_ObjectHideFlags: 0

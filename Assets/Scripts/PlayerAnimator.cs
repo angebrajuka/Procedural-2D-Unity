@@ -5,14 +5,13 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     // hierarchy
-    public TwoDirectionAnimator m_animator_body;
+    public SpriteRenderer m_renderer;
+    public Animator m_animator;
     public SpriteRenderer m_renderer_gun;
     public SpriteRenderer[] m_renderers_guns;
 
     // input
     public static int direction=0;
-
-    float walkTimer=0;
 
     public void BeginMelee()
     {
@@ -35,30 +34,18 @@ public class PlayerAnimator : MonoBehaviour
 
     void Update()
     {
-        if(PlayerInput.input_move.x != 0 || PlayerInput.input_move.y != 0)
-        {
-            walkTimer += PlayerStats.rigidbody.velocity.magnitude * Time.deltaTime;
-            if(walkTimer >= 4)
-            {
-                walkTimer = 0;
-            }
-            m_animator_body.state = convert[(int)Mathf.Floor(walkTimer)];
-        }
-        else
-        {
-            walkTimer = 0.99f;
-            m_animator_body.state = 0;
-        }
-
-        m_animator_body.direction = direction;
-
         if(m_renderer_gun != null)
         {
-            Debug.Log(m_renderer_gun);
             m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
             Vector3 position = PlayerStats.currentGun.barrelTip.localPosition;
             position.y = Mathf.Abs(position.y) * (m_renderer_gun.flipY ? -1 : 1);
             PlayerStats.currentGun.barrelTip.localPosition = position;
         }
+
+        bool running = PlayerInput.input_move.x != 0 || PlayerInput.input_move.y != 0;
+        m_animator.SetBool("running", running);
+        m_animator.speed = running ? PlayerStats.rigidbody.velocity.magnitude * 0.07f : 1;
+
+        m_renderer.flipX = (direction == 1);
     }
 }
