@@ -81,9 +81,8 @@ new public Transform transform;
         {
             Vector2 pos = PlayerStats.rigidbody.position;
 
-            pos /= DynamicLoading.chunkSize;
-            pos.x /= DynamicLoading.mapSize.x;
-            pos.y /= DynamicLoading.mapSize.y;
+            pos /= ProceduralGeneration.chunkSize;
+            pos /= ProceduralGeneration.mapDiameter;
             pos.x *= minimap.sizeDelta.x;
             pos.y *= minimap.sizeDelta.y;
 

@@ -18,6 +18,7 @@ public class Init : MonoBehaviour
     public DaylightCycle daylightCycle;
     public DynamicEnemySpawning dynamicEnemySpawning;
     public DynamicLoading dynamicLoading;
+    public ProceduralGeneration proceduralGeneration;
     public FadeTransition fadeTransition;
 
     public GameObject mainMenuObject;
@@ -41,10 +42,10 @@ public class Init : MonoBehaviour
             devConsole.Init();
             daylightCycle.Init();
             dynamicEnemySpawning.Init();
-            dynamicLoading.Init();
+            // dynamicLoading.Init();
             fadeTransition.Init();
-
             playerStats.Init();
+            proceduralGeneration.Init();
             PlayerInput.LoadKeybinds();
 
             MenuHandler.mainMenuObject = mainMenuObject;

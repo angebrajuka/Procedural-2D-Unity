@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {    
+    static readonly Vector2 vecLength2 = new Vector2(2, 2);
+
     // hierarchy
     public Item item;
 
     // components
-    Rigidbody2D m_rigidbody;
+    [HideInInspector] public Rigidbody2D m_rigidbody;
 
     public int count;
     public int ammo=0;
@@ -25,6 +27,14 @@ public class ItemPickup : MonoBehaviour
             PlayerStats.hud.interact.text = "press   <F>   to   loot";// + Items.names[(int)item];
             PlayerStats.interactItem = item;
             PlayerStats.interactPickup = this;
+        }
+        else if(other.gameObject.layer == gameObject.layer)
+        {
+            Rigidbody2D o_rigidbody = other.gameObject.GetComponent<Rigidbody2D>();
+
+            Vector3 delta = (vecLength2-(o_rigidbody.position - m_rigidbody.position))*1.3f;
+            o_rigidbody.AddForce(-delta);
+            m_rigidbody.AddForce(delta);
         }
     }
 

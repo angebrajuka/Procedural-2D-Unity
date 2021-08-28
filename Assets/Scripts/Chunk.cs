@@ -71,6 +71,7 @@ public class Chunk : MonoBehaviour
             
             if(pos.x == DynamicLoading.chunkSize+1)
             {
+                m_tilemap.CompressBounds();
                 loaded = true;
                 enabled = false;
                 dynamicLoader.CheckLoaded();
