@@ -6,7 +6,8 @@ using UnityEngine.Tilemaps;
 public class ProceduralGeneration : MonoBehaviour
 {
     // hierarchy
-    public GameObject prefab_chunk;
+    // public GameObject prefab_chunk_loading;
+    // public GameObject prefab_chunk_unloading;
     public Tilemap tilemap_ground;
 
     public static ProceduralGeneration instance;
@@ -18,7 +19,10 @@ public class ProceduralGeneration : MonoBehaviour
     public const int chunkSize=50;
     public const int mapRadius=16;
     public const int mapDiameter=mapRadius*2;
-    private Dictionary<(int x, int y), ProceduralChunk> loadedChunks;
+    public static readonly Vector2Int center = Vector2Int.one*ProceduralGeneration.mapRadius;
+    public static Dictionary<(int x, int y), ProceduralChunkLoader> loadingChunks;
+    // public static Dictionary<(int x, int y), ProceduralChunkUnloader> unloadingChunks;
+    public static HashSet<(int x, int y)> loadedChunks;
     public static TileBase[] tiles;
     public static int seed;
 
@@ -33,7 +37,9 @@ public class ProceduralGeneration : MonoBehaviour
             tiles[i] = (TileBase)objTiles[i];
         }
 
-        loadedChunks = new Dictionary<(int, int), ProceduralChunk>();
+        loadingChunks = new Dictionary<(int, int), ProceduralChunkLoader>();
+        // unloadingChunks = new Dictionary<(int x, int y), ProceduralChunkUnloader>();
+        loadedChunks = new HashSet<(int x, int y)>();
 
         player_rb = PlayerStats.rigidbody;
     }
@@ -47,12 +53,13 @@ public class ProceduralGeneration : MonoBehaviour
         {
             for(int y=Mathf.Max(posY-1, 0); y<=Mathf.Min(posY+1, mapDiameter-1); y++)
             {
-                if(!loadedChunks.ContainsKey((x, y)))
+                if(!loadedChunks.Contains((x, y)) && !loadingChunks.ContainsKey((x, y)))
                 {
-                    GameObject chunkObj = Instantiate(prefab_chunk);
-                    ProceduralChunk chunk = chunkObj.GetComponent<ProceduralChunk>();
-                    chunk.pos = new Vector2Int(x, y);
-                    loadedChunks.Add((x, y), chunk);
+                    GameObject chunkObj = new GameObject();
+                    chunkObj.AddComponent<ProceduralChunkLoader>();
+                    var chunk = chunkObj.GetComponent<ProceduralChunkLoader>();
+                    chunk.pos = new Vector3Int(x, y, 0);
+                    loadingChunks.Add((x, y), chunk);
                 }
             }
         }
@@ -67,12 +74,17 @@ public class ProceduralGeneration : MonoBehaviour
         {
             Application.backgroundLoadingPriority = ThreadPriority.Low;
 
-            foreach(var key in new List<(int x, int y)>(loadedChunks.Keys))
+            foreach(var key in loadedChunks)
             {
                 if(Mathf.Abs(key.x-currPos.x) > 2 || Mathf.Abs(key.y-currPos.y) > 2)
                 {
-                    loadedChunks[key].state = ProceduralChunk.State.UNLOADING;
-                    loadedChunks.Remove(key);
+                    // GameObject chunkObj = new GameObject();
+                    // chunkObj.AddComponent<ProceduralChunkUnloader>();
+                    // var chunk = chunkObj.GetComponent<ProceduralChunkUnloader>();
+                    // chunk.pos = new Vector3Int(key.x, key.y, 0);
+                    // unloadingChunks.Add((key.x, key.y), chunk);
+
+                    // tilemap_ground.DeleteCells(new Vector3Int(key.x, key.y, 0), chunkSize, chunkSize, 1);
                 }
             };
 
@@ -83,12 +95,12 @@ public class ProceduralGeneration : MonoBehaviour
         prevPos.y = currPos.y;
     }
 
-    public void CheckLoaded()
+    public void CheckLoaded(ProceduralChunkLoader loader)
     {
-        foreach(var pair in loadedChunks)
-        {
-            if(pair.Value.state != ProceduralChunk.State.LOADED) return;
-        }
+        loadedChunks.Add((loader.pos.x, loader.pos.y));
+        loadingChunks.Remove((loader.pos.x, loader.pos.y));
+        
+        if(loadingChunks.Count != 0) return;
 
         tilemap_ground.CompressBounds();
 
