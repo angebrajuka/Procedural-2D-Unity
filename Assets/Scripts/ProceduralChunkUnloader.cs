@@ -19,16 +19,15 @@ public class ProceduralChunkUnloader : MonoBehaviour
     {
         for(tilePos.y=0; tilePos.y<DynamicLoading.chunkSize; tilePos.y++)
         {
-            if(tilePos.x < DynamicLoading.chunkSize && tilePos.y < DynamicLoading.chunkSize)
-            {
-                ProceduralGeneration.instance.tilemap_ground.SetTile(tilePos+pos*ProceduralGeneration.chunkSize, ProceduralGeneration.tiles[1]);
-            }
+            ProceduralGeneration.instance.tilemap_ground.SetTile(tilePos+pos*ProceduralGeneration.chunkSize, null);
         }
         tilePos.x++;
         
-        if(tilePos.x == DynamicLoading.chunkSize+1)
+        if(tilePos.x == DynamicLoading.chunkSize)
         {
-            // ProceduralGeneration.instance.CheckLoaded(this);
+            ProceduralGeneration.loadedChunks.Remove((pos.x, pos.y));
+            ProceduralGeneration.unloadingChunks.Remove((pos.x, pos.y));
+            Destroy(gameObject);
         }
     }
 }

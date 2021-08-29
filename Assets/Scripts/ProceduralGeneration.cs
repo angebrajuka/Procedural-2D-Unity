@@ -21,7 +21,7 @@ public class ProceduralGeneration : MonoBehaviour
     public const int mapDiameter=mapRadius*2;
     public static readonly Vector2Int center = Vector2Int.one*ProceduralGeneration.mapRadius;
     public static Dictionary<(int x, int y), ProceduralChunkLoader> loadingChunks;
-    // public static Dictionary<(int x, int y), ProceduralChunkUnloader> unloadingChunks;
+    public static Dictionary<(int x, int y), ProceduralChunkUnloader> unloadingChunks;
     public static HashSet<(int x, int y)> loadedChunks;
     public static TileBase[] tiles;
     public static int seed;
@@ -38,7 +38,7 @@ public class ProceduralGeneration : MonoBehaviour
         }
 
         loadingChunks = new Dictionary<(int, int), ProceduralChunkLoader>();
-        // unloadingChunks = new Dictionary<(int x, int y), ProceduralChunkUnloader>();
+        unloadingChunks = new Dictionary<(int x, int y), ProceduralChunkUnloader>();
         loadedChunks = new HashSet<(int x, int y)>();
 
         player_rb = PlayerStats.rigidbody;
@@ -74,17 +74,17 @@ public class ProceduralGeneration : MonoBehaviour
         {
             Application.backgroundLoadingPriority = ThreadPriority.Low;
 
+
+
             foreach(var key in loadedChunks)
             {
                 if(Mathf.Abs(key.x-currPos.x) > 2 || Mathf.Abs(key.y-currPos.y) > 2)
                 {
-                    // GameObject chunkObj = new GameObject();
-                    // chunkObj.AddComponent<ProceduralChunkUnloader>();
-                    // var chunk = chunkObj.GetComponent<ProceduralChunkUnloader>();
-                    // chunk.pos = new Vector3Int(key.x, key.y, 0);
-                    // unloadingChunks.Add((key.x, key.y), chunk);
-
-                    // tilemap_ground.DeleteCells(new Vector3Int(key.x, key.y, 0), chunkSize, chunkSize, 1);
+                    GameObject chunkObj = new GameObject();
+                    chunkObj.AddComponent<ProceduralChunkUnloader>();
+                    var chunk = chunkObj.GetComponent<ProceduralChunkUnloader>();
+                    chunk.pos = new Vector3Int(key.x, key.y, 0);
+                    unloadingChunks.Add((key.x, key.y), chunk);
                 }
             };
 

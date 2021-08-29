@@ -33,6 +33,7 @@ public class ProceduralChunkLoader : MonoBehaviour
         if(tilePos.x == DynamicLoading.chunkSize+1)
         {
             ProceduralGeneration.instance.CheckLoaded(this);
+            Destroy(gameObject);
         }
     }
 }
