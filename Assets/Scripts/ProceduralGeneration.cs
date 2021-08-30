@@ -6,9 +6,9 @@ using UnityEngine.Tilemaps;
 public class ProceduralGeneration : MonoBehaviour
 {
     // hierarchy
-    // public GameObject prefab_chunk_loading;
-    // public GameObject prefab_chunk_unloading;
-    public Tilemap tilemap_ground;
+    public GameObject prefab_chunk;
+    public TileBase water;
+    public TileBase grass;
 
     public static ProceduralGeneration instance;
     
@@ -17,16 +17,18 @@ public class ProceduralGeneration : MonoBehaviour
     private Vector2Int currPos=Vector2Int.zero;
     private Vector2Int prevPos;
     public const int chunkSize=50;
-    public const int mapRadius=16;
+    public const int mapRadius=4;
     public const int mapDiameter=mapRadius*2;
-    public static readonly Vector2Int center = Vector2Int.one*ProceduralGeneration.mapRadius;
-    public static Dictionary<(int x, int y), ProceduralChunkLoader> loadingChunks;
-    public static Dictionary<(int x, int y), ProceduralChunkUnloader> unloadingChunks;
-    public static HashSet<(int x, int y)> loadedChunks;
+    public static readonly Vector3Int center = new Vector3Int(mapRadius, mapRadius, 0);
+    public static Dictionary<(int x, int y), GameObject> loadedChunks;
+    public static LinkedList<GameObject> disabledChunks;
     public static TileBase[] tiles;
-    public static int seed;
 
-    public void Init()
+    public static int seed_main; // determines land/water
+    public static int seed_biome;
+    public static int seed_decorations;
+
+    public void Init(int seed)
     {
         instance = this;
 
@@ -37,11 +39,20 @@ public class ProceduralGeneration : MonoBehaviour
             tiles[i] = (TileBase)objTiles[i];
         }
 
-        loadingChunks = new Dictionary<(int, int), ProceduralChunkLoader>();
-        unloadingChunks = new Dictionary<(int x, int y), ProceduralChunkUnloader>();
-        loadedChunks = new HashSet<(int x, int y)>();
+        loadedChunks = new Dictionary<(int, int), GameObject>();
+        disabledChunks = new LinkedList<GameObject>();
+        for(int i=0; i<16; i++)
+        {
+            disabledChunks.AddLast(Instantiate(prefab_chunk));
+            disabledChunks.Last.Value.GetComponent<ProceduralChunk>()._Start();
+            disabledChunks.Last.Value.SetActive(false);
+        }
 
         player_rb = PlayerStats.rigidbody;
+
+        seed_main = seed;
+        seed_biome = seed_main+109358; // random values have no meaning, just not the same as main
+        seed_decorations = seed_main+349085; // random values have no meaning, just not the same as main
     }
 
     void LoadAll()
@@ -53,13 +64,16 @@ public class ProceduralGeneration : MonoBehaviour
         {
             for(int y=Mathf.Max(posY-1, 0); y<=Mathf.Min(posY+1, mapDiameter-1); y++)
             {
-                if(!loadedChunks.Contains((x, y)) && !loadingChunks.ContainsKey((x, y)))
+                if(!loadedChunks.ContainsKey((x, y)))
                 {
-                    GameObject chunkObj = new GameObject();
-                    chunkObj.AddComponent<ProceduralChunkLoader>();
-                    var chunk = chunkObj.GetComponent<ProceduralChunkLoader>();
-                    chunk.pos = new Vector3Int(x, y, 0);
-                    loadingChunks.Add((x, y), chunk);
+                    GameObject chunkObj = disabledChunks.First.Value;
+                    disabledChunks.RemoveFirst();
+                    chunkObj.SetActive(true);
+                    chunkObj.transform.localPosition = new Vector3(x*chunkSize, y*chunkSize, 0);
+                    var chunk = chunkObj.GetComponent<ProceduralChunk>();
+                    chunk.enabled = true;
+                    chunk.Init();
+                    loadedChunks.Add((x, y), chunkObj);
                 }
             }
         }
@@ -74,17 +88,17 @@ public class ProceduralGeneration : MonoBehaviour
         {
             Application.backgroundLoadingPriority = ThreadPriority.Low;
 
+            // tilemap_ground.origin = Math.Vec3(currPos-(Vector2Int.one*2))*chunkSize;
+            // tilemap_ground.size = Math.Vec3(Vector2Int.one*5*chunkSize)+Vector3Int.forward;
+            // tilemap_ground.ResizeBounds();
 
-
-            foreach(var key in loadedChunks)
+            foreach(var key in new List<(int x, int y)>(loadedChunks.Keys))
             {
                 if(Mathf.Abs(key.x-currPos.x) > 2 || Mathf.Abs(key.y-currPos.y) > 2)
                 {
-                    GameObject chunkObj = new GameObject();
-                    chunkObj.AddComponent<ProceduralChunkUnloader>();
-                    var chunk = chunkObj.GetComponent<ProceduralChunkUnloader>();
-                    chunk.pos = new Vector3Int(key.x, key.y, 0);
-                    unloadingChunks.Add((key.x, key.y), chunk);
+                    loadedChunks[key].SetActive(false);
+                    disabledChunks.AddLast(loadedChunks[key]);
+                    loadedChunks.Remove(key);
                 }
             };
 
@@ -95,20 +109,17 @@ public class ProceduralGeneration : MonoBehaviour
         prevPos.y = currPos.y;
     }
 
-    public void CheckLoaded(ProceduralChunkLoader loader)
+    public void CheckLoaded()
     {
-        loadedChunks.Add((loader.pos.x, loader.pos.y));
-        loadingChunks.Remove((loader.pos.x, loader.pos.y));
-        
-        if(loadingChunks.Count != 0) return;
+        if(!PlayerStats.loadingFirstChunks) return;
 
-        tilemap_ground.CompressBounds();
-
-        if(PlayerStats.loadingFirstChunks)
+        foreach(var pair in loadedChunks)
         {
-            FadeTransition.Fade(true, OnFadeComplete);
-            PlayerStats.loadingFirstChunks = false;
+            if(!pair.Value.GetComponent<ProceduralChunk>().loaded) return;
         }
+
+        FadeTransition.Fade(true, OnFadeComplete);
+        PlayerStats.loadingFirstChunks = false;
     }
 
     public static bool OnFadeComplete()

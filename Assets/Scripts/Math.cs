@@ -50,4 +50,9 @@ public class Math
         float dy = pos2.y-pos2.y;
         return dx*dx+dy*dy < distance*distance;
     }
+
+    public static Vector3Int Vec3(Vector2Int vec)
+    {
+        return new Vector3Int(vec.x, vec.y, 0);
+    }
 }

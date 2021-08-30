@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -42,10 +43,10 @@ public class Init : MonoBehaviour
             devConsole.Init();
             daylightCycle.Init();
             dynamicEnemySpawning.Init();
-            // dynamicLoading.Init();
+            dynamicLoading.Init();
             fadeTransition.Init();
             playerStats.Init();
-            proceduralGeneration.Init();
+            proceduralGeneration.Init(UnityEngine.Random.Range(Int32.MinValue, Int32.MaxValue));
             PlayerInput.LoadKeybinds();
 
             MenuHandler.mainMenuObject = mainMenuObject;

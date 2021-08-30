@@ -12,7 +12,6 @@ public class DynamicLoading : MonoBehaviour
     public TileBase defaultTile;
 
     [HideInInspector]
-    public Rigidbody2D player_rb;
     private Vector2Int currPos=Vector2Int.zero;
     private Vector2Int prevPos;
     public const int chunkSize=50;
@@ -48,8 +47,6 @@ public class DynamicLoading : MonoBehaviour
                 validChunks.Set(y*mapSize.x+x, true);
             }
         }
-
-        player_rb = GetComponent<Rigidbody2D>();
     }
 
     public static string Name(int x, int y) { return x+","+y; }
@@ -68,8 +65,8 @@ public class DynamicLoading : MonoBehaviour
 
     void LoadAll()
     {
-        int posX = (int)Mathf.Floor(player_rb.position.x/chunkSize);
-        int posY = (int)Mathf.Floor(player_rb.position.y/chunkSize);
+        int posX = (int)Mathf.Floor(PlayerStats.rigidbody.position.x/chunkSize);
+        int posY = (int)Mathf.Floor(PlayerStats.rigidbody.position.y/chunkSize);
 
         for(int x=Mathf.Max(posX-1, 0); x<=Mathf.Min(posX+1, mapSize.x-1); x++)
         {
@@ -105,8 +102,8 @@ public class DynamicLoading : MonoBehaviour
 
     void Update()
     {    
-        currPos.x = (int)(player_rb.position.x/chunkSize);
-        currPos.y = (int)(player_rb.position.y/chunkSize);
+        currPos.x = (int)(PlayerStats.rigidbody.position.x/chunkSize);
+        currPos.y = (int)(PlayerStats.rigidbody.position.y/chunkSize);
         
         if(currPos != prevPos)
         {
