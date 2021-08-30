@@ -46,7 +46,7 @@ public class Init : MonoBehaviour
             dynamicLoading.Init();
             fadeTransition.Init();
             playerStats.Init();
-            proceduralGeneration.Init(UnityEngine.Random.Range(Int32.MinValue, Int32.MaxValue));
+            proceduralGeneration.Init(0);//UnityEngine.Random.value);
             PlayerInput.LoadKeybinds();
 
             MenuHandler.mainMenuObject = mainMenuObject;

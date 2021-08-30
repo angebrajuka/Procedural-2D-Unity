@@ -15,10 +15,12 @@ ScriptsOnlyBuild:
     - ButtonSave
     - ButtonSaveAndQuit
     - ButtonSounds
+    - Chunk
     - DaylightCycle
     - DestroyParticleSystem
     - DevConsole
     - DynamicEnemySpawning
+    - DynamicLoading
     - EnemyObject
     - Explosion
     - FadeTransition
@@ -214,6 +216,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2880}
     - Class: 114
+      Script: {instanceID: 2968}
+    - Class: 114
       Script: {instanceID: 2976}
     - Class: 114
       Script: {instanceID: 3018}
@@ -255,6 +259,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 4074}
     - Class: 114
       Script: {instanceID: 4126}
+    - Class: 114
+      Script: {instanceID: 4160}
     - Class: 114
       Script: {instanceID: 4218}
     - Class: 114
@@ -346,37 +352,37 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 6790}
     - Class: 114
-      Script: {instanceID: 6960}
+      Script: {instanceID: 6958}
     - Class: 114
-      Script: {instanceID: 6968}
+      Script: {instanceID: 6966}
     - Class: 114
-      Script: {instanceID: 7040}
+      Script: {instanceID: 7038}
     - Class: 114
-      Script: {instanceID: 7172}
+      Script: {instanceID: 7170}
     - Class: 114
-      Script: {instanceID: 7282}
+      Script: {instanceID: 7280}
     - Class: 114
-      Script: {instanceID: 7298}
+      Script: {instanceID: 7296}
     - Class: 114
-      Script: {instanceID: 7340}
+      Script: {instanceID: 7338}
     - Class: 114
-      Script: {instanceID: 7472}
+      Script: {instanceID: 7470}
     - Class: 114
-      Script: {instanceID: 7538}
+      Script: {instanceID: 7536}
     - Class: 114
-      Script: {instanceID: 7586}
+      Script: {instanceID: 7584}
     - Class: 114
-      Script: {instanceID: 7606}
+      Script: {instanceID: 7604}
+    - Class: 114
+      Script: {instanceID: 7656}
     - Class: 114
       Script: {instanceID: 7658}
     - Class: 114
-      Script: {instanceID: 7660}
+      Script: {instanceID: 7746}
     - Class: 114
-      Script: {instanceID: 7748}
+      Script: {instanceID: 7834}
     - Class: 114
-      Script: {instanceID: 7836}
-    - Class: 114
-      Script: {instanceID: 8078}
+      Script: {instanceID: 8076}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -592,7 +598,7 @@ ScriptsOnlyBuild:
     className: ItemPickup
   - hash:
       serializedVersion: 2
-      Hash: f3aa5b1f2bdc76adeeb22d04ba4a7e91
+      Hash: 58f3ce39ee726ccdd0c9fa76052c1999
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ProceduralChunk
@@ -700,7 +706,7 @@ ScriptsOnlyBuild:
     className: Chunk
   - hash:
       serializedVersion: 2
-      Hash: c9f4e0e9884d42253cebb1c5643e5133
+      Hash: 94bd8a09cd9cd30a8ece130338530ecf
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ProceduralGeneration
@@ -958,7 +964,7 @@ ScriptsOnlyBuild:
     className: Bloom
   - hash:
       serializedVersion: 2
-      Hash: 51149e548d3fc80d94afc571c60867ba
+      Hash: 1553b37bcab2b9663294e41fc17b13ba
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: DynamicLoading

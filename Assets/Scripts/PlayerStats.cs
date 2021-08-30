@@ -22,7 +22,7 @@ new public static Rigidbody2D rigidbody;
 
 
     // constant
-    public const float k_RUN_ACCELL = 1250.0f;
+    public const float k_RUN_ACCELL = 125.0f;
     public const float k_SPRINT_MULTIPLIER = 1.2f;
     public const float k_FLASHLIGHT_MULTIPLIER = 0.88f;
     public const float k_KNIFE_SPEED = 500f;
@@ -94,7 +94,7 @@ new public static Rigidbody2D rigidbody;
         }
         else
         {
-            rigidbody.position = new Vector2(325, 25);
+            rigidbody.position = ProceduralGeneration.center;
             
             while(entities.childCount > 0)
             {
