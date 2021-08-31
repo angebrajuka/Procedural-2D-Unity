@@ -46,6 +46,16 @@ public class ProceduralGeneration : MonoBehaviour
 
         player_rb = PlayerStats.rigidbody;
 
+        SetSeed(seed);
+    }
+
+    public static float RandomSeed()
+    {
+        return Random.Range((float)(-1000000), (float)1000000);
+    }
+
+    public static void SetSeed(float seed)
+    {
         seed_main = seed;
         seed_biome = seed_main+0.3585825032f; // random values have no meaning, just not the same as main
         seed_decorations = seed_main+0.93252735085f; // random values have no meaning, just not the same as main

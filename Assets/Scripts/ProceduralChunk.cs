@@ -26,14 +26,13 @@ public class ProceduralChunk : MonoBehaviour
     }
 
 
-    float PerlinMain()
+    // returns true for land, false for water
+    public static bool PerlinMain(Vector2Int pos)
     {
-        var pos = new Vector2Int((int)transform.localPosition.x+tilePos.x, (int)transform.localPosition.y+tilePos.y);
-
-        float perlinVal = Mathf.PerlinNoise(pos.x/20.0f+5429, pos.y/20.0f+5429)/2+0.5f; // 0.5 to 1
+        float perlinVal = Mathf.PerlinNoise(ProceduralGeneration.seed_main + pos.x/20.0f+5429, ProceduralGeneration.seed_main + pos.y/20.0f+5429)/2+0.5f; // 0.5 to 1
         float gradientVal = 1-Vector2Int.Distance(pos, ProceduralGeneration.center)/(ProceduralGeneration.chunkSize*ProceduralGeneration.mapRadius); // 1 in center, 0 at edge of map
 
-        return (perlinVal+gradientVal)/2;
+        return (perlinVal+gradientVal)/2 > 0.5;
     }
 
     void Update()
@@ -52,7 +51,7 @@ public class ProceduralChunk : MonoBehaviour
                 }
                 else
                 {
-                    m_tilemap.SetTile(tilePos, PerlinMain() > 0.5 ? ProceduralGeneration.instance.grass : ProceduralGeneration.instance.water);
+                    m_tilemap.SetTile(tilePos, PerlinMain(new Vector2Int((int)transform.localPosition.x+tilePos.x, (int)transform.localPosition.y+tilePos.y)) ? ProceduralGeneration.instance.grass : ProceduralGeneration.instance.water);
                 }
             }
             tilePos.x++;
