@@ -26,6 +26,9 @@ public class Init : MonoBehaviour
     public GameObject gameWorldObject;
 
 
+    public float seed;
+    public bool setSeed;
+
     static bool init=false;
     
     void Start()
@@ -46,7 +49,7 @@ public class Init : MonoBehaviour
             dynamicLoading.Init();
             fadeTransition.Init();
             playerStats.Init();
-            proceduralGeneration.Init(0);//ProceduralGeneration.RandomSeed());
+            proceduralGeneration.Init(setSeed ? seed : ProceduralGeneration.RandomSeed());
             PlayerInput.LoadKeybinds();
 
             MenuHandler.mainMenuObject = mainMenuObject;

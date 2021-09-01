@@ -10,6 +10,9 @@ public class _EditorMapTextureGen : MonoBehaviour
 
     public void Generate()
     {
+        Color land = new Color(0.5f, 0.9f, 0.5f);
+        Color water = new Color(0.2f, 0.5f, 0.9f);
+
         ProceduralGeneration.SetSeed(seed);
 
         var width = ProceduralGeneration.mapDiameter*ProceduralGeneration.chunkSize;
@@ -19,7 +22,7 @@ public class _EditorMapTextureGen : MonoBehaviour
         {
             for(int y=0; y<width; y++)
             {
-                texture.SetPixel(x, y, ProceduralChunk.PerlinMain(new Vector2Int(x, y)) ? Color.black : Color.white);
+                texture.SetPixel(x, y, ProceduralChunk.PerlinMain(new Vector2Int(x, y)) ? land : water);
             }
         }
         texture.Apply();

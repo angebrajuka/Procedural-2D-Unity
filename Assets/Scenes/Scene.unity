@@ -1437,6 +1437,8 @@ MonoBehaviour:
   fadeTransition: {fileID: 1461331824}
   mainMenuObject: {fileID: 449472433}
   gameWorldObject: {fileID: 73507468}
+  seed: 232174.3
+  setSeed: 1
 --- !u!4 &349773230
 Transform:
   m_ObjectHideFlags: 0
@@ -2869,7 +2871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   texture: {fileID: 2800000, guid: c0bb56ecc59149342ad7ccd9d596b467, type: 2}
-  seed: 619792.7
+  seed: 498869.12
 --- !u!1 &1042245119
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,10 +29,13 @@ public class ProceduralChunk : MonoBehaviour
     // returns true for land, false for water
     public static bool PerlinMain(Vector2Int pos)
     {
-        float perlinVal = Mathf.PerlinNoise(ProceduralGeneration.seed_main + pos.x/20.0f+5429, ProceduralGeneration.seed_main + pos.y/20.0f+5429)/2+0.5f; // 0.5 to 1
+        const float perlinScale = 0.01f;
+        const int perlinOffset = 5429; // prevents mirroring
+        float perlinVal = Mathf.PerlinNoise((ProceduralGeneration.seed_main + pos.x + perlinOffset)*perlinScale, (ProceduralGeneration.seed_main + pos.y + perlinOffset)*perlinScale); // 0 to 1
+        perlinVal = perlinVal.Remap(0, 1, 0.3f, 1);
         float gradientVal = 1-Vector2Int.Distance(pos, ProceduralGeneration.center)/(ProceduralGeneration.chunkSize*ProceduralGeneration.mapRadius); // 1 in center, 0 at edge of map
 
-        return (perlinVal+gradientVal)/2 > 0.5;
+        return (perlinVal+gradientVal)/2 > 0.5f;
     }
 
     void Update()
