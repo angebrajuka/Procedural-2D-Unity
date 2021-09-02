@@ -1,3 +1,5 @@
+#if(UNITY_EDITOR)
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,3 +32,5 @@ public class _EditorMapTextureGen : MonoBehaviour
         AssetDatabase.CreateAsset(texture, "Assets/EditorGeneratedResources/mapTexture.asset");
     }
 }
+
+#endif

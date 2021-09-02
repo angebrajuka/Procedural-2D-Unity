@@ -25,7 +25,7 @@ public class AdvancedRuleTile : RuleTile<AdvancedRuleTile.Neighbor>
         switch (neighbor)
         {
         case Neighbor.This:
-            return tile == this || tile == null;
+            return tile == this;
         case Neighbor.NotThis:
             return tile != this && tile != null;
         case Neighbor.Zero:

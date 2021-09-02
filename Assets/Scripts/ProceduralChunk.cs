@@ -7,9 +7,6 @@ public class ProceduralChunk : MonoBehaviour
 {
     public Tilemap m_tilemap;
     Vector3Int tilePos;
-
-    bool refreshing;
-    bool removing;
     public bool loaded;
 
     public void _Start()
@@ -21,8 +18,7 @@ public class ProceduralChunk : MonoBehaviour
     public void Init()
     {
         loaded = false;
-        refreshing = false;
-        tilePos = new Vector3Int(0, 0, 0);
+        tilePos = new Vector3Int(-1, 0, 0);
     }
 
 
@@ -34,46 +30,27 @@ public class ProceduralChunk : MonoBehaviour
         float perlinVal = Mathf.PerlinNoise((ProceduralGeneration.seed_main + pos.x + perlinOffset)*perlinScale, (ProceduralGeneration.seed_main + pos.y + perlinOffset)*perlinScale); // 0 to 1
         perlinVal = perlinVal.Remap(0, 1, 0.3f, 1);
         float gradientVal = 1-Vector2Int.Distance(pos, ProceduralGeneration.center)/(ProceduralGeneration.chunkSize*ProceduralGeneration.mapRadius); // 1 in center, 0 at edge of map
+        float perlinScaleFine = 0.1f;
+        float fineNoise = Mathf.PerlinNoise((ProceduralGeneration.seed_main + pos.x + perlinOffset)*perlinScaleFine, (ProceduralGeneration.seed_main + pos.y + perlinOffset)*perlinScaleFine);
+        fineNoise = fineNoise.Remap(0, 1, 0, 0.05f);
 
-        return (perlinVal+gradientVal)/2 > 0.5f;
+        return (perlinVal+gradientVal)/2-fineNoise > 0.5f;
     }
 
     void Update()
     {
-        if(removing)
+        for(tilePos.y=-1; tilePos.y<=DynamicLoading.chunkSize; tilePos.y++)
         {
-            
+            m_tilemap.SetTile(tilePos, PerlinMain(new Vector2Int((int)transform.localPosition.x+tilePos.x, (int)transform.localPosition.y+tilePos.y)) ? ProceduralGeneration.instance.grass : ProceduralGeneration.instance.water);
         }
-        else
-        {
-            for(tilePos.y=0; tilePos.y<DynamicLoading.chunkSize; tilePos.y++)
-            {
-                if(refreshing)
-                {
-                    m_tilemap.RefreshTile(tilePos);
-                }
-                else
-                {
-                    m_tilemap.SetTile(tilePos, PerlinMain(new Vector2Int((int)transform.localPosition.x+tilePos.x, (int)transform.localPosition.y+tilePos.y)) ? ProceduralGeneration.instance.grass : ProceduralGeneration.instance.water);
-                }
-            }
-            tilePos.x++;
+        tilePos.x++;
 
-            if(tilePos.x == DynamicLoading.chunkSize+1)
-            {
-                if(refreshing)
-                {
-                    m_tilemap.CompressBounds();
-                    loaded = true;
-                    ProceduralGeneration.instance.CheckLoaded();
-                    enabled = false;
-                }
-                else
-                {
-                    refreshing = true;
-                    tilePos.x = 0;
-                }
-            }
+        if(tilePos.x == DynamicLoading.chunkSize+1)
+        {
+            m_tilemap.CompressBounds();
+            loaded = true;
+            ProceduralGeneration.instance.CheckLoaded();
+            enabled = false;
         }
     }
 }

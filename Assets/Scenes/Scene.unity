@@ -1437,8 +1437,8 @@ MonoBehaviour:
   fadeTransition: {fileID: 1461331824}
   mainMenuObject: {fileID: 449472433}
   gameWorldObject: {fileID: 73507468}
-  seed: 232174.3
-  setSeed: 1
+  seed: 537149.2
+  setSeed: 0
 --- !u!4 &349773230
 Transform:
   m_ObjectHideFlags: 0
@@ -2819,6 +2819,7 @@ GameObject:
   - component: {fileID: 1007638344}
   - component: {fileID: 1007638343}
   - component: {fileID: 1007638345}
+  - component: {fileID: 1007638346}
   m_Layer: 0
   m_Name: Tools
   m_TagString: Untagged
@@ -2871,7 +2872,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   texture: {fileID: 2800000, guid: c0bb56ecc59149342ad7ccd9d596b467, type: 2}
-  seed: 498869.12
+  seed: 887295.5
+--- !u!114 &1007638346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007638342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ffbfd62ab631c447aac6c89d666db8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  water:
+  - {fileID: -7430383670088101596, guid: 41bed760b9b0dd04f82ea4e95ec9e69b, type: 3}
+  - {fileID: -4422093182512481842, guid: 41bed760b9b0dd04f82ea4e95ec9e69b, type: 3}
+  L: {fileID: -9098889951551215179, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  U: {fileID: 5509857638715117265, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  R: {fileID: -4959573946174759702, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  D: {fileID: -8205407213943788413, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  LU: {fileID: 3457867045685112549, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  UR: {fileID: -2307536797248414214, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  RD: {fileID: 8527101669429972365, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  DL: {fileID: -4062522836777839865, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  LR: {fileID: -2398008657232166250, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  UD: {fileID: 1556713449575293717, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  URD: {fileID: 3903972100952661651, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  RDL: {fileID: 230273990883358108, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  DLU: {fileID: 7478025511440273361, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  LUR: {fileID: -1876492524875490762, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  LURD: {fileID: 2780454373037352319, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  ul: {fileID: 1889538223680205964, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  ur: {fileID: -8934296432870422354, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  bl: {fileID: -8331219465619339428, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
+  br: {fileID: 6860781443664483058, guid: 9578f629d56b01f448c090fee960a2ec, type: 3}
 --- !u!1 &1042245119
 GameObject:
   m_ObjectHideFlags: 0
@@ -18123,7 +18158,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 213
+  orthographic size: 13
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -19090,7 +19125,7 @@ MonoBehaviour:
   water: {fileID: 11400000, guid: 1fceba9dd17cbd94ea61696f79e4e25b, type: 2}
   grass: {fileID: 11400000, guid: 5b9d7baa5b208b94d955f95accba008e, type: 2}
   player_rb: {fileID: 0}
-  renderDistance: 5
+  renderDistance: 2
 --- !u!4 &2599422765226947294
 Transform:
   m_ObjectHideFlags: 0

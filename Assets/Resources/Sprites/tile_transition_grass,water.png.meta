@@ -74,6 +74,114 @@ TextureImporter:
   - first:
       213: 8929542178940782103
     second: tile_transition_grass,water_23
+  - first:
+      213: 1566350380575535925
+    second: tile_transition_grass,water_24
+  - first:
+      213: 6280174629958123834
+    second: tile_transition_grass,water_25
+  - first:
+      213: -230056355598533224
+    second: tile_transition_grass,water_26
+  - first:
+      213: -6715728498388709373
+    second: tile_transition_grass,water_27
+  - first:
+      213: -3022026737100522957
+    second: tile_transition_grass,water_28
+  - first:
+      213: 4769457488327736540
+    second: tile_transition_grass,water_29
+  - first:
+      213: -1060460533284204587
+    second: tile_transition_grass,water_30
+  - first:
+      213: -6079950854933786419
+    second: tile_transition_grass,water_31
+  - first:
+      213: 5909323977555188068
+    second: tile_transition_grass,water_32
+  - first:
+      213: -454921750379467222
+    second: tile_transition_grass,water_33
+  - first:
+      213: -1390954825888790153
+    second: tile_transition_grass,water_34
+  - first:
+      213: 7638690385223747634
+    second: tile_transition_grass,water_35
+  - first:
+      213: 6769339977338961368
+    second: tile_transition_grass,water_36
+  - first:
+      213: -7745167502066138327
+    second: tile_transition_grass,water_37
+  - first:
+      213: 7387282326486931305
+    second: tile_transition_grass,water_38
+  - first:
+      213: -3068530680784687038
+    second: tile_transition_grass,water_39
+  - first:
+      213: 4074159913156058305
+    second: tile_transition_grass,water_40
+  - first:
+      213: 7603951984718592992
+    second: tile_transition_grass,water_41
+  - first:
+      213: 2778098098789044267
+    second: tile_transition_grass,water_42
+  - first:
+      213: -8840504358534512696
+    second: tile_transition_grass,water_43
+  - first:
+      213: 1026825334693053911
+    second: tile_transition_grass,water_44
+  - first:
+      213: -3087569951395472491
+    second: tile_transition_grass,water_45
+  - first:
+      213: 3632325930958896839
+    second: tile_transition_grass,water_46
+  - first:
+      213: -1359975250645895364
+    second: tile_transition_grass,water_47
+  - first:
+      213: -4278762671445974132
+    second: tile_transition_grass,water_48
+  - first:
+      213: -3527215370296941226
+    second: tile_transition_grass,water_49
+  - first:
+      213: -1637343007709056271
+    second: tile_transition_grass,water_50
+  - first:
+      213: 3349930932643750249
+    second: tile_transition_grass,water_51
+  - first:
+      213: 541334966642915350
+    second: tile_transition_grass,water_52
+  - first:
+      213: 3809639986043103229
+    second: tile_transition_grass,water_53
+  - first:
+      213: -3529910680969681930
+    second: tile_transition_grass,water_54
+  - first:
+      213: -3257491140044491545
+    second: tile_transition_grass,water_55
+  - first:
+      213: -3420332200576254082
+    second: tile_transition_grass,water_56
+  - first:
+      213: -8161673902729804344
+    second: tile_transition_grass,water_57
+  - first:
+      213: 6266788301532253461
+    second: tile_transition_grass,water_58
+  - first:
+      213: 8666677569039909699
+    second: tile_transition_grass,water_59
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -95,6 +203,7 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -104,8 +213,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -126,9 +235,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -175,7 +287,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 464
         width: 16
         height: 16
       alignment: 0
@@ -196,7 +308,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 32
+        y: 464
         width: 16
         height: 16
       alignment: 0
@@ -216,8 +328,8 @@ TextureImporter:
       name: tile_transition_grass,water_2
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
+        x: 0
+        y: 448
         width: 16
         height: 16
       alignment: 0
@@ -237,8 +349,8 @@ TextureImporter:
       name: tile_transition_grass,water_3
       rect:
         serializedVersion: 2
-        x: 48
-        y: 32
+        x: 16
+        y: 448
         width: 16
         height: 16
       alignment: 0
@@ -258,8 +370,8 @@ TextureImporter:
       name: tile_transition_grass,water_4
       rect:
         serializedVersion: 2
-        x: 64
-        y: 32
+        x: 0
+        y: 432
         width: 16
         height: 16
       alignment: 0
@@ -279,8 +391,8 @@ TextureImporter:
       name: tile_transition_grass,water_5
       rect:
         serializedVersion: 2
-        x: 80
-        y: 32
+        x: 16
+        y: 432
         width: 16
         height: 16
       alignment: 0
@@ -300,8 +412,8 @@ TextureImporter:
       name: tile_transition_grass,water_6
       rect:
         serializedVersion: 2
-        x: 96
-        y: 32
+        x: 0
+        y: 416
         width: 16
         height: 16
       alignment: 0
@@ -321,8 +433,8 @@ TextureImporter:
       name: tile_transition_grass,water_7
       rect:
         serializedVersion: 2
-        x: 112
-        y: 32
+        x: 16
+        y: 416
         width: 16
         height: 16
       alignment: 0
@@ -343,7 +455,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
+        y: 400
         width: 16
         height: 16
       alignment: 0
@@ -364,7 +476,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 16
+        y: 400
         width: 16
         height: 16
       alignment: 0
@@ -384,8 +496,8 @@ TextureImporter:
       name: tile_transition_grass,water_10
       rect:
         serializedVersion: 2
-        x: 32
-        y: 16
+        x: 0
+        y: 384
         width: 16
         height: 16
       alignment: 0
@@ -405,8 +517,8 @@ TextureImporter:
       name: tile_transition_grass,water_11
       rect:
         serializedVersion: 2
-        x: 48
-        y: 16
+        x: 16
+        y: 384
         width: 16
         height: 16
       alignment: 0
@@ -426,8 +538,8 @@ TextureImporter:
       name: tile_transition_grass,water_12
       rect:
         serializedVersion: 2
-        x: 64
-        y: 16
+        x: 0
+        y: 368
         width: 16
         height: 16
       alignment: 0
@@ -447,8 +559,8 @@ TextureImporter:
       name: tile_transition_grass,water_13
       rect:
         serializedVersion: 2
-        x: 80
-        y: 16
+        x: 16
+        y: 368
         width: 16
         height: 16
       alignment: 0
@@ -468,8 +580,8 @@ TextureImporter:
       name: tile_transition_grass,water_14
       rect:
         serializedVersion: 2
-        x: 96
-        y: 16
+        x: 0
+        y: 352
         width: 16
         height: 16
       alignment: 0
@@ -489,8 +601,8 @@ TextureImporter:
       name: tile_transition_grass,water_15
       rect:
         serializedVersion: 2
-        x: 112
-        y: 16
+        x: 16
+        y: 352
         width: 16
         height: 16
       alignment: 0
@@ -511,7 +623,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 336
         width: 16
         height: 16
       alignment: 0
@@ -532,7 +644,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 0
+        y: 336
         width: 16
         height: 16
       alignment: 0
@@ -552,8 +664,8 @@ TextureImporter:
       name: tile_transition_grass,water_18
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
+        x: 0
+        y: 320
         width: 16
         height: 16
       alignment: 0
@@ -573,8 +685,8 @@ TextureImporter:
       name: tile_transition_grass,water_19
       rect:
         serializedVersion: 2
-        x: 48
-        y: 0
+        x: 16
+        y: 320
         width: 16
         height: 16
       alignment: 0
@@ -594,8 +706,8 @@ TextureImporter:
       name: tile_transition_grass,water_20
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
+        x: 0
+        y: 304
         width: 16
         height: 16
       alignment: 0
@@ -615,8 +727,8 @@ TextureImporter:
       name: tile_transition_grass,water_21
       rect:
         serializedVersion: 2
-        x: 80
-        y: 0
+        x: 16
+        y: 304
         width: 16
         height: 16
       alignment: 0
@@ -636,8 +748,8 @@ TextureImporter:
       name: tile_transition_grass,water_22
       rect:
         serializedVersion: 2
-        x: 96
-        y: 0
+        x: 0
+        y: 288
         width: 16
         height: 16
       alignment: 0
@@ -657,8 +769,8 @@ TextureImporter:
       name: tile_transition_grass,water_23
       rect:
         serializedVersion: 2
-        x: 112
-        y: 0
+        x: 16
+        y: 288
         width: 16
         height: 16
       alignment: 0
@@ -670,6 +782,762 @@ TextureImporter:
       bones: []
       spriteID: 71602ae0d4b1ceb70800000000000000
       internalID: 8929542178940782103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 533b00c4f5bccb510800000000000000
+      internalID: 1566350380575535925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_25
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a31031a5d89a72750800000000000000
+      internalID: 6280174629958123834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_26
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89d7a36a6fcaeccf0800000000000000
+      internalID: -230056355598533224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_27
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 300d29d1380fcc2a0800000000000000
+      internalID: -6715728498388709373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33af369a1ba9f06d0800000000000000
+      internalID: -3022026737100522957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_29
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdcf913e054803240800000000000000
+      internalID: 4769457488327736540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5df064773cc7841f0800000000000000
+      internalID: -1060460533284204587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_31
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc0d6df09ecaf9ba0800000000000000
+      internalID: -6079950854933786419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46910e049d2220250800000000000000
+      internalID: 5909323977555188068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_33
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2e680c041bcfa9f0800000000000000
+      internalID: -454921750379467222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_34
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 779884894f552bce0800000000000000
+      internalID: -1390954825888790153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_35
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23804701f64120a60800000000000000
+      internalID: 7638690385223747634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ddb32908d681fd50800000000000000
+      internalID: 6769339977338961368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_37
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 923c2794133a38490800000000000000
+      internalID: -7745167502066138327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_38
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96756cde226e48660800000000000000
+      internalID: 7387282326486931305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_39
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 240f0758a936a65d0800000000000000
+      internalID: -3068530680784687038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cc9dcdead25a8830800000000000000
+      internalID: 4074159913156058305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_41
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0eb374aea0aa68960800000000000000
+      internalID: 7603951984718592992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_42
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2052897089cd8620800000000000000
+      internalID: 2778098098789044267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_43
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cff14aff18305580800000000000000
+      internalID: -8840504358534512696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_44
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d540c89334004e00800000000000000
+      internalID: 1026825334693053911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_45
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59b17e3ec7fb625d0800000000000000
+      internalID: -3087569951395472491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_46
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cebe37703d986230800000000000000
+      internalID: 3632325930958896839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_47
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c37bde907b5602de0800000000000000
+      internalID: -1359975250645895364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_48
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c83e24a2508ce94c0800000000000000
+      internalID: -4278762671445974132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_49
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65527270f40dc0fc0800000000000000
+      internalID: -3527215370296941226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_50
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f23802a53df649e0800000000000000
+      internalID: -1637343007709056271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_51
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 961e25e3f685d7e20800000000000000
+      internalID: 3349930932643750249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_52
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 618bf37b845338700800000000000000
+      internalID: 541334966642915350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_53
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df7293a026f8ed430800000000000000
+      internalID: 3809639986043103229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_54
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f3e1fb10fc330fc0800000000000000
+      internalID: -3529910680969681930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_55
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e47aaa21111bc2d0800000000000000
+      internalID: -3257491140044491545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_56
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7f72da3cf98880d0800000000000000
+      internalID: -3420332200576254082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_57
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c5c63fe3d8ebbe80800000000000000
+      internalID: -8161673902729804344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_58
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51d4763e1ca18f650800000000000000
+      internalID: 6266788301532253461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_transition_grass,water_59
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 343487db459364870800000000000000
+      internalID: 8666677569039909699
       vertices: []
       indices: 
       edges: []

@@ -1,3 +1,5 @@
+#if(UNITY_EDITOR)
+
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -44,3 +46,5 @@ public class _EditorShowTilemapBorder : MonoBehaviour
         Debug.DrawLine(new Vector3(tBounds.min.x + tp.x, tp.y), new Vector3(tBounds.max.x + tp.x, tp.y), Color.green);
     }
 }
+
+#endif
