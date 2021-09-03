@@ -39,10 +39,15 @@ public class ProceduralChunk : MonoBehaviour
 
     void Update()
     {
-        for(tilePos.y=-1; tilePos.y<=DynamicLoading.chunkSize; tilePos.y++)
+        var positionArray = new Vector3Int[ProceduralGeneration.chunkSize+2];
+        var tileBaseArray = new TileBase[ProceduralGeneration.chunkSize+2];
+        int i=0;
+        for(tilePos.y=-1; tilePos.y<=DynamicLoading.chunkSize; tilePos.y++, i++)
         {
-            m_tilemap.SetTile(tilePos, PerlinMain(new Vector2Int((int)transform.localPosition.x+tilePos.x, (int)transform.localPosition.y+tilePos.y)) ? ProceduralGeneration.instance.grass : ProceduralGeneration.instance.water);
+            positionArray[i] = tilePos;
+            tileBaseArray[i] = PerlinMain(new Vector2Int((int)transform.localPosition.x+tilePos.x, (int)transform.localPosition.y+tilePos.y)) ? ProceduralGeneration.instance.grass : ProceduralGeneration.instance.water;
         }
+        m_tilemap.SetTiles(positionArray, tileBaseArray);
         tilePos.x++;
 
         if(tilePos.x == DynamicLoading.chunkSize+1)

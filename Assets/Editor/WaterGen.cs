@@ -15,5 +15,6 @@ public class WaterGen : Editor
         {
             script.Generate();
         }
+        GUILayout.TextArea("remember to re add water tile to Procedural Generation script and other rule tiles", new GUILayoutOption[]{});
     }
 }
