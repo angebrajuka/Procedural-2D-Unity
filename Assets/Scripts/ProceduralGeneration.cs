@@ -17,12 +17,13 @@ public class ProceduralGeneration : MonoBehaviour
     private Vector2Int currPos=Vector2Int.zero;
     private Vector2Int prevPos;
     public const int chunkSize=50;
-    public const int mapRadius=5;
+    public const int mapRadius=10;
     public const int mapDiameter=mapRadius*2;
     public static readonly Vector2Int center = Vector2Int.one*mapRadius*chunkSize;
     public static Dictionary<(int x, int y), GameObject> loadedChunks;
     public static LinkedList<GameObject> disabledChunks;
     public int renderDistance;
+    public static bool reset=true;
 
     public static TileBase[] tiles;
 
@@ -95,7 +96,7 @@ public class ProceduralGeneration : MonoBehaviour
         currPos.x = (int)Mathf.Floor(player_rb.position.x/chunkSize);
         currPos.y = (int)Mathf.Floor(player_rb.position.y/chunkSize);
         
-        if(currPos != prevPos || loadedChunks.Count == 0)
+        if(currPos != prevPos || loadedChunks.Count == 0 || reset)
         {
             Application.backgroundLoadingPriority = ThreadPriority.Low;
 
@@ -105,7 +106,7 @@ public class ProceduralGeneration : MonoBehaviour
 
             foreach(var key in new List<(int x, int y)>(loadedChunks.Keys))
             {
-                if(Mathf.Abs(key.x-currPos.x) > renderDistance || Mathf.Abs(key.y-currPos.y) > renderDistance)
+                if(Mathf.Abs(key.x-currPos.x) > renderDistance || Mathf.Abs(key.y-currPos.y) > renderDistance || reset)
                 {
                     loadedChunks[key].SetActive(false);
                     disabledChunks.AddLast(loadedChunks[key]);
@@ -114,6 +115,8 @@ public class ProceduralGeneration : MonoBehaviour
             };
 
             LoadAll();
+
+            reset = false;
         }
 
         prevPos.x = currPos.x;

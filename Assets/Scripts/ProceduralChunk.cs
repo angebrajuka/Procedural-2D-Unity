@@ -8,13 +8,15 @@ public class ProceduralChunk : MonoBehaviour
     public Tilemap m_tilemap;
     Vector3Int tilePos;
     public bool loaded;
+    Vector3Int[] positionArray=new Vector3Int[ProceduralGeneration.chunkSize+2];
+    TileBase[] tileArray=new TileBase[ProceduralGeneration.chunkSize+2];
 
     public void _Start()
     {
         m_tilemap = transform.GetChild(0).GetComponent<Tilemap>();
     }
 
-
+    
     public void Init()
     {
         loaded = false;
@@ -39,15 +41,13 @@ public class ProceduralChunk : MonoBehaviour
 
     void Update()
     {
-        var positionArray = new Vector3Int[ProceduralGeneration.chunkSize+2];
-        var tileBaseArray = new TileBase[ProceduralGeneration.chunkSize+2];
         int i=0;
         for(tilePos.y=-1; tilePos.y<=DynamicLoading.chunkSize; tilePos.y++, i++)
         {
             positionArray[i] = tilePos;
-            tileBaseArray[i] = PerlinMain(new Vector2Int((int)transform.localPosition.x+tilePos.x, (int)transform.localPosition.y+tilePos.y)) ? ProceduralGeneration.instance.grass : ProceduralGeneration.instance.water;
+            tileArray[i] = PerlinMain(new Vector2Int((int)transform.localPosition.x+tilePos.x, (int)transform.localPosition.y+tilePos.y)) ? ProceduralGeneration.instance.grass : ProceduralGeneration.instance.water;
         }
-        m_tilemap.SetTiles(positionArray, tileBaseArray);
+        m_tilemap.SetTiles(positionArray, tileArray);
         tilePos.x++;
 
         if(tilePos.x == DynamicLoading.chunkSize+1)

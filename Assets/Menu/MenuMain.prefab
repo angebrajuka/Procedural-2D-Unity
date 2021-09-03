@@ -1,30 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &626072379897347981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165847512223351543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c214d05804e0f5d4ba55a605bd7e24ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 848727651705840381, guid: f3ea4f864ecf98d4e911d0143d9a39d9, type: 3}
---- !u!114 &9180145577403552532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4481966761318721677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 537902f56bd2b8941b917095f476fbcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6182132684724437726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51,6 +26,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 2005103489266070291, guid: cd5f0bbca49232d4ab0785352543a712, type: 3}
+--- !u!114 &626072379897347981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165847512223351543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c214d05804e0f5d4ba55a605bd7e24ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menu: {fileID: 848727651705840381, guid: f3ea4f864ecf98d4e911d0143d9a39d9, type: 3}
+--- !u!114 &9180145577403552532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4481966761318721677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537902f56bd2b8941b917095f476fbcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &533581470337867476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -101,7 +101,7 @@ PrefabInstance:
     - target: {fileID: 7433675097898214263, guid: 92751e19e2517164d984a845fe67bcd3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8331057264361955630, guid: 92751e19e2517164d984a845fe67bcd3,
         type: 3}
@@ -421,7 +421,7 @@ PrefabInstance:
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnButtonPress
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8493925532410144254, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}

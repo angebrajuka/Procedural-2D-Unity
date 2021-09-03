@@ -87,6 +87,7 @@ new public static Rigidbody2D rigidbody;
         gunReloadTimer = 0;
         melee = false;
         energyMax = 50;
+        ProceduralGeneration.reset = true;
 
         if(load)
         {
