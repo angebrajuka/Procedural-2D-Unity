@@ -24,7 +24,7 @@ public class _EditorMapTextureGen : MonoBehaviour
         {
             for(int y=0; y<width; y++)
             {
-                texture.SetPixel(x, y, ProceduralChunk.PerlinMain(new Vector2Int(x, y)) ? land : water);
+                texture.SetPixel(x, y, ProceduralChunk.PerlinMain(new Vector2Int(x, y)) == 5 ? land : water);
             }
         }
         texture.Apply();

@@ -57,6 +57,7 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
+    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.IK.Runtime.dll:
     - UnityEditor.U2D.IK.IKEditorManagerHelper
     Unity.2D.Tilemap.Editor.dll:
@@ -717,7 +718,7 @@ ScriptsOnlyBuild:
     className: Chunk
   - hash:
       serializedVersion: 2
-      Hash: 94bd8a09cd9cd30a8ece130338530ecf
+      Hash: e9676c265d8df7a29aed27671df02c7e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ProceduralGeneration
@@ -1209,7 +1210,7 @@ ScriptsOnlyBuild:
     className: Target
   - hash:
       serializedVersion: 2
-      Hash: f96b41b68d5488cb45b0cd1b3da4ff00
+      Hash: b6d7882d59519fd63d4d3a56c53deb33
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AdvancedRuleTile

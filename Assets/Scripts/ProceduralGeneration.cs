@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+public class Biome
+{
+    
+}
+
 public class ProceduralGeneration : MonoBehaviour
 {
     // hierarchy
     public GameObject prefab_chunk;
-    public TileBase water;
-    public TileBase grass;
 
     public static ProceduralGeneration instance;
     
     [HideInInspector]
-    public Rigidbody2D player_rb;
     private Vector2Int currPos=Vector2Int.zero;
     private Vector2Int prevPos;
     public const int chunkSize=50;
@@ -25,27 +27,32 @@ public class ProceduralGeneration : MonoBehaviour
     public int renderDistance;
     public static bool reset=true;
 
-    public static TileBase[] tiles;
+    public static TileBase[] tiles_land;
+    public static TileBase tile_sand;
+    public static TileBase tile_water;
+    public static TileBase tile_water_shallow;
 
     public static float seed_main; // determines land/water
-    public static float seed_biome;
+    public static float seed_temperature, seed_rainfall; // used for biome decision making
     public static float seed_decorations;
 
     public void Init(float seed)
     {
         instance = this;
 
-        UnityEngine.Object[] objTiles = Resources.LoadAll("Tiles/Ground", typeof(TileBase));
-        tiles = new TileBase[objTiles.Length];
+        UnityEngine.Object[] objTiles = Resources.LoadAll("Tiles/Ground/Land", typeof(TileBase));
+        tiles_land = new TileBase[objTiles.Length];
         for(int i=0; i<objTiles.Length; i++)
         {
-            tiles[i] = (TileBase)objTiles[i];
+            tiles_land[i] = (TileBase)objTiles[i];
         }
+        tile_water = (TileBase)Resources.Load("Tiles/Ground/Water/water", typeof(TileBase));
+        tile_water_shallow = (TileBase)Resources.Load("Tiles/Ground/Water/water_shallow", typeof(TileBase));
+        tile_sand = (TileBase)Resources.Load("Tiles/Ground/Land/sand", typeof(TileBase));
+
 
         loadedChunks = new Dictionary<(int, int), GameObject>();
         disabledChunks = new LinkedList<GameObject>();
-
-        player_rb = PlayerStats.rigidbody;
 
         SetSeed(seed);
     }
@@ -58,15 +65,13 @@ public class ProceduralGeneration : MonoBehaviour
     public static void SetSeed(float seed)
     {
         seed_main = seed;
-        seed_biome = seed_main+0.3585825032f; // random values have no meaning, just not the same as main
-        seed_decorations = seed_main+0.93252735085f; // random values have no meaning, just not the same as main
+        seed_temperature = seed_main+530128.3585825032f; // random values have no meaning, just getting a different area in the perlin noise
+        seed_rainfall = seed_main+632571.5362583f; // random values have no meaning, just getting a different area in the perlin noise
+        seed_decorations = seed_main+471282.93252735085f; // random values have no meaning, just getting a different area in the perlin noise
     }
 
     void LoadAll()
     {
-        // for(int x=Mathf.Max(currPos.x-(renderDistance-1), 0); x<=Mathf.Min(currPos.x+(renderDistance-1), mapDiameter-1); x++)
-        // {
-        //     for(int y=Mathf.Max(currPos.y-(renderDistance-1), 0); y<=Mathf.Min(currPos.y+(renderDistance-1), mapDiameter-1); y++)
         for(int x=currPos.x-(renderDistance-1); x<=currPos.x+(renderDistance-1); x++)
         {
             for(int y=currPos.y-(renderDistance-1); y<=currPos.y+(renderDistance-1); y++)
@@ -93,16 +98,12 @@ public class ProceduralGeneration : MonoBehaviour
 
     void Update()
     {
-        currPos.x = (int)Mathf.Floor(player_rb.position.x/chunkSize);
-        currPos.y = (int)Mathf.Floor(player_rb.position.y/chunkSize);
+        currPos.x = (int)Mathf.Floor(PlayerStats.rigidbody.position.x/chunkSize);
+        currPos.y = (int)Mathf.Floor(PlayerStats.rigidbody.position.y/chunkSize);
         
         if(currPos != prevPos || loadedChunks.Count == 0 || reset)
         {
             Application.backgroundLoadingPriority = ThreadPriority.Low;
-
-            // tilemap_ground.origin = Math.Vec3(currPos-(Vector2Int.one*2))*chunkSize;
-            // tilemap_ground.size = Math.Vec3(Vector2Int.one*5*chunkSize)+Vector3Int.forward;
-            // tilemap_ground.ResizeBounds();
 
             foreach(var key in new List<(int x, int y)>(loadedChunks.Keys))
             {

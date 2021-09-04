@@ -9,6 +9,7 @@ public class AdvancedRuleTile : RuleTile<AdvancedRuleTile.Neighbor>
 {
     public TileBase[] connectingTiles;
     public TileBase[] any;
+    public TileBase[] alsoThis;
 
     public class Neighbor : RuleTile.TilingRule.Neighbor
     {
@@ -25,7 +26,7 @@ public class AdvancedRuleTile : RuleTile<AdvancedRuleTile.Neighbor>
         switch (neighbor)
         {
         case Neighbor.This:
-            return tile == this;
+            return tile == this || alsoThis.Contains(tile);
         case Neighbor.NotThis:
             return tile != this && tile != null;
         case Neighbor.Zero:

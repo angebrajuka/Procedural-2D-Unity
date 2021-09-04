@@ -244,15 +244,11 @@ public class _EditorWaterGen : MonoBehaviour
                 var dict = new Dictionary<Vector3Int, int>();
                 foreach(var vec in edge.Key)
                 {
-                    dict.Add(vec, AdvancedRuleTile.Neighbor.NotThis);
-                    // foreach(var veci in EdgeToCorners(vec))
-                    // {
-                    //     if(!dict.ContainsKey(veci)) dict.Add(veci, AdvancedRuleTile.Neighbor.NotThis);
-                    // }
+                    dict.Add(vec, AdvancedRuleTile.Neighbor.Any);
                 }
                 foreach(var vec in cornerRuleVecs[cornerIndex])
                 {
-                    dict.Add(vec, AdvancedRuleTile.Neighbor.NotThis);
+                    dict.Add(vec, AdvancedRuleTile.Neighbor.Any);
                 }
                 
                 foreach(var vec in allSides)

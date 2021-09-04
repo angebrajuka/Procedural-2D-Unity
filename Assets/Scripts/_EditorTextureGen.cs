@@ -73,7 +73,7 @@ public class _EditorTextureGen : MonoBehaviour
         }
 
         byte[] bytes = newTexture.EncodeToPNG();
-        File.WriteAllBytes(Application.dataPath + "/Resources/Sprites/" + newTextureName + ".png", bytes);
+        File.WriteAllBytes(Application.dataPath + "/Resources/Sprites/Tiles/" + newTextureName + ".png", bytes);
         AssetDatabase.Refresh();
     }
 }
