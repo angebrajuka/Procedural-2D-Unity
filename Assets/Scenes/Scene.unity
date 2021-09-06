@@ -2871,8 +2871,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48929883be2803c46b28c542cc4fe5e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  proceduralGeneration: {fileID: 2599422765226947265}
   texture: {fileID: 2800000, guid: c0bb56ecc59149342ad7ccd9d596b467, type: 2}
-  seed: -815122.1
+  seed: -722367.5
+  colors:
+  - {r: 0.32694018, g: 0.8773585, b: 0.48090795, a: 1}
+  - {r: 0.40606087, g: 0.6886792, b: 0.40606087, a: 1}
+  - {r: 0.9450981, g: 0.8862746, b: 0.7372549, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0.3504274, a: 1}
+  - {r: 0.9019608, g: 0.7685401, b: 0.5019608, a: 1}
+  - {r: 0.47267708, g: 0.65081614, b: 0.8867924, a: 1}
+  water: {r: 0.20000002, g: 0.5019608, b: 0.90196085, a: 1}
+  water_shallow: {r: 0.3927999, g: 0.6174741, b: 0.9150943, a: 1}
+  beach: {r: 0.9450981, g: 0.8862746, b: 0.7372549, a: 1}
 --- !u!114 &1007638346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3832,6 +3845,7 @@ MonoBehaviour:
   knifeStart: {fileID: 1548968148}
   weapons: {fileID: 561793919}
   entities: {fileID: 561002594}
+  debugSpode: 1
 --- !u!114 &1422633262
 MonoBehaviour:
   m_ObjectHideFlags: 0

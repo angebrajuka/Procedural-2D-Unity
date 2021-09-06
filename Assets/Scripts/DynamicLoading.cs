@@ -36,7 +36,7 @@ public class DynamicLoading : MonoBehaviour
         loadedChunks = new Dictionary<(int, int), GameObject>();
         validChunks = new BitArray(mapSize.x*mapSize.y);
 
-        TextAsset validChunksTxt = (TextAsset)Resources.Load("ValidChunks");
+        TextAsset validChunksTxt = (TextAsset)Resources.Load("Text/ValidChunks");
         string[] validChunksTxtArr = validChunksTxt.text.Split(';');
 
         foreach(var chunk in validChunksTxtArr)

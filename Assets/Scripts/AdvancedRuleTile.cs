@@ -19,6 +19,7 @@ public class AdvancedRuleTile : RuleTile<AdvancedRuleTile.Neighbor>
         public const int Three = 6;
         public const int Four = 7;
         public const int Any = 8;
+        public const int NotNull = 9;
     }
 
     public override bool RuleMatch(int neighbor, TileBase tile)
@@ -37,6 +38,8 @@ public class AdvancedRuleTile : RuleTile<AdvancedRuleTile.Neighbor>
             return tile == connectingTiles[neighbor-Neighbor.Zero];
         case Neighbor.Any:
             return any.Contains(tile);
+        case Neighbor.NotNull:
+            return tile != null;
         }
         return base.RuleMatch(neighbor, tile);
     }

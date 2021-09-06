@@ -60,4 +60,9 @@ public class Math
     {
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
     }
+
+    public static bool Ish(float value1, float value2, float range=0.05f)
+    {
+        return Mathf.Abs(value1-value2) < range;
+    }
 }

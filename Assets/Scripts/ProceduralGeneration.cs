@@ -2,10 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+// using UnityEngine.JSONSerializeModule;
 
-public class Biome
+[System.Serializable]
+public class BiomeJson
 {
-    
+    public string biome_name;
+    public string tile_name;
+    public int[] map_color;
+    public string[] decorations;
+}
+
+[System.Serializable]
+public class BiomesJson
+{
+    public BiomeJson[] biomes;
+}
+
+public struct Biome
+{
+    public TileBase tile;
+    public GameObject[] decorations;
+
+    public Biome(BiomeJson json)
+    {
+        tile = ProceduralGeneration.LoadTile(json.tile_name);
+        decorations = new GameObject[json.decorations.Length];
+        for(int i=0; i<decorations.Length; i++)
+        {
+            decorations[i] = Resources.Load<GameObject>("Prefabs/"+json.decorations[i]);
+        }
+    }
 }
 
 public class ProceduralGeneration : MonoBehaviour
@@ -19,7 +46,7 @@ public class ProceduralGeneration : MonoBehaviour
     private Vector2Int currPos=Vector2Int.zero;
     private Vector2Int prevPos;
     public const int chunkSize=50;
-    public const int mapRadius=10;
+    public const int mapRadius=16;
     public const int mapDiameter=mapRadius*2;
     public static readonly Vector2Int center = Vector2Int.one*mapRadius*chunkSize;
     public static Dictionary<(int x, int y), GameObject> loadedChunks;
@@ -27,29 +54,52 @@ public class ProceduralGeneration : MonoBehaviour
     public int renderDistance;
     public static bool reset=true;
 
-    public static TileBase[] tiles_land;
+    public static Biome[] biomes;
+    public static int tex_map_width=100;
+    public static byte[,] rain_temp_map;
     public static TileBase tile_sand;
     public static TileBase tile_water;
     public static TileBase tile_water_shallow;
 
     public static float seed_main; // determines land/water
-    public static float seed_temperature, seed_rainfall; // used for biome decision making
-    public static float seed_decorations;
+    public static float seed_temp, seed_rain; // used for biome decision making
+    public static float seed_dcor;
+
+    public static TileBase LoadTile(string name)
+    {
+        return Resources.Load<TileBase>("Tiles/"+name);
+    }
 
     public void Init(float seed)
     {
         instance = this;
 
-        UnityEngine.Object[] objTiles = Resources.LoadAll("Tiles/Ground/Land", typeof(TileBase));
-        tiles_land = new TileBase[objTiles.Length];
-        for(int i=0; i<objTiles.Length; i++)
-        {
-            tiles_land[i] = (TileBase)objTiles[i];
-        }
-        tile_water = (TileBase)Resources.Load("Tiles/Ground/Water/water", typeof(TileBase));
-        tile_water_shallow = (TileBase)Resources.Load("Tiles/Ground/Water/water_shallow", typeof(TileBase));
-        tile_sand = (TileBase)Resources.Load("Tiles/Ground/Land/sand", typeof(TileBase));
+        tile_water = LoadTile("water");
+        tile_water_shallow = LoadTile("water_shallow");
+        tile_sand = LoadTile("sand");
 
+        var rain_temp_map_tex = Resources.Load<Texture2D>("BiomeData/rain_temp_map");
+
+        var biomesJson = JsonUtility.FromJson<BiomesJson>(Resources.Load<TextAsset>("BiomeData/biomes").text).biomes;
+
+        rain_temp_map = new byte[tex_map_width,tex_map_width];
+        biomes = new Biome[biomesJson.Length];
+        for(int i=0; i<biomes.Length; i++)
+        {
+            biomes[i] = new Biome(biomesJson[i]);
+            for(int x=0; x<tex_map_width; x++)
+            {
+                for(int y=0; y<tex_map_width; y++)
+                {
+                    Color c = rain_temp_map_tex.GetPixel(x, y);
+                    int[] arr = biomesJson[i].map_color;
+                    if(Math.Ish(c.r, arr[0]/255f) && Math.Ish(c.g, arr[1]/255f) && Math.Ish(c.b, arr[2]/255f))
+                    {
+                        rain_temp_map[x,y] = (byte)i;
+                    }
+                }
+            }
+        }
 
         loadedChunks = new Dictionary<(int, int), GameObject>();
         disabledChunks = new LinkedList<GameObject>();
@@ -65,9 +115,9 @@ public class ProceduralGeneration : MonoBehaviour
     public static void SetSeed(float seed)
     {
         seed_main = seed;
-        seed_temperature = seed_main+530128.3585825032f; // random values have no meaning, just getting a different area in the perlin noise
-        seed_rainfall = seed_main+632571.5362583f; // random values have no meaning, just getting a different area in the perlin noise
-        seed_decorations = seed_main+471282.93252735085f; // random values have no meaning, just getting a different area in the perlin noise
+        seed_temp = seed_main+530128.3585825032f; // random values have no meaning, just getting a different area in the perlin noise
+        seed_rain = seed_main+632571.5362583f; // random values have no meaning, just getting a different area in the perlin noise
+        seed_dcor = seed_main+471282.93252735085f; // random values have no meaning, just getting a different area in the perlin noise
     }
 
     void LoadAll()

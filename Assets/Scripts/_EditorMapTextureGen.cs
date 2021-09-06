@@ -7,24 +7,31 @@ using UnityEditor;
 
 public class _EditorMapTextureGen : MonoBehaviour
 {
+    public ProceduralGeneration proceduralGeneration;
     public Texture2D texture;
     public float seed;
 
+    public Color[] colors;
+    public Color water;
+    public Color water_shallow;
+    public Color beach;
+
     public void Generate()
     {
-        Color land = new Color(0.5f, 0.9f, 0.5f);
-        Color water = new Color(0.2f, 0.5f, 0.9f);
+        proceduralGeneration.Init(seed);
 
-        ProceduralGeneration.SetSeed(seed);
+        Color[] beachColors = new Color[]{water, water_shallow, beach};
 
         var width = ProceduralGeneration.mapDiameter*ProceduralGeneration.chunkSize;
         texture = new Texture2D(width, width);
 
-        for(int x=0; x<width; x++)
+        Vector2Int pos = new Vector2Int(0, 0);
+        for(pos.x=0; pos.x<width; pos.x++)
         {
-            for(int y=0; y<width; y++)
+            for(pos.y=0; pos.y<width; pos.y++)
             {
-                texture.SetPixel(x, y, ProceduralChunk.PerlinMain(new Vector2Int(x, y)) == 5 ? land : water);
+                int val = ProceduralChunk.PerlinMain(pos);
+                texture.SetPixel(pos.x, pos.y, val == 3 ? colors[ProceduralChunk.PerlinBiome(pos)] : beachColors[val]);
             }
         }
         texture.Apply();

@@ -27,12 +27,12 @@ public class ProceduralChunk : MonoBehaviour
         tilePos = new Vector3Int(-1, 0, 0);
     }
 
+    const int perlinOffset = 5429; // prevents mirroring
 
     // returns 0 for water, 1 for shallow water, 2 for sand, 3 for biome gen
     public static int PerlinMain(Vector2Int pos)
     {
         const float perlinScale = 0.01f;
-        const int perlinOffset = 5429; // prevents mirroring
         float perlinVal = Mathf.PerlinNoise((ProceduralGeneration.seed_main + pos.x + perlinOffset)*perlinScale, (ProceduralGeneration.seed_main + pos.y + perlinOffset)*perlinScale); // 0 to 1
         perlinVal = Math.Remap(perlinVal, 0, 1, 0.3f, 1);
         float gradientVal = 1-Vector2Int.Distance(pos, ProceduralGeneration.center)/(ProceduralGeneration.chunkSize*ProceduralGeneration.mapRadius); // 1 in center, 0 at edge of map
@@ -48,20 +48,32 @@ public class ProceduralChunk : MonoBehaviour
         return val > landVal ? 3 : val > sandVal ? 2 : val > shallowWaterVal ? 1 : 0;//(int)Mathf.Round(Math.Remap(val, sandVal, landVal, 0, 4)) : val > shallowWaterVal ? (int)Mathf.Round(Math.Remap(val, shallowWaterVal, sandVal, )) : 0;
     }
 
-    public static TileBase PerlinBiome(Vector2Int pos)
+    public static int PerlinBiome(Vector2Int pos)
     {
-        return ProceduralGeneration.tiles_land[1];
+        const float perlinScaleRain = 0.003f;
+        const float perlinScaleTemp = 0.003f;
+
+        float perlinValRain = Mathf.PerlinNoise((ProceduralGeneration.seed_rain + pos.x + perlinOffset)*perlinScaleRain, (ProceduralGeneration.seed_rain + pos.y + perlinOffset)*perlinScaleRain);
+        float perlinValTemp = Mathf.PerlinNoise((ProceduralGeneration.seed_temp + pos.x + perlinOffset)*perlinScaleTemp, (ProceduralGeneration.seed_temp + pos.y + perlinOffset)*perlinScaleTemp);
+
+        perlinValRain = Mathf.Clamp(Mathf.Round(perlinValRain * ProceduralGeneration.tex_map_width), 0, ProceduralGeneration.tex_map_width-1);
+        perlinValTemp = Mathf.Clamp(Mathf.Round(perlinValTemp * ProceduralGeneration.tex_map_width), 0, ProceduralGeneration.tex_map_width-1);
+
+        // if(Random.value < 0.05f) Debug.Log(perlinValRain + "," + perlinValTemp);
+
+        return ProceduralGeneration.rain_temp_map[(int)perlinValTemp, (int)perlinValRain];
     }
 
+    Vector2Int pos = new Vector2Int(0, 0);
     void Update()
     {
         int i=0;
         for(tilePos.y=-1; tilePos.y<=DynamicLoading.chunkSize; tilePos.y++, i++)
         {
             positionArray[i] = tilePos;
-            var pos = new Vector2Int((int)transform.localPosition.x+tilePos.x, (int)transform.localPosition.y+tilePos.y);
+            pos.Set((int)transform.localPosition.x+tilePos.x, (int)transform.localPosition.y+tilePos.y);
             int perlinMain = PerlinMain(pos);
-            tileArray[i] = perlinMain == 3 ? PerlinBiome(pos) : tiles[perlinMain];
+            tileArray[i] = perlinMain == 3 ? ProceduralGeneration.biomes[PerlinBiome(pos)].tile : tiles[perlinMain];
         }
         m_tilemap.SetTiles(positionArray, tileArray);
         tilePos.x++;

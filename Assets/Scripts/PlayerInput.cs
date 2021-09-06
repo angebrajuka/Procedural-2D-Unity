@@ -232,6 +232,6 @@ public class PlayerInput : MonoBehaviour
 
     void FixedUpdate()
     {
-        PlayerStats.rigidbody.AddForce(input_move * (PlayerStats.sprinting ? PlayerStats.k_SPRINT_MULTIPLIER : (PlayerStats.flashlight ? PlayerStats.k_FLASHLIGHT_MULTIPLIER : 1)) * PlayerStats.k_RUN_ACCELL);
+        PlayerStats.rigidbody.AddForce(input_move * (PlayerStats.sprinting ? PlayerStats.k_SPRINT_MULTIPLIER : (PlayerStats.flashlight ? PlayerStats.k_FLASHLIGHT_MULTIPLIER : 1)) * PlayerStats.k_RUN_ACCELL * PlayerStats.instance.debugSpode);
     }
 }

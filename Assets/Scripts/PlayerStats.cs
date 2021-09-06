@@ -10,6 +10,7 @@ public class PlayerStats : MonoBehaviour
     public Transform knifeStart;
     public Transform weapons;
     public Transform entities;
+    public float debugSpode;
 
     // components
     public static PlayerStats instance;
