@@ -45,7 +45,7 @@ public class ProceduralChunk : MonoBehaviour
         const float shallowWaterVal = 0.48f;
 
         float val = (perlinVal+gradientVal)/2-fineNoise;
-        return val > landVal ? 3 : val > sandVal ? 2 : val > shallowWaterVal ? 1 : 0;//(int)Mathf.Round(Math.Remap(val, sandVal, landVal, 0, 4)) : val > shallowWaterVal ? (int)Mathf.Round(Math.Remap(val, shallowWaterVal, sandVal, )) : 0;
+        return val > landVal ? 3 : val > sandVal ? 2 : val > shallowWaterVal ? 1 : 0;
     }
 
     public static int PerlinBiome(Vector2Int pos)
@@ -56,10 +56,14 @@ public class ProceduralChunk : MonoBehaviour
         float perlinValRain = Mathf.PerlinNoise((ProceduralGeneration.seed_rain + pos.x + perlinOffset)*perlinScaleRain, (ProceduralGeneration.seed_rain + pos.y + perlinOffset)*perlinScaleRain);
         float perlinValTemp = Mathf.PerlinNoise((ProceduralGeneration.seed_temp + pos.x + perlinOffset)*perlinScaleTemp, (ProceduralGeneration.seed_temp + pos.y + perlinOffset)*perlinScaleTemp);
 
-        perlinValRain = Mathf.Clamp(Mathf.Round(perlinValRain * ProceduralGeneration.tex_map_width), 0, ProceduralGeneration.tex_map_width-1);
-        perlinValTemp = Mathf.Clamp(Mathf.Round(perlinValTemp * ProceduralGeneration.tex_map_width), 0, ProceduralGeneration.tex_map_width-1);
+        float perlinScaleFine = 0.1f;
+        float fineNoise = Mathf.PerlinNoise((ProceduralGeneration.seed_main + pos.x + perlinOffset)*perlinScaleFine, (ProceduralGeneration.seed_main + pos.y + perlinOffset)*perlinScaleFine);
+        fineNoise = Math.Remap(fineNoise, 0, 1, 0, 0.05f);
 
-        // if(Random.value < 0.05f) Debug.Log(perlinValRain + "," + perlinValTemp);
+        perlinValTemp -= fineNoise;
+        perlinValTemp = Mathf.Clamp(Mathf.Round(perlinValTemp * ProceduralGeneration.tex_map_width), 0, ProceduralGeneration.tex_map_width-1);
+        perlinValRain -= fineNoise;
+        perlinValRain = Mathf.Clamp(Mathf.Round(perlinValRain * ProceduralGeneration.tex_map_width), 0, perlinValTemp);
 
         return ProceduralGeneration.rain_temp_map[(int)perlinValTemp, (int)perlinValRain];
     }
