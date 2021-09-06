@@ -52,6 +52,8 @@ public class MenuHandler
         mainMenuObject.SetActive(false);
         gameWorldObject.SetActive(true);
         PlayerStats.instance.Reset();
+        ProceduralGeneration.SetSeed(Init.instance.setSeed ? Init.instance.seed : ProceduralGeneration.RandomSeed());
+        ProceduralGeneration.instance.GenerateMap();
         PlayerStats.loadingFirstChunks = true;
     }
 

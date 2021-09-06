@@ -718,7 +718,7 @@ ScriptsOnlyBuild:
     className: Chunk
   - hash:
       serializedVersion: 2
-      Hash: e9676c265d8df7a29aed27671df02c7e
+      Hash: b5ebae0514bea8fd03f049e8d8f52a81
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ProceduralGeneration
@@ -1090,7 +1090,7 @@ ScriptsOnlyBuild:
     className: PlayerTarget
   - hash:
       serializedVersion: 2
-      Hash: 501f75d36bc59b03667d14e10f18cab7
+      Hash: 2d4839cc5493d688c409b6b7ffcf0d29
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerStats
@@ -1276,7 +1276,7 @@ ScriptsOnlyBuild:
     className: UIFoldout
   - hash:
       serializedVersion: 2
-      Hash: 42220f85c96965ce98f068f3ef4a5849
+      Hash: 5c1af75a6e5c418c97070e9d1d780732
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: _EditorMapTextureGen

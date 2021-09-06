@@ -24,6 +24,6 @@ public class MapTextureGen : Editor
             script.Generate();
         }
 
-        EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), script.texture, null, ScaleMode.ScaleToFit);
+        if(script.texture != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), script.texture, null, ScaleMode.ScaleToFit);
     }
 }

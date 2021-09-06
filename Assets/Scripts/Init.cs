@@ -7,6 +7,8 @@ using UnityEngine.Audio;
 
 public class Init : MonoBehaviour
 {
+    public static Init instance;
+
     // hierarchy
     public AudioManager audioManager;
     public MusicManager musicManager;
@@ -33,6 +35,8 @@ public class Init : MonoBehaviour
     
     void Start()
     {
+        instance = this;
+
         if(!init)
         {
             init = true;
@@ -49,7 +53,7 @@ public class Init : MonoBehaviour
             dynamicLoading.Init();
             fadeTransition.Init();
             playerStats.Init();
-            proceduralGeneration.Init(setSeed ? seed : ProceduralGeneration.RandomSeed());
+            proceduralGeneration.Init();
             PlayerInput.LoadKeybinds();
 
             MenuHandler.mainMenuObject = mainMenuObject;

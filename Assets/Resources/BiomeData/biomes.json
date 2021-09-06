@@ -3,49 +3,49 @@
         {
             "biome_name": "plains",
             "tile_name": "grass",
-            "map_color": [255, 97, 97],
+            "rain_temp_map_color": [255, 97, 97],
             "decorations": ["decor_grass"]
         },
         {
             "biome_name": "forest",
             "tile_name": "grass",
-            "map_color": [191, 64, 255],
+            "rain_temp_map_color": [191, 64, 255],
             "decorations": []
         },
         {
             "biome_name": "desert",
             "tile_name": "sand",
-            "map_color": [255, 0, 0],
+            "rain_temp_map_color": [255, 0, 0],
             "decorations": []
         },
         {
             "biome_name": "taiga",
             "tile_name": "snow",
-            "map_color": [255, 128, 255],
+            "rain_temp_map_color": [255, 128, 255],
             "decorations": []
         },
         {
             "biome_name": "tundra",
             "tile_name": "snow",
-            "map_color": [255, 191, 212],
+            "rain_temp_map_color": [255, 191, 212],
             "decorations": []
         },
         {
             "biome_name": "rainforest",
             "tile_name": "grass",
-            "map_color": [0, 0, 255],
+            "rain_temp_map_color": [0, 0, 255],
             "decorations": []
         },
         {
             "biome_name": "savanna",
             "tile_name": "grass",
-            "map_color": [255, 0, 170],
+            "rain_temp_map_color": [255, 0, 170],
             "decorations": []
         },
         {
             "biome_name": "swamp",
             "tile_name": "water_shallow",
-            "map_color": [64, 64, 255],
+            "rain_temp_map_color": [64, 64, 255],
             "decorations": []
         }
     ]
