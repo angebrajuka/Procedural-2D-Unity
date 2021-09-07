@@ -4,49 +4,57 @@
             "biome_name": "plains",
             "tile_name": "grass",
             "rain_temp_map_color": [255, 97, 97],
-            "decorations": ["decor_grass"]
+            "decorations": ["decor_grass"],
+            "decorationChances": [0.05]
         },
         {
             "biome_name": "forest",
             "tile_name": "grass",
             "rain_temp_map_color": [191, 64, 255],
-            "decorations": []
+            "decorations": [],
+            "decorationChances": []
         },
         {
             "biome_name": "desert",
             "tile_name": "sand",
             "rain_temp_map_color": [255, 0, 0],
-            "decorations": []
+            "decorations": [],
+            "decorationChances": []
         },
         {
             "biome_name": "taiga",
             "tile_name": "snow",
             "rain_temp_map_color": [255, 128, 255],
-            "decorations": []
+            "decorations": [],
+            "decorationChances": []
         },
         {
             "biome_name": "tundra",
             "tile_name": "snow",
             "rain_temp_map_color": [255, 191, 212],
-            "decorations": []
+            "decorations": [],
+            "decorationChances": []
         },
         {
             "biome_name": "rainforest",
             "tile_name": "grass",
             "rain_temp_map_color": [0, 0, 255],
-            "decorations": []
+            "decorations": [],
+            "decorationChances": []
         },
         {
             "biome_name": "savanna",
             "tile_name": "grass",
             "rain_temp_map_color": [255, 0, 170],
-            "decorations": []
+            "decorations": [],
+            "decorationChances": []
         },
         {
             "biome_name": "swamp",
             "tile_name": "water_shallow",
             "rain_temp_map_color": [64, 64, 255],
-            "decorations": []
+            "decorations": [],
+            "decorationChances": []
         }
     ]
 }

@@ -24,6 +24,7 @@ public class MapTextureGen : Editor
             script.Generate();
         }
 
-        if(script.texture != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), script.texture, null, ScaleMode.ScaleToFit);
+        if(script.textureBiome != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), script.textureBiome, null, ScaleMode.ScaleToFit);
+        if(script.textureDecor != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), script.textureDecor, null, ScaleMode.ScaleToFit);
     }
 }
