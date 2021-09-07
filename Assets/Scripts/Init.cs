@@ -20,7 +20,6 @@ public class Init : MonoBehaviour
     public DevConsole devConsole;
     public DaylightCycle daylightCycle;
     public DynamicEnemySpawning dynamicEnemySpawning;
-    public DynamicLoading dynamicLoading;
     public ProceduralGeneration proceduralGeneration;
     public FadeTransition fadeTransition;
 
@@ -50,7 +49,6 @@ public class Init : MonoBehaviour
             devConsole.Init();
             daylightCycle.Init();
             dynamicEnemySpawning.Init();
-            dynamicLoading.Init();
             fadeTransition.Init();
             playerStats.Init();
             proceduralGeneration.Init();

@@ -15,12 +15,10 @@ ScriptsOnlyBuild:
     - ButtonSave
     - ButtonSaveAndQuit
     - ButtonSounds
-    - Chunk
     - DaylightCycle
     - DestroyParticleSystem
     - DevConsole
     - DynamicEnemySpawning
-    - DynamicLoading
     - EnemyObject
     - Explosion
     - FadeTransition
@@ -49,7 +47,6 @@ ScriptsOnlyBuild:
     - ProceduralChunk
     - ProceduralGeneration
     - Target
-    - _EditorChunkLoading
     - _EditorMapTextureGen
     - _EditorTextureGen
     - _EditorWaterGen
@@ -61,6 +58,7 @@ ScriptsOnlyBuild:
     Unity.2D.IK.Runtime.dll:
     - UnityEditor.U2D.IK.IKEditorManagerHelper
     Unity.2D.Tilemap.Editor.dll:
+    - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
     - UnityEditor.Tilemaps.GridPalettes
@@ -68,6 +66,14 @@ ScriptsOnlyBuild:
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
     - UnityEditor.Tilemaps.TilemapPrefabStageHelper
+    Unity.2D.Tilemap.Extras.Editor.dll:
+    - UnityEditor.Tilemaps.CoordinateBrush
+    - UnityEditor.Tilemaps.GameObjectBrush
+    - UnityEditor.Tilemaps.GroupBrush
+    - UnityEditor.Tilemaps.LineBrush
+    - UnityEditor.Tilemaps.RandomBrush
+    - UnityEditor.Tilemaps.TintBrush
+    - UnityEditor.Tilemaps.TintBrushSmooth
     Unity.RenderPipelines.Core.Runtime.dll:
     - UnityEngine.Rendering.UI.DebugUIHandlerBitField
     - UnityEngine.Rendering.UI.DebugUIHandlerButton
@@ -220,8 +226,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2882}
     - Class: 114
-      Script: {instanceID: 2970}
-    - Class: 114
       Script: {instanceID: 2978}
     - Class: 114
       Script: {instanceID: 3020}
@@ -263,8 +267,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 4078}
     - Class: 114
       Script: {instanceID: 4130}
-    - Class: 114
-      Script: {instanceID: 4164}
     - Class: 114
       Script: {instanceID: 4222}
     - Class: 114
@@ -365,8 +367,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 6976}
     - Class: 114
       Script: {instanceID: 7048}
-    - Class: 114
-      Script: {instanceID: 7182}
     - Class: 114
       Script: {instanceID: 7306}
     - Class: 114
@@ -610,7 +610,7 @@ ScriptsOnlyBuild:
     className: ItemPickup
   - hash:
       serializedVersion: 2
-      Hash: 58f3ce39ee726ccdd0c9fa76052c1999
+      Hash: 55b1e3e576fcce41839b5f2c864cde25
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ProceduralChunk
@@ -718,7 +718,7 @@ ScriptsOnlyBuild:
     className: Chunk
   - hash:
       serializedVersion: 2
-      Hash: b5ebae0514bea8fd03f049e8d8f52a81
+      Hash: e9676c265d8df7a29aed27671df02c7e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ProceduralGeneration
@@ -1276,7 +1276,7 @@ ScriptsOnlyBuild:
     className: UIFoldout
   - hash:
       serializedVersion: 2
-      Hash: 5c1af75a6e5c418c97070e9d1d780732
+      Hash: ad04b0bac42344dba735f48fbbc3a58a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: _EditorMapTextureGen
@@ -1630,7 +1630,7 @@ ScriptsOnlyBuild:
     className: ButtonSounds
   - hash:
       serializedVersion: 2
-      Hash: 4311f69b49c35afa874d270a985f62d4
+      Hash: d862216d463d1d5f84efb14b14423353
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Init

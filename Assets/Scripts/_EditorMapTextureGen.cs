@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using static ProceduralGeneration;
 
 public class _EditorMapTextureGen : MonoBehaviour
 {
@@ -34,33 +35,31 @@ public class _EditorMapTextureGen : MonoBehaviour
     public void Generate()
     {
         proceduralGeneration.Init();
-        ProceduralGeneration.SetSeed(seed);
+        SetSeed(seed);
         proceduralGeneration.GenerateMap();
         
-        var colors = new Color32[ProceduralGeneration.tiles.Length];
-        for(int i=0; i<ProceduralGeneration.tiles.Length; i++)
+        var colors = new Color32[tiles.Length];
+        for(int i=0; i<tiles.Length; i++)
         {
-            colors[i] = AverageColorFromTexture(ProceduralGeneration.tiles[i].m_DefaultSprite.texture);
+            colors[i] = AverageColorFromTexture(tiles[i].m_DefaultSprite.texture);
         }
         
-        textureBiome = new Texture2D(proceduralGeneration.mapTexture_biome.width, proceduralGeneration.mapTexture_biome.height);
+        textureBiome = new Texture2D(mapDiameter*chunkSize, mapDiameter*chunkSize);
         for(int x=0; x<textureBiome.width; x++)
         {
             for(int y=0; y<textureBiome.height; y++)
             {
-                Color32 c = proceduralGeneration.mapTexture_biome.GetPixel(x, y);
-                textureBiome.SetPixel(x, y, colors[c.r]);
+                textureBiome.SetPixel(x, y, colors[mapTexture_biome[x, y]]);
             }
         }
         textureBiome.Apply();
         
-        textureDecor = new Texture2D(proceduralGeneration.mapTexture_decor.width, proceduralGeneration.mapTexture_decor.height);
+        textureDecor = new Texture2D(mapDiameter*chunkSize, mapDiameter*chunkSize);
         for(int x=0; x<textureBiome.width; x++)
         {
             for(int y=0; y<textureBiome.height; y++)
             {
-                Color32 c = proceduralGeneration.mapTexture_decor.GetPixel(x, y);
-                textureDecor.SetPixel(x, y, c.r == 0 ? Color.white : Color.black);
+                textureDecor.SetPixel(x, y, mapTexture_decor[x, y] == 0 ? Color.white : Color.black);
             }
         }
         textureDecor.Apply();
