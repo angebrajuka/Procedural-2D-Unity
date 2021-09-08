@@ -54,6 +54,8 @@ public class MenuHandler
         PlayerStats.instance.Reset();
         ProceduralGeneration.SetSeed(Init.instance.setSeed ? Init.instance.seed : ProceduralGeneration.RandomSeed());
         ProceduralGeneration.instance.GenerateMap();
+        ProceduralGeneration.GenerateTexture(100);
+        PlayerStats.hud.SetMapImage(ProceduralGeneration.textureBiome);
         PlayerStats.loadingFirstChunks = true;
     }
 

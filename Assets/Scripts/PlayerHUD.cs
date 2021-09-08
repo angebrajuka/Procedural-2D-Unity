@@ -16,20 +16,28 @@ new public Transform transform;
     public Sprite[] ammoImages;
     // public Text smallBulletsTxt, bigBulletsTxt, shellsTxt, energyTxt;
     public Slider bar_health;
-    public Image bar_health_fillRect;
+    // public Image bar_health_fillRect;
     public Slider bar_energy;
+    public Image minimapImage;
+    Sprite mapImageSprite;
     public RectTransform minimap;
     public RectTransform minimapPlayer;
 
     // components
     Target m_target;
 
-    void Start()
+    public void Init()
     {
         m_target = GetComponent<Target>();
-        bar_health_fillRect = bar_health.fillRect.GetComponent<Image>();
+        // bar_health_fillRect = bar_health.fillRect.GetComponent<Image>();
         UpdateAmmo();
         UpdateHealth();
+    }
+
+    public void SetMapImage(Texture2D texture)
+    {
+        mapImageSprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 122.0f, 1, SpriteMeshType.FullRect, new Vector4(0, 0, texture.width, texture.height), false);
+        minimapImage.sprite = mapImageSprite;
     }
 
     public void UpdateHotbar()

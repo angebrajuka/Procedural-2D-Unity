@@ -25,7 +25,7 @@
             "biome_name": "plains",
             "tile_name": "grass_plains",
             "rain_temp_map_color": [255, 97, 97],
-            "decorations": ["decor_grass", "decor_flower_orange", "decor_flower_violet", "decor_flower_blue"],
+            "decorations": ["decor_grass", "decor_flower_orange", "decor_flower_violet", "decor_flower_red"],
             "decorationChances": [0.05, 0.01, 0.01, 0.01]
         },
         {
@@ -53,7 +53,7 @@
             "biome_name": "tundra",
             "tile_name": "snow",
             "rain_temp_map_color": [255, 191, 212],
-            "decorations": ["decor_grass", "decor_flower_red"],
+            "decorations": ["decor_grass", "decor_flower_blue"],
             "decorationChances": [0.05, 0.02]
         },
         {

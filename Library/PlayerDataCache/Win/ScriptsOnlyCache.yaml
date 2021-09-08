@@ -58,7 +58,6 @@ ScriptsOnlyBuild:
     Unity.2D.IK.Runtime.dll:
     - UnityEditor.U2D.IK.IKEditorManagerHelper
     Unity.2D.Tilemap.Editor.dll:
-    - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
     - UnityEditor.Tilemaps.GridPalettes
@@ -66,14 +65,6 @@ ScriptsOnlyBuild:
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
     - UnityEditor.Tilemaps.TilemapPrefabStageHelper
-    Unity.2D.Tilemap.Extras.Editor.dll:
-    - UnityEditor.Tilemaps.CoordinateBrush
-    - UnityEditor.Tilemaps.GameObjectBrush
-    - UnityEditor.Tilemaps.GroupBrush
-    - UnityEditor.Tilemaps.LineBrush
-    - UnityEditor.Tilemaps.RandomBrush
-    - UnityEditor.Tilemaps.TintBrush
-    - UnityEditor.Tilemaps.TintBrushSmooth
     Unity.RenderPipelines.Core.Runtime.dll:
     - UnityEngine.Rendering.UI.DebugUIHandlerBitField
     - UnityEngine.Rendering.UI.DebugUIHandlerButton
@@ -316,8 +307,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 5668}
     - Class: 114
-      Script: {instanceID: 5744}
-    - Class: 114
       Script: {instanceID: 5786}
     - Class: 114
       Script: {instanceID: 5812}
@@ -389,6 +378,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 7844}
     - Class: 114
       Script: {instanceID: 8086}
+    - Class: 114
+      Script: {instanceID: 39742}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -916,7 +907,7 @@ ScriptsOnlyBuild:
     className: ShadowsMidtonesHighlights
   - hash:
       serializedVersion: 2
-      Hash: 923d2feb169edc7fc8c2ba37339b967f
+      Hash: 03306de4ae9845244b9c065770c5de8c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerHUD
@@ -1274,12 +1265,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Core.Runtime.dll
     namespaceName: UnityEngine.Rendering.UI
     className: UIFoldout
-  - hash:
-      serializedVersion: 2
-      Hash: ad04b0bac42344dba735f48fbbc3a58a
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: _EditorMapTextureGen
   - hash:
       serializedVersion: 2
       Hash: a1aa98c78061c6f03a8c124cda576e67
@@ -1760,6 +1745,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AudioSettings
+  - hash:
+      serializedVersion: 2
+      Hash: c264f98241e11a23a57c3297688c876c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: _EditorMapTextureGen
   platform: 5
   scenePathNames:
   - Assets/Scenes/Scene.unity

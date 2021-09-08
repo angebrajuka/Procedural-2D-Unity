@@ -51,6 +51,7 @@ public class Init : MonoBehaviour
             dynamicEnemySpawning.Init();
             fadeTransition.Init();
             playerStats.Init();
+            PlayerStats.hud.Init();
             proceduralGeneration.Init();
             PlayerInput.LoadKeybinds();
 

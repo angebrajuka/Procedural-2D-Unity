@@ -67,6 +67,9 @@ public class ProceduralGeneration : MonoBehaviour
     public static byte[,] mapTexture_biome;
     public static byte[,] mapTexture_decor;
 
+    public static Texture2D textureBiome;
+    public static Texture2D textureDecor;
+
     public static float seed_main; // determines land/water
     public static float seed_temp, seed_rain; // used for biome decision making
     public static int seed_decor;
@@ -111,6 +114,54 @@ public class ProceduralGeneration : MonoBehaviour
 
         loadedChunks = new Dictionary<(int, int), GameObject>();
         disabledChunks = new LinkedList<GameObject>();
+    }
+
+    static Color32 AverageColorFromTexture(Texture2D tex)
+    {
+        Color32[] texColors = tex.GetPixels32();
+
+        int total = texColors.Length;
+        float r = 0;
+        float g = 0;
+        float b = 0;
+
+        for(int i = 0; i < total; i++)
+        {
+            r += texColors[i].r;
+            g += texColors[i].g;
+            b += texColors[i].b;
+        }
+
+        return new Color32((byte)(r / total) , (byte)(g / total) , (byte)(b / total) , 255);
+    }
+
+    public static void GenerateTexture(int width)
+    {
+        var colors = new Color32[tiles.Length];
+        for(int i=0; i<tiles.Length; i++)
+        {
+            colors[i] = AverageColorFromTexture(tiles[i].m_DefaultSprite.texture);
+        }
+        
+        textureBiome = new Texture2D(width, width);
+        for(int x=0; x<textureBiome.width; x++)
+        {
+            for(int y=0; y<textureBiome.height; y++)
+            {
+                textureBiome.SetPixel(x, y, colors[mapTexture_biome[(int)(((float)x/textureBiome.width)*mapDiameter*chunkSize), (int)(((float)y/textureBiome.height)*mapDiameter*chunkSize)]]);
+            }
+        }
+        textureBiome.Apply();
+        
+        textureDecor = new Texture2D(width, width);
+        for(int x=0; x<textureBiome.width; x++)
+        {
+            for(int y=0; y<textureBiome.height; y++)
+            {
+                textureDecor.SetPixel(x, y, mapTexture_decor[(int)(((float)x/textureDecor.width)*mapDiameter*chunkSize), (int)(((float)y/textureDecor.height)*mapDiameter*chunkSize)] == 0 ? Color.white : Color.black);
+            }
+        }
+        textureDecor.Apply();
     }
 
     const int perlinOffset = 5429; // prevents mirroring
