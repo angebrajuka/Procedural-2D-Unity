@@ -26,6 +26,10 @@ public class EditorMapTextureGen : Editor
             script.proceduralGeneration.GenerateMap();
             ProceduralGeneration.GenerateTexture(script.resolution);
         }
+        if(GUILayout.Button("clear"))
+        {
+            ProceduralGeneration.Clear();
+        }
 
         if(ProceduralGeneration.textureBiome != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), ProceduralGeneration.textureBiome, null, ScaleMode.ScaleToFit);
         if(ProceduralGeneration.textureDecor != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), ProceduralGeneration.textureDecor, null, ScaleMode.ScaleToFit);
