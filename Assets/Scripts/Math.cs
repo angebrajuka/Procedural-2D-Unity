@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Math
+public static class Math
 {
     public static float ROOT_ONE_HALF = 0.70710678118654752440084436210485f;
     
@@ -49,6 +49,16 @@ public class Math
         float dx = pos2.x-pos1.x;
         float dy = pos2.y-pos2.y;
         return dx*dx+dy*dy < distance*distance;
+    }
+
+    public static float Sqr(float x)
+    {
+        return x*x;
+    }
+
+    public static float Dist(float x1, float y1, float x2, float y2)
+    {
+        return Mathf.Sqrt(Sqr(x2-x1)+Sqr(y2-y1));
     }
 
     public static Vector3Int Vec3(Vector2Int vec)

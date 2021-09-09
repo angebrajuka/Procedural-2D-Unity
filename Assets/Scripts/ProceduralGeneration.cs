@@ -8,7 +8,7 @@ public class JsonBiome
 {
     public string biome_name;
     public string tile_name;
-    public int[] rain_temp_map_color;
+    public float avg_rain, avg_temp, rarity;
     public string[] decorations;
     public float[] decorationChances;
 }
@@ -82,7 +82,7 @@ public class ProceduralGeneration : MonoBehaviour
 
     public static RuleTile[] tiles;
     public static Biome[] biomes;
-    public static int tex_map_width=100;
+    public static int rain_temp_map_width=100;
     public static byte[,] rain_temp_map;
 
     public static byte[,] mapTexture_biome;
@@ -136,27 +136,38 @@ public class ProceduralGeneration : MonoBehaviour
 
         tiles = new RuleTile[biomesJson.Length];
 
-        rain_temp_map = new byte[tex_map_width,tex_map_width];
+        
         biomes = new Biome[biomesJson.Length];
-
+        var biomeAvgRains = new float[biomes.Length];
+        var biomeAvgTemps = new float[biomes.Length];
+        var biomeRarities = new float[biomes.Length];
         for(int i=0; i<biomes.Length; i++)
         {
-            tiles[i] = ProceduralGeneration.LoadTile(biomesJson[i].tile_name);
+            tiles[i] = LoadTile(biomesJson[i].tile_name);
             biomes[i] = new Biome(biomesJson[i]);
-            for(int x=0; x<tex_map_width; x++)
+            biomeAvgRains[i] = biomesJson[i].avg_rain;
+            biomeAvgTemps[i] = biomesJson[i].avg_temp;
+            biomeRarities[i] = biomesJson[i].rarity;
+        }
+
+        rain_temp_map = new byte[rain_temp_map_width, rain_temp_map_width];
+        for(int x=0; x<rain_temp_map_width; x++)
+        {
+            for(int y=0; y<rain_temp_map_width; y++)
             {
-                for(int y=0; y<tex_map_width; y++)
+                float closestDist = 1000;
+                int closest=0;
+                float currentDist;
+                for(int i=3; i<biomes.Length; i++)
                 {
-                    Color32 c = rain_temp_map_tex.GetPixel(x, y);
-                    if(biomesJson[i].rain_temp_map_color.Length == 3)
+                    currentDist = Math.Dist(x, y, biomeAvgTemps[i]*rain_temp_map_width, biomeAvgRains[i]*rain_temp_map_width)/biomeRarities[i];
+                    if(currentDist < closestDist)
                     {
-                        int[] arr = biomesJson[i].rain_temp_map_color;
-                        if(c.r == arr[0] && c.g == arr[1] && c.b == arr[2])
-                        {
-                            rain_temp_map[x,y] = (byte)i;
-                        }
+                        closestDist = currentDist;
+                        closest = i;
                     }
                 }
+                rain_temp_map[x,y] = (byte)closest;
             }
         }
 
@@ -218,11 +229,11 @@ public class ProceduralGeneration : MonoBehaviour
     public static byte PerlinMain(Vector2Int pos)
     {
         const float perlinScale = 0.005f;
-        float perlinVal = Mathf.PerlinNoise((ProceduralGeneration.seed_main + pos.x + perlinOffset)*perlinScale, (ProceduralGeneration.seed_main + pos.y + perlinOffset)*perlinScale); // 0 to 1
+        float perlinVal = Mathf.PerlinNoise((seed_main + pos.x + perlinOffset)*perlinScale, (seed_main + pos.y + perlinOffset)*perlinScale); // 0 to 1
         perlinVal = Math.Remap(perlinVal, 0, 1, 0.3f, 1);
-        float gradientVal = 1-Vector2Int.Distance(pos, ProceduralGeneration.center)/(ProceduralGeneration.chunkSize*ProceduralGeneration.mapRadius); // 1 in center, 0 at edge of map
+        float gradientVal = 1-Vector2Int.Distance(pos, center)/(chunkSize*mapRadius); // 1 in center, 0 at edge of map
         float perlinScaleFine = 0.1f;
-        float fineNoise = Mathf.PerlinNoise((ProceduralGeneration.seed_main + pos.x + perlinOffset)*perlinScaleFine, (ProceduralGeneration.seed_main + pos.y + perlinOffset)*perlinScaleFine);
+        float fineNoise = Mathf.PerlinNoise((seed_main + pos.x + perlinOffset)*perlinScaleFine, (seed_main + pos.y + perlinOffset)*perlinScaleFine);
         fineNoise = Math.Remap(fineNoise, 0, 1, 0, 0.05f);
         
         const float landVal = 0.52f;
@@ -238,19 +249,19 @@ public class ProceduralGeneration : MonoBehaviour
         const float perlinScaleRain = 0.003f;
         const float perlinScaleTemp = 0.003f;
 
-        float perlinValRain = Mathf.PerlinNoise((ProceduralGeneration.seed_rain + pos.x + perlinOffset)*perlinScaleRain, (ProceduralGeneration.seed_rain + pos.y + perlinOffset)*perlinScaleRain);
-        float perlinValTemp = Mathf.PerlinNoise((ProceduralGeneration.seed_temp + pos.x + perlinOffset)*perlinScaleTemp, (ProceduralGeneration.seed_temp + pos.y + perlinOffset)*perlinScaleTemp);
+        float perlinValRain = Mathf.PerlinNoise((seed_rain + pos.x + perlinOffset)*perlinScaleRain, (seed_rain + pos.y + perlinOffset)*perlinScaleRain);
+        float perlinValTemp = Mathf.PerlinNoise((seed_temp + pos.x + perlinOffset)*perlinScaleTemp, (seed_temp + pos.y + perlinOffset)*perlinScaleTemp);
 
         float perlinScaleFine = 0.1f;
-        float fineNoise = Mathf.PerlinNoise((ProceduralGeneration.seed_main + pos.x + perlinOffset)*perlinScaleFine, (ProceduralGeneration.seed_main + pos.y + perlinOffset)*perlinScaleFine);
+        float fineNoise = Mathf.PerlinNoise((seed_main + pos.x + perlinOffset)*perlinScaleFine, (seed_main + pos.y + perlinOffset)*perlinScaleFine);
         fineNoise = Math.Remap(fineNoise, 0, 1, 0, 0.05f);
 
         perlinValTemp -= fineNoise;
-        perlinValTemp = Mathf.Clamp(Mathf.Round(perlinValTemp * ProceduralGeneration.tex_map_width), 0, ProceduralGeneration.tex_map_width-1);
+        perlinValTemp = Mathf.Clamp(Mathf.Round(perlinValTemp * rain_temp_map_width), 0, rain_temp_map_width-1);
         perlinValRain -= fineNoise;
         perlinValRain = Mathf.Clamp(Mathf.Round(perlinValRain * perlinValTemp), 0, perlinValTemp);
 
-        return ProceduralGeneration.rain_temp_map[(int)perlinValTemp, (int)perlinValRain];
+        return rain_temp_map[(int)perlinValTemp, (int)perlinValRain];
     }
 
     static Color32 MultiplyColor(Color32 c, int x)
