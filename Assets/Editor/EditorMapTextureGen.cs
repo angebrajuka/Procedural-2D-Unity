@@ -6,14 +6,10 @@ using UnityEditor;
 [CustomEditor(typeof(_EditorMapTextureGen))]
 public class EditorMapTextureGen : Editor
 {
-    // bool randSeed = true;
-
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
         var script = (_EditorMapTextureGen)target;
-
-        // randSeed = EditorGUILayout.Toggle("random seed", randSeed);
 
         if(GUILayout.Button("generate"))
         {

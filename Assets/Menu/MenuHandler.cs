@@ -51,8 +51,7 @@ public class MenuHandler
         currentMenu = null;
         mainMenuObject.SetActive(false);
         gameWorldObject.SetActive(true);
-        PlayerStats.instance.Reset();
-        ProceduralGeneration.SetSeed(Init.instance.setSeed ? Init.instance.seed : ProceduralGeneration.RandomSeed());
+        PlayerStats.instance.Reset(); // if load, set seed should happen in Player reset
         ProceduralGeneration.instance.GenerateMap();
         ProceduralGeneration.GenerateTexture(100);
         PlayerStats.hud.SetMapImage(ProceduralGeneration.textureBiome);

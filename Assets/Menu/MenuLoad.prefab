@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6341277415071333879}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe49baf1fefc85744a42d7cb86e88a19, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bce87c9972103a40a1ce7d0911fd528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  load: 1
   save: 0
+  menuWorldSettings: {fileID: 0}
+  empty: 1
 --- !u!114 &4878156619285448473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22,10 +25,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7675570186498812798}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe49baf1fefc85744a42d7cb86e88a19, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bce87c9972103a40a1ce7d0911fd528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  load: 1
   save: 4
+  menuWorldSettings: {fileID: 0}
+  empty: 1
 --- !u!114 &5575887763165500799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,10 +53,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 9153480309862233448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe49baf1fefc85744a42d7cb86e88a19, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bce87c9972103a40a1ce7d0911fd528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  load: 1
   save: 5
+  menuWorldSettings: {fileID: 0}
+  empty: 1
 --- !u!114 &4556077021198183199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,10 +69,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8677879382044485781}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe49baf1fefc85744a42d7cb86e88a19, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bce87c9972103a40a1ce7d0911fd528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  load: 1
   save: 2
+  menuWorldSettings: {fileID: 0}
+  empty: 1
 --- !u!114 &5145654624906724998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,10 +85,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 925047141454925051}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe49baf1fefc85744a42d7cb86e88a19, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bce87c9972103a40a1ce7d0911fd528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  load: 1
   save: 1
+  menuWorldSettings: {fileID: 0}
+  empty: 1
 --- !u!114 &4613267359611983390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,10 +101,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3660075465298590740}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe49baf1fefc85744a42d7cb86e88a19, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bce87c9972103a40a1ce7d0911fd528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  load: 1
   save: 3
+  menuWorldSettings: {fileID: 0}
+  empty: 1
 --- !u!1001 &1542468006966029228
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -115,7 +133,12 @@ PrefabInstance:
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnButtonPress
+      value: OnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonSlot, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 9040080000987120958, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
@@ -255,7 +278,12 @@ PrefabInstance:
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnButtonPress
+      value: OnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonSlot, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 9040080000987120958, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
@@ -400,7 +428,7 @@ PrefabInstance:
     - target: {fileID: 7433675097898214263, guid: 92751e19e2517164d984a845fe67bcd3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8331057264361955630, guid: 92751e19e2517164d984a845fe67bcd3,
         type: 3}
@@ -557,7 +585,12 @@ PrefabInstance:
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnButtonPress
+      value: OnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonSlot, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 9040080000987120958, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
@@ -697,7 +730,12 @@ PrefabInstance:
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnButtonPress
+      value: OnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonSlot, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 9040080000987120958, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
@@ -837,7 +875,12 @@ PrefabInstance:
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnButtonPress
+      value: OnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonSlot, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 9040080000987120958, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
@@ -977,7 +1020,12 @@ PrefabInstance:
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnButtonPress
+      value: OnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonSlot, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 9040080000987120958, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}

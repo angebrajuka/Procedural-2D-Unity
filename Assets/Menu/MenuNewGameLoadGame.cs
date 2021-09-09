@@ -17,7 +17,7 @@ public class MenuNewGameLoadGame : MonoBehaviour
             if(Save_Load.GetSaveInfo(i, out lastPlayed))
             {
                 text.text += ("    last played: " + lastPlayed.ToString());
-                ButtonLoad load = button.GetComponent<ButtonLoad>();
+                var load = button.GetComponent<ButtonSlot>();
                 if(load != null)
                 {
                     load.empty = false;

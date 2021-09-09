@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [System.Serializable]
-public class BiomeJson
+public class JsonBiome
 {
     public string biome_name;
     public string tile_name;
@@ -16,25 +16,46 @@ public class BiomeJson
 [System.Serializable]
 public class BiomesJson
 {
-    public BiomeJson[] biomes;
+    public JsonBiome[] biomes;
 }
 
 public struct Biome
 {
+    public static Dictionary<string, Vector2[]> s_colliders = new Dictionary<string, Vector2[]>();
+    public static Dictionary<string, int> s_altSortingOrders = new Dictionary<string, int>();
+    public static Dictionary<string, GameObject> s_decorations = new Dictionary<string, GameObject>();
+
     public GameObject[] decorations;
     public float[] decorationThreshholds;
 
-    public Biome(BiomeJson json)
+    public Biome(JsonBiome jsonBiome)
     {
-        decorations = new GameObject[json.decorations.Length];
+        decorations = new GameObject[jsonBiome.decorations.Length];
+        decorationThreshholds = new float[jsonBiome.decorations.Length];
         for(int i=0; i<decorations.Length; i++)
         {
-            decorations[i] = Resources.Load<GameObject>("Decorations/"+json.decorations[i]);
-        }
-        decorationThreshholds = new float[json.decorationChances.Length];
-        for(int i=0; i<decorationThreshholds.Length; i++)
-        {
-            decorationThreshholds[i] = json.decorationChances[i];
+            var name = jsonBiome.decorations[i];
+            if(!s_decorations.ContainsKey(name))
+            {
+                GameObject go = new GameObject(name, typeof(SpriteRenderer));
+                
+                var sr = go.GetComponent<SpriteRenderer>();
+                sr.sprite = Resources.Load<Sprite>("Sprites/Decorations/"+name);
+                sr.sortingOrder = s_altSortingOrders.ContainsKey(name) ? s_altSortingOrders[name] : 1;
+                sr.spriteSortPoint = SpriteSortPoint.Pivot;
+                
+                if(s_colliders.ContainsKey(name))
+                {
+                    var c = go.AddComponent<PolygonCollider2D>();
+                    c.pathCount = 1;
+                    c.SetPath(0, s_colliders[name]);
+                }
+
+                s_decorations.Add(name, go);
+                go.SetActive(false);
+            }
+            decorations[i] = s_decorations[name];
+            decorationThreshholds[i] = jsonBiome.decorationChances[i];
             decorationThreshholds[i] += (i > 0 ? decorationThreshholds[i-1] : 0);
         }
     }
@@ -84,6 +105,33 @@ public class ProceduralGeneration : MonoBehaviour
         instance = this;
 
         var rain_temp_map_tex = Resources.Load<Texture2D>("BiomeData/rain_temp_map");
+        var collidersTxt = Resources.Load<TextAsset>("DecorationData/colliders").text.Split('\n');
+        Biome.s_colliders.Clear();
+        for(int i=0; i<collidersTxt.Length; i++)
+        {
+            var line = collidersTxt[i].Split(':');
+            var pointsTxt = line[1].Split(';');
+            var points = new Vector2[pointsTxt.Length];
+            for(int p=0; p<points.Length; p++)
+            {
+                var point = pointsTxt[p].Split(',');
+                for(int xy=0; xy<2; xy++)
+                {
+                    points[p][xy] = float.Parse(point[xy]);
+                }
+            }
+            Biome.s_colliders.Add(line[0], points);
+        }
+
+        var sortingOrdersTxt = Resources.Load<TextAsset>("DecorationData/altSortingOrders").text.Split('\n');
+        Biome.s_altSortingOrders.Clear();
+        for(int i=0; i<sortingOrdersTxt.Length; i++)
+        {
+            var line = sortingOrdersTxt[i].Split(':');
+            Biome.s_altSortingOrders.Add(line[0], int.Parse(line[1]));
+        }
+
+
         var biomesJson = JsonUtility.FromJson<BiomesJson>(Resources.Load<TextAsset>("BiomeData/biomes").text).biomes;
 
         tiles = new RuleTile[biomesJson.Length];
@@ -182,7 +230,7 @@ public class ProceduralGeneration : MonoBehaviour
         const float shallowWaterVal = 0.48f;
 
         float val = (perlinVal+gradientVal)/2-fineNoise;
-        return (byte)(val > landVal ? 3 : val > sandVal ? 2 : val > shallowWaterVal ? 1 : 0);
+        return (byte)(val > landVal ? PerlinBiome(pos) : val > sandVal ? 2 : val > shallowWaterVal ? 1 : 0);
     }
 
     public static byte PerlinBiome(Vector2Int pos)
@@ -205,12 +253,6 @@ public class ProceduralGeneration : MonoBehaviour
         return ProceduralGeneration.rain_temp_map[(int)perlinValTemp, (int)perlinValRain];
     }
 
-    public static byte Perlin(Vector2Int pos)
-    {
-        byte main = PerlinMain(pos);
-        return main == 3 ? PerlinBiome(pos) : main;
-    }
-
     static Color32 MultiplyColor(Color32 c, int x)
     {
         return new Color32((byte)(c.r*x), (byte)(c.g*x), (byte)(c.b*x), (byte)(c.a*x));
@@ -218,7 +260,7 @@ public class ProceduralGeneration : MonoBehaviour
 
     public static byte MapClamped(byte[,] map, int x, int y)
     {
-        return map[Mathf.Clamp(x, 0, map.Length), Mathf.Clamp(y, 0, map.Length)];
+        return map[Mathf.Clamp(x, 0, map.GetLength(0)-1), Mathf.Clamp(y, 0, map.GetLength(1)-1)];
     }
 
     public void GenerateMap()
@@ -234,7 +276,7 @@ public class ProceduralGeneration : MonoBehaviour
         {
             for(pos.y=0; pos.y<width; pos.y++)
             {
-                byte val = Perlin(pos);
+                byte val = PerlinMain(pos);
                 mapTexture_biome[pos.x, pos.y] = val;
                 mapTexture_decor[pos.x, pos.y] = 0;
                 if(val >= 3)
@@ -267,11 +309,12 @@ public class ProceduralGeneration : MonoBehaviour
 
     public static float RandomSeed()
     {
-        return Random.Range((float)(-1000000), (float)1000000);
+        return Random.Range((float)0, (float)1000000);
     }
 
     public static void SetSeed(float seed)
     {
+        seed = Mathf.Abs(seed);
         seed_main = seed;
         seed_temp = seed_main+530128.3585825032f; // random values have no meaning, just getting a different area in the perlin noise
         seed_rain = seed_main+632571.5362583f; // random values have no meaning, just getting a different area in the perlin noise

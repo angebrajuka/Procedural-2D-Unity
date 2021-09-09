@@ -421,7 +421,12 @@ PrefabInstance:
     - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: OnButtonPress
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151232598971341108, guid: 12d021b4efeb8ca42827bfa064ffe2db,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonChangeMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8493925532410144254, guid: 12d021b4efeb8ca42827bfa064ffe2db,
         type: 3}
