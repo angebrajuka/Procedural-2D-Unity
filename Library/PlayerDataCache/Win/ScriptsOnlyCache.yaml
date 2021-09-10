@@ -543,7 +543,7 @@ ScriptsOnlyBuild:
     className: RenderObjects
   - hash:
       serializedVersion: 2
-      Hash: 5fcf49501124b4c1b53795546c0a9f71
+      Hash: 5631016d34da87ff9d39ca9666d81d70
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: _EditorGetCollider

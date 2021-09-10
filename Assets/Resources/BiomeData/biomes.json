@@ -46,29 +46,29 @@
             "biome_name": "taiga",
             "tile_name": "snow",
             "rain_temp_map_color": [255, 128, 255],
-            "decorations": ["tree_oak"],
-            "decorationChances": [0.02]
+            "decorations": ["tree_pine", "grass", "flower_blue"],
+            "decorationChances": [0.02, 0.02, 0.03]
         },
         {
             "biome_name": "tundra",
             "tile_name": "snow",
             "rain_temp_map_color": [255, 191, 212],
             "decorations": ["grass", "flower_blue"],
-            "decorationChances": [0.05, 0.02]
+            "decorationChances": [0.02, 0.02]
         },
         {
             "biome_name": "rainforest",
             "tile_name": "grass_rainforest",
             "rain_temp_map_color": [0, 0, 255],
-            "decorations": [],
-            "decorationChances": []
+            "decorations": ["tree_rainforest_0", "tree_rainforest_1", "grass", "flower_orange", "flower_red", "bush_0"],
+            "decorationChances": [0.03, 0.04, 0.1, 0.03, 0.03, 0.02]
         },
         {
             "biome_name": "savanna",
             "tile_name": "grass_savanna",
             "rain_temp_map_color": [255, 0, 170],
-            "decorations": [],
-            "decorationChances": []
+            "decorations": ["tree_acacia", "deadbush_0", "deadbush_1", "grass"],
+            "decorationChances": [0.01, 0.007, 0.007, 0.007]
         },
         {
             "biome_name": "swamp",

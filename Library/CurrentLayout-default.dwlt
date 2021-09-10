@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Inspector
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_MinSize: {x: 677, y: 492}
   m_MaxSize: {x: 14001, y: 14042}
   vertical: 0
-  controlID: 64
+  controlID: 8913
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_MinSize: {x: 402, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 69
+  controlID: 8918
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_MinSize: {x: 402, y: 221}
   m_MaxSize: {x: 8002, y: 4021}
   vertical: 0
-  controlID: 70
+  controlID: 8919
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -274,8 +274,8 @@ MonoBehaviour:
     y: 0
     width: 478
     height: 947
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 19}
@@ -350,23 +350,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 1026
-      height: 566
-    m_Scale: {x: 0.5240741, y: 0.5240741}
-    m_Translation: {x: 513, y: 283}
+      width: 1920
+      height: 907
+    m_Scale: {x: 0.83981484, y: 0.83981484}
+    m_Translation: {x: 960, y: 453.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -978.86926
+      x: -1143.1091
       y: -540
-      width: 1957.7385
+      width: 2286.2183
       height: 1080
     m_MinimalGUI: 1
-  m_defaultScale: 0.5240741
-  m_LastWindowPixelSize: {x: 1026, y: 587}
+  m_defaultScale: 0.83981484
+  m_LastWindowPixelSize: {x: 1920, y: 928}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -403,7 +403,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 72d8ffffe6d8fffff0d8fffff8daffff6cdbfffffcdcffff42fbffff
+      m_ExpandedIDs: 1079f0ff8479f0ff147bf0ff889cf1fffc9cf1ff8c9ef1ff42fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -464,9 +464,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.008530051, y: 0.33286703, z: -0.25288856}
+    m_Target: {x: 1.6702409, y: 2.9398859, z: -2.9743514}
     speed: 2
-    m_Value: {x: 0.008530051, y: 0.33286703, z: -0.25288856}
+    m_Value: {x: 1.6702409, y: 2.9398859, z: -2.9743514}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -517,9 +517,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 1.5731883
+    m_Target: 3.3010786
     speed: 2
-    m_Value: 1.5731883
+    m_Value: 3.3010786
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -847,21 +847,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Editor
+    - Assets/Resources/Sprites/Decorations
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Editor
+  - Assets/Resources/Sprites/Decorations
   m_LastFoldersGridSize: 64
   m_LastProjectPath: C:\Users\braju\workspaces\Unity-workspace\Caedis
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: 3e570000
-    m_LastClickedID: 22334
+    m_SelectedIDs: 54570000
+    m_LastClickedID: 22356
     m_ExpandedIDs: 000000002e57000030570000325700003457000036570000385700003a57000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -890,7 +890,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000002e57000030570000325700003457000036570000385700003a570000
+    m_ExpandedIDs: 000000002e57000030570000325700003457000036570000385700003a57000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
