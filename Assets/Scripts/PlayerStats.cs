@@ -51,6 +51,7 @@ new public static Rigidbody2D rigidbody;
     public static int interactPriority=0;
 
     //state
+    public static float speedMult=1; // for swimming and shallow water
     public static bool sprinting=false;
     public static bool flashlight=false;
 

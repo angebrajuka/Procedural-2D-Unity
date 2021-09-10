@@ -86,6 +86,7 @@ public class ProceduralGeneration : MonoBehaviour
     public static bool reset=true;
 
     public static RuleTile[] tiles;
+    public static HashSet<int> s_shallowWater;
     public static Biome[] biomes;
     public static int rain_temp_map_width=100;
     public static byte[,] rain_temp_map;
@@ -151,11 +152,16 @@ public class ProceduralGeneration : MonoBehaviour
 
         tiles = new RuleTile[biomesJson.Length];
         biomes = new Biome[biomesJson.Length];
+        s_shallowWater = new HashSet<int>();
         rain_temp_map = new byte[rain_temp_map_width, rain_temp_map_width];
 
         for(int i=0; i<biomes.Length; i++)
         {
             tiles[i] = LoadTile(biomesJson[i].tile_name);
+            if(biomesJson[i].tile_name.Equals("water_shallow"))
+            {
+                s_shallowWater.Add(i);
+            }
             biomes[i] = new Biome(biomesJson[i]);
             if(biomesJson[i].rain_temp_map_color.Length == 3)
             {

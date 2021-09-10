@@ -10,6 +10,9 @@ public class PlayerAnimator : MonoBehaviour
     public SpriteRenderer m_renderer_gun;
     public SpriteRenderer[] m_renderers_guns;
 
+    public Vector2Int currPos;
+    public Vector2Int prevPos=Vector2Int.one*-100000000;
+
     // input
     public static int direction=0;
 
@@ -34,6 +37,16 @@ public class PlayerAnimator : MonoBehaviour
 
     void Update()
     {
+        currPos.x = (int)Mathf.Floor(PlayerStats.rigidbody.position.x);
+        currPos.y = (int)Mathf.Floor(PlayerStats.rigidbody.position.y);
+        if(currPos != prevPos)
+        {
+            int biome = ProceduralGeneration.MapClamped(ProceduralGeneration.mapTexture_biome, currPos.x, currPos.y);
+            PlayerStats.speedMult = (ProceduralGeneration.s_shallowWater.Contains(biome) || biome == 0) ? 0.6f : 1;
+        }
+        prevPos.x = currPos.x;
+        prevPos.y = currPos.y;
+
         if(m_renderer_gun != null)
         {
             m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
