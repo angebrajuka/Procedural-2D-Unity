@@ -43,6 +43,7 @@ public class PlayerAnimator : MonoBehaviour
         {
             int biome = ProceduralGeneration.MapClamped(ProceduralGeneration.mapTexture_biome, currPos.x, currPos.y);
             PlayerStats.speedMult = (ProceduralGeneration.s_shallowWater.Contains(biome) || biome == 0) ? 0.6f : 1;
+            m_animator.SetBool("swimming", biome == 0);
         }
         prevPos.x = currPos.x;
         prevPos.y = currPos.y;

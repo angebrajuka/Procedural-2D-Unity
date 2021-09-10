@@ -3915,6 +3915,8 @@ MonoBehaviour:
   - {fileID: 1153360108}
   - {fileID: 1693700650}
   - {fileID: 120112900}
+  currPos: {x: 0, y: 0}
+  prevPos: {x: -100000000, y: -100000000}
 --- !u!50 &1422633254
 Rigidbody2D:
   serializedVersion: 4
