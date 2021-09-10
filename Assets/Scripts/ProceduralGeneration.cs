@@ -24,14 +24,17 @@ public struct Biome
     public static Dictionary<string, Vector2[]> s_colliders = new Dictionary<string, Vector2[]>();
     public static Dictionary<string, int> s_altSortingOrders = new Dictionary<string, int>();
     public static Dictionary<string, GameObject> s_decorations = new Dictionary<string, GameObject>();
+    public static Dictionary<string, Vector2Int> s_decorationSizes = new Dictionary<string, Vector2Int>();
 
     public GameObject[] decorations;
     public float[] decorationThreshholds;
+    public Vector2Int[] decorationSizes;
 
     public Biome(JsonBiome jsonBiome)
     {
         decorations = new GameObject[jsonBiome.decorations.Length];
         decorationThreshholds = new float[jsonBiome.decorations.Length];
+        decorationSizes = new Vector2Int[jsonBiome.decorations.Length];
         for(int i=0; i<decorations.Length; i++)
         {
             var name = jsonBiome.decorations[i];
@@ -52,11 +55,13 @@ public struct Biome
                 }
 
                 s_decorations.Add(name, go);
+                s_decorationSizes.Add(name, new Vector2Int(sr.sprite.texture.width/(int)sr.sprite.pixelsPerUnit, sr.sprite.texture.height/(int)sr.sprite.pixelsPerUnit));
                 go.SetActive(false);
             }
             decorations[i] = s_decorations[name];
             decorationThreshholds[i] = jsonBiome.decorationChances[i];
             decorationThreshholds[i] += (i > 0 ? decorationThreshholds[i-1] : 0);
+            decorationSizes[i] = s_decorationSizes[name];
         }
     }
 }
@@ -288,15 +293,37 @@ public class ProceduralGeneration : MonoBehaviour
             {
                 byte val = PerlinMain(pos);
                 mapTexture_biome[pos.x, pos.y] = val;
-                mapTexture_decor[pos.x, pos.y] = 0;
-                if(val >= 3)
+            }
+        }
+        for(pos.x=0; pos.x<width; pos.x++)
+        {
+            for(pos.y=0; pos.y<width; pos.y++)
+            {
+                int val = mapTexture_biome[pos.x, pos.y];
+
+                if(mapTexture_decor[pos.x, pos.y] == 0)
                 {
                     float rval = Random.value;
                     for(int i=0; i<biomes[val].decorationThreshholds.Length; i++)
                     {
                         if(rval < biomes[val].decorationThreshholds[i])
                         {
+                            for(int x=0; x<biomes[val].decorationSizes[i].x; x++)
+                            {
+                                for(int y=0; y<biomes[val].decorationSizes[i].y; y++)
+                                {
+                                    if(mapTexture_decor[pos.x+x, pos.y+y] != 0 || mapTexture_biome[pos.x+x, pos.y+y] != val) goto BreakBreak;
+                                }
+                            }
+                            for(int x=0; x<biomes[val].decorationSizes[i].x; x++)
+                            {
+                                for(int y=0; y<biomes[val].decorationSizes[i].y; y++)
+                                {
+                                    mapTexture_decor[pos.x+x, pos.y+y] = 255;
+                                }
+                            }
                             mapTexture_decor[pos.x, pos.y] = (byte)(i+1);
+                            BreakBreak:
                             break;
                         }
                     }
@@ -313,7 +340,7 @@ public class ProceduralGeneration : MonoBehaviour
     public static GameObject GetDecoration(int x, int y, int tile)
     {
         int i = MapClamped(mapTexture_decor, x, y);
-        if(i == 0) return null;
+        if(i == 0 || i == 255) return null;
         return biomes[tile].decorations[i-1];
     }
 

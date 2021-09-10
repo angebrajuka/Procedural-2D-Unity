@@ -60,8 +60,8 @@
             "biome_name": "rainforest",
             "tile_name": "grass_rainforest",
             "rain_temp_map_color": [0, 0, 255],
-            "decorations": ["tree_rainforest_0", "tree_rainforest_1", "grass", "flower_orange", "flower_red", "bush_0"],
-            "decorationChances": [0.03, 0.04, 0.1, 0.03, 0.03, 0.02]
+            "decorations": ["tree_rainforest_0", "tree_rainforest_1", "grass", "flower_orange", "flower_red"],
+            "decorationChances": [0.025, 0.035, 0.1, 0.03, 0.03]
         },
         {
             "biome_name": "savanna",

@@ -2974,9 +2974,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   proceduralGeneration: {fileID: 2599422765226947265}
-  randSeed: 1
-  seed: 754856.44
-  resolution: 250
+  randSeed: 0
+  seed: 810944.94
+  resolution: 500
 --- !u!114 &1007638346
 MonoBehaviour:
   m_ObjectHideFlags: 0
