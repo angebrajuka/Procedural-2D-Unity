@@ -3915,8 +3915,6 @@ MonoBehaviour:
   - {fileID: 1153360108}
   - {fileID: 1693700650}
   - {fileID: 120112900}
-  currPos: {x: 0, y: 0}
-  prevPos: {x: -100000000, y: -100000000}
 --- !u!50 &1422633254
 Rigidbody2D:
   serializedVersion: 4
@@ -20780,6 +20778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab_chunk: {fileID: 9015538738396015669, guid: bace9ce1bb80b684da2b69a3bd4359b1,
     type: 3}
+  material: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   renderDistance: 2
 --- !u!4 &2599422765226947294
 Transform:

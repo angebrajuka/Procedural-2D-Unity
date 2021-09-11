@@ -27,12 +27,14 @@ public struct Biome
     public static Dictionary<string, Vector2Int> s_decorationSizes = new Dictionary<string, Vector2Int>();
 
     public GameObject[] decorations;
+    public bool[] hasCollider;
     public float[] decorationThreshholds;
     public Vector2Int[] decorationSizes;
 
-    public Biome(JsonBiome jsonBiome)
+    public Biome(JsonBiome jsonBiome, Material material)
     {
         decorations = new GameObject[jsonBiome.decorations.Length];
+        hasCollider = new bool[decorations.Length];
         decorationThreshholds = new float[jsonBiome.decorations.Length];
         decorationSizes = new Vector2Int[jsonBiome.decorations.Length];
         for(int i=0; i<decorations.Length; i++)
@@ -46,6 +48,7 @@ public struct Biome
                 sr.sprite = Resources.Load<Sprite>("Sprites/Decorations/"+name);
                 sr.sortingOrder = s_altSortingOrders.ContainsKey(name) ? s_altSortingOrders[name] : 1;
                 sr.spriteSortPoint = SpriteSortPoint.Pivot;
+                sr.material = material;
                 
                 if(s_colliders.ContainsKey(name))
                 {
@@ -55,10 +58,11 @@ public struct Biome
                 }
 
                 s_decorations.Add(name, go);
-                s_decorationSizes.Add(name, new Vector2Int(sr.sprite.texture.width/(int)sr.sprite.pixelsPerUnit, sr.sprite.texture.height/(int)sr.sprite.pixelsPerUnit));
+                s_decorationSizes.Add(name, new Vector2Int(sr.sprite.texture.width/(int)sr.sprite.pixelsPerUnit, (int)Mathf.Ceil(sr.sprite.texture.height/2f/sr.sprite.pixelsPerUnit)));
                 go.SetActive(false);
             }
             decorations[i] = s_decorations[name];
+            hasCollider[i] = (decorations[i].GetComponent<Collider>() != null);
             decorationThreshholds[i] = jsonBiome.decorationChances[i];
             decorationThreshholds[i] += (i > 0 ? decorationThreshholds[i-1] : 0);
             decorationSizes[i] = s_decorationSizes[name];
@@ -70,6 +74,7 @@ public class ProceduralGeneration : MonoBehaviour
 {
     // hierarchy
     public GameObject prefab_chunk;
+    public Material material;
 
     public static ProceduralGeneration instance;
     
@@ -162,7 +167,7 @@ public class ProceduralGeneration : MonoBehaviour
             {
                 s_shallowWater.Add(i);
             }
-            biomes[i] = new Biome(biomesJson[i]);
+            biomes[i] = new Biome(biomesJson[i], material);
             if(biomesJson[i].rain_temp_map_color.Length == 3)
             {
                 for(int x=0; x<rain_temp_map_width; x++)
@@ -318,7 +323,7 @@ public class ProceduralGeneration : MonoBehaviour
                             {
                                 for(int y=0; y<biomes[val].decorationSizes[i].y; y++)
                                 {
-                                    if(mapTexture_decor[pos.x+x, pos.y+y] != 0 || mapTexture_biome[pos.x+x, pos.y+y] != val) goto BreakBreak;
+                                    if(mapTexture_decor[pos.x+x, pos.y+y] == 255 || biomes[val].hasCollider[mapTexture_decor[pos.x+x, pos.y+y]] || mapTexture_biome[pos.x+x, pos.y+y] != val) goto BreakBreak;
                                 }
                             }
                             for(int x=0; x<biomes[val].decorationSizes[i].x; x++)
