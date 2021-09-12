@@ -4,64 +4,57 @@ using UnityEngine;
 
 public class EnemyObject : MonoBehaviour
 {
-    // hierarchy
-    public SpriteRenderer m_renderer;
-    public bool awake;
-    public EnemyType type;
-    
-
     // components
     [HideInInspector] public Rigidbody2D m_rigidbody;
     [HideInInspector] public Material m_material;
     [HideInInspector] public Target m_target;
+    [HideInInspector] public SpriteRenderer m_renderer;
 
-    
 
     // members
-    public Vector2 targetMovement;
+    [HideInInspector] public Vector2 targetMovement;
     float timer;
     bool following;
     float flash;
-
+    public int state;
+    public float frame;
+    [HideInInspector] public bool awake;
+    [HideInInspector] public Enemy enemy;
 
     void Start()
     {
         m_rigidbody = GetComponent<Rigidbody2D>();
-        m_material = GetComponent<SpriteRenderer>().material;
+        m_renderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        m_material = m_renderer.material;
         m_target = GetComponent<Target>();
         m_target.OnDamage = OnDamage;
         m_target.OnKill = OnKill;
         timer = 0;
         flash = 0;
+        state = 0;
+        frame = 0;
     }
 
     public bool OnDamage(float damage)
     {
-        // Color c = m_animator.m_spriteRenderer.color;
         flash = 1;
-        // m_animator.m_spriteRenderer.color = c;
-        Enemy.enemies[(int)type].OnOnDamage(this);
         return true;
     }
 
     public bool OnKill(float damage)
     {
-        Enemy.enemies[(int)type].OnOnKill(this);
         DynamicEnemySpawning.OnKilled(this);
         Destroy(this.gameObject);
         return true;
     }
 
-
     void NewTarget(bool forceWander=false)
     {
         following = !forceWander && (UnityEngine.Random.value > 0.4f);
         
-        targetMovement = following ? PlayerStats.rigidbody.position-m_rigidbody.position : (Math.vectors[(int)Mathf.Floor(UnityEngine.Random.value*8)]);
-
-        // m_animator.direction = Math.AngleToDir(Math.NormalizedVecToAngle(targetMovement));
-        // if(m_animator.direction >= 4) m_animator.direction = 0;
-        // targetMovement = Math.vectors[m_animator.direction];
+        targetMovement = following ? PlayerStats.rigidbody.position-m_rigidbody.position : Random.insideUnitCircle;
+        targetMovement.Normalize();
+        m_renderer.flipX = targetMovement.x < 0;
         
         timer = UnityEngine.Random.value+0.2f;
     }
@@ -70,35 +63,7 @@ public class EnemyObject : MonoBehaviour
     {
         if(timer < 0.1f)
         {
-            // dir *= -1;
-            // m_animator.direction = Math.AngleToDir8(Math.NormalizedVecToAngle(dir));
-            // timer = 0.2f;
             NewTarget(true);
-        }
-    }
-
-    void Update()
-    {
-        if(timer <= 0)
-        {
-            NewTarget();
-        }
-
-        // animationTimer += Time.deltaTime;
-        // if(animationTimer > 0.05f)
-        // {
-        //     animationTimer = 0;
-        //     m_animator.state ++;
-        //     if(m_animator.state > 3) m_animator.state = 0;
-        // }
-        
-        timer -= Time.deltaTime;
-
-        if(flash > 0)
-        {
-            flash -= Time.deltaTime*8;
-            if(flash < 0) flash = 0;
-            m_material.SetFloat("_Blend", flash);
         }
     }
 
@@ -106,6 +71,24 @@ public class EnemyObject : MonoBehaviour
     {
         if(awake)
         {
+            timer -= Time.fixedDeltaTime;
+            frame += Time.fixedDeltaTime*5;
+            if(frame >= enemy.sprites[state].Length) frame = 0;
+
+            m_renderer.sprite = enemy.sprites[state][(int)Mathf.Floor(frame)];
+
+            if(timer <= 0)
+            {
+                NewTarget();
+            }
+
+            if(flash > 0)
+            {
+                flash -= Time.fixedDeltaTime*6;
+                if(flash < 0) flash = 0;
+                m_material.SetFloat("_Blend", flash);
+            }
+            
             m_rigidbody.velocity *= 0;
             m_rigidbody.AddForce(targetMovement*320);
         }
