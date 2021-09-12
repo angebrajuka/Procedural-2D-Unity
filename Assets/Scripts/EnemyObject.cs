@@ -67,7 +67,7 @@ public class EnemyObject : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(awake)
+        if(!PauseHandler.paused && awake)
         {
             if(state == 0 && Vector2.Distance(m_rigidbody.position, PlayerStats.rigidbody.position) <= enemy.range_melee)
             {

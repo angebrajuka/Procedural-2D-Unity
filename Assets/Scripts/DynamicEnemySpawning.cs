@@ -97,7 +97,7 @@ public class DynamicEnemySpawning : MonoBehaviour
 
     void Update()
     {
-        if(DaylightCycle.time > (DaylightCycle.k_EVENING + DaylightCycle.k_NIGHT) / 2 || DaylightCycle.time < DaylightCycle.k_DAY / 2)
+        if(!PauseHandler.paused && (DaylightCycle.time > (DaylightCycle.k_EVENING + DaylightCycle.k_NIGHT) / 2 || DaylightCycle.time < DaylightCycle.k_DAY / 2))
         {
             timer -= Time.deltaTime;
             if(timer <= 0 && totalDifficulty < GetDifficultyValue())
