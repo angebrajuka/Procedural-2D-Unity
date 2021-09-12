@@ -44,7 +44,7 @@ public class PauseHandler : MonoBehaviour
 
         FreezePhysics();
         PlayerStats.playerInput.enabled = false;
-        // PlayerStats.playerAnimator.enabled = false;
+        PlayerStats.hud.transform.gameObject.SetActive(false);
 
         AudioManager.PauseAllAudio();
     }
@@ -53,7 +53,7 @@ public class PauseHandler : MonoBehaviour
     {
         UnfreezePhysics();
         PlayerStats.playerInput.enabled = true;
-        // PlayerStats.playerAnimator.enabled = true;
+        PlayerStats.hud.transform.gameObject.SetActive(true);
 
         AudioManager.ResumeAllAudio();
 

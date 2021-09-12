@@ -17,7 +17,6 @@ public class InventoryControls : MonoBehaviour {
             PauseHandler.UnPause();
             PauseHandler.UnBlur();
             playerInput.enabled = true;
-            PlayerStats.hud.transform.gameObject.SetActive(true);
             transform.gameObject.SetActive(false);
         }
     }

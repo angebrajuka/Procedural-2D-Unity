@@ -171,8 +171,6 @@ public class PlayerInput : MonoBehaviour
             PlayerStats.inventory.Open();
             
             if(PlayerStats.gunReloadTimer > 0) PlayerStats.CancelReload();
-            
-            PlayerStats.hud.transform.gameObject.SetActive(false);
         }
         
         // reload
