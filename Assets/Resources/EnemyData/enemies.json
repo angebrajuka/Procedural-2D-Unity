@@ -3,10 +3,11 @@
         {
             "name": "spider",
             "difficulty": 5,
-            "range_melee": 0.5,
+            "range_melee": 2,
             "range_projectile": -1,
             "speed_move": 320,
-            "sprites": null
+            "sprites": null,
+            "anim_speeds": [10, 8, 1]
         }
     ]
 }

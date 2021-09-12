@@ -9,15 +9,11 @@ public class DevConsole : MonoBehaviour
     public InputField inputField;
     public Text textObject;
     public PlayerInput playerInput;
-    public Target target;
 
     [HideInInspector] public bool isActive=false;
 
-    static Target s_target;
-
     public void Init()
     {
-        s_target = target;
         Disable();
     }
 
@@ -51,10 +47,10 @@ public class DevConsole : MonoBehaviour
         switch(args[0])
         {
         case "add":
-            s_target.Heal(amount);
+            PlayerStats.target.Heal(amount);
             break;
         case "sub":
-            s_target.Damage(amount);
+            PlayerStats.target.Damage(amount);
             break;
         default:
             return false;

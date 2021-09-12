@@ -17,6 +17,7 @@ public class Enemy
     public float range_melee, range_projectile;
     public float speed_move;
     public Sprite[][] sprites;
+    public float[] anim_speeds;
 }
 
 public class DynamicEnemySpawning : MonoBehaviour
