@@ -6,14 +6,16 @@ using UnityEngine;
 public class SaveData
 {
     byte difficulty;
+    float seed;
     GridItemSerializable[] inventoryItems;
     float health, energy;
     float[] position;
-    public float timeOfDay;
+    float timeOfDay;
 
     public SaveData()
     {
         difficulty = PlayerStats.difficulty;
+        seed = ProceduralGeneration.seed_main;
         
         inventoryItems = new GridItemSerializable[PlayerStats.inventory.items.Count];
         LinkedListNode<GridItem> node = PlayerStats.inventory.items.First;
@@ -36,6 +38,7 @@ public class SaveData
     public void Load()
     {
         PlayerStats.difficulty = difficulty;
+        ProceduralGeneration.SetSeed(seed);
 
         PlayerStats.inventory.Clear();
         for(int i=0; i<inventoryItems.Length; i++)

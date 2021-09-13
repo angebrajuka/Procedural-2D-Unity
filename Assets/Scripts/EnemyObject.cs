@@ -9,14 +9,16 @@ public class EnemyObject : MonoBehaviour
     [HideInInspector] public Material m_material;
     [HideInInspector] public Target m_target;
     [HideInInspector] public SpriteRenderer m_renderer;
+    [HideInInspector] public CircleCollider2D m_trigger;
 
 
     // members
+    [HideInInspector] public Dictionary<Transform, Vector2> nearbyColliders;
     [HideInInspector] public Vector2 targetMovement;
-    bool following;
     float flash;
     public int state;
     public float frame;
+    public float attackCooldown;
     [HideInInspector] public bool awake;
     [HideInInspector] public Enemy enemy;
 
@@ -28,9 +30,12 @@ public class EnemyObject : MonoBehaviour
         m_target = GetComponent<Target>();
         m_target.OnDamage = OnDamage;
         m_target.OnKill = OnKill;
+        m_trigger = transform.GetChild(1).GetComponent<CircleCollider2D>();
+        nearbyColliders = new Dictionary<Transform, Vector2>();
         flash = 0;
         state = 0;
-        frame = 0;
+        frame = (UnityEngine.Random.value+0.2f);;
+        attackCooldown = 0;
     }
 
     public bool OnDamage(float damage)
@@ -46,48 +51,85 @@ public class EnemyObject : MonoBehaviour
         return true;
     }
 
-    void NewTarget(bool forceWander=false)
+    void UpdateTarget()
     {
-        following = !forceWander && (UnityEngine.Random.value > 0.4f);
-        
-        targetMovement = following ? PlayerStats.rigidbody.position-m_rigidbody.position : Random.insideUnitCircle;
+        targetMovement = (PlayerStats.rigidbody.position-m_rigidbody.position).normalized;
+
+        foreach(var pair in nearbyColliders)
+        {
+            targetMovement -= (pair.Value-m_rigidbody.position).normalized*2;
+        }
+
         targetMovement.Normalize();
+
         m_renderer.flipX = targetMovement.x < 0;
-        
-        frame = (UnityEngine.Random.value+0.2f);
     }
 
-    // void OnCollisionStay2D(Collision2D other)
-    // {
-    //     // if(timer < 0.1f)
-    //     // {
-    //         NewTarget(true);
-    //     // }
-    // }
+    bool Range(float range)
+    {
+        return Vector2.Distance(m_rigidbody.position, PlayerStats.rigidbody.position) <= range;
+    }
+
+    void Attack(byte state)
+    {
+        attackCooldown = Random.Range(enemy.attack_cooldown_min, enemy.attack_cooldown_max);
+        this.state = state;
+        frame = 0;
+        targetMovement *= 0;
+    }
+
+    void FacePlayer()
+    {
+        m_renderer.flipX = PlayerStats.rigidbody.position.x < m_rigidbody.position.x;
+    }
 
     void FixedUpdate()
     {
         if(!PauseHandler.paused && awake)
         {
-            if(state == 0 && Vector2.Distance(m_rigidbody.position, PlayerStats.rigidbody.position) <= enemy.range_melee)
+            switch(state)
             {
-                state = 1;
-                frame = 0;
+            case 0:
+                if(attackCooldown > 0)
+                {
+                    attackCooldown -= Time.fixedDeltaTime;
+                }
+                else
+                {
+                    if(Range(enemy.range_melee))
+                    {
+                        Attack(1);
+                    }
+                    else if(Range(enemy.range_projectile))
+                    {
+                        Attack(2);
+                    }
+                }
+                break;
+            case 1:
+                FacePlayer();
+                break;
+            case 2:
 
-                targetMovement *= 0;
+                break;
+            default: break;
             }
-
+    
             frame += Time.fixedDeltaTime*enemy.anim_speeds[state];
             if(frame >= enemy.sprites[state].Length)
             {
                 switch(state)
                 {
                 case 0:
-                    NewTarget();
+                    UpdateTarget();
                     break;
                 case 1:
-                    PlayerStats.target.Damage(10);
+                    if(Range(enemy.range_melee))
+                    {
+                        PlayerStats.target.Damage(10);
+                    }
                     state = 0;
+                    UpdateTarget();
                     break;
                 case 2:
                     
@@ -98,7 +140,6 @@ public class EnemyObject : MonoBehaviour
             }
 
             m_renderer.sprite = enemy.sprites[state][(int)Mathf.Floor(frame)];
-            
 
             if(flash > 0)
             {
@@ -107,7 +148,6 @@ public class EnemyObject : MonoBehaviour
                 m_material.SetFloat("_Blend", flash);
             }
             
-            m_rigidbody.velocity *= 0;
             m_rigidbody.AddForce(targetMovement*enemy.speed_move);
         }
     }

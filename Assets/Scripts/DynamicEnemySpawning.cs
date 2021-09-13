@@ -15,6 +15,8 @@ public class Enemy
     public string name;
     public int difficulty;
     public float range_melee, range_projectile;
+    public float attack_cooldown_min;
+    public float attack_cooldown_max;
     public float speed_move;
     public Sprite[][] sprites;
     public float[] anim_speeds;

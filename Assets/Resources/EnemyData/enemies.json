@@ -5,9 +5,11 @@
             "difficulty": 5,
             "range_melee": 2,
             "range_projectile": -1,
-            "speed_move": 320,
+            "attack_cooldown_min": 0.1,
+            "attack_cooldown_max": 0.5,
+            "speed_move": 120,
             "sprites": null,
-            "anim_speeds": [10, 8, 1]
+            "anim_speeds": [12, 5, 1]
         }
     ]
 }

@@ -20,10 +20,11 @@ public class PlayerStats : MonoBehaviour
 new public static Rigidbody2D rigidbody;
     public static PlayerAnimator playerAnimator;
     public static PlayerInput playerInput;
+new public static Collider2D collider;
 
 
     // constant
-    public const float k_RUN_ACCELL = 125.0f;
+    public const float k_RUN_ACCELL = 90.0f;
     public const float k_SPRINT_MULTIPLIER = 1.2f;
     public const float k_FLASHLIGHT_MULTIPLIER = 0.88f;
     public const float k_KNIFE_SPEED = 500f;
@@ -57,7 +58,7 @@ new public static Rigidbody2D rigidbody;
 
 
     // global
-    public static byte difficulty;
+    public static byte difficulty; // 0 to 4
     public static byte save;
     public static bool load=false;
     public static bool loadingFirstChunks=true;
@@ -72,6 +73,7 @@ new public static Rigidbody2D rigidbody;
         rigidbody = GetComponent<Rigidbody2D>();
         playerAnimator = GetComponent<PlayerAnimator>();
         playerInput = GetComponent<PlayerInput>();
+        collider = GetComponent<BoxCollider2D>();
 
         for(int i=0; i<guns.Length; i++)
         {
@@ -137,6 +139,8 @@ new public static Rigidbody2D rigidbody;
             inventory.AutoAdd(Item.BULLETS_LARGE, 20);
             inventory.AutoAdd(Item.SHELLS, 16);
             inventory.AutoAdd(Item.PLASMA, 60);
+
+            difficulty = 2;
 
             Save_Load.Save(save);
         }

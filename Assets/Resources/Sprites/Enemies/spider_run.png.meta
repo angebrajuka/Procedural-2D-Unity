@@ -110,6 +110,18 @@ TextureImporter:
   - first:
       213: 5280768944157025839
     second: spider_2
+  - first:
+      213: 3162871427969081640
+    second: spider_run_0
+  - first:
+      213: -5391334968308435496
+    second: spider_run_1
+  - first:
+      213: -5459062429945078108
+    second: spider_run_2
+  - first:
+      213: 1992822373170528658
+    second: spider_run_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -211,7 +223,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spider_0
+      name: spider_run_0
       rect:
         serializedVersion: 2
         x: 0
@@ -225,14 +237,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72ddec77db8ffb530800000000000000
-      internalID: 3873087697204469031
+      spriteID: 821645e5ec6c4eb20800000000000000
+      internalID: 3162871427969081640
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spider_1
+      name: spider_run_1
       rect:
         serializedVersion: 2
         x: 32
@@ -246,14 +258,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5af3333ab97646140800000000000000
-      internalID: 4712005028292018085
+      spriteID: 8d575dc29612e25b0800000000000000
+      internalID: -5391334968308435496
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spider_2
+      name: spider_run_2
       rect:
         serializedVersion: 2
         x: 64
@@ -267,8 +279,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f26e461406f094940800000000000000
-      internalID: 5280768944157025839
+      spriteID: 4ae5170b4a38d34b0800000000000000
+      internalID: -5459062429945078108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spider_run_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 291c745d36de7ab10800000000000000
+      internalID: 1992822373170528658
       vertices: []
       indices: 
       edges: []

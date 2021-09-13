@@ -14,6 +14,7 @@ public class ButtonChangeDifficulty : MonoBehaviour
         "no. Just no."
     };
 
+    public RectTransform selected;
     public byte difficulty;
     public Text text;
 
@@ -31,5 +32,6 @@ public class ButtonChangeDifficulty : MonoBehaviour
     {
         PlayerStats.difficulty = difficulty;
         Save_Load.Save(PlayerStats.save);
+        selected.position = transform.position;
     }
 }
