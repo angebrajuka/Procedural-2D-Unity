@@ -3,7 +3,7 @@
         {
             "name": "spider",
             "difficulty": 5,
-            "range_melee": 2,
+            "range_melee": 1.2,
             "range_projectile": -1,
             "attack_cooldown_min": 0.1,
             "attack_cooldown_max": 0.5,

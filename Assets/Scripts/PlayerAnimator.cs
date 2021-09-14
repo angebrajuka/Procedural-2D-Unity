@@ -45,8 +45,8 @@ public class PlayerAnimator : MonoBehaviour
         bool moving = (PlayerInput.input_move.x != 0 || PlayerInput.input_move.y != 0) && !PauseHandler.paused;
         int biome = ProceduralGeneration.MapClamped(ProceduralGeneration.mapTexture_biome, (int)Mathf.Floor(PlayerStats.rigidbody.position.x), (int)Mathf.Floor(PlayerStats.rigidbody.position.y));
         PlayerStats.speedMult = (ProceduralGeneration.s_shallowWater.Contains(biome) || biome == 0) ? 0.6f : 1;
-        m_animator.SetBool("swimming", biome == 0 && moving);
-        m_animator.SetBool("running", moving && biome != 0);
+        m_animator.SetBool("moving", moving);
+        m_animator.SetInteger("biome", biome);
         m_animator.speed = moving ? PlayerStats.rigidbody.velocity.magnitude * 0.07f : 1;
         
 
