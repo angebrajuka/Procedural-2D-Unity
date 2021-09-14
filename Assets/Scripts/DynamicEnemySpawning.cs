@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 [System.Serializable]
 public class EnemiesJson
@@ -26,17 +25,20 @@ public class DynamicEnemySpawning : MonoBehaviour
 {
     // hierarchy
     public GameObject enemyPrefab;
+    public float minRadius, maxRadius;
+
+    [HideInInspector] public static DynamicEnemySpawning instance;
 
     // stats
     public static Enemy[] enemies;
     public static LinkedList<EnemyObject> enemyObjects = new LinkedList<EnemyObject>();
     public static int totalDifficulty=0;
     public static float timer;
-    public const float minRadius=30, maxRadius=45;
     readonly string[] states = {"_run", "_melee", "_projectile"};
 
     public void Init()
     {
+        instance = this;
         totalDifficulty = 0;
         enemies = JsonUtility.FromJson<EnemiesJson>(Resources.Load<TextAsset>("EnemyData/enemies").text).enemies;
         foreach(var enemy in enemies)
@@ -71,11 +73,7 @@ public class DynamicEnemySpawning : MonoBehaviour
     {
         if(autoPosition)
         {
-            position = new Vector2(0, 0);
-            float radius = UnityEngine.Random.value * (maxRadius-minRadius) + minRadius;
-            position.x = (UnityEngine.Random.value-0.5f) * radius * 2;
-            position.y = Mathf.Sqrt(radius*radius - position.x*position.x) * (UnityEngine.Random.value > 0.5f ? 1 : -1);
-            position += PlayerStats.rigidbody.position;
+            position = PlayerStats.rigidbody.position + Random.insideUnitCircle.normalized*Random.Range(minRadius, maxRadius);
         }
         GameObject gameObject = Instantiate(enemyPrefab, position, Quaternion.identity);
         EnemyObject enemyObject = gameObject.GetComponent<EnemyObject>();

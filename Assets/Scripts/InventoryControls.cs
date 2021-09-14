@@ -14,7 +14,6 @@ public class InventoryControls : MonoBehaviour {
 
         if(Input.GetKeyDown(PlayerInput.keybinds[Keybind.inventory]) || Input.GetKeyDown(KeyCode.Escape)) {
             inventory.Close();
-            PauseHandler.UnPause();
             PauseHandler.UnBlur();
             playerInput.enabled = true;
             transform.gameObject.SetActive(false);

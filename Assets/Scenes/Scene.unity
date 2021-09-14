@@ -3753,6 +3753,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 1562518597343047322, guid: d3a2a2af39dd3674ba3b374ea4a35dd0,
     type: 3}
+  minRadius: 15
+  maxRadius: 30
 --- !u!114 &1422633259
 MonoBehaviour:
   m_ObjectHideFlags: 0

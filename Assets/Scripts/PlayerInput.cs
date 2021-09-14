@@ -165,7 +165,6 @@ public class PlayerInput : MonoBehaviour
         if(Input.GetKeyDown(keybinds[Keybind.inventory]))
         {
             PlayerStats.EndMelee();
-            PauseHandler.Pause();
             PauseHandler.Blur();
             inventory.gameObject.SetActive(true);
             PlayerStats.inventory.Open();

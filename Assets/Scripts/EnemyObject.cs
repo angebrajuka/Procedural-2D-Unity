@@ -57,7 +57,7 @@ public class EnemyObject : MonoBehaviour
 
         foreach(var pair in nearbyColliders)
         {
-            targetMovement -= (pair.Value-m_rigidbody.position).normalized*2;
+            targetMovement -= (pair.Value-m_rigidbody.position).normalized*3;
         }
 
         targetMovement.Normalize();
@@ -85,6 +85,11 @@ public class EnemyObject : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(Vector2.Distance(m_rigidbody.position, PlayerStats.rigidbody.position) >= DynamicEnemySpawning.instance.maxRadius*2)
+        {
+            DynamicEnemySpawning.DeSpawn(this);
+        }
+
         if(!PauseHandler.paused && awake)
         {
             switch(state)
