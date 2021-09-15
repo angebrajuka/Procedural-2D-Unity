@@ -11,6 +11,15 @@ TextureImporter:
   - first:
       213: -2287005486989715844
     second: player_swim_2
+  - first:
+      213: -6608727119230766129
+    second: player_swim_3
+  - first:
+      213: 5958769299165553547
+    second: player_swim_4
+  - first:
+      213: -1192432977818412499
+    second: player_swim_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -158,6 +167,69 @@ TextureImporter:
       bones: []
       spriteID: c76db9c60ace240e0800000000000000
       internalID: -2287005486989715844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_swim_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc372c813b51944a0800000000000000
+      internalID: -6608727119230766129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_swim_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b83244f4b1dc1b250800000000000000
+      internalID: 5958769299165553547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_swim_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2a1ca24680a37fe0800000000000000
+      internalID: -1192432977818412499
       vertices: []
       indices: 
       edges: []
