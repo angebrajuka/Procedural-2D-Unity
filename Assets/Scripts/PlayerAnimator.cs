@@ -42,7 +42,7 @@ public class PlayerAnimator : MonoBehaviour
             PlayerStats.currentGun.barrelTip.localPosition = position;
         }
 
-        bool moving = (PlayerInput.input_move.x != 0 || PlayerInput.input_move.y != 0) && !PauseHandler.paused;
+        bool moving = (PlayerInput.input_move.x != 0 || PlayerInput.input_move.y != 0) && (Mathf.Abs(PlayerStats.rigidbody.velocity.x) >= 0.01f || Mathf.Abs(PlayerStats.rigidbody.velocity.y) >= 0.01f) && !PauseHandler.paused;
         int biome = ProceduralGeneration.MapClamped(ProceduralGeneration.mapTexture_biome, (int)Mathf.Floor(PlayerStats.rigidbody.position.x), (int)Mathf.Floor(PlayerStats.rigidbody.position.y));
         PlayerStats.speedMult = (ProceduralGeneration.s_shallowWater.Contains(biome) || biome == 0) ? 0.6f : 1;
         m_animator.SetBool("moving", moving);
