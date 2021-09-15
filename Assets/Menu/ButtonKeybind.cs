@@ -14,7 +14,7 @@ public class ButtonKeybind : MonoBehaviour {
 
     void Start() {
         SetText(PlayerInput.keybinds[keybind]);
-        menu = transform.parent.parent.parent.parent.parent.GetComponent<Menu>();
+        menu = transform.parent.parent.parent.parent.parent.parent.GetComponent<Menu>();
     }
 
     void SetText(KeyCode key) {
