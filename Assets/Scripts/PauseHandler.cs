@@ -38,13 +38,24 @@ public class PauseHandler : MonoBehaviour
         }
     }
 
+    public static void DisableInputAndHUD()
+    {
+        PlayerStats.playerInput.enabled = false;
+        PlayerStats.hud.transform.gameObject.SetActive(false);
+    }
+
+    public static void EnableInputAndHUD()
+    {
+        PlayerStats.playerInput.enabled = true;
+        PlayerStats.hud.transform.gameObject.SetActive(true);
+    }
+
     public static void Pause()
     {
         paused = true;
 
         FreezePhysics();
-        PlayerStats.playerInput.enabled = false;
-        PlayerStats.hud.transform.gameObject.SetActive(false);
+        DisableInputAndHUD();
 
         AudioManager.PauseAllAudio();
     }
@@ -52,8 +63,7 @@ public class PauseHandler : MonoBehaviour
     public static void UnPause()
     {
         UnfreezePhysics();
-        PlayerStats.playerInput.enabled = true;
-        PlayerStats.hud.transform.gameObject.SetActive(true);
+        EnableInputAndHUD();
 
         AudioManager.ResumeAllAudio();
 

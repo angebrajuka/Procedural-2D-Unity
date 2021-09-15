@@ -166,6 +166,7 @@ public class PlayerInput : MonoBehaviour
         {
             PlayerStats.EndMelee();
             PauseHandler.Blur();
+            PauseHandler.DisableInputAndHUD();
             inventory.gameObject.SetActive(true);
             PlayerStats.inventory.Open();
             
