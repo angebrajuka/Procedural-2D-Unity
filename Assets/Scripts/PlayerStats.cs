@@ -11,6 +11,7 @@ public class PlayerStats : MonoBehaviour
     public Transform weapons;
     public Transform entities;
     public float debugSpode;
+    public Transform gunSpriteTransform;
 
     // components
     public static PlayerStats instance;
@@ -38,16 +39,16 @@ new public static Collider2D collider;
     public static float gunRpmTimer;
     public static float gunReloadTimer;
     public static GameObject reloadSound;
-    public static Gun[] guns = new Gun[9];
+    public static Gun[] guns;
     public static int _currentGun;
     public static Gun currentGun;
 
     // items
     public static bool melee;
     private static sbyte knifeDirection;
-    public static Item currentItem = Item.NONE;
+    public static string currentItem = null;
     public static LinkedListNode<GridItem> currentItemNode;
-    public static Item interactItem = Item.NONE;
+    public static string interactItem = null;
     public static ItemPickup interactPickup;
     public static int interactPriority=0;
 
@@ -75,9 +76,11 @@ new public static Collider2D collider;
         playerInput = GetComponent<PlayerInput>();
         collider = GetComponent<BoxCollider2D>();
 
-        for(int i=0; i<guns.Length; i++)
+        var gunsJson = JsonUtility.FromJson<GunsJson>(Resources.Load<TextAsset>("ItemData/guns").text).guns;
+        guns = new Gun[gunsJson.Length];
+        for(int i=0; i<gunsJson.Length; i++)
         {
-            guns[i] = weapons.GetChild(i).GetComponent<Gun>();
+            guns[i] = new Gun(gunsJson[i], gunSpriteTransform);
         }
     }
 
@@ -125,20 +128,16 @@ new public static Collider2D collider;
             // inventory.AutoAdd(Item.FISHING_ROD);
             // inventory.AutoAdd(Item.FLASHLIGHT);
             // inventory.AutoAdd(Item.PISTOL);
-            inventory.AutoAdd(Item.SMG);
-            inventory.AutoAdd(Item.ASSAULT_RIFLE);
-            inventory.AutoAdd(Item.DMR);
+            // inventory.AutoAdd(Item.SMG);
+            // inventory.AutoAdd(Item.ASSAULT_RIFLE);
+            // inventory.AutoAdd(Item.DMR);
 
-            inventory.AutoAdd(Item.SHOTGUN_PUMP);
-            // inventory.AutoAdd(Item.SHOTGUN_DOUBLE);
-            // inventory.AutoAdd(Item.SHOTGUN_AUTO);
-            // inventory.AutoAdd(Item.ENERGY_RIFLE);
-            inventory.AutoAdd(Item.ENERGY_RAILGUN);
+            // inventory.AutoAdd(Item.SHOTGUN_PUMP);
 
-            inventory.AutoAdd(Item.BULLETS_SMALL, 20);
-            inventory.AutoAdd(Item.BULLETS_LARGE, 20);
-            inventory.AutoAdd(Item.SHELLS, 16);
-            inventory.AutoAdd(Item.PLASMA, 60);
+            // inventory.AutoAdd(Item.BULLETS_SMALL, 20);
+            // inventory.AutoAdd(Item.BULLETS_LARGE, 20);
+            // inventory.AutoAdd(Item.SHELLS, 16);
+            // inventory.AutoAdd(Item.PLASMA, 60);
 
             difficulty = 2;
 
@@ -152,13 +151,13 @@ new public static Collider2D collider;
     {
         Destroy(currentItemNode.Value.gameObject);
         currentItemNode.List.Remove(currentItemNode);
-        currentItem = Item.NONE;
+        currentItem = null;
         hud.UpdateHotbar();
     }
 
     public static void BeginReload()
     {
-        if(inventory.isOpen || currentGun == null || GetAmmo() == currentGun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || inventory.GetTotalCount(currentGun.ammoType) == 0) return;
+        // if(inventory.isOpen || currentGun == null || GetAmmo() == currentGun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || inventory.GetTotalCount(currentGun.ammoType) == 0) return;
         gunReloadTimer = currentGun.reloadTime;
         reloadSound = AudioManager.PlayClip(currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
     }
@@ -171,20 +170,20 @@ new public static Collider2D collider;
 
     public static void FinishReload()
     {
-        int _ammo = inventory.GetTotalCount(currentGun.ammoType)/currentGun.ammoPerShot;
+        int _ammo = 0;//inventory.GetTotalCount(currentGun.ammoType)/currentGun.ammoPerShot;
         int _clip = GetAmmo()/currentGun.ammoPerShot;
         int _clipSize = currentGun.clipSize/currentGun.ammoPerShot;
         
         if(_ammo > _clipSize - _clip)
         {
-            inventory.RemoveItemCount(currentGun.ammoType, (_clipSize - _clip)*currentGun.ammoPerShot);
+            // inventory.RemoveItemCount(currentGun.ammoType, (_clipSize - _clip)*currentGun.ammoPerShot);
             SetAmmo(currentGun.clipSize);
         }
         else if(_ammo > 0)
         {
             int num = _ammo*currentGun.ammoPerShot;
             SetAmmo(GetAmmo()+num);
-            inventory.RemoveItemCount(currentGun.ammoType, num);
+            // inventory.RemoveItemCount(currentGun.ammoType, num);
         }
 
         hud.UpdateAmmo();
@@ -219,7 +218,7 @@ new public static Collider2D collider;
         else
         {
             currentGun = guns[_gun];
-            currentItem = Item.NONE;
+            currentItem = null;
         }
 
         if(nullNode) currentItemNode = null;

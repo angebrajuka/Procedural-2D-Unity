@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class GridItemSerializable
 {
-    public byte item;
+    public string item;
     public int x, y;
     public bool rotated;
     public int count;
@@ -15,7 +15,7 @@ public class GridItemSerializable
     public GridItemSerializable(LinkedListNode<GridItem> node)
     {
         GridItem gridItem = node.Value;
-        item = (byte)gridItem.item;
+        item = gridItem.item;
         x = gridItem.GetX();
         y = gridItem.GetY();
         rotated = gridItem.rotated;

@@ -2,40 +2,76 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gun : MonoBehaviour
+[System.Serializable]
+public class GunsJson
 {
-    // Hierarchy
+    public JsonGun[] guns;
+}
+
+[System.Serializable]
+public class JsonGun
+{
+    public string   name;
+    public float    damage;
+    public int      ammoType;
+    public float    rpm;
+    public float    spread;
+    public float    range;
+    public int      clipSize;
+    public int      ammoPerShot;
+    public float    reloadTime;
+    public float    recoil;
+    public int      pellets;
+    public float    volume_shoot;
+    public float    volume_reload;
+    public int      muzzleFlashPrefab;
+    public float[]  barrelTip;
+}
+
+public class Gun
+{
     public string gunName;
     public float damage;
-    public byte h_ammoType;
-    public float rpm;
+    public int ammoType;
     public float spread;
     public float range;
     public int clipSize;
     public int ammoPerShot;
     public float reloadTime;
     public float recoil;
-    public int bullets;
+    public int pellets;
     public AudioClip audio_shoot;
     public float volume_shoot;
     public AudioClip audio_reload;
     public float volume_reload;
-    public Transform muzzleFlashPrefab;
+    public GameObject muzzleFlashPrefab;
+    public float secondsBetweenShots;
+    public Vector3 barrelTip;
+    public Sprite sprite;
+    public Transform transform;
 
-
-    // stats
-    [HideInInspector] public float secondsBetweenShots;
-    [HideInInspector] public Item ammoType;
-
-    // components
-    public Transform barrelTip;
-
-    protected void Start()
+    public Gun(JsonGun json, Transform transform)
     {
-        ammoType = (Item)(h_ammoType+(int)Item.BULLETS_SMALL);
-        secondsBetweenShots = 60.0f/rpm;
-        damage /= bullets;
-        barrelTip = transform.GetChild(0);
+        gunName = json.name;
+        damage = json.damage;
+        ammoType = json.ammoType;
+        spread = json.spread;
+        range = json.range;
+        clipSize = json.clipSize;
+        ammoPerShot = json.ammoPerShot;
+        reloadTime = json.reloadTime;
+        recoil = json.recoil;
+        pellets = json.pellets;
+        audio_shoot = Resources.Load<AudioClip>("");
+        volume_shoot = json.volume_shoot;
+        audio_reload = Resources.Load<AudioClip>("");
+        volume_reload = json.volume_reload;
+        muzzleFlashPrefab = Resources.Load<GameObject>("");
+        secondsBetweenShots = 60.0f/json.rpm;
+        damage /= pellets;
+        barrelTip = new Vector3(json.barrelTip[0], json.barrelTip[1], 0);
+        sprite = Resources.Load<Sprite>("");
+        this.transform = transform;
     }
 
     public bool Shoot(Vector3 position, Vector2 direction, float angle, Rigidbody2D rigidbody)
@@ -43,7 +79,7 @@ public class Gun : MonoBehaviour
         AudioManager.PlayClip(audio_shoot, volume_shoot, Mixer.SFX, 0.5f, position);
         if(muzzleFlashPrefab != null)
         {
-            Transform flash = Instantiate(muzzleFlashPrefab, barrelTip.position, transform.rotation, transform);
+            Transform flash = MonoBehaviour.Instantiate(muzzleFlashPrefab, barrelTip, transform.rotation, transform).transform;
             Vector3 vec = flash.localScale;
             vec.x /= transform.localScale.x;
             vec.y /= transform.localScale.y;
@@ -57,7 +93,7 @@ public class Gun : MonoBehaviour
         PlayerStats.gunRpmTimer = secondsBetweenShots;
 
         bool hit = false;
-        for(int i=0; i<bullets; i++)
+        for(int i=0; i<pellets; i++)
         {
             if(ShootBullet(position, angle)) hit = true;
         }

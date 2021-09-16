@@ -43,7 +43,7 @@ public class SaveData
         PlayerStats.inventory.Clear();
         for(int i=0; i<inventoryItems.Length; i++)
         {
-            GridItem gridItem = PlayerStats.inventory.Add((Item)inventoryItems[i].item, inventoryItems[i].x, inventoryItems[i].y);
+            GridItem gridItem = PlayerStats.inventory.Add(inventoryItems[i].item, inventoryItems[i].x, inventoryItems[i].y);
             if(inventoryItems[i].rotated) gridItem.Rotate();
             gridItem.count = inventoryItems[i].count;
             gridItem.ammo = inventoryItems[i].ammo;

@@ -1,0 +1,21 @@
+{
+    "guns": [
+        {
+            "name": "Pistol",
+            "damage": 3,
+            "ammoType": 0,
+            "rpm": 300,
+            "spread": 0.05,
+            "range": 15,
+            "clipSize": 10,
+            "ammoPerShot": 1,
+            "reloadTime": 1.4,
+            "recoil": 40,
+            "pellets": 1,
+            "volume_shoot": 0.6,
+            "volume_reload": 0.5,
+            "muzzleFlashPrefab": 0,
+            "barrelTip": [0, 0]
+        }
+    ]
+}

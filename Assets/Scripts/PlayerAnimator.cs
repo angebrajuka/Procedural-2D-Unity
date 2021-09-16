@@ -8,7 +8,6 @@ public class PlayerAnimator : MonoBehaviour
     public SpriteRenderer m_renderer;
     public Animator m_animator;
     public SpriteRenderer m_renderer_gun;
-    public SpriteRenderer[] m_renderers_guns;
 
     // input
     public static int direction=0;
@@ -25,21 +24,19 @@ public class PlayerAnimator : MonoBehaviour
 
     public void UpdateGunImage()
     {
-        if(m_renderer_gun != null) m_renderer_gun.enabled = false;
-        m_renderer_gun = PlayerStats._currentGun == -1 ? null : m_renderers_guns[PlayerStats._currentGun];
-        if(m_renderer_gun != null) m_renderer_gun.enabled = true;
+        m_renderer_gun.sprite = PlayerStats._currentGun == -1 ? null : PlayerStats.currentGun.sprite;
     }
 
     static readonly int[] convert = {0, 1, 0, 2};
 
     void Update()
     {
-        if(m_renderer_gun != null)
+        if(PlayerStats.currentGun != null)
         {
             m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
-            Vector3 position = PlayerStats.currentGun.barrelTip.localPosition;
+            Vector3 position = PlayerStats.currentGun.barrelTip;
             position.y = Mathf.Abs(position.y) * (m_renderer_gun.flipY ? -1 : 1);
-            PlayerStats.currentGun.barrelTip.localPosition = position;
+            PlayerStats.currentGun.barrelTip = position;
         }
 
         bool moving = (PlayerInput.input_move.x != 0 || PlayerInput.input_move.y != 0) && (Mathf.Abs(PlayerStats.rigidbody.velocity.x) >= 0.01f || Mathf.Abs(PlayerStats.rigidbody.velocity.y) >= 0.01f) && !PauseHandler.paused;

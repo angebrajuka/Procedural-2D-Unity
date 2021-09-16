@@ -7,7 +7,7 @@ public class ItemPickup : MonoBehaviour
     static readonly Vector2 vecLength2 = new Vector2(2, 2);
 
     // hierarchy
-    public Item item;
+    public string item;
 
     // components
     [HideInInspector] public Rigidbody2D m_rigidbody;
@@ -42,7 +42,7 @@ public class ItemPickup : MonoBehaviour
     {
         if(other.gameObject.layer != 8) return;
         PlayerStats.hud.interact.text = "";
-        PlayerStats.interactItem = Item.NONE;
+        PlayerStats.interactItem = null;
         PlayerStats.interactPickup = null;
     }
 }

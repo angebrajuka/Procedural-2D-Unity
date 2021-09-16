@@ -19,7 +19,8 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         highlighted = false;
     }
     
-    public Item item;
+    public string item;
+    public sbyte gun;
     public int count=1;
     public int ammo=0;
     RectTransform rectTransform;
@@ -39,11 +40,11 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         highlighted = false;
         followMouse = false;
         rectTransform = GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(Items.items[(int)item].size.x*Inventory.cellSize, Items.items[(int)item].size.y*Inventory.cellSize);
+        rectTransform.sizeDelta = new Vector2(Items.items[item].size.x*Inventory.cellSize, Items.items[item].size.y*Inventory.cellSize);
         Transform child = transform.GetChild(0);
         image = child.GetComponent<RectTransform>();
         image.sizeDelta = rectTransform.sizeDelta;
-        child.GetComponent<Image>().sprite = Items.items[(int)item].sprite;
+        child.GetComponent<Image>().sprite = Items.items[item].sprite;
         UpdateCount();
     }
 
@@ -133,11 +134,11 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         else if(highlighted)
         {
-            if(Items.items[(int)item].equipable && Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_equip]))
+            if(Items.items[item].equipable && Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_equip]))
             {
                 if(PlayerStats.currentItemNode == node)
                 {
-                    PlayerStats.currentItem = Item.NONE;
+                    PlayerStats.currentItem = null;
                     PlayerStats.SwitchGun(-1, true);
                 }
                 else

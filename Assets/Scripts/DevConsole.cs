@@ -82,12 +82,12 @@ public class DevConsole : MonoBehaviour
 
     static bool AutoAddItem(string[] args)
     {
-        int itemID = Int32.Parse(args[0]);
+        string itemID = args[0];
         int count = Int32.Parse(args[1]);
 
-        if(itemID >= (int)Item.LAST || itemID <= (int)Item.NONE) return false;
+        if(!Items.items.ContainsKey(itemID)) return false;
 
-        PlayerStats.inventory.AutoAdd((Item)itemID, count);
+        PlayerStats.inventory.AutoAdd(itemID, count);
 
         return true;
     }
