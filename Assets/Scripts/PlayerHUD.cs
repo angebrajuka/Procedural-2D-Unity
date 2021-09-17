@@ -13,8 +13,6 @@ new public Transform transform;
     public Image ammoImage;
     public Image currentItem;
     public RectTransform ammoTxt;
-    public Sprite[] ammoImages;
-    // public Text smallBulletsTxt, bigBulletsTxt, shellsTxt, energyTxt;
     public Slider bar_health;
     // public Image bar_health_fillRect;
     public Slider bar_energy;
@@ -25,10 +23,19 @@ new public Transform transform;
 
     // components
     Target m_target;
+    Dictionary<string, Sprite> ammoImages;
 
     public void Init()
     {
         m_target = GetComponent<Target>();
+        ammoImages = new Dictionary<string, Sprite>();
+        foreach(var pair in Items.guns)
+        {
+            if(!ammoImages.ContainsKey(pair.Value.ammoType))
+            {
+                ammoImages.Add(pair.Value.ammoType, Items.items[pair.Value.ammoType].sprite);
+            }
+        }
         // bar_health_fillRect = bar_health.fillRect.GetComponent<Image>();
         UpdateAmmo();
         UpdateHealth();
@@ -42,41 +49,33 @@ new public Transform transform;
 
     public void UpdateHotbar()
     {
-        if(PlayerStats.currentGun == null)
-        {
-            ammoTxt.gameObject.SetActive(false);
-        }
-        else
-        {
-            ammoTxt.gameObject.SetActive(true);
-            ammoImage.sprite = ammoImages[PlayerStats.currentGun.ammoType];
-        }
+        ammoTxt.gameObject.SetActive(false);
+        currentItem.transform.localScale = Vector3.zero;
 
-        
         if(PlayerStats.currentItem != null)
         {
-            ItemStats item = Items.items[PlayerStats.currentItem];
-            currentItem.sprite = item.sprite;
-            currentItem.transform.localScale = new Vector3(item.size.x > item.size.y ? 1 : (float)item.size.x/item.size.y, item.size.y > item.size.x ? 1 : (float)item.size.y/item.size.x, 1);
+            if(PlayerStats.currentItem.gun != null)
+            {
+                ammoTxt.gameObject.SetActive(true);
+                ammoImage.sprite = ammoImages[PlayerStats.currentItem.gun.ammoType];
+            }
+            else
+            {
+                currentItem.sprite = PlayerStats.currentItem.sprite;
+                currentItem.transform.localScale = new Vector3(PlayerStats.currentItem.size.x > PlayerStats.currentItem.size.y ? 1 : (float)PlayerStats.currentItem.size.x/PlayerStats.currentItem.size.y, PlayerStats.currentItem.size.y > PlayerStats.currentItem.size.x ? 1 : (float)PlayerStats.currentItem.size.y/PlayerStats.currentItem.size.x, 1);
+            }
         }
-        else
-        {
-            currentItem.transform.localScale = Vector3.zero;
-        }
-        currentItem.transform.parent.gameObject.SetActive(PlayerStats.currentItem != null);
+
+        currentItem.transform.parent.gameObject.SetActive(PlayerStats.currentItem != null && PlayerStats.currentItem.gun == null);
     }
 
     public void UpdateAmmo()
     {
-        // smallBulletsTxt.text = PlayerStats.inventory.GetTotalCount(Item.BULLETS_SMALL)+"";
-        // bigBulletsTxt.text = PlayerStats.inventory.GetTotalCount(Item.BULLETS_LARGE)+"";
-        // shellsTxt.text = PlayerStats.inventory.GetTotalCount(Item.SHELLS)+"";
-        // energyTxt.text = PlayerStats.inventory.GetTotalCount(Item.PLASMA)+"";
-        if(PlayerStats.currentGun != null)
+        if(PlayerStats.currentItem != null && PlayerStats.currentItem.gun != null)
         {
             currentGunAmmoTxt.text = PlayerStats.GetAmmo() < 10 ? "0" : "";
             currentGunAmmoTxt.text += PlayerStats.GetAmmo()+"";
-            // currentReserveTxt.text = "/"+PlayerStats.inventory.GetTotalCount(PlayerStats.currentGun.ammoType);
+            currentReserveTxt.text = "/"+PlayerStats.inventory.GetTotalCount(PlayerStats.currentItem.gun.ammoType);
         }
     }
 

@@ -179,15 +179,18 @@ public class PlayerInput : MonoBehaviour
         // pew pew
         if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerStats.currentItem != null)
         {
-            ItemStats item = Items.items[PlayerStats.currentItem];
-            if(PlayerStats.currentItemNode != null && PlayerStats.currentItemNode.Value.gun != -1 && PlayerStats.CanShoot())
+        Debug.Log("pew");
+
+            ItemStats item = Items.items[PlayerStats._currentItem];
+            
+            if(PlayerStats.currentItemNode != null && PlayerStats.currentItemNode.Value.gun != null && PlayerStats.CanShoot())
             {
-                PlayerStats.currentGun.Shoot(PlayerStats.rigidbody.position, mouse_offset, angle, PlayerStats.rigidbody);
+                PlayerStats.currentItem.gun.Shoot(PlayerStats.rigidbody.position, mouse_offset, angle, PlayerStats.rigidbody);
                 PlayerStats.hud.UpdateAmmo();
             }
             else if(!PlayerStats.melee)
             {
-                // item.use();
+                item.Use();
             }
         }
 

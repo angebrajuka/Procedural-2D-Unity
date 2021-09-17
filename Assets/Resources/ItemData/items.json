@@ -1,0 +1,22 @@
+{
+    "items": [
+        {
+            "name": "bomb",
+            "size": [2, 2],
+            "maxStack": 1,
+            "equipable": true
+        },
+        {
+            "name": "ammo_pistol",
+            "size": [1, 1],
+            "maxStack": 20,
+            "equipable": false
+        },
+        {
+            "name": "pistol",
+            "size": [3, 2],
+            "maxStack": 1,
+            "equipable": true
+        }
+    ]
+}

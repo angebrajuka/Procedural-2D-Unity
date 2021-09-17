@@ -1,9 +1,9 @@
 {
     "guns": [
         {
-            "name": "Pistol",
+            "name": "pistol",
             "damage": 3,
-            "ammoType": 0,
+            "ammoType": "ammo_pistol",
             "rpm": 300,
             "spread": 0.05,
             "range": 15,

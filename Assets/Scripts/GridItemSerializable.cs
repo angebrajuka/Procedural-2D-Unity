@@ -15,7 +15,7 @@ public class GridItemSerializable
     public GridItemSerializable(LinkedListNode<GridItem> node)
     {
         GridItem gridItem = node.Value;
-        item = gridItem.item;
+        item = gridItem.item.name;
         x = gridItem.GetX();
         y = gridItem.GetY();
         rotated = gridItem.rotated;

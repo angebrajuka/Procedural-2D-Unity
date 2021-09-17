@@ -2,37 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class GunsJson
-{
-    public JsonGun[] guns;
-}
-
-[System.Serializable]
-public class JsonGun
-{
-    public string   name;
-    public float    damage;
-    public int      ammoType;
-    public float    rpm;
-    public float    spread;
-    public float    range;
-    public int      clipSize;
-    public int      ammoPerShot;
-    public float    reloadTime;
-    public float    recoil;
-    public int      pellets;
-    public float    volume_shoot;
-    public float    volume_reload;
-    public int      muzzleFlashPrefab;
-    public float[]  barrelTip;
-}
-
 public class Gun
 {
     public string gunName;
     public float damage;
-    public int ammoType;
+    public string ammoType;
     public float spread;
     public float range;
     public int clipSize;
@@ -62,9 +36,9 @@ public class Gun
         reloadTime = json.reloadTime;
         recoil = json.recoil;
         pellets = json.pellets;
-        audio_shoot = Resources.Load<AudioClip>("");
+        audio_shoot = Resources.Load<AudioClip>("Audio/Guns/"+gunName+"_shoot");
         volume_shoot = json.volume_shoot;
-        audio_reload = Resources.Load<AudioClip>("");
+        audio_reload = Resources.Load<AudioClip>("Audio/Guns/"+gunName+"_reload");
         volume_reload = json.volume_reload;
         muzzleFlashPrefab = Resources.Load<GameObject>("");
         secondsBetweenShots = 60.0f/json.rpm;

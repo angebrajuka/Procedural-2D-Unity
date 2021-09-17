@@ -23,7 +23,8 @@ public class Inventory : MonoBehaviour
     {
         GameObject gameObject = Instantiate(gridItemPrefab, Vector3.zero, Quaternion.identity, grid);
         GridItem gridItem = gameObject.GetComponent<GridItem>();
-        gridItem.item = item;
+        gridItem.item = Items.items.ContainsKey(item) ? Items.items[item] : null;
+        gridItem.gun = Items.guns.ContainsKey(item) ? Items.guns[item] : null;
         gridItem.count = count;
         gridItem.ammo = ammo;
         items.AddLast(gridItem);
@@ -39,15 +40,15 @@ public class Inventory : MonoBehaviour
     public void Equip(LinkedListNode<GridItem> node)
     {
         PlayerStats.currentItemNode = node;
-        if(node.Value.gun == -1)
+        if(node.Value.gun != null)
         {
-            PlayerStats.currentItem = node.Value.item;
-            PlayerStats.SwitchGun(-1, false);
-            PlayerStats.hud.UpdateHotbar();
+            PlayerStats.SwitchGun(node.Value.item.name, false);
         }
         else
         {
-            PlayerStats.SwitchGun(node.Value.gun, false);
+            PlayerStats._currentItem = node.Value.item.name;
+            PlayerStats.SwitchGun("", false);
+            PlayerStats.hud.UpdateHotbar();
         }
     }
 
@@ -72,7 +73,7 @@ public class Inventory : MonoBehaviour
         {
             foreach(GridItem other in items)
             {
-                if(other.item == item && other.count < itemStats.maxStack)
+                if(other.item.name == item && other.count < itemStats.maxStack)
                 {
                     other.count += count;
                     count = other.count - itemStats.maxStack;
@@ -118,7 +119,7 @@ public class Inventory : MonoBehaviour
         
         foreach(GridItem gridItem in items)
         {
-            if(gridItem.item == item)
+            if(gridItem.item.name == item)
             {
                 amount += gridItem.count;
             }
@@ -133,7 +134,7 @@ public class Inventory : MonoBehaviour
         LinkedListNode<GridItem> node = items.First;
         while(node != null)
         {
-            if(node.Value.item == item)
+            if(node.Value.item.name == item)
             {
                 if(sorted.Count == 0)
                 {
@@ -208,13 +209,13 @@ public class Inventory : MonoBehaviour
 
                 if(PlayerStats.currentItemNode == node)
                 {
-                    if(PlayerStats.currentItemNode.Value.gun == -1)
+                    if(PlayerStats.currentItemNode.Value.gun != null)
                     {
-                        PlayerStats.currentItem = null;
+                        PlayerStats.SwitchGun("", false);
                     }
                     else
                     {
-                        PlayerStats.SwitchGun(-1, false);
+                        PlayerStats.currentItem = null;
                     }
                     PlayerStats.currentItemNode = null;
                     PlayerStats.playerAnimator.UpdateGunImage();
@@ -223,11 +224,11 @@ public class Inventory : MonoBehaviour
                 GameObject item = Instantiate(itemPickupPrefab, player_rb.position, Quaternion.identity);
                 item.transform.parent = entities;
                 ItemPickup pickup = item.GetComponent<ItemPickup>();
-                pickup.item = node.Value.item;
+                pickup.item = node.Value.item.name;
                 pickup.count = node.Value.count;
                 pickup.ammo = node.Value.ammo;
                 SpriteRenderer sprite = item.GetComponent<SpriteRenderer>();
-                sprite.sprite = Items.items[node.Value.item].sprite;
+                sprite.sprite = node.Value.item.sprite;
                 item.GetComponent<Rigidbody2D>().AddForce(new Vector2((Random.value-0.5f)*100, (Random.value-0.5f)*100));
                 Destroy(node.Value.gameObject);
                 items.Remove(node);

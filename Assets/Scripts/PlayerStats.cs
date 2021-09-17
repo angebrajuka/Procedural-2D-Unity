@@ -39,14 +39,12 @@ new public static Collider2D collider;
     public static float gunRpmTimer;
     public static float gunReloadTimer;
     public static GameObject reloadSound;
-    public static Gun[] guns;
-    public static int _currentGun;
-    public static Gun currentGun;
 
     // items
     public static bool melee;
     private static sbyte knifeDirection;
-    public static string currentItem = null;
+    public static string _currentItem = null;
+    public static ItemStats currentItem = null;
     public static LinkedListNode<GridItem> currentItemNode;
     public static string interactItem = null;
     public static ItemPickup interactPickup;
@@ -75,13 +73,6 @@ new public static Collider2D collider;
         playerAnimator = GetComponent<PlayerAnimator>();
         playerInput = GetComponent<PlayerInput>();
         collider = GetComponent<BoxCollider2D>();
-
-        var gunsJson = JsonUtility.FromJson<GunsJson>(Resources.Load<TextAsset>("ItemData/guns").text).guns;
-        guns = new Gun[gunsJson.Length];
-        for(int i=0; i<gunsJson.Length; i++)
-        {
-            guns[i] = new Gun(gunsJson[i], gunSpriteTransform);
-        }
     }
 
     public void Reset()
@@ -89,7 +80,7 @@ new public static Collider2D collider;
         PauseHandler.Pause();
         PauseHandler.Blur();
 
-        SwitchGun(-1, true);
+        SwitchGun("", true);
         gunRpmTimer = 0;
         gunReloadTimer = 0;
         melee = false;
@@ -157,9 +148,9 @@ new public static Collider2D collider;
 
     public static void BeginReload()
     {
-        // if(inventory.isOpen || currentGun == null || GetAmmo() == currentGun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || inventory.GetTotalCount(currentGun.ammoType) == 0) return;
-        gunReloadTimer = currentGun.reloadTime;
-        reloadSound = AudioManager.PlayClip(currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
+        if(inventory.isOpen || currentItem == null || currentItem.gun == null || GetAmmo() == currentItem.gun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || inventory.GetTotalCount(currentItem.gun.ammoType) == 0) return;
+        gunReloadTimer = currentItem.gun.reloadTime;
+        reloadSound = AudioManager.PlayClip(currentItem.gun.audio_reload, currentItem.gun.volume_reload, Mixer.SFX);
     }
 
     public static void CancelReload()
@@ -170,20 +161,20 @@ new public static Collider2D collider;
 
     public static void FinishReload()
     {
-        int _ammo = 0;//inventory.GetTotalCount(currentGun.ammoType)/currentGun.ammoPerShot;
-        int _clip = GetAmmo()/currentGun.ammoPerShot;
-        int _clipSize = currentGun.clipSize/currentGun.ammoPerShot;
+        int _ammo = inventory.GetTotalCount(currentItem.gun.ammoType)/currentItem.gun.ammoPerShot;
+        int _clip = GetAmmo()/currentItem.gun.ammoPerShot;
+        int _clipSize = currentItem.gun.clipSize/currentItem.gun.ammoPerShot;
         
         if(_ammo > _clipSize - _clip)
         {
-            // inventory.RemoveItemCount(currentGun.ammoType, (_clipSize - _clip)*currentGun.ammoPerShot);
-            SetAmmo(currentGun.clipSize);
+            inventory.RemoveItemCount(currentItem.gun.ammoType, (_clipSize - _clip)*currentItem.gun.ammoPerShot);
+            SetAmmo(currentItem.gun.clipSize);
         }
         else if(_ammo > 0)
         {
-            int num = _ammo*currentGun.ammoPerShot;
+            int num = _ammo*currentItem.gun.ammoPerShot;
             SetAmmo(GetAmmo()+num);
-            // inventory.RemoveItemCount(currentGun.ammoType, num);
+            inventory.RemoveItemCount(currentItem.gun.ammoType, num);
         }
 
         hud.UpdateAmmo();
@@ -206,19 +197,14 @@ new public static Collider2D collider;
         melee = false;
     }
 
-    public static void SwitchGun(sbyte _gun, bool nullNode)
+    public static void SwitchGun(string _gun, bool nullNode)
     {
         CancelReload();
         
-        _currentGun = _gun;
-        if(_gun == -1)
+        if(Items.guns.ContainsKey(_gun))
         {
-            currentGun = null;
-        }
-        else
-        {
-            currentGun = guns[_gun];
-            currentItem = null;
+            _currentItem = _gun;
+            currentItem = Items.items[_gun];
         }
 
         if(nullNode) currentItemNode = null;
@@ -241,7 +227,7 @@ new public static Collider2D collider;
 
     public static bool CanShoot()
     {
-        return gunRpmTimer <= 0 && currentGun != null && GetAmmo() > 0 && gunReloadTimer <= 0;
+        return gunRpmTimer <= 0 && currentItem != null && currentItem.gun != null && GetAmmo() > 0 && gunReloadTimer <= 0;
     }
 
     void Update()
@@ -256,7 +242,7 @@ new public static Collider2D collider;
             }
         }
 
-        if(currentGun != null && GetAmmo() == 0) BeginReload();
+        if(currentItem != null && currentItem.gun != null && GetAmmo() == 0) BeginReload();
 
         if(gunReloadTimer > 0)
         {

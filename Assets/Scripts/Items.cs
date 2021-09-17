@@ -4,79 +4,116 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-public struct ItemStats
+[System.Serializable] 
+public class JsonItem
+{
+    public string name;
+    public int[] size;
+    public int maxStack;
+    public bool equipable;
+}
+
+[System.Serializable] 
+public class ItemsJson
+{
+    public JsonItem[] items;
+}
+
+public class ItemStats
 {
     public string name;
     public Vector2Int size;
     public int maxStack;
     public bool equipable;
     public Sprite sprite;
+    public Gun gun;
 
-    public ItemStats(string name, Vector2Int size, int maxStack, bool equipable)
+    public ItemStats(JsonItem jsonItem)
     {
-        this.name = name;
-        this.size = size;
-        this.maxStack = maxStack;
-        this.equipable = equipable;
-        this.sprite = Resources.Load<Sprite>("Sprites/item_" + name);
+        name = jsonItem.name;
+        size = new Vector2Int(jsonItem.size[0], jsonItem.size[1]);
+        maxStack = jsonItem.maxStack;
+        equipable = jsonItem.equipable;
+        sprite = Resources.Load<Sprite>("Sprites/Items/"+name);
+        gun = Items.guns.ContainsKey(name) ? Items.guns[name] : null;
     }
+
+    public void Use()
+    {
+        switch(name)
+        {
+        case "bomb":
+            MonoBehaviour.Instantiate(PlayerStats.instance.prefab_bomb, PlayerStats.rigidbody.position, Quaternion.identity);
+            PlayerStats.RemoveCurrentItem();
+            break;
+        case "Blade":
+            PlayerStats.BeginMelee();
+            break;
+        case "Medkit":
+            PlayerStats.target.Heal(20);
+            PlayerStats.RemoveCurrentItem();
+            break;
+        case "Stimpack":
+            PlayerStats.target.Heal(10);
+            PlayerStats.RemoveCurrentItem();
+            break;
+        case "Potion":
+            PlayerStats.RemoveCurrentItem();
+            break;
+        case "FishingRod":
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+[System.Serializable]
+public class GunsJson
+{
+    public JsonGun[] guns;
+}
+
+[System.Serializable]
+public class JsonGun
+{
+    public string   name;
+    public float    damage;
+    public string   ammoType;
+    public float    rpm;
+    public float    spread;
+    public float    range;
+    public int      clipSize;
+    public int      ammoPerShot;
+    public float    reloadTime;
+    public float    recoil;
+    public int      pellets;
+    public float    volume_shoot;
+    public float    volume_reload;
+    public int      muzzleFlashPrefab;
+    public float[]  barrelTip;
 }
 
 public class Items 
 {
-    public static bool UseNone()
-    {
-        return true;
-    }
+    public static Dictionary<string, ItemStats> items;
+    public static Dictionary<string, Gun> guns;
 
-    public static bool UseBlade()
+    public static void Init(Transform gunSpriteTransform)
     {
-        PlayerStats.BeginMelee();
-        return true;
-    }
+        var gunsJson = JsonUtility.FromJson<GunsJson>(Resources.Load<TextAsset>("ItemData/guns").text).guns;
+        guns = new Dictionary<string, Gun>();
+        foreach(var jsonGun in gunsJson)
+        {
+            guns.Add(jsonGun.name, new Gun(jsonGun, gunSpriteTransform));
+        }
 
-    public static bool UseBomb()
-    {
-        MonoBehaviour.Instantiate(PlayerStats.instance.prefab_bomb, PlayerStats.rigidbody.position, Quaternion.identity);
-        PlayerStats.RemoveCurrentItem();
-        return true;
-    }
-
-    public static bool UseMedkit()
-    {
-        PlayerStats.target.Heal(20);
-        PlayerStats.RemoveCurrentItem();
-        return true;
-    }
-
-    public static bool UseStimpack()
-    {
-        PlayerStats.target.Heal(10);
-        PlayerStats.RemoveCurrentItem();
-        return true;
-    }
-
-    public static bool UseCompass()
-    {
-        return true;
-    }
-
-    public static bool UsePotion()
-    {
-        PlayerStats.RemoveCurrentItem();
-        return true;
-    }
-
-    public static bool UseFishingRod()
-    {
-        return true;
-    }
-
-    public static Dictionary<string, ItemStats> items = new Dictionary<string, ItemStats>();
-
-    public static void Init()
-    {
-        
+        var itemsJson = JsonUtility.FromJson<ItemsJson>(Resources.Load<TextAsset>("ItemData/items").text).items;
+        items = new Dictionary<string, ItemStats>();
+        foreach(var jsonItem in itemsJson)
+        {
+            items.Add(jsonItem.name, new ItemStats(jsonItem));
+        }
     }
 
     // {

@@ -50,8 +50,8 @@ public class Init : MonoBehaviour
             daylightCycle.Init();
             dynamicEnemySpawning.Init();
             fadeTransition.Init();
-            Items.Init();
             playerStats.Init();
+            Items.Init(PlayerStats.instance.gunSpriteTransform);
             PlayerStats.hud.Init();
             proceduralGeneration.Init();
             PlayerInput.LoadKeybinds();
