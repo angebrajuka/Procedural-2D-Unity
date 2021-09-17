@@ -2,21 +2,23 @@
     "items": [
         {
             "name": "bomb",
-            "size": [2, 2],
             "maxStack": 1,
             "equipable": true
         },
         {
-            "name": "ammo_pistol",
-            "size": [1, 1],
-            "maxStack": 20,
+            "name": "ammo_9mm",
+            "maxStack": 25,
             "equipable": false
         },
         {
-            "name": "pistol",
-            "size": [3, 2],
-            "maxStack": 1,
-            "equipable": true
+            "name": "ammo_556",
+            "maxStack": 15,
+            "equipable": false
+        },
+        {
+            "name": "ammo_12gauge",
+            "maxStack": 15,
+            "equipable": false
         }
     ]
 }

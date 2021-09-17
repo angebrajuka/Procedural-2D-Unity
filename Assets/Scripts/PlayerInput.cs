@@ -34,7 +34,7 @@ public class PlayerInput : MonoBehaviour
     // output
     public static float angle;
     public static float cursorDistance;
-
+    public static bool moving;
 
 
     // keybinds
@@ -143,6 +143,8 @@ public class PlayerInput : MonoBehaviour
             if(Input.GetKey(keybinds[Keybind.moveSouth])) input_move.y --;
             
             input_move.Normalize();
+
+            moving = (PlayerInput.input_move.x != 0 || PlayerInput.input_move.y != 0) && (Mathf.Abs(PlayerStats.rigidbody.velocity.x) >= 0.01f || Mathf.Abs(PlayerStats.rigidbody.velocity.y) >= 0.01f) && !PauseHandler.paused;
         }
 
         // facing
@@ -177,12 +179,8 @@ public class PlayerInput : MonoBehaviour
         if(Input.GetKey(keybinds[Keybind.reload])) PlayerStats.BeginReload();
 
         // pew pew
-        if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerStats.currentItem != null)
+        if(Input.GetKey(keybinds[Keybind.shoot]) && !moving && PlayerStats.currentItem != null)
         {
-        Debug.Log("pew");
-
-            ItemStats item = Items.items[PlayerStats._currentItem];
-            
             if(PlayerStats.currentItemNode != null && PlayerStats.currentItemNode.Value.gun != null && PlayerStats.CanShoot())
             {
                 PlayerStats.currentItem.gun.Shoot(PlayerStats.rigidbody.position, mouse_offset, angle, PlayerStats.rigidbody);
@@ -190,7 +188,7 @@ public class PlayerInput : MonoBehaviour
             }
             else if(!PlayerStats.melee)
             {
-                item.Use();
+                PlayerStats.currentItem.Use();
             }
         }
 

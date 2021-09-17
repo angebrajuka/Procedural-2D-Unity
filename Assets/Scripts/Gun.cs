@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gun
 {
-    public string gunName;
+    public string name;
     public float damage;
     public string ammoType;
     public float spread;
@@ -24,9 +24,11 @@ public class Gun
     public Sprite sprite;
     public Transform transform;
 
+    public static GameObject[] muzzleFlashes = new GameObject[]{null, null, null};
+
     public Gun(JsonGun json, Transform transform)
     {
-        gunName = json.name;
+        name = json.name;
         damage = json.damage;
         ammoType = json.ammoType;
         spread = json.spread;
@@ -36,33 +38,36 @@ public class Gun
         reloadTime = json.reloadTime;
         recoil = json.recoil;
         pellets = json.pellets;
-        audio_shoot = Resources.Load<AudioClip>("Audio/Guns/"+gunName+"_shoot");
+        audio_shoot = Resources.Load<AudioClip>("Audio/Guns/"+name+"_shoot");
         volume_shoot = json.volume_shoot;
-        audio_reload = Resources.Load<AudioClip>("Audio/Guns/"+gunName+"_reload");
+        audio_reload = Resources.Load<AudioClip>("Audio/Guns/"+name+"_reload");
         volume_reload = json.volume_reload;
-        muzzleFlashPrefab = Resources.Load<GameObject>("");
+        if(muzzleFlashes[json.muzzleFlashPrefab] == null)
+        {
+            muzzleFlashes[json.muzzleFlashPrefab] = Resources.Load<GameObject>("ItemData/MuzzleFlash"+json.muzzleFlashPrefab);
+        }
+        muzzleFlashPrefab = muzzleFlashes[json.muzzleFlashPrefab];
         secondsBetweenShots = 60.0f/json.rpm;
         damage /= pellets;
         barrelTip = new Vector3(json.barrelTip[0], json.barrelTip[1], 0);
-        sprite = Resources.Load<Sprite>("");
+        sprite = Resources.Load<Sprite>("Sprites/Guns/"+name);
         this.transform = transform;
     }
 
     public bool Shoot(Vector3 position, Vector2 direction, float angle, Rigidbody2D rigidbody)
     {
         AudioManager.PlayClip(audio_shoot, volume_shoot, Mixer.SFX, 0.5f, position);
-        if(muzzleFlashPrefab != null)
-        {
-            Transform flash = MonoBehaviour.Instantiate(muzzleFlashPrefab, barrelTip, transform.rotation, transform).transform;
-            Vector3 vec = flash.localScale;
-            vec.x /= transform.localScale.x;
-            vec.y /= transform.localScale.y;
-            flash.localScale = vec;
-        }
+        Transform flash = MonoBehaviour.Instantiate(muzzleFlashPrefab, transform.position, transform.rotation, transform).transform;
+        var tip = barrelTip;
+        if(direction.x < 0) tip.y *= -1;
+        flash.localPosition += tip;
+        Vector3 vec = flash.localScale;
+        vec.x /= transform.localScale.x;
+        vec.y /= transform.localScale.y;
+        flash.localScale = vec;
 
         rigidbody.AddForce(-direction*recoil);
-        
-        
+
         PlayerStats.SetAmmo(PlayerStats.GetAmmo()-ammoPerShot);
         PlayerStats.gunRpmTimer = secondsBetweenShots;
 

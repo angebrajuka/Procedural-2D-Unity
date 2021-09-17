@@ -8,7 +8,6 @@ using System;
 public class JsonItem
 {
     public string name;
-    public int[] size;
     public int maxStack;
     public bool equipable;
 }
@@ -31,10 +30,10 @@ public class ItemStats
     public ItemStats(JsonItem jsonItem)
     {
         name = jsonItem.name;
-        size = new Vector2Int(jsonItem.size[0], jsonItem.size[1]);
         maxStack = jsonItem.maxStack;
         equipable = jsonItem.equipable;
         sprite = Resources.Load<Sprite>("Sprites/Items/"+name);
+        size = new Vector2Int((int)(sprite.texture.width/16f), (int)(sprite.texture.height/16f));
         gun = Items.guns.ContainsKey(name) ? Items.guns[name] : null;
     }
 
@@ -103,13 +102,19 @@ public class Items
     {
         var gunsJson = JsonUtility.FromJson<GunsJson>(Resources.Load<TextAsset>("ItemData/guns").text).guns;
         guns = new Dictionary<string, Gun>();
+        items = new Dictionary<string, ItemStats>();
         foreach(var jsonGun in gunsJson)
         {
-            guns.Add(jsonGun.name, new Gun(jsonGun, gunSpriteTransform));
+            var gun = new Gun(jsonGun, gunSpriteTransform);
+            guns.Add(jsonGun.name, gun);
+            var item = new JsonItem();
+            item.name = gun.name;
+            item.maxStack = 1;
+            item.equipable = true;
+            items.Add(item.name, new ItemStats(item));
         }
 
         var itemsJson = JsonUtility.FromJson<ItemsJson>(Resources.Load<TextAsset>("ItemData/items").text).items;
-        items = new Dictionary<string, ItemStats>();
         foreach(var jsonItem in itemsJson)
         {
             items.Add(jsonItem.name, new ItemStats(jsonItem));

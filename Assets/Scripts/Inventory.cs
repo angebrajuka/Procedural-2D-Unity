@@ -47,6 +47,7 @@ public class Inventory : MonoBehaviour
         else
         {
             PlayerStats._currentItem = node.Value.item.name;
+            PlayerStats.currentItem = Items.items[PlayerStats._currentItem];
             PlayerStats.SwitchGun("", false);
             PlayerStats.hud.UpdateHotbar();
         }
