@@ -7,6 +7,7 @@ public class MenuKeybinds : MonoBehaviour
 {
     public GameObject keybindButton;
     public Transform overlay;
+    public Menu menu;
 
     void Start()
     {
@@ -17,8 +18,7 @@ public class MenuKeybinds : MonoBehaviour
             Transform transform = obj.transform;
             transform.localPosition = new Vector3(340, -50 - (80*i));
             ButtonKeybind button = transform.GetChild(0).GetComponent<ButtonKeybind>();
-            button.keybind = pair.Key;
-            button.overlay = overlay;
+            button.Init(menu, pair.Key, overlay);
 
             Text keybindText = transform.GetChild(1).GetComponent<Text>();
             keybindText.text = pair.Value;
