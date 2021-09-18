@@ -55,7 +55,7 @@
             "name": "dmr",
             "damage": 100,
             "ammoType": "ammo_556",
-            "rpm": 90,
+            "rpm": 120,
             "spread": 0,
             "range": 25,
             "clipSize": 1,

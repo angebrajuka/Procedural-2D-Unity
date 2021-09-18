@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        moving = (PlayerInput.input_move.x != 0 || PlayerInput.input_move.y != 0) && (Mathf.Abs(PlayerStats.rigidbody.velocity.x) >= 0.01f || Mathf.Abs(PlayerStats.rigidbody.velocity.y) >= 0.01f) && !PauseHandler.paused;
+        moving = (PlayerInput.input_move.x != 0 || PlayerInput.input_move.y != 0) && (Mathf.Abs(PlayerStats.rigidbody.velocity.x) >= 0.01f || Mathf.Abs(PlayerStats.rigidbody.velocity.y) >= 0.01f) && !PlayerState.shooting && !PauseHandler.paused;
         biome = ProceduralGeneration.MapClamped(ProceduralGeneration.mapTexture_biome, (int)Mathf.Floor(PlayerStats.rigidbody.position.x), (int)Mathf.Floor(PlayerStats.rigidbody.position.y));
         
         speedMult = 1;

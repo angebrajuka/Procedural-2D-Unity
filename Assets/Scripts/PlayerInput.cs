@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static PlayerState;
 
 public enum Keybind:byte
 {
@@ -22,9 +23,7 @@ public enum Keybind:byte
 public class PlayerInput : MonoBehaviour
 {    
     // hierarchy
-    public Transform weapons;
     public InventoryControls inventory;
-
 
     // input
     [HideInInspector] public static Vector2 input_move;
@@ -33,8 +32,6 @@ public class PlayerInput : MonoBehaviour
     // output
     public static float angle=0;
     public static float cursorDistance=0;
-    public static bool moving=false;
-    public static bool shooting=false;
 
 
     // keybinds
@@ -126,8 +123,6 @@ public class PlayerInput : MonoBehaviour
             cursorDistance = mouse_offset.magnitude;
             mouse_offset.Normalize();
             angle = Math.NormalizedVecToAngle(mouse_offset);
-
-            weapons.eulerAngles = new Vector3(0, 0, angle);
         }
         
         shooting = PlayerStats.gunRpmTimer > 0;

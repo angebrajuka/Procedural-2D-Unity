@@ -3,7 +3,9 @@ using static PlayerStats;
 
 public class PlayerState : MonoBehaviour
 {
+    public static bool moving=false;
     public static bool sprinting=false;
+    public static bool shooting=false;
 
     public void Init()
     {
@@ -95,8 +97,6 @@ public class PlayerState : MonoBehaviour
                 EndMelee();
             }
         }
-
-        if(currentItem != null && currentItem.gun != null && GetAmmo() == 0) BeginReload();
 
         if(gunReloadTimer > 0)
         {
