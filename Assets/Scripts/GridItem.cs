@@ -138,7 +138,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 if(PlayerStats.currentItemNode == node)
                 {
                     PlayerStats.currentItem = null;
-                    PlayerStats.SwitchGun("", true);
+                    PlayerState.SwitchGun("", true);
                 }
                 else
                 {

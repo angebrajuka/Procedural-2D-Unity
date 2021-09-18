@@ -129,18 +129,40 @@ public class PlayerInput : MonoBehaviour
 
             weapons.eulerAngles = new Vector3(0, 0, angle);
         }
+        
+        shooting = PlayerStats.gunRpmTimer > 0;
+        // pew pew
+        if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerStats.currentItem != null)
+        {
+            if(PlayerStats.currentItem.gun != null && PlayerState.CanShoot())
+            {
+                shooting = true;
+                if(PlayerStats.gunRpmTimer <= 0)
+                {
+                    PlayerStats.currentItem.gun.Shoot(PlayerStats.rigidbody.position, mouse_offset, angle, PlayerStats.rigidbody);
+                    PlayerStats.hud.UpdateAmmo();
+                }
+            }
+            else if(!PlayerStats.melee && Input.GetKeyDown(keybinds[Keybind.shoot]))
+            {
+                PlayerStats.currentItem.Use();
+            }
+        }
 
         // movement
         {
             input_move.x = 0;
             input_move.y = 0;
 
-            if(Input.GetKey(keybinds[Keybind.moveEast]))  input_move.x ++;
-            if(Input.GetKey(keybinds[Keybind.moveNorth])) input_move.y ++;
-            if(Input.GetKey(keybinds[Keybind.moveWest]))  input_move.x --;
-            if(Input.GetKey(keybinds[Keybind.moveSouth])) input_move.y --;
-            
-            input_move.Normalize();
+            if(!shooting)
+            {
+                if(Input.GetKey(keybinds[Keybind.moveEast]))  input_move.x ++;
+                if(Input.GetKey(keybinds[Keybind.moveNorth])) input_move.y ++;
+                if(Input.GetKey(keybinds[Keybind.moveWest]))  input_move.x --;
+                if(Input.GetKey(keybinds[Keybind.moveSouth])) input_move.y --;
+                
+                input_move.Normalize();
+            }
         }
 
         // facing
@@ -156,42 +178,23 @@ public class PlayerInput : MonoBehaviour
         }
 
         // battery consumption
-        PlayerStats.sprinting = Input.GetKey(keybinds[Keybind.sprint]) && PlayerStats.energy > 0;
-        PlayerStats.flashlight = !PlayerStats.sprinting && PlayerStats.energy > 0 && (Input.GetKeyDown(keybinds[Keybind.flashlight]) ? !PlayerStats.flashlight : PlayerStats.flashlight);
+        PlayerState.sprinting = Input.GetKey(keybinds[Keybind.sprint]) && PlayerStats.energy > 0;
+        Flashlight.on = !PlayerState.sprinting && PlayerStats.energy > 0 && (Input.GetKeyDown(keybinds[Keybind.flashlight]) ? !Flashlight.on : Flashlight.on);
 
         // inventory
         if(Input.GetKeyDown(keybinds[Keybind.inventory]))
         {
-            PlayerStats.EndMelee();
+            PlayerState.EndMelee();
             PauseHandler.Blur();
             PauseHandler.DisableInputAndHUD();
             inventory.gameObject.SetActive(true);
             PlayerStats.inventory.Open();
             
-            if(PlayerStats.gunReloadTimer > 0) PlayerStats.CancelReload();
+            if(PlayerStats.gunReloadTimer > 0) PlayerState.CancelReload();
         }
         
         // reload
-        if(Input.GetKey(keybinds[Keybind.reload])) PlayerStats.BeginReload();
-
-        shooting = false;
-        // pew pew
-        if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerStats.currentItem != null)
-        {
-            if(PlayerStats.currentItem.gun != null && PlayerStats.CanShoot())
-            {
-                shooting = true;
-                if(PlayerStats.gunRpmTimer <= 0)
-                {
-                    PlayerStats.currentItem.gun.Shoot(PlayerStats.rigidbody.position, mouse_offset, angle, PlayerStats.rigidbody);
-                    PlayerStats.hud.UpdateAmmo();
-                }
-            }
-            else if(!PlayerStats.melee && Input.GetKeyDown(keybinds[Keybind.shoot]))
-            {
-                PlayerStats.currentItem.Use();
-            }
-        }
+        if(Input.GetKey(keybinds[Keybind.reload])) PlayerState.BeginReload();
 
         // interact
         if(Input.GetKeyDown(keybinds[Keybind.interact]))

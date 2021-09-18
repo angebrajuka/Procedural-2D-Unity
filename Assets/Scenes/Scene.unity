@@ -3201,6 +3201,7 @@ GameObject:
   - component: {fileID: 1422633256}
   - component: {fileID: 1422633262}
   - component: {fileID: 1422633261}
+  - component: {fileID: 1422633258}
   - component: {fileID: 1422633255}
   - component: {fileID: 1422633251}
   - component: {fileID: 1422633260}
@@ -3351,6 +3352,18 @@ MonoBehaviour:
     type: 3}
   minRadius: 15
   maxRadius: 30
+--- !u!114 &1422633258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422633249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f38609ff9d73534428c8bf87d4f21fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1422633259
 MonoBehaviour:
   m_ObjectHideFlags: 0

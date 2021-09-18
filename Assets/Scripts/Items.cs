@@ -46,7 +46,7 @@ public class ItemStats
             PlayerStats.SubtractCurrentItem();
             break;
         case "Blade":
-            PlayerStats.BeginMelee();
+            PlayerState.BeginMelee();
             break;
         case "Medkit":
             PlayerStats.target.Heal(20);

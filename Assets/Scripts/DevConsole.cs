@@ -94,7 +94,7 @@ public class DevConsole : MonoBehaviour
 
     static bool SetGun(string[] args)
     {
-        PlayerStats.SwitchGun(args[0], true);
+        PlayerState.SwitchGun(args[0], true);
         return true;
     }
 

@@ -8,6 +8,8 @@ public class Flashlight : MonoBehaviour
     private UnityEngine.Experimental.Rendering.Universal.Light2D flashlight;
     public FlickeringLight flickeringLight;
 
+    public static bool on=false;
+
     void Start()
     {
         flashlight = GetComponent<UnityEngine.Experimental.Rendering.Universal.Light2D>();
@@ -15,7 +17,7 @@ public class Flashlight : MonoBehaviour
 
     void Update()
     {
-        flashlight.intensity = Mathf.Lerp(flashlight.intensity, PlayerStats.flashlight ? 0.47f : 0, 0.16f);
-        flickeringLight.enabled = PlayerStats.flashlight;
+        flashlight.intensity = Mathf.Lerp(flashlight.intensity, on ? 0.47f : 0, 0.16f);
+        flickeringLight.enabled = on;
     }
 }

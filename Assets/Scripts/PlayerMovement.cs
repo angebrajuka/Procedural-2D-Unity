@@ -15,9 +15,9 @@ public class PlayerMovement : MonoBehaviour
         
         speedMult = 1;
         speedMult *= (ProceduralGeneration.s_shallowWater.Contains(biome) || biome == 0) ? 0.6f : 1;
-        speedMult *= PlayerStats.sprinting ? PlayerStats.k_SPRINT_MULTIPLIER : (PlayerStats.flashlight ? PlayerStats.k_FLASHLIGHT_MULTIPLIER : 1);
+        speedMult *= PlayerState.sprinting ? PlayerStats.k_SPRINT_MULTIPLIER : (Flashlight.on ? PlayerStats.k_FLASHLIGHT_MULTIPLIER : 1);
         speedMult *= PlayerStats.instance.debugSpode;
-        speedMult *= PlayerInput.shooting ? 0.4f : 1;
+        // speedMult *= PlayerInput.shooting ? 0.4f : 1;
     }
 
     void FixedUpdate()

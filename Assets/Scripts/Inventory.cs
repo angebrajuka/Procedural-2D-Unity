@@ -41,13 +41,13 @@ public class Inventory : MonoBehaviour
         PlayerStats.currentItemNode = node;
         if(node.Value.item.gun != null)
         {
-            PlayerStats.SwitchGun(node.Value.item.name, false);
+            PlayerState.SwitchGun(node.Value.item.name, false);
         }
         else
         {
             PlayerStats._currentItem = node.Value.item.name;
             PlayerStats.currentItem = Items.items[PlayerStats._currentItem];
-            PlayerStats.SwitchGun("", false);
+            PlayerState.SwitchGun("", false);
             PlayerStats.hud.UpdateHotbar();
         }
     }
@@ -211,7 +211,7 @@ public class Inventory : MonoBehaviour
                 {
                     if(PlayerStats.currentItemNode.Value.item.gun != null)
                     {
-                        PlayerStats.SwitchGun("", false);
+                        PlayerState.SwitchGun("", false);
                     }
                     else
                     {
