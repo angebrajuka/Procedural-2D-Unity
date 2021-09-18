@@ -24,7 +24,7 @@ public class Gun
     public Sprite sprite;
     public Transform transform;
 
-    public static GameObject[] muzzleFlashes = new GameObject[]{null, null, null};
+    public static Dictionary<string, GameObject> muzzleFlashes = new Dictionary<string, GameObject>();
 
     public Gun(JsonGun json, Transform transform)
     {
@@ -42,9 +42,9 @@ public class Gun
         volume_shoot = json.volume_shoot;
         audio_reload = Resources.Load<AudioClip>("Audio/Guns/"+name+"_reload");
         volume_reload = json.volume_reload;
-        if(muzzleFlashes[json.muzzleFlashPrefab] == null)
+        if(!muzzleFlashes.ContainsKey(json.muzzleFlashPrefab))
         {
-            muzzleFlashes[json.muzzleFlashPrefab] = Resources.Load<GameObject>("ItemData/MuzzleFlash"+json.muzzleFlashPrefab);
+            muzzleFlashes.Add(json.muzzleFlashPrefab, Resources.Load<GameObject>("ItemData/MuzzleFlash_"+json.muzzleFlashPrefab));
         }
         muzzleFlashPrefab = muzzleFlashes[json.muzzleFlashPrefab];
         secondsBetweenShots = 60.0f/json.rpm;

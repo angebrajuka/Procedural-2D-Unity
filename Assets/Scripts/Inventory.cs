@@ -24,7 +24,6 @@ public class Inventory : MonoBehaviour
         GameObject gameObject = Instantiate(gridItemPrefab, Vector3.zero, Quaternion.identity, grid);
         GridItem gridItem = gameObject.GetComponent<GridItem>();
         gridItem.item = Items.items.ContainsKey(item) ? Items.items[item] : null;
-        gridItem.gun = Items.guns.ContainsKey(item) ? Items.guns[item] : null;
         gridItem.count = count;
         gridItem.ammo = ammo;
         items.AddLast(gridItem);
@@ -40,7 +39,7 @@ public class Inventory : MonoBehaviour
     public void Equip(LinkedListNode<GridItem> node)
     {
         PlayerStats.currentItemNode = node;
-        if(node.Value.gun != null)
+        if(node.Value.item.gun != null)
         {
             PlayerStats.SwitchGun(node.Value.item.name, false);
         }
@@ -210,7 +209,7 @@ public class Inventory : MonoBehaviour
 
                 if(PlayerStats.currentItemNode == node)
                 {
-                    if(PlayerStats.currentItemNode.Value.gun != null)
+                    if(PlayerStats.currentItemNode.Value.item.gun != null)
                     {
                         PlayerStats.SwitchGun("", false);
                     }

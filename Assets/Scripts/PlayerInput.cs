@@ -13,7 +13,6 @@ public enum Keybind:byte
     flashlight,
     shoot,
     reload,
-    // item,
     interact,
     inventory,
     i_equip,
@@ -32,9 +31,10 @@ public class PlayerInput : MonoBehaviour
     private Vector2 mouse_offset;
 
     // output
-    public static float angle;
-    public static float cursorDistance;
-    public static bool moving;
+    public static float angle=0;
+    public static float cursorDistance=0;
+    public static bool moving=false;
+    public static bool shooting=false;
 
 
     // keybinds
@@ -50,7 +50,6 @@ public class PlayerInput : MonoBehaviour
         {Keybind.flashlight,    "flashlight"            },
         {Keybind.shoot,         "shoot"                 },
         {Keybind.reload,        "reload"                },
-        // {Keybind.item,          "use item"              },
         {Keybind.interact,      "interact"              },
         {Keybind.inventory,     "open inventory"        },
         {Keybind.i_equip,       "inventory equip item"  },
@@ -69,7 +68,6 @@ public class PlayerInput : MonoBehaviour
             {Keybind.flashlight,    KeyCode.LeftShift   },
             {Keybind.shoot,         KeyCode.Mouse0      },
             {Keybind.reload,        KeyCode.R           },
-            // {Keybind.item,          KeyCode.Mouse1      },
             {Keybind.interact,      KeyCode.F           },
             {Keybind.inventory,     KeyCode.Tab         },
             {Keybind.i_equip,       KeyCode.E           },
@@ -143,8 +141,6 @@ public class PlayerInput : MonoBehaviour
             if(Input.GetKey(keybinds[Keybind.moveSouth])) input_move.y --;
             
             input_move.Normalize();
-
-            moving = (PlayerInput.input_move.x != 0 || PlayerInput.input_move.y != 0) && (Mathf.Abs(PlayerStats.rigidbody.velocity.x) >= 0.01f || Mathf.Abs(PlayerStats.rigidbody.velocity.y) >= 0.01f) && !PauseHandler.paused;
         }
 
         // facing
@@ -178,15 +174,20 @@ public class PlayerInput : MonoBehaviour
         // reload
         if(Input.GetKey(keybinds[Keybind.reload])) PlayerStats.BeginReload();
 
+        shooting = false;
         // pew pew
-        if(Input.GetKey(keybinds[Keybind.shoot]) && !moving && PlayerStats.currentItem != null)
+        if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerStats.currentItem != null)
         {
-            if(PlayerStats.currentItemNode != null && PlayerStats.currentItemNode.Value.gun != null && PlayerStats.CanShoot())
+            if(PlayerStats.currentItem.gun != null && PlayerStats.CanShoot())
             {
-                PlayerStats.currentItem.gun.Shoot(PlayerStats.rigidbody.position, mouse_offset, angle, PlayerStats.rigidbody);
-                PlayerStats.hud.UpdateAmmo();
+                shooting = true;
+                if(PlayerStats.gunRpmTimer <= 0)
+                {
+                    PlayerStats.currentItem.gun.Shoot(PlayerStats.rigidbody.position, mouse_offset, angle, PlayerStats.rigidbody);
+                    PlayerStats.hud.UpdateAmmo();
+                }
             }
-            else if(!PlayerStats.melee)
+            else if(!PlayerStats.melee && Input.GetKeyDown(keybinds[Keybind.shoot]))
             {
                 PlayerStats.currentItem.Use();
             }
@@ -227,10 +228,5 @@ public class PlayerInput : MonoBehaviour
                 // }
             }
         }
-    }
-
-    void FixedUpdate()
-    {
-        PlayerStats.rigidbody.AddForce(input_move * PlayerStats.speedMult * (PlayerStats.sprinting ? PlayerStats.k_SPRINT_MULTIPLIER : (PlayerStats.flashlight ? PlayerStats.k_FLASHLIGHT_MULTIPLIER : 1)) * PlayerStats.k_RUN_ACCELL * PlayerStats.instance.debugSpode);
     }
 }

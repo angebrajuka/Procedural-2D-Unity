@@ -12,6 +12,7 @@ new public Transform transform;
     public Text interact;
     public Image ammoImage;
     public Image currentItem;
+    public Text currentItemCount;
     public RectTransform ammoTxt;
     public Slider bar_health;
     // public Image bar_health_fillRect;
@@ -63,6 +64,7 @@ new public Transform transform;
             {
                 currentItem.sprite = PlayerStats.currentItem.sprite;
                 currentItem.transform.localScale = new Vector3(PlayerStats.currentItem.size.x > PlayerStats.currentItem.size.y ? 1 : (float)PlayerStats.currentItem.size.x/PlayerStats.currentItem.size.y, PlayerStats.currentItem.size.y > PlayerStats.currentItem.size.x ? 1 : (float)PlayerStats.currentItem.size.y/PlayerStats.currentItem.size.x, 1);
+                currentItemCount.text = PlayerStats.currentItem == null || PlayerStats.currentItemNode.Value.count == 0 ? "" : PlayerStats.currentItemNode.Value.count+"";
             }
         }
 

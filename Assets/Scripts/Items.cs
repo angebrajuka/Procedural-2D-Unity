@@ -43,7 +43,7 @@ public class ItemStats
         {
         case "bomb":
             MonoBehaviour.Instantiate(PlayerStats.instance.prefab_bomb, PlayerStats.rigidbody.position, Quaternion.identity);
-            PlayerStats.RemoveCurrentItem();
+            PlayerStats.SubtractCurrentItem();
             break;
         case "Blade":
             PlayerStats.BeginMelee();
@@ -89,7 +89,7 @@ public class JsonGun
     public int      pellets;
     public float    volume_shoot;
     public float    volume_reload;
-    public int      muzzleFlashPrefab;
+    public string   muzzleFlashPrefab;
     public float[]  barrelTip;
 }
 

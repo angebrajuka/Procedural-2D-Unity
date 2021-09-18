@@ -36,21 +36,14 @@ public class PlayerAnimator : MonoBehaviour
     {
         m_renderer.flipX = (direction == 1);
 
-        int biome = ProceduralGeneration.MapClamped(ProceduralGeneration.mapTexture_biome, (int)Mathf.Floor(PlayerStats.rigidbody.position.x), (int)Mathf.Floor(PlayerStats.rigidbody.position.y));
-        PlayerStats.speedMult = (ProceduralGeneration.s_shallowWater.Contains(biome) || biome == 0) ? 0.6f : 1;
-        m_animator.SetBool("moving", PlayerInput.moving);
-        m_animator.SetInteger("biome", biome);
-        m_animator.speed = PlayerInput.moving ? PlayerStats.rigidbody.velocity.magnitude * 0.07f : 1;
-
-        // m_renderer_gun.enabled = !PlayerInput.moving && biome != 0;
+        m_animator.SetBool("moving", PlayerMovement.moving);
+        m_animator.SetInteger("biome", PlayerMovement.biome);
+        m_animator.speed = PlayerMovement.moving ? PlayerStats.rigidbody.velocity.magnitude * 0.07f : 1;
 
         if(PlayerStats.currentItem != null && PlayerStats.currentItem.gun != null)
         {
             m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
             weaponSortingGroup.localPosition = m_renderer_gun.flipY ? weaponBack : weaponFront;
-            // Vector3 position = PlayerStats.currentGun.barrelTip;
-            // position.y = Mathf.Abs(position.y) * (m_renderer_gun.flipY ? -1 : 1);
-            // PlayerStats.currentGun.barrelTip = position;
         }
     }
 }

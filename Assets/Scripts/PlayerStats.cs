@@ -51,7 +51,6 @@ new public static Collider2D collider;
     public static int interactPriority=0;
 
     //state
-    public static float speedMult=1; // for swimming and shallow water
     public static bool sprinting=false;
     public static bool flashlight=false;
 
@@ -110,32 +109,24 @@ new public static Collider2D collider;
 
             inventory.Clear();
 
-            // inventory.AutoAdd(Item.BLADE);
-            // inventory.AutoAdd(Item.BOMB);
-            // inventory.AutoAdd(Item.MEDKIT);
-            // inventory.AutoAdd(Item.STIMPACK);
-            // inventory.AutoAdd(Item.COMPASS);
-            // inventory.AutoAdd(Item.POTION);
-            // inventory.AutoAdd(Item.FISHING_ROD);
-            // inventory.AutoAdd(Item.FLASHLIGHT);
-            // inventory.AutoAdd(Item.PISTOL);
-            // inventory.AutoAdd(Item.SMG);
-            // inventory.AutoAdd(Item.ASSAULT_RIFLE);
-            // inventory.AutoAdd(Item.DMR);
-
-            // inventory.AutoAdd(Item.SHOTGUN_PUMP);
-
-            // inventory.AutoAdd(Item.BULLETS_SMALL, 20);
-            // inventory.AutoAdd(Item.BULLETS_LARGE, 20);
-            // inventory.AutoAdd(Item.SHELLS, 16);
-            // inventory.AutoAdd(Item.PLASMA, 60);
-
             difficulty = 2;
 
             Save_Load.Save(save);
         }
         
         hud.UpdateHotbar();
+    }
+
+    public static void SubtractCurrentItem()
+    {
+        currentItemNode.Value.count --;
+        if(currentItemNode.Value.count <= 0)
+        {
+            RemoveCurrentItem();
+        } else
+        {
+            hud.UpdateHotbar();
+        }
     }
 
     public static void RemoveCurrentItem()
@@ -227,7 +218,7 @@ new public static Collider2D collider;
 
     public static bool CanShoot()
     {
-        return gunRpmTimer <= 0 && currentItem != null && currentItem.gun != null && GetAmmo() > 0 && gunReloadTimer <= 0;
+        return currentItem != null && currentItem.gun != null && GetAmmo() > 0 && gunReloadTimer <= 0;
     }
 
     void Update()

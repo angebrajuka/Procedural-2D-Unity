@@ -14,7 +14,6 @@ public class Init : MonoBehaviour
     public MusicManager musicManager;
     public GameObject h_menuMain;
     public GameObject h_menuPause;
-    // public bool setMenu;
     public PlayerStats playerStats;
     public PauseHandler pauseHandler;
     public DevConsole devConsole;
@@ -25,10 +24,6 @@ public class Init : MonoBehaviour
 
     public GameObject mainMenuObject;
     public GameObject gameWorldObject;
-
-
-    // public float seed;
-    // public bool setSeed;
 
     static bool init=false;
     
@@ -58,8 +53,6 @@ public class Init : MonoBehaviour
 
             MenuHandler.mainMenuObject = mainMenuObject;
             MenuHandler.gameWorldObject = gameWorldObject;
-
-
 
             MenuHandler.MainMenu();
         }

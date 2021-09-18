@@ -1,11 +1,6 @@
 {
     "items": [
         {
-            "name": "bomb",
-            "maxStack": 1,
-            "equipable": true
-        },
-        {
             "name": "ammo_9mm",
             "maxStack": 25,
             "equipable": false
@@ -19,6 +14,46 @@
             "name": "ammo_12gauge",
             "maxStack": 15,
             "equipable": false
+        },
+        {
+            "name": "ammo_plasma",
+            "maxStack": 30,
+            "equipable": false
+        },
+        {
+            "name": "fishing_rod",
+            "maxStack": 1,
+            "equipable": true
+        },
+        {
+            "name": "bomb",
+            "maxStack": 3,
+            "equipable": true
+        },
+        {
+            "name": "blade",
+            "maxStack": 1,
+            "equipable": true
+        },
+        {
+            "name": "medkit",
+            "maxStack": 2,
+            "equipable": true
+        },
+        {
+            "name": "stimpack",
+            "maxStack": 4,
+            "equipable": true
+        },
+        {
+            "name": "compass",
+            "maxStack": 1,
+            "equipable": true
+        },
+        {
+            "name": "potion",
+            "maxStack": 2,
+            "equipable": true
         }
     ]
 }

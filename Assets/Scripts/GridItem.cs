@@ -19,9 +19,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         highlighted = false;
     }
     
-    // public string itemName;
     public ItemStats item;
-    public Gun gun;
     public int count=1;
     public int ammo=0;
     RectTransform rectTransform;
