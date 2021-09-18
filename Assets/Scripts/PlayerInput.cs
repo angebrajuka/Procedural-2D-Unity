@@ -189,7 +189,7 @@ public class PlayerInput : MonoBehaviour
         }
         
         // reload
-        if(Input.GetKey(keybinds[Keybind.reload])) PlayerState.BeginReload();
+        if(Input.GetKey(keybinds[Keybind.reload]) && PlayerMovement.biome != 0) PlayerState.BeginReload();
 
         // interact
         if(Input.GetKeyDown(keybinds[Keybind.interact]))
