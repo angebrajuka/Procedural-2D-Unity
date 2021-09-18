@@ -17,6 +17,7 @@ public class ProceduralChunk : MonoBehaviour
     public void _Start()
     {
         m_tilemap = transform.GetChild(0).GetComponent<Tilemap>();
+        enabled = false;
     }
     
     public void Init()

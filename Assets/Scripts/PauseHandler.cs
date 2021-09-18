@@ -9,44 +9,35 @@ public class PauseHandler : MonoBehaviour
     public Volume volume;
     static DepthOfField dofComponent;
     static int focalLengthVal=1;
-    static Dictionary<Rigidbody2D, Vector3> rb_vels;
     public static bool paused;
 
     public void Init()
     {
         volume.profile.TryGet<DepthOfField>(out dofComponent);
-        rb_vels = new Dictionary<Rigidbody2D, Vector3>();
         paused = false;
     }
 
     public static void FreezePhysics()
     {
-        rb_vels.Clear();
-        Rigidbody2D[] rb = Rigidbody.FindObjectsOfType(typeof(Rigidbody2D)) as Rigidbody2D[];
-        foreach(Rigidbody2D body in rb)
-        {
-            rb_vels.Add(body, body.velocity);
-            body.velocity *= 0;
-        }
+        Time.timeScale = 0;
     }
 
     public static void UnfreezePhysics()
     {
-        foreach(KeyValuePair<Rigidbody2D, Vector3> pair in rb_vels)
-        {
-            pair.Key.velocity = pair.Value;
-        }
+        Time.timeScale = 1;
     }
 
     public static void DisableInputAndHUD()
     {
         PlayerStats.playerInput.enabled = false;
+        PlayerStats.playerMovement.enabled = false;
         PlayerStats.hud.transform.gameObject.SetActive(false);
     }
 
     public static void EnableInputAndHUD()
     {
         PlayerStats.playerInput.enabled = true;
+        PlayerStats.playerMovement.enabled = true;
         PlayerStats.hud.transform.gameObject.SetActive(true);
     }
 

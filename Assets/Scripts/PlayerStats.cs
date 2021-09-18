@@ -21,6 +21,7 @@ public class PlayerStats : MonoBehaviour
 new public static Rigidbody2D rigidbody;
     public static PlayerAnimator playerAnimator;
     public static PlayerInput playerInput;
+    public static PlayerMovement playerMovement;
 new public static Collider2D collider;
 
 
@@ -66,6 +67,7 @@ new public static Collider2D collider;
         rigidbody = GetComponent<Rigidbody2D>();
         playerAnimator = GetComponent<PlayerAnimator>();
         playerInput = GetComponent<PlayerInput>();
+        playerMovement = GetComponent<PlayerMovement>();
         collider = GetComponent<BoxCollider2D>();
     }
 
@@ -88,6 +90,7 @@ new public static Collider2D collider;
         else
         {
             rigidbody.position = ProceduralGeneration.center;
+            transform.position = rigidbody.position;
             
             while(entities.childCount > 0)
             {

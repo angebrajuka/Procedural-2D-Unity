@@ -85,8 +85,8 @@ public class ProceduralGeneration : MonoBehaviour
     public const int mapRadius=16;
     public const int mapDiameter=mapRadius*2;
     public static readonly Vector2Int center = Vector2Int.one*mapRadius*chunkSize;
-    public static Dictionary<(int x, int y), GameObject> loadedChunks;
-    public static LinkedList<GameObject> disabledChunks;
+    public static Dictionary<(int x, int y), ProceduralChunk> loadedChunks;
+    public static LinkedList<ProceduralChunk> disabledChunks;
     public int renderDistance;
     public static bool reset=true;
 
@@ -186,8 +186,14 @@ public class ProceduralGeneration : MonoBehaviour
             }
         }
 
-        loadedChunks = new Dictionary<(int, int), GameObject>();
-        disabledChunks = new LinkedList<GameObject>();
+        loadedChunks = new Dictionary<(int, int), ProceduralChunk>();
+        disabledChunks = new LinkedList<ProceduralChunk>();
+
+        while(disabledChunks.Count < Math.Sqr(renderDistance*2))
+        {
+            disabledChunks.AddLast(Instantiate(prefab_chunk).GetComponent<ProceduralChunk>());
+            disabledChunks.Last.Value._Start();
+        }
     }
 
     static Color32 AverageColorFromTexture(Texture2D tex)
@@ -377,19 +383,14 @@ public class ProceduralGeneration : MonoBehaviour
             {
                 if(!loadedChunks.ContainsKey((x, y)))
                 {
-                    if(disabledChunks.Count == 0)
-                    {
-                        disabledChunks.AddLast(Instantiate(prefab_chunk));
-                        disabledChunks.Last.Value.GetComponent<ProceduralChunk>()._Start();
-                    }
-                    GameObject chunkObj = disabledChunks.First.Value;
+                    var chunk = disabledChunks.First.Value;
+                    var chunkObj = disabledChunks.First.Value.gameObject;
                     disabledChunks.RemoveFirst();
                     chunkObj.SetActive(true);
                     chunkObj.transform.localPosition = new Vector3(x*chunkSize, y*chunkSize, 0);
-                    var chunk = chunkObj.GetComponent<ProceduralChunk>();
                     chunk.enabled = true;
                     chunk.Init();
-                    loadedChunks.Add((x, y), chunkObj);
+                    loadedChunks.Add((x, y), chunk);
                 }
             }
         }
@@ -408,8 +409,8 @@ public class ProceduralGeneration : MonoBehaviour
             {
                 if(Mathf.Abs(key.x-currPos.x) > renderDistance || Mathf.Abs(key.y-currPos.y) > renderDistance || reset)
                 {
-                    loadedChunks[key].GetComponent<ProceduralChunk>().RemoveDecorations();
-                    loadedChunks[key].SetActive(false);
+                    loadedChunks[key].RemoveDecorations();
+                    loadedChunks[key].gameObject.SetActive(false);
                     disabledChunks.AddLast(loadedChunks[key]);
                     loadedChunks.Remove(key);
                 }
@@ -430,7 +431,7 @@ public class ProceduralGeneration : MonoBehaviour
 
         foreach(var pair in loadedChunks)
         {
-            if(!pair.Value.GetComponent<ProceduralChunk>().loaded) return;
+            if(!pair.Value.loaded) return;
         }
 
         FadeTransition.Fade(true, OnFadeComplete);

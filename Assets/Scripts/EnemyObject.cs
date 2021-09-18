@@ -22,7 +22,7 @@ public class EnemyObject : MonoBehaviour
     [HideInInspector] public bool awake;
     [HideInInspector] public Enemy enemy;
 
-    void Start()
+    public void Start()
     {
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_renderer = transform.GetChild(0).GetComponent<SpriteRenderer>();

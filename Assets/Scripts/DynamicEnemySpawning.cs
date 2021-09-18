@@ -30,7 +30,7 @@ public class DynamicEnemySpawning : MonoBehaviour
     [HideInInspector] public static DynamicEnemySpawning instance;
 
     // stats
-    public static Enemy[] enemies;
+    public static Dictionary<string, Enemy> enemies;
     public static LinkedList<EnemyObject> enemyObjects = new LinkedList<EnemyObject>();
     public static int totalDifficulty=0;
     public static float timer;
@@ -40,14 +40,16 @@ public class DynamicEnemySpawning : MonoBehaviour
     {
         instance = this;
         totalDifficulty = 0;
-        enemies = JsonUtility.FromJson<EnemiesJson>(Resources.Load<TextAsset>("EnemyData/enemies").text).enemies;
-        foreach(var enemy in enemies)
+        enemies = new Dictionary<string, Enemy>();
+        var enemies_ = JsonUtility.FromJson<EnemiesJson>(Resources.Load<TextAsset>("EnemyData/enemies").text).enemies;
+        foreach(var enemy in enemies_)
         {
             enemy.sprites = new Sprite[3][];
             for(int s=0; s<3; s++)
             {
                 enemy.sprites[s] = Resources.LoadAll<Sprite>("Sprites/Enemies/"+enemy.name+states[s]);
             }
+            enemies.Add(enemy.name, enemy);
         }
     }
 
@@ -69,8 +71,9 @@ public class DynamicEnemySpawning : MonoBehaviour
         return (float)totalDifficulty / GetDifficultyValue();
     }
 
-    public void Spawn(Enemy enemy, bool autoPosition=true, Vector2 position=default(Vector2))
+    public EnemyObject Spawn(string name, bool autoPosition=true, Vector2 position=default(Vector2))
     {
+        var enemy = enemies[name];
         if(autoPosition)
         {
             position = PlayerStats.rigidbody.position + Random.insideUnitCircle.normalized*Random.Range(minRadius, maxRadius);
@@ -81,6 +84,8 @@ public class DynamicEnemySpawning : MonoBehaviour
         enemyObject.awake = true;
         enemyObjects.AddLast(enemyObject);
         totalDifficulty += enemy.difficulty;
+
+        return enemyObject;
     }
 
     public static void DeSpawn(EnemyObject enemyObject)
@@ -103,7 +108,7 @@ public class DynamicEnemySpawning : MonoBehaviour
             if(timer <= 0 && totalDifficulty < GetDifficultyValue())
             {
                 timer = UnityEngine.Random.value*0+0.5f;
-                Spawn(enemies[0]);
+                Spawn("spider");
             }
         }
     }

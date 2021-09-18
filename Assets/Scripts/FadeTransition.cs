@@ -41,7 +41,7 @@ public class FadeTransition : MonoBehaviour
         if(!done)
         {
             Color col = image.color;
-            col.a += (fadingIn ? -1 : 1) * Time.deltaTime * fadeSpeed;
+            col.a += (fadingIn ? -1 : 1) * Time.unscaledDeltaTime * fadeSpeed;
             if((fadingIn && col.a <= 0) || (!fadingIn && col.a >= 1))
             {
                 col.a = Mathf.Round(col.a);

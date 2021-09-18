@@ -19,9 +19,9 @@ public class DaylightCycle : MonoBehaviour
         globalLight = GetComponent<UnityEngine.Experimental.Rendering.Universal.Light2D>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        time += PauseHandler.paused ? 0 : Time.fixedDeltaTime;
+        time += PauseHandler.paused ? 0 : Time.deltaTime;
         if(time >= k_MORNING) time = 0;
         
         globalLight.intensity = (time < k_DAY)      ? Mathf.Lerp(brightness_night, brightness_day, time/k_DAY)
