@@ -12,7 +12,8 @@ public class PlayerAnimator : MonoBehaviour
     public SpriteRenderer m_renderer_gun;
     public SpriteRenderer m_renderer_arm;
     public GameObject gun;
-    public GameObject arm;
+    public GameObject arm_right;
+    public GameObject arm_left;
     public Transform gunRotatePoint;
     public Transform armRotatePoint;
 
@@ -57,6 +58,7 @@ public class PlayerAnimator : MonoBehaviour
         armRotatePoint.eulerAngles = new Vector3(0, 0, PlayerInput.angle);
 
         gun.SetActive(PlayerState.shooting);
-        arm.SetActive(PlayerState.shooting);
+        arm_right.SetActive(PlayerState.shooting);
+        arm_left.SetActive(PlayerState.shooting && direction == 1);
     }
 }

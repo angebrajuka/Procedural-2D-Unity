@@ -125,9 +125,9 @@ public class PlayerInput : MonoBehaviour
             angle = Math.NormalizedVecToAngle(mouse_offset);
         }
         
-        shooting = PlayerStats.gunRpmTimer > 0;
+        shooting = PlayerStats.gunRpmTimer > 0 || PlayerStats.gunReloadTimer > 0;
         // pew pew
-        if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerStats.currentItem != null)
+        if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerStats.currentItem != null && PlayerMovement.biome != 0)
         {
             if(PlayerStats.currentItem.gun != null && PlayerState.CanShoot())
             {
