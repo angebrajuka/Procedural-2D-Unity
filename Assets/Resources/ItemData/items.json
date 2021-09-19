@@ -27,7 +27,7 @@
         },
         {
             "name": "bomb",
-            "maxStack": 3,
+            "maxStack": 1,
             "equipable": true
         },
         {
@@ -37,12 +37,12 @@
         },
         {
             "name": "medkit",
-            "maxStack": 2,
+            "maxStack": 1,
             "equipable": true
         },
         {
             "name": "stimpack",
-            "maxStack": 4,
+            "maxStack": 1,
             "equipable": true
         },
         {
@@ -52,7 +52,7 @@
         },
         {
             "name": "potion",
-            "maxStack": 2,
+            "maxStack": 1,
             "equipable": true
         }
     ]

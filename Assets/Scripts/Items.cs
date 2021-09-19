@@ -26,15 +26,30 @@ public class ItemStats
     public bool equipable;
     public Sprite sprite;
     public Gun gun;
+    public GameObject[] prefabs;
 
     public ItemStats(JsonItem jsonItem)
     {
         name = jsonItem.name;
         maxStack = jsonItem.maxStack;
         equipable = jsonItem.equipable;
-        sprite = Resources.Load<Sprite>("Sprites/Items/"+name);
-        size = new Vector2Int((int)(sprite.texture.width/16f), (int)(sprite.texture.height/16f));
+        sprite = Resources.Load<Sprite>("Sprites/Guns/"+name);
+        if(sprite == null) sprite = Resources.Load<Sprite>("Sprites/Items/"+name);
+        size = new Vector2Int((int)(sprite.texture.width/8f), (int)(sprite.texture.height/8f));
         gun = Items.guns.ContainsKey(name) ? Items.guns[name] : null;
+
+        prefabs = new GameObject[5];
+        for(int i=0; true; i++)
+        {
+            prefabs[i] = Resources.Load<GameObject>("ItemData/prefab_"+name+"_"+i);
+            if(prefabs[i] == null)
+            {
+                Array.Resize(ref prefabs, i);
+                break;
+            }
+            prefabs[i].SetActive(false);
+            Array.Resize(ref prefabs, prefabs.Length*2);
+        }
     }
 
     public void Use()
@@ -42,24 +57,24 @@ public class ItemStats
         switch(name)
         {
         case "bomb":
-            MonoBehaviour.Instantiate(Items.prefab_bomb, PlayerMovement.rb.position, Quaternion.identity).SetActive(true);
+            MonoBehaviour.Instantiate(prefabs[0], PlayerMovement.rb.position, Quaternion.identity).SetActive(true);
             PlayerStats.SubtractCurrentItem();
             break;
-        case "Blade":
+        case "blade":
             PlayerState.BeginMelee();
             break;
-        case "Medkit":
+        case "medkit":
             PlayerTarget.target.Heal(20);
-            PlayerStats.RemoveCurrentItem();
+            PlayerStats.SubtractCurrentItem();
             break;
-        case "Stimpack":
+        case "stimpack":
             PlayerTarget.target.Heal(10);
+            PlayerStats.SubtractCurrentItem();
+            break;
+        case "potion":
             PlayerStats.RemoveCurrentItem();
             break;
-        case "Potion":
-            PlayerStats.RemoveCurrentItem();
-            break;
-        case "FishingRod":
+        case "fishing_rod":
             break;
         default:
             break;
@@ -95,15 +110,11 @@ public class JsonGun
 
 public class Items 
 {
-    public static GameObject prefab_bomb;
     public static Dictionary<string, ItemStats> items;
     public static Dictionary<string, Gun> guns;
 
     public static void Init(Transform gunSpriteTransform)
     {
-        prefab_bomb = Resources.Load<GameObject>("ItemData/Bomb");
-        prefab_bomb.SetActive(false);
-
         var gunsJson = JsonUtility.FromJson<GunsJson>(Resources.Load<TextAsset>("ItemData/guns").text).guns;
         guns = new Dictionary<string, Gun>();
         items = new Dictionary<string, ItemStats>();

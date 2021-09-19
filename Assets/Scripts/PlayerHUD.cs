@@ -68,7 +68,9 @@ new public Transform transform;
             {
                 currentItem.sprite = PlayerState.currentItem.sprite;
                 currentItem.transform.localScale = new Vector3(PlayerState.currentItem.size.x > PlayerState.currentItem.size.y ? 1 : (float)PlayerState.currentItem.size.x/PlayerState.currentItem.size.y, PlayerState.currentItem.size.y > PlayerState.currentItem.size.x ? 1 : (float)PlayerState.currentItem.size.y/PlayerState.currentItem.size.x, 1);
-                currentItemCount.text = PlayerState.currentItem == null || PlayerState.currentItemNode.Value.count == 0 ? "" : PlayerState.currentItemNode.Value.count+"";
+                
+                int count = Inventory.instance.GetTotalCount(PlayerState.currentItem.name);
+                currentItemCount.text = count == 1 ? "" : count+"";
             }
         }
 

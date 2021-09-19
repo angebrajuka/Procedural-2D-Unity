@@ -35,8 +35,15 @@ public class PlayerStats : MonoBehaviour
         currentItemNode.Value.count --;
         if(currentItemNode.Value.count <= 0)
         {
+            string name = currentItem.name;
             RemoveCurrentItem();
-        } else
+            LinkedListNode<GridItem> gridItem;
+            if(Inventory.instance.GetTotalCount(name, out gridItem) > 0)
+            {
+                Inventory.instance.Equip(gridItem);
+            }
+        }
+        else
         {
             PlayerHUD.instance.UpdateHotbar();
         }

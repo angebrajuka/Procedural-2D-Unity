@@ -30,7 +30,7 @@ public class PlayerState : MonoBehaviour
     public static LinkedListNode<GridItem> currentItemNode;
     public static string interactItem = null;
     public static ItemPickup interactPickup;
-    public static int interactPriority=0;
+    // public static int interactPriority=0;
 
     public void Init()
     {

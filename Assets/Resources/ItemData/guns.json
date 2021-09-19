@@ -134,7 +134,7 @@
             "volume_shoot": 0.5,
             "volume_reload": 0.6,
             "muzzleFlashPrefab": "energyRifle",
-            "barrelTip": [0, 0]
+            "barrelTip": [2, 0]
         },
         {
             "name": "energy_railgun",
@@ -151,7 +151,7 @@
             "volume_shoot": 0.5,
             "volume_reload": 0.6,
             "muzzleFlashPrefab": "laser",
-            "barrelTip": [0, 0]
+            "barrelTip": [2, 0]
         }
     ]
 }

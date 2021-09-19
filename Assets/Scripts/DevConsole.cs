@@ -20,9 +20,9 @@ public class DevConsole : MonoBehaviour
 
     static bool Time(string[] args)
     {
-        float amount = float.Parse(args[1]);
+        float amount = float.Parse(args[2]);
 
-        switch(args[0])
+        switch(args[1])
         {
         case "set":
             DaylightCycle.time = amount;
@@ -42,9 +42,9 @@ public class DevConsole : MonoBehaviour
 
     static bool Health(string[] args)
     {
-        float amount = float.Parse(args[1]);
+        float amount = float.Parse(args[2]);
 
-        switch(args[0])
+        switch(args[1])
         {
         case "add":
             PlayerTarget.target.Heal(amount);
@@ -61,9 +61,9 @@ public class DevConsole : MonoBehaviour
 
     static bool Energy(string[] args)
     {
-        float amount = float.Parse(args[1]);
+        float amount = float.Parse(args[2]);
 
-        switch(args[0])
+        switch(args[1])
         {
         case "set":
             PlayerStats.energy = amount;
@@ -82,8 +82,8 @@ public class DevConsole : MonoBehaviour
 
     static bool AutoAddItem(string[] args)
     {
-        string itemID = args[0];
-        int count = Int32.Parse(args[1]);
+        string itemID = args[1];
+        int count = Int32.Parse(args[2]);
 
         if(!Items.items.ContainsKey(itemID)) return false;
 
@@ -94,14 +94,14 @@ public class DevConsole : MonoBehaviour
 
     static bool SetGun(string[] args)
     {
-        PlayerState.SwitchGun(args[0], true);
+        PlayerState.SwitchGun(args[1], true);
         return true;
     }
 
 
     static bool Teleport(string[] args)
     {
-        if(Int32.TryParse(args[0], out int x) && Int32.TryParse(args[1], out int y))
+        if(Int32.TryParse(args[1], out int x) && Int32.TryParse(args[2], out int y))
         {
             PlayerMovement.rb.position = new Vector3(x, y, 0);
 
@@ -109,6 +109,20 @@ public class DevConsole : MonoBehaviour
         }
 
         return false;
+    }
+
+    static bool KFA(string[] args)
+    {
+        foreach(var pair in Items.guns)
+        {
+            if(args.Length != 2)
+            {
+                AutoAddItem(new string[]{"give", pair.Key, "1"});
+            }
+            AutoAddItem(new string[]{"give", pair.Value.ammoType+"", pair.Value.clipSize+""});
+        }
+
+        return true;
     }
 
 
@@ -120,7 +134,8 @@ public class DevConsole : MonoBehaviour
         {"energy",      Energy      },
         {"give",        AutoAddItem },
         {"setgun",      SetGun      },
-        {"tp",          Teleport    }
+        {"tp",          Teleport    },
+        {"kfa",         KFA         }
     };
 
     void Enable()
@@ -151,10 +166,10 @@ public class DevConsole : MonoBehaviour
     public void OnCommandEntered()
     {
         string text = textObject.text.ToLower();
-        string[] words = text.Split(new char[]{' '}, 2);
+        string[] words = text.Split(' ');
         try
         {
-            commands[words[0]](words[1].Split(' '));
+            commands[words[0]](words);
         }
         catch {}
         

@@ -53,9 +53,9 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            PlayerState._currentItem = node.Value.item.name;
-            PlayerState.currentItem = Items.items[PlayerState._currentItem];
             PlayerState.SwitchGun("", false);
+            PlayerState._currentItem = node.Value.item.name;
+            PlayerState.currentItem = node.Value.item;
             PlayerHUD.instance.UpdateHotbar();
         }
     }
@@ -123,13 +123,21 @@ public class Inventory : MonoBehaviour
 
     public int GetTotalCount(string item)
     {
+        LinkedListNode<GridItem> gridItem;
+        return GetTotalCount(item, out gridItem);
+    }
+
+    public int GetTotalCount(string item, out LinkedListNode<GridItem> out_item)
+    {
+        out_item = null;
         int amount = 0;
         
-        foreach(GridItem gridItem in items)
+        for(LinkedListNode<GridItem> gridItem=items.First; gridItem!=null; gridItem=gridItem.Next)
         {
-            if(gridItem.item.name == item)
+            if(gridItem.Value.item.name == item)
             {
-                amount += gridItem.count;
+                if(amount == 0) out_item = gridItem;
+                amount += gridItem.Value.count;
             }
         }
 

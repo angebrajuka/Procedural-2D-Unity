@@ -4972,7 +4972,7 @@ GameObject:
   - component: {fileID: 404997224797622803}
   - component: {fileID: 6412114100873253045}
   m_Layer: 0
-  m_Name: Bomb
+  m_Name: prefab_bomb_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
