@@ -198,6 +198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 73507469}
+  - component: {fileID: 73507470}
   m_Layer: 0
   m_Name: GameWorld
   m_TagString: Untagged
@@ -223,6 +224,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &73507470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73507468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfbc006095d15049b3c5d4cc8c9541a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &88053856
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +291,6 @@ GameObject:
   - component: {fileID: 109599348}
   - component: {fileID: 109599351}
   - component: {fileID: 109599350}
-  - component: {fileID: 109599349}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -303,23 +315,8 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 8, y: 0}
-  m_SizeDelta: {x: 37, y: 37}
+  m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 1, y: 0.5}
---- !u!114 &109599349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 109599347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!114 &109599350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1176,6 +1173,7 @@ MonoBehaviour:
     type: 3}
   h_menuPause: {fileID: 6298506397448957745, guid: 16784d1a561a17f4e85ca8f676b2f81b,
     type: 3}
+  entities: {fileID: 561002595}
   player: {fileID: 1422633250}
   gunSpriteTransform: {fileID: 1277829917}
   pauseHandler: {fileID: 1378529023}
@@ -1538,6 +1536,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 561002594}
+  - component: {fileID: 561002595}
   m_Layer: 0
   m_Name: Entities
   m_TagString: Untagged
@@ -1559,6 +1558,18 @@ Transform:
   m_Father: {fileID: 73507469}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &561002595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561002593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced7211944852bb49898cdfd445d3d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &561793918
 GameObject:
   m_ObjectHideFlags: 0
@@ -3166,7 +3177,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1.02, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!212 &1277829918
@@ -3643,8 +3654,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 1562518597343047322, guid: d3a2a2af39dd3674ba3b374ea4a35dd0,
     type: 3}
-  minRadius: 15
-  maxRadius: 30
+  minRadius: 20
+  maxRadius: 35
 --- !u!114 &1422633258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3659,7 +3670,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knifeRotationPoint: {fileID: 2003165959}
   knifeStart: {fileID: 1548968148}
-  entities: {fileID: 561002594}
 --- !u!114 &1422633259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19531,7 +19541,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1.5
+  m_PixelsPerUnitMultiplier: 0.375
 --- !u!222 &2104654371
 CanvasRenderer:
   m_ObjectHideFlags: 0

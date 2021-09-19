@@ -14,6 +14,7 @@ public class Init : MonoBehaviour
     public MusicManager musicManager;
     public GameObject h_menuMain;
     public GameObject h_menuPause;
+    public Entities entities;
     public Transform player;
     public Transform gunSpriteTransform;
     public PauseHandler pauseHandler;
@@ -39,6 +40,7 @@ public class Init : MonoBehaviour
 
             audioManager.Init();
             musicManager.Init();
+            entities.Init();
             pauseHandler.Init();
             devConsole.Init();
             daylightCycle.Init();

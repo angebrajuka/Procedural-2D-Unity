@@ -76,9 +76,9 @@ public class DynamicEnemySpawning : MonoBehaviour
         var enemy = enemies[name];
         if(autoPosition)
         {
-            position = PlayerMovement.rb.position + Random.insideUnitCircle.normalized*Random.Range(minRadius, maxRadius);
+            position = Random.insideUnitCircle.normalized*Random.Range(minRadius, maxRadius) + PlayerMovement.rb.position;
         }
-        GameObject gameObject = Instantiate(enemyPrefab, position, Quaternion.identity);
+        GameObject gameObject = Instantiate(enemyPrefab, position, Quaternion.identity, Entities.t);
         EnemyObject enemyObject = gameObject.GetComponent<EnemyObject>();
         enemyObject.enemy = enemy;
         enemyObject.awake = true;

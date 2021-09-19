@@ -135,9 +135,9 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             if(item.equipable && Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_equip]))
             {
-                if(PlayerState.currentItemNode == node)
+                if(PlayerState.currentItem == item)
                 {
-                    PlayerState.SwitchGun("", true);
+                    PlayerState.SwitchGun(true);
                 }
                 else
                 {

@@ -37,11 +37,6 @@ public class PlayerAnimator : MonoBehaviour
         m_renderer_gun.enabled = true;
     }
 
-    public void UpdateGunImage()
-    {
-        m_renderer_gun.sprite = PlayerState.currentItem == null || PlayerState.currentItem.gun == null ? null : PlayerState.currentItem.gun.sprite;
-    }
-
     static readonly int[] convert = {0, 1, 0, 2};
     static readonly Vector3 gunFront = new Vector3(0, -1.001f, 0);
     static readonly Vector3 gunBack  = new Vector3(0, -0.999f, 0);
@@ -57,6 +52,7 @@ public class PlayerAnimator : MonoBehaviour
         m_animator.SetBool("shooting", PlayerState.shooting);
         m_animator.speed = PlayerMovement.moving ? PlayerMovement.rb.velocity.magnitude * 0.07f : 1;
 
+        m_renderer_gun.sprite = PlayerState.currentItem == null || PlayerState.currentItem.gun == null ? null : PlayerState.currentItem.sprite;
         m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
         m_renderer_arm.flipY = m_renderer_gun.flipY;
         gunSortingGroup.localPosition = m_renderer_gun.flipY ? gunBack : gunFront;

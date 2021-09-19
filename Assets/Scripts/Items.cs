@@ -33,8 +33,7 @@ public class ItemStats
         name = jsonItem.name;
         maxStack = jsonItem.maxStack;
         equipable = jsonItem.equipable;
-        sprite = Resources.Load<Sprite>("Sprites/Guns/"+name);
-        if(sprite == null) sprite = Resources.Load<Sprite>("Sprites/Items/"+name);
+        sprite = Resources.Load<Sprite>("Sprites/Items/"+name);
         size = new Vector2Int((int)(sprite.texture.width/8f), (int)(sprite.texture.height/8f));
         gun = Items.guns.ContainsKey(name) ? Items.guns[name] : null;
 
@@ -57,7 +56,7 @@ public class ItemStats
         switch(name)
         {
         case "bomb":
-            MonoBehaviour.Instantiate(prefabs[0], PlayerMovement.rb.position, Quaternion.identity).SetActive(true);
+            MonoBehaviour.Instantiate(prefabs[0], PlayerMovement.rb.position, Quaternion.identity, Entities.t).SetActive(true);
             PlayerStats.SubtractCurrentItem();
             break;
         case "blade":
@@ -134,5 +133,25 @@ public class Items
         {
             items.Add(jsonItem.name, new ItemStats(jsonItem));
         }
+    }
+
+    public static string[] GetAmmoTypes()
+    {
+        var types = new HashSet<string>();
+        foreach(var pair in guns)
+        {
+            if(!types.Contains(pair.Value.ammoType))
+            {
+                types.Add(pair.Value.ammoType);
+            }
+        }
+        var arr = new string[types.Count];
+        int i = 0;
+        foreach(var str in types)
+        {
+            arr[i] = str;
+            i++;
+        }
+        return arr;
     }
 }

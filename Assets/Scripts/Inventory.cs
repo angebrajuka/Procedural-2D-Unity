@@ -47,17 +47,8 @@ public class Inventory : MonoBehaviour
     public void Equip(LinkedListNode<GridItem> node)
     {
         PlayerState.currentItemNode = node;
-        if(node.Value.item.gun != null)
-        {
-            PlayerState.SwitchGun(node.Value.item.name, false);
-        }
-        else
-        {
-            PlayerState.SwitchGun("", false);
-            PlayerState._currentItem = node.Value.item.name;
-            PlayerState.currentItem = node.Value.item;
-            PlayerHUD.instance.UpdateHotbar();
-        }
+        PlayerState.SwitchGun(false);
+        PlayerHUD.instance.UpdateHotbar();
     }
 
     public void Clear()
@@ -225,19 +216,10 @@ public class Inventory : MonoBehaviour
                 
                 if(PlayerState.currentItemNode == node)
                 {
-                    if(PlayerState.currentItemNode.Value.item.gun != null)
-                    {
-                        PlayerState.SwitchGun("", true);
-                    }
-                    else
-                    {
-                        PlayerState.currentItem = null;
-                    }
-                    PlayerState.currentItemNode = null;
-                    PlayerAnimator.instance.UpdateGunImage();
+                    PlayerState.SwitchGun(true);
                 }
 
-                GameObject item = Instantiate(itemPickupPrefab, player_rb.position, Quaternion.identity);
+                GameObject item = Instantiate(itemPickupPrefab, player_rb.position, Quaternion.identity, Entities.t);
                 item.transform.parent = entities;
                 ItemPickup pickup = item.GetComponent<ItemPickup>();
                 pickup.item = node.Value.item.name;
@@ -254,8 +236,7 @@ public class Inventory : MonoBehaviour
 
         PlayerHUD.instance.UpdateHotbar();
         PlayerHUD.instance.UpdateAmmo();
-
-        playerAnimator.UpdateGunImage();
+        
         isOpen = false;
     }
 }

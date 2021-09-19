@@ -56,6 +56,11 @@ public class PauseHandler : MonoBehaviour
         UnfreezePhysics();
         EnableInputAndHUD();
 
+        PlayerHUD.instance.UpdateHotbar();
+        PlayerHUD.instance.UpdateAmmo();
+        PlayerHUD.instance.UpdateHealth();
+        PlayerHUD.instance.UpdateEnergy();
+
         AudioManager.ResumeAllAudio();
 
         paused = false;

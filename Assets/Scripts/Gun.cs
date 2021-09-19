@@ -21,7 +21,6 @@ public class Gun
     public GameObject muzzleFlashPrefab;
     public float secondsBetweenShots;
     public Vector3 barrelTip;
-    public Sprite sprite;
     public Transform transform;
 
     public static Dictionary<string, GameObject> muzzleFlashes = new Dictionary<string, GameObject>();
@@ -50,7 +49,6 @@ public class Gun
         secondsBetweenShots = 60.0f/json.rpm;
         damage /= pellets;
         barrelTip = new Vector3(json.barrelTip[0], json.barrelTip[1], 0);
-        sprite = Resources.Load<Sprite>("Sprites/Guns/"+name);
         this.transform = transform;
     }
 

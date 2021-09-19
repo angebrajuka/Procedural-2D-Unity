@@ -92,13 +92,6 @@ public class DevConsole : MonoBehaviour
         return true;
     }
 
-    static bool SetGun(string[] args)
-    {
-        PlayerState.SwitchGun(args[1], true);
-        return true;
-    }
-
-
     static bool Teleport(string[] args)
     {
         if(Int32.TryParse(args[1], out int x) && Int32.TryParse(args[2], out int y))
@@ -119,9 +112,27 @@ public class DevConsole : MonoBehaviour
             {
                 AutoAddItem(new string[]{"give", pair.Key, "1"});
             }
-            AutoAddItem(new string[]{"give", pair.Value.ammoType+"", pair.Value.clipSize+""});
         }
 
+        return true;
+    }
+
+    static bool FA(string[] args)
+    {
+        for(int i=0; i<(args.Length==2 ? Int32.Parse(args[1]) : 1); i++)
+        {
+            foreach(string type in Items.GetAmmoTypes())
+            {
+                AutoAddItem(new string[]{"give", type+"", Items.items[type].maxStack+""});
+            }
+        }
+
+        return true;
+    }
+
+    static bool Clear(string[] args)
+    {
+        Inventory.instance.Clear();
         return true;
     }
 
@@ -133,9 +144,10 @@ public class DevConsole : MonoBehaviour
         {"health",      Health      },
         {"energy",      Energy      },
         {"give",        AutoAddItem },
-        {"setgun",      SetGun      },
         {"tp",          Teleport    },
-        {"kfa",         KFA         }
+        {"kfa",         KFA         },
+        {"fa",          FA          },
+        {"clear",       Clear       }
     };
 
     void Enable()

@@ -53,7 +53,7 @@ public class PlayerStats : MonoBehaviour
     {
         Destroy(currentItemNode.Value.gameObject);
         currentItemNode.List.Remove(currentItemNode);
-        currentItem = null;
+        currentItemNode = null;
         PlayerHUD.instance.UpdateHotbar();
     }
 

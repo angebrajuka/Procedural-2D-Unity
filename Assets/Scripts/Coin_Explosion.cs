@@ -16,7 +16,7 @@ public class Coin_Explosion : MonoBehaviour
 
         for(int i=0; i<count; i++)
         {
-            Transform coin = Instantiate(prefab_coin, transform.position, Quaternion.identity);
+            Transform coin = Instantiate(prefab_coin, transform.position, Quaternion.identity, Entities.t);
             Rigidbody2D rb = coin.GetComponent<Rigidbody2D>();
             rb.AddForce(new Vector2((Random.value-0.5f)*vel, (Random.value-0.5f)*vel));
         }

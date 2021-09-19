@@ -10,7 +10,6 @@ public class PlayerState : MonoBehaviour
     // hierarchy
     public Transform knifeRotationPoint;
     public Transform knifeStart;
-    public Transform entities;
 
     // general
     public static bool moving=false;
@@ -25,12 +24,23 @@ public class PlayerState : MonoBehaviour
     // items
     public static bool melee;
     public static sbyte knifeDirection;
-    public static string _currentItem = null;
-    public static ItemStats currentItem = null;
     public static LinkedListNode<GridItem> currentItemNode;
+    public static string _currentItem
+    {
+        get
+        {
+            return currentItemNode == null ? null : currentItemNode.Value.item.name;
+        }
+    }
+    public static ItemStats currentItem
+    {
+        get
+        {
+            return currentItemNode == null ? null : currentItemNode.Value.item;
+        }
+    }
     public static string interactItem = null;
     public static ItemPickup interactPickup;
-    // public static int interactPriority=0;
 
     public void Init()
     {
@@ -42,12 +52,14 @@ public class PlayerState : MonoBehaviour
         PauseHandler.Pause();
         PauseHandler.Blur();
 
-        PlayerState.SwitchGun("", true);
+        PlayerState.SwitchGun(true);
         gunRpmTimer = 0;
         gunReloadTimer = 0;
         melee = false;
         energyMax = 50;
         ProceduralGeneration.reset = true;
+
+        Entities.Clear();
 
         if(load)
         {
@@ -57,13 +69,6 @@ public class PlayerState : MonoBehaviour
         {
             PlayerMovement.rb.position = ProceduralGeneration.center;
             transform.position = PlayerMovement.rb.position;
-            
-            while(entities.childCount > 0)
-            {
-                Transform child = entities.GetChild(0);
-                child.SetParent(null);
-                Destroy(child.gameObject);
-            }
 
             DynamicEnemySpawning.Reset();
 
@@ -138,23 +143,11 @@ public class PlayerState : MonoBehaviour
         melee = false;
     }
 
-    public static void SwitchGun(string _gun, bool nullNode)
+    public static void SwitchGun(bool nullNode)
     {
         CancelReload();
-        
-        if(Items.guns.ContainsKey(_gun))
-        {
-            _currentItem = _gun;
-            currentItem = Items.items[_gun];
-        }
-        else
-        {
-            currentItem = null;
-        }
 
         if(nullNode) currentItemNode = null;
-
-        PlayerAnimator.instance.UpdateGunImage();
 
         PlayerHUD.instance.UpdateAmmo();
         PlayerHUD.instance.UpdateHotbar();
