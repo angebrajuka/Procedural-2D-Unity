@@ -2993,7 +2993,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79aeb678ad4c3ff41bfb84f3f725b95b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  light: {fileID: 1225463321}
   radiusRange: 0
   intensityRange: 0.2
   timingAverage: 0.06

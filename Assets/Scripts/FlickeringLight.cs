@@ -1,24 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.LWRP;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class FlickeringLight : MonoBehaviour
 {
-new public UnityEngine.Experimental.Rendering.Universal.Light2D light;
+    // hierarchy
     public float radiusRange, intensityRange, timingAverage, timingRange, changeSpeed;
     public float averageRadius, averageIntensity;
     public bool useBeginningRadiusAndIntensity;
+    
+    private Light2D m_light;
     private float timer, interval;
     private float targetIntensity;
     private float targetRadius;
 
     void Start()
     {
+        m_light = GetComponent<Light2D>();
+
         if(useBeginningRadiusAndIntensity)
         {
-            averageIntensity = light.intensity;
-            averageRadius = light.pointLightOuterRadius;
+            averageIntensity = m_light.intensity;
+            averageRadius = m_light.pointLightOuterRadius;
         }
         timer = 0;
         interval = 0;
@@ -37,7 +41,7 @@ new public UnityEngine.Experimental.Rendering.Universal.Light2D light;
             interval = timingAverage + Random.value*timingRange*2 - timingRange;
         }
 
-        light.intensity = Mathf.Lerp(light.intensity, targetIntensity, changeSpeed);
-        light.pointLightOuterRadius = Mathf.Lerp(light.pointLightOuterRadius, targetRadius, changeSpeed);
+        m_light.intensity = Mathf.Lerp(m_light.intensity, targetIntensity, changeSpeed);
+        m_light.pointLightOuterRadius = Mathf.Lerp(m_light.pointLightOuterRadius, targetRadius, changeSpeed);
     }
 }
