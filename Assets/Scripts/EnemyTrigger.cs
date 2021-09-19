@@ -9,7 +9,7 @@ public class EnemyTrigger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other != PlayerStats.collider && !enemyObject.nearbyColliders.ContainsKey(other.transform))
+        if (other.gameObject.layer != 8 && !enemyObject.nearbyColliders.ContainsKey(other.transform))
         {
             enemyObject.nearbyColliders.Add(other.transform, Math.Vec2(other.bounds.min+other.bounds.max)/2);
         }

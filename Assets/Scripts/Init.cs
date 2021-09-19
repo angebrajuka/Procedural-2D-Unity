@@ -14,12 +14,11 @@ public class Init : MonoBehaviour
     public MusicManager musicManager;
     public GameObject h_menuMain;
     public GameObject h_menuPause;
-    public PlayerStats playerStats;
+    public Transform player;
+    public Transform gunSpriteTransform;
     public PauseHandler pauseHandler;
     public DevConsole devConsole;
     public DaylightCycle daylightCycle;
-    public DynamicEnemySpawning dynamicEnemySpawning;
-    public ProceduralGeneration proceduralGeneration;
     public FadeTransition fadeTransition;
 
     public GameObject mainMenuObject;
@@ -43,13 +42,19 @@ public class Init : MonoBehaviour
             pauseHandler.Init();
             devConsole.Init();
             daylightCycle.Init();
-            dynamicEnemySpawning.Init();
             fadeTransition.Init();
-            playerStats.Init();
-            Items.Init(PlayerStats.instance.gunSpriteTransform);
-            PlayerStats.hud.Init();
-            proceduralGeneration.Init();
+            player.GetComponent<DynamicEnemySpawning>().Init();
+            player.GetComponent<PlayerTarget>().Init();
+            player.GetComponent<PlayerStats>().Init();
+            player.GetComponent<PlayerState>().Init();
+            Items.Init(gunSpriteTransform);
+            player.GetComponent<PlayerHUD>().Init();
+            player.GetComponent<ProceduralGeneration>().Init();
+            player.GetComponent<PlayerInput>().Init();
             PlayerInput.LoadKeybinds();
+            player.GetComponent<Inventory>().Init();
+            player.GetComponent<PlayerMovement>().Init();
+            player.GetComponent<PlayerAnimator>().Init();
 
             MenuHandler.mainMenuObject = mainMenuObject;
             MenuHandler.gameWorldObject = gameWorldObject;

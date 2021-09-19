@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerHUD : MonoBehaviour
 {
+    public static PlayerHUD instance;
+
     // hierarchy
 new public Transform transform;
     public Text currentGunAmmoTxt;
@@ -28,6 +30,8 @@ new public Transform transform;
 
     public void Init()
     {
+        instance = this;
+
         m_target = GetComponent<Target>();
         ammoImages = new Dictionary<string, Sprite>();
         foreach(var pair in Items.guns)
@@ -53,31 +57,31 @@ new public Transform transform;
         ammoTxt.gameObject.SetActive(false);
         currentItem.transform.localScale = Vector3.zero;
 
-        if(PlayerStats.currentItem != null)
+        if(PlayerState.currentItem != null)
         {
-            if(PlayerStats.currentItem.gun != null)
+            if(PlayerState.currentItem.gun != null)
             {
                 ammoTxt.gameObject.SetActive(true);
-                ammoImage.sprite = ammoImages[PlayerStats.currentItem.gun.ammoType];
+                ammoImage.sprite = ammoImages[PlayerState.currentItem.gun.ammoType];
             }
             else
             {
-                currentItem.sprite = PlayerStats.currentItem.sprite;
-                currentItem.transform.localScale = new Vector3(PlayerStats.currentItem.size.x > PlayerStats.currentItem.size.y ? 1 : (float)PlayerStats.currentItem.size.x/PlayerStats.currentItem.size.y, PlayerStats.currentItem.size.y > PlayerStats.currentItem.size.x ? 1 : (float)PlayerStats.currentItem.size.y/PlayerStats.currentItem.size.x, 1);
-                currentItemCount.text = PlayerStats.currentItem == null || PlayerStats.currentItemNode.Value.count == 0 ? "" : PlayerStats.currentItemNode.Value.count+"";
+                currentItem.sprite = PlayerState.currentItem.sprite;
+                currentItem.transform.localScale = new Vector3(PlayerState.currentItem.size.x > PlayerState.currentItem.size.y ? 1 : (float)PlayerState.currentItem.size.x/PlayerState.currentItem.size.y, PlayerState.currentItem.size.y > PlayerState.currentItem.size.x ? 1 : (float)PlayerState.currentItem.size.y/PlayerState.currentItem.size.x, 1);
+                currentItemCount.text = PlayerState.currentItem == null || PlayerState.currentItemNode.Value.count == 0 ? "" : PlayerState.currentItemNode.Value.count+"";
             }
         }
 
-        currentItem.transform.parent.gameObject.SetActive(PlayerStats.currentItem != null && PlayerStats.currentItem.gun == null);
+        currentItem.transform.parent.gameObject.SetActive(PlayerState.currentItem != null && PlayerState.currentItem.gun == null);
     }
 
     public void UpdateAmmo()
     {
-        if(PlayerStats.currentItem != null && PlayerStats.currentItem.gun != null)
+        if(PlayerState.currentItem != null && PlayerState.currentItem.gun != null)
         {
             currentGunAmmoTxt.text = PlayerStats.GetAmmo() < 10 ? "0" : "";
             currentGunAmmoTxt.text += PlayerStats.GetAmmo()+"";
-            currentReserveTxt.text = "/"+PlayerStats.inventory.GetTotalCount(PlayerStats.currentItem.gun.ammoType);
+            currentReserveTxt.text = "/"+Inventory.instance.GetTotalCount(PlayerState.currentItem.gun.ammoType);
         }
     }
 
@@ -96,7 +100,7 @@ new public Transform transform;
     {
         // update minimap
         {
-            Vector2 pos = PlayerStats.rigidbody.position;
+            Vector2 pos = PlayerMovement.rb.position;
 
             pos /= ProceduralGeneration.chunkSize;
             pos /= ProceduralGeneration.mapDiameter;

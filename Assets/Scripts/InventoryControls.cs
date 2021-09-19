@@ -9,9 +9,8 @@ public class InventoryControls : MonoBehaviour {
     
 
 
-    void Update() {    
-        // highlight.localPosition = Vector3.down*(PlayerStats._nextGun-1)*120+Vector3.left*160;
-
+    void Update()
+    {
         if(Input.GetKeyDown(PlayerInput.keybinds[Keybind.inventory]) || Input.GetKeyDown(KeyCode.Escape)) {
             inventory.Close();
             PauseHandler.UnBlur();

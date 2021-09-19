@@ -53,7 +53,7 @@ public class EnemyObject : MonoBehaviour
 
     void UpdateTarget()
     {
-        targetMovement = (PlayerStats.rigidbody.position-m_rigidbody.position).normalized;
+        targetMovement = (PlayerMovement.rb.position-m_rigidbody.position).normalized;
 
         foreach(var pair in nearbyColliders)
         {
@@ -67,7 +67,7 @@ public class EnemyObject : MonoBehaviour
 
     bool Range(float range)
     {
-        return Vector2.Distance(m_rigidbody.position, PlayerStats.rigidbody.position) <= range;
+        return Vector2.Distance(m_rigidbody.position, PlayerMovement.rb.position) <= range;
     }
 
     void Attack(byte state)
@@ -80,12 +80,12 @@ public class EnemyObject : MonoBehaviour
 
     void FacePlayer()
     {
-        m_renderer.flipX = PlayerStats.rigidbody.position.x < m_rigidbody.position.x;
+        m_renderer.flipX = PlayerMovement.rb.position.x < m_rigidbody.position.x;
     }
 
     void FixedUpdate()
     {
-        if(Vector2.Distance(m_rigidbody.position, PlayerStats.rigidbody.position) >= DynamicEnemySpawning.instance.maxRadius*2)
+        if(Vector2.Distance(m_rigidbody.position, PlayerMovement.rb.position) >= DynamicEnemySpawning.instance.maxRadius*2)
         {
             DynamicEnemySpawning.DeSpawn(this);
         }
@@ -131,7 +131,7 @@ public class EnemyObject : MonoBehaviour
                 case 1:
                     if(Range(enemy.range_melee))
                     {
-                        PlayerStats.target.Damage(10);
+                        PlayerTarget.target.Damage(10);
                     }
                     state = 0;
                     UpdateTarget();

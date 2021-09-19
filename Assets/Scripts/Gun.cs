@@ -69,7 +69,7 @@ public class Gun
         rigidbody.AddForce(-direction*recoil);
 
         PlayerStats.SetAmmo(PlayerStats.GetAmmo()-ammoPerShot);
-        PlayerStats.gunRpmTimer = secondsBetweenShots;
+        PlayerState.gunRpmTimer = secondsBetweenShots;
 
         bool hit = false;
         for(int i=0; i<pellets; i++)

@@ -21,7 +21,7 @@ public class GridItemSerializable
         rotated = gridItem.rotated;
         count = gridItem.count;
         ammo = gridItem.ammo;
-        equipped = (PlayerStats.currentItemNode == node);
+        equipped = (PlayerState.currentItemNode == node);
     }
 }
 
@@ -58,8 +58,8 @@ public class SaveData
         difficulty = PlayerStats.difficulty;
         seed = ProceduralGeneration.seed_main;
         
-        inventoryItems = new GridItemSerializable[PlayerStats.inventory.items.Count];
-        LinkedListNode<GridItem> node = PlayerStats.inventory.items.First;
+        inventoryItems = new GridItemSerializable[Inventory.instance.items.Count];
+        LinkedListNode<GridItem> node = Inventory.instance.items.First;
         for(int i=0; i<inventoryItems.Length; i++)
         {
             inventoryItems[i] = new GridItemSerializable(node);
@@ -73,12 +73,12 @@ public class SaveData
             enemies[e++] = new EnemySerializable(enemy);
         }
 
-        health = PlayerStats.target.health;
+        health = PlayerTarget.target.health;
         energy = PlayerStats.energy;
 
         position = new float[2];
-        position[0] = PlayerStats.rigidbody.position.x;
-        position[1] = PlayerStats.rigidbody.position.y;
+        position[0] = PlayerMovement.rb.position.x;
+        position[1] = PlayerMovement.rb.position.y;
 
         timeOfDay = DaylightCycle.time;
     }
@@ -88,10 +88,10 @@ public class SaveData
         PlayerStats.difficulty = difficulty;
         ProceduralGeneration.SetSeed(seed);
 
-        PlayerStats.inventory.Clear();
+        Inventory.instance.Clear();
         for(int i=0; i<inventoryItems.Length; i++)
         {
-            GridItem gridItem = PlayerStats.inventory.Add(inventoryItems[i].item, inventoryItems[i].x, inventoryItems[i].y);
+            GridItem gridItem = Inventory.instance.Add(inventoryItems[i].item, inventoryItems[i].x, inventoryItems[i].y);
             if(inventoryItems[i].rotated) gridItem.Rotate();
             gridItem.count = inventoryItems[i].count;
             gridItem.ammo = inventoryItems[i].ammo;
@@ -99,7 +99,7 @@ public class SaveData
 
             if(inventoryItems[i].equipped)
             {
-                PlayerStats.inventory.Equip(PlayerStats.inventory.items.Last);
+                Inventory.instance.Equip(Inventory.instance.items.Last);
             }
         }
 
@@ -112,12 +112,12 @@ public class SaveData
             enemyObject.m_rigidbody.velocity = new Vector2(enemy.velocity[0], enemy.velocity[1]);
         }
 
-        PlayerStats.target.health = health;
+        PlayerTarget.target.health = health;
         PlayerStats.energy = energy;
 
         DaylightCycle.time = timeOfDay;
 
-        PlayerStats.rigidbody.position = new Vector2(position[0], position[1]);
-        PlayerStats.rigidbody.transform.position = PlayerStats.rigidbody.position;
+        PlayerMovement.rb.position = new Vector2(position[0], position[1]);
+        PlayerMovement.rb.transform.position = PlayerMovement.rb.position;
     }
 }

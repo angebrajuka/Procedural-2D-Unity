@@ -65,8 +65,8 @@ public class DynamicLoading : MonoBehaviour
 
     void LoadAll()
     {
-        int posX = (int)Mathf.Floor(PlayerStats.rigidbody.position.x/chunkSize);
-        int posY = (int)Mathf.Floor(PlayerStats.rigidbody.position.y/chunkSize);
+        int posX = (int)Mathf.Floor(PlayerMovement.rb.position.x/chunkSize);
+        int posY = (int)Mathf.Floor(PlayerMovement.rb.position.y/chunkSize);
 
         for(int x=Mathf.Max(posX-1, 0); x<=Mathf.Min(posX+1, mapSize.x-1); x++)
         {
@@ -102,8 +102,8 @@ public class DynamicLoading : MonoBehaviour
 
     void Update()
     {    
-        currPos.x = (int)(PlayerStats.rigidbody.position.x/chunkSize);
-        currPos.y = (int)(PlayerStats.rigidbody.position.y/chunkSize);
+        currPos.x = (int)(PlayerMovement.rb.position.x/chunkSize);
+        currPos.y = (int)(PlayerMovement.rb.position.y/chunkSize);
         
         if(currPos != prevPos)
         {

@@ -82,7 +82,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public LinkedListNode<GridItem> Collides()
     {
-        LinkedListNode<GridItem> other = PlayerStats.inventory.items.First;
+        LinkedListNode<GridItem> other = Inventory.instance.items.First;
         while(other != null)
         {
             if(other.Value != this && GetX()+GetWidth() > other.Value.GetX() && GetX() < other.Value.GetX()+other.Value.GetWidth() && GetY()+GetHeight() > other.Value.GetY() && GetY() < other.Value.GetY()+other.Value.GetHeight())
@@ -135,14 +135,14 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             if(item.equipable && Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_equip]))
             {
-                if(PlayerStats.currentItemNode == node)
+                if(PlayerState.currentItemNode == node)
                 {
-                    PlayerStats.currentItem = null;
+                    PlayerState.currentItem = null;
                     PlayerState.SwitchGun("", true);
                 }
                 else
                 {
-                    PlayerStats.inventory.Equip(node);
+                    Inventory.instance.Equip(node);
                 }
             }
         }

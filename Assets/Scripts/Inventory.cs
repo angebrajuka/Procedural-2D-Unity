@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    public static Inventory instance;
+
+    // hierarchy
     public GameObject gridItemPrefab;
     public GameObject itemPickupPrefab;
     public Transform grid;
@@ -19,6 +22,11 @@ public class Inventory : MonoBehaviour
     public static readonly Vector2Int gridSize = new Vector2Int(9, 12);
     public const float cellSize = 384f/9f;
 
+    public void Init()
+    {
+        instance = this;
+    }
+
     public GridItem Add(string item, int x, int y, int count=1, int ammo=0)
     {
         GameObject gameObject = Instantiate(gridItemPrefab, Vector3.zero, Quaternion.identity, grid);
@@ -31,24 +39,24 @@ public class Inventory : MonoBehaviour
         gridItem.Start();
         gridItem.SetPos(x, y);
 
-        PlayerStats.hud.UpdateHotbar();
-        PlayerStats.hud.UpdateAmmo();
+        PlayerHUD.instance.UpdateHotbar();
+        PlayerHUD.instance.UpdateAmmo();
         return gridItem;
     }
 
     public void Equip(LinkedListNode<GridItem> node)
     {
-        PlayerStats.currentItemNode = node;
+        PlayerState.currentItemNode = node;
         if(node.Value.item.gun != null)
         {
             PlayerState.SwitchGun(node.Value.item.name, false);
         }
         else
         {
-            PlayerStats._currentItem = node.Value.item.name;
-            PlayerStats.currentItem = Items.items[PlayerStats._currentItem];
+            PlayerState._currentItem = node.Value.item.name;
+            PlayerState.currentItem = Items.items[PlayerState._currentItem];
             PlayerState.SwitchGun("", false);
-            PlayerStats.hud.UpdateHotbar();
+            PlayerHUD.instance.UpdateHotbar();
         }
     }
 
@@ -63,7 +71,7 @@ public class Inventory : MonoBehaviour
             items.RemoveFirst();
         }
 
-        PlayerStats.hud.UpdateAmmo();
+        PlayerHUD.instance.UpdateAmmo();
     }
 
     public bool AutoAdd(string item, int count=1, int ammo=0)
@@ -170,7 +178,7 @@ public class Inventory : MonoBehaviour
             {
                 gridItem.count -= amount;
                 gridItem.UpdateCount();
-                PlayerStats.hud.UpdateAmmo();
+                PlayerHUD.instance.UpdateAmmo();
                 return;
             }
             else
@@ -183,7 +191,7 @@ public class Inventory : MonoBehaviour
 
         }
 
-        PlayerStats.hud.UpdateAmmo();
+        PlayerHUD.instance.UpdateAmmo();
     }
 
     public void Open()
@@ -207,18 +215,18 @@ public class Inventory : MonoBehaviour
             {
                 // DROP
 
-                if(PlayerStats.currentItemNode == node)
+                if(PlayerState.currentItemNode == node)
                 {
-                    if(PlayerStats.currentItemNode.Value.item.gun != null)
+                    if(PlayerState.currentItemNode.Value.item.gun != null)
                     {
                         PlayerState.SwitchGun("", false);
                     }
                     else
                     {
-                        PlayerStats.currentItem = null;
+                        PlayerState.currentItem = null;
                     }
-                    PlayerStats.currentItemNode = null;
-                    PlayerStats.playerAnimator.UpdateGunImage();
+                    PlayerState.currentItemNode = null;
+                    PlayerAnimator.instance.UpdateGunImage();
                 }
 
                 GameObject item = Instantiate(itemPickupPrefab, player_rb.position, Quaternion.identity);
@@ -236,8 +244,8 @@ public class Inventory : MonoBehaviour
             node = next;
         }
 
-        PlayerStats.hud.UpdateHotbar();
-        PlayerStats.hud.UpdateAmmo();
+        PlayerHUD.instance.UpdateHotbar();
+        PlayerHUD.instance.UpdateAmmo();
 
         playerAnimator.UpdateGunImage();
         isOpen = false;

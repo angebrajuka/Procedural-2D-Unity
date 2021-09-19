@@ -10,6 +10,6 @@ public class PlayerEnergyDrain : MonoBehaviour
                             - ((PlayerStats.energy > 0) ? (Time.deltaTime * ((Flashlight.on ? 2 : 0) + (PlayerState.sprinting ? 5 : 0))) : 0);
 
         PlayerStats.energy = Mathf.Clamp(PlayerStats.energy, 0, PlayerStats.energyMax);
-        PlayerStats.hud.UpdateEnergy();
+        PlayerHUD.instance.UpdateEnergy();
     }
 }

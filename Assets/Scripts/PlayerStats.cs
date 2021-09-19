@@ -1,29 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PlayerState;
 
 public class PlayerStats : MonoBehaviour
 {
+    public static PlayerStats instance;
+
     // hierarchy
     public Transform prefab_bomb;
-    public Transform knifeRotationPoint;
-    public Transform knifeStart;
-    public Transform weapons;
-    public Transform entities;
     public float debugSpode;
-    public Transform gunSpriteTransform;
-
-    // components
-    public static PlayerStats instance;
-    public static Target target;
-    public static PlayerHUD hud;
-    public static Inventory inventory;
-new public static Rigidbody2D rigidbody;
-    public static PlayerAnimator playerAnimator;
-    public static PlayerInput playerInput;
-    public static PlayerMovement playerMovement;
-new public static Collider2D collider;
-
 
     // constant
     public const float k_RUN_ACCELL = 90.0f;
@@ -36,21 +22,6 @@ new public static Collider2D collider;
     public static float g_KNIFE_DAMAGE=4;
     public static float energyMax, energy;
 
-    // weapons
-    public static float gunRpmTimer;
-    public static float gunReloadTimer;
-    public static GameObject reloadSound;
-
-    // items
-    public static bool melee;
-    public static sbyte knifeDirection;
-    public static string _currentItem = null;
-    public static ItemStats currentItem = null;
-    public static LinkedListNode<GridItem> currentItemNode;
-    public static string interactItem = null;
-    public static ItemPickup interactPickup;
-    public static int interactPriority=0;
-
     // global
     public static byte difficulty; // 0 to 4
     public static byte save;
@@ -61,58 +32,6 @@ new public static Collider2D collider;
     public void Init()
     {
         instance = this;
-        inventory = GetComponent<Inventory>();
-        target = GetComponent<Target>();
-        hud = GetComponent<PlayerHUD>();
-        rigidbody = GetComponent<Rigidbody2D>();
-        playerAnimator = GetComponent<PlayerAnimator>();
-        playerInput = GetComponent<PlayerInput>();
-        playerMovement = GetComponent<PlayerMovement>();
-        collider = GetComponent<BoxCollider2D>();
-    }
-
-    public void Reset()
-    {
-        PauseHandler.Pause();
-        PauseHandler.Blur();
-
-        PlayerState.SwitchGun("", true);
-        gunRpmTimer = 0;
-        gunReloadTimer = 0;
-        melee = false;
-        energyMax = 50;
-        ProceduralGeneration.reset = true;
-
-        if(load)
-        {
-            Save_Load.Load(save);
-        }
-        else
-        {
-            rigidbody.position = ProceduralGeneration.center;
-            transform.position = rigidbody.position;
-            
-            while(entities.childCount > 0)
-            {
-                Transform child = entities.GetChild(0);
-                child.SetParent(null);
-                Destroy(child.gameObject);
-            }
-
-            DynamicEnemySpawning.Reset();
-
-            DaylightCycle.time = DaylightCycle.k_DAY*2f/3f;
-
-            energy = energyMax;
-
-            inventory.Clear();
-
-            difficulty = 2;
-
-            Save_Load.Save(save);
-        }
-        
-        hud.UpdateHotbar();
     }
 
     public static void SubtractCurrentItem()
@@ -123,7 +42,7 @@ new public static Collider2D collider;
             RemoveCurrentItem();
         } else
         {
-            hud.UpdateHotbar();
+            PlayerHUD.instance.UpdateHotbar();
         }
     }
 
@@ -132,7 +51,7 @@ new public static Collider2D collider;
         Destroy(currentItemNode.Value.gameObject);
         currentItemNode.List.Remove(currentItemNode);
         currentItem = null;
-        hud.UpdateHotbar();
+        PlayerHUD.instance.UpdateHotbar();
     }
 
     public static void SetAmmo(int ammo)

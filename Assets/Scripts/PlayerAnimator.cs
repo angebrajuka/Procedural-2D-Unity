@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
+    public static PlayerAnimator instance;
+
     // hierarchy
     public SpriteRenderer m_renderer;
     public Animator m_animator;
@@ -20,6 +22,11 @@ public class PlayerAnimator : MonoBehaviour
     // input
     public static int direction=0;
 
+    public void Init()
+    {
+        instance = this;
+    }
+
     public void BeginMelee()
     {
         m_renderer_gun.enabled = false;
@@ -32,7 +39,7 @@ public class PlayerAnimator : MonoBehaviour
 
     public void UpdateGunImage()
     {
-        m_renderer_gun.sprite = PlayerStats.currentItem == null || PlayerStats.currentItem.gun == null ? null : PlayerStats.currentItem.gun.sprite;
+        m_renderer_gun.sprite = PlayerState.currentItem == null || PlayerState.currentItem.gun == null ? null : PlayerState.currentItem.gun.sprite;
     }
 
     static readonly int[] convert = {0, 1, 0, 2};
@@ -48,7 +55,7 @@ public class PlayerAnimator : MonoBehaviour
         m_animator.SetBool("moving", PlayerMovement.moving);
         m_animator.SetInteger("biome", PlayerMovement.biome);
         m_animator.SetBool("shooting", PlayerState.shooting);
-        m_animator.speed = PlayerMovement.moving ? PlayerStats.rigidbody.velocity.magnitude * 0.07f : 1;
+        m_animator.speed = PlayerMovement.moving ? PlayerMovement.rb.velocity.magnitude * 0.07f : 1;
 
         m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
         m_renderer_arm.flipY = m_renderer_gun.flipY;

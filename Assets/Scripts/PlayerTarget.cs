@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class PlayerTarget : MonoBehaviour
 {
-    [HideInInspector] public Target m_target;
+    public static Target target;
     [HideInInspector] public PlayerHUD m_playerHUD;
 
-    void Start()
+    public void Init()
     {
-        m_target = GetComponent<Target>();
+        target = GetComponent<Target>();
         m_playerHUD = GetComponent<PlayerHUD>();
-        m_target.OnDamage = OnDamage;
-        m_target.OnKill = OnKill;
-        m_target.OnHeal = OnHeal;
+        target.OnDamage = OnDamage;
+        target.OnKill = OnKill;
+        target.OnHeal = OnHeal;
     }
 
     public bool OnDamage(float damage)

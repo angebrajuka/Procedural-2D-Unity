@@ -47,10 +47,10 @@ public class DevConsole : MonoBehaviour
         switch(args[0])
         {
         case "add":
-            PlayerStats.target.Heal(amount);
+            PlayerTarget.target.Heal(amount);
             break;
         case "sub":
-            PlayerStats.target.Damage(amount);
+            PlayerTarget.target.Damage(amount);
             break;
         default:
             return false;
@@ -75,7 +75,7 @@ public class DevConsole : MonoBehaviour
             return false;
         }
 
-        PlayerStats.hud.UpdateEnergy();
+        PlayerHUD.instance.UpdateEnergy();
     
         return true;
     }
@@ -87,7 +87,7 @@ public class DevConsole : MonoBehaviour
 
         if(!Items.items.ContainsKey(itemID)) return false;
 
-        PlayerStats.inventory.AutoAdd(itemID, count);
+        Inventory.instance.AutoAdd(itemID, count);
 
         return true;
     }
@@ -103,7 +103,7 @@ public class DevConsole : MonoBehaviour
     {
         if(Int32.TryParse(args[0], out int x) && Int32.TryParse(args[1], out int y))
         {
-            PlayerStats.rigidbody.position = new Vector3(x, y, 0);
+            PlayerMovement.rb.position = new Vector3(x, y, 0);
 
             return true;
         }

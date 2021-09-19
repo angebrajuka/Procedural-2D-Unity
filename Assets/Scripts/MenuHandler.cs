@@ -51,10 +51,10 @@ public class MenuHandler
         currentMenu = null;
         mainMenuObject.SetActive(false);
         gameWorldObject.SetActive(true);
-        PlayerStats.instance.Reset(); // if load, set seed should happen in Player reset
+        PlayerState.instance.Reset(); // if load, set seed should happen in Player reset
         ProceduralGeneration.instance.GenerateMap();
         ProceduralGeneration.GenerateTexture(100);
-        PlayerStats.hud.SetMapImage(ProceduralGeneration.textureBiome);
+        PlayerHUD.instance.SetMapImage(ProceduralGeneration.textureBiome);
         PlayerStats.loadingFirstChunks = true;
     }
 

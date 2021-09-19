@@ -29,16 +29,16 @@ public class PauseHandler : MonoBehaviour
 
     public static void DisableInputAndHUD()
     {
-        PlayerStats.playerInput.enabled = false;
-        PlayerStats.playerMovement.enabled = false;
-        PlayerStats.hud.transform.gameObject.SetActive(false);
+        PlayerInput.instance.enabled = false;
+        PlayerMovement.instance.enabled = false;
+        PlayerHUD.instance.transform.gameObject.SetActive(false);
     }
 
     public static void EnableInputAndHUD()
     {
-        PlayerStats.playerInput.enabled = true;
-        PlayerStats.playerMovement.enabled = true;
-        PlayerStats.hud.transform.gameObject.SetActive(true);
+        PlayerInput.instance.enabled = true;
+        PlayerMovement.instance.enabled = true;
+        PlayerHUD.instance.transform.gameObject.SetActive(true);
     }
 
     public static void Pause()

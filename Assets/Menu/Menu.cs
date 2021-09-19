@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
-
     public bool canUseEsc=true;
 
     void Start()
@@ -16,14 +15,13 @@ public class Menu : MonoBehaviour
     {
         if(canUseEsc && Input.GetKeyDown(KeyCode.Escape))
         {
-            if(!MenuHandler.Back() && PlayerStats.playerInput != null)
+            if(!MenuHandler.Back())
             {
                 PauseHandler.UnPause();
                 PauseHandler.UnBlur();
                 Destroy(gameObject);
                 MenuHandler.currentMenu = null;
                 MenuHandler.currentMenuPrefab = null;
-                PlayerStats.playerInput.enabled = true;
             }
         }
     }

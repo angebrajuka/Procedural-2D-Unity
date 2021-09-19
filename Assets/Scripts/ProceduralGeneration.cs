@@ -398,8 +398,8 @@ public class ProceduralGeneration : MonoBehaviour
 
     void Update()
     {
-        currPos.x = (int)Mathf.Floor(PlayerStats.rigidbody.position.x/chunkSize);
-        currPos.y = (int)Mathf.Floor(PlayerStats.rigidbody.position.y/chunkSize);
+        currPos.x = (int)Mathf.Floor(PlayerMovement.rb.position.x/chunkSize);
+        currPos.y = (int)Mathf.Floor(PlayerMovement.rb.position.y/chunkSize);
         
         if(currPos != prevPos || loadedChunks.Count == 0 || reset)
         {

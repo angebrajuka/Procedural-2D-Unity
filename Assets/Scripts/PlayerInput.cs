@@ -21,7 +21,9 @@ public enum Keybind:byte
 }
 
 public class PlayerInput : MonoBehaviour
-{    
+{
+    public static PlayerInput instance;
+
     // hierarchy
     public InventoryControls inventory;
 
@@ -70,6 +72,11 @@ public class PlayerInput : MonoBehaviour
             {Keybind.i_equip,       KeyCode.E           },
             {Keybind.i_rotate,      KeyCode.R           },
         };
+    }
+
+    public void Init()
+    {
+        instance = this;
     }
 
     public static void LoadKeybinds()
@@ -125,22 +132,22 @@ public class PlayerInput : MonoBehaviour
             angle = Math.NormalizedVecToAngle(mouse_offset);
         }
         
-        shooting = PlayerStats.gunRpmTimer > 0 || PlayerStats.gunReloadTimer > 0;
+        shooting = PlayerState.gunRpmTimer > 0 || PlayerState.gunReloadTimer > 0;
         // pew pew
-        if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerStats.currentItem != null && PlayerMovement.biome != 0)
+        if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerState.currentItem != null && PlayerMovement.biome != 0)
         {
-            if(PlayerStats.currentItem.gun != null && PlayerState.CanShoot())
+            if(PlayerState.currentItem.gun != null && PlayerState.CanShoot())
             {
                 shooting = true;
-                if(PlayerStats.gunRpmTimer <= 0)
+                if(PlayerState.gunRpmTimer <= 0)
                 {
-                    PlayerStats.currentItem.gun.Shoot(PlayerStats.rigidbody.position, mouse_offset, angle, PlayerStats.rigidbody);
-                    PlayerStats.hud.UpdateAmmo();
+                    PlayerState.currentItem.gun.Shoot(PlayerMovement.rb.position, mouse_offset, angle, PlayerMovement.rb);
+                    PlayerHUD.instance.UpdateAmmo();
                 }
             }
-            else if(!PlayerStats.melee && Input.GetKeyDown(keybinds[Keybind.shoot]))
+            else if(!PlayerState.melee && Input.GetKeyDown(keybinds[Keybind.shoot]))
             {
-                PlayerStats.currentItem.Use();
+                PlayerState.currentItem.Use();
             }
         }
 
@@ -183,9 +190,9 @@ public class PlayerInput : MonoBehaviour
             PauseHandler.Blur();
             PauseHandler.DisableInputAndHUD();
             inventory.gameObject.SetActive(true);
-            PlayerStats.inventory.Open();
+            Inventory.instance.Open();
             
-            if(PlayerStats.gunReloadTimer > 0) PlayerState.CancelReload();
+            if(PlayerState.gunReloadTimer > 0) PlayerState.CancelReload();
         }
         
         // reload
@@ -194,12 +201,12 @@ public class PlayerInput : MonoBehaviour
         // interact
         if(Input.GetKeyDown(keybinds[Keybind.interact]))
         {
-            if(PlayerStats.interactItem != null)
+            if(PlayerState.interactItem != null)
             {
-                if(PlayerStats.inventory.AutoAdd(PlayerStats.interactItem, PlayerStats.interactPickup.count, PlayerStats.interactPickup.ammo))
+                if(Inventory.instance.AutoAdd(PlayerState.interactItem, PlayerState.interactPickup.count, PlayerState.interactPickup.ammo))
                 {
-                    Destroy(PlayerStats.interactPickup.gameObject);
-                    PlayerStats.interactPickup = null;
+                    Destroy(PlayerState.interactPickup.gameObject);
+                    PlayerState.interactPickup = null;
                 }
                 else
                 {

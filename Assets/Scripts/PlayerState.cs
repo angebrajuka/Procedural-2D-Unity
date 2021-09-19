@@ -1,15 +1,84 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using static PlayerStats;
 
 public class PlayerState : MonoBehaviour
 {
+    public static PlayerState instance;
+
+    // hierarchy
+    public Transform knifeRotationPoint;
+    public Transform knifeStart;
+    public Transform entities;
+
+    // general
     public static bool moving=false;
     public static bool sprinting=false;
     public static bool shooting=false;
 
+    // weapons
+    public static float gunRpmTimer;
+    public static float gunReloadTimer;
+    public static GameObject reloadSound;
+
+    // items
+    public static bool melee;
+    public static sbyte knifeDirection;
+    public static string _currentItem = null;
+    public static ItemStats currentItem = null;
+    public static LinkedListNode<GridItem> currentItemNode;
+    public static string interactItem = null;
+    public static ItemPickup interactPickup;
+    public static int interactPriority=0;
+
     public void Init()
     {
+        instance = this;
+    }
 
+    public void Reset()
+    {
+        PauseHandler.Pause();
+        PauseHandler.Blur();
+
+        PlayerState.SwitchGun("", true);
+        gunRpmTimer = 0;
+        gunReloadTimer = 0;
+        melee = false;
+        energyMax = 50;
+        ProceduralGeneration.reset = true;
+
+        if(load)
+        {
+            Save_Load.Load(save);
+        }
+        else
+        {
+            PlayerMovement.rb.position = ProceduralGeneration.center;
+            transform.position = PlayerMovement.rb.position;
+            
+            while(entities.childCount > 0)
+            {
+                Transform child = entities.GetChild(0);
+                child.SetParent(null);
+                Destroy(child.gameObject);
+            }
+
+            DynamicEnemySpawning.Reset();
+
+            DaylightCycle.time = DaylightCycle.k_DAY*2f/3f;
+
+            energy = energyMax;
+
+            Inventory.instance.Clear();
+
+            difficulty = 2;
+
+            Save_Load.Save(save);
+        }
+        
+        PlayerHUD.instance.UpdateHotbar();
     }
 
     public static bool CanShoot()
@@ -19,7 +88,7 @@ public class PlayerState : MonoBehaviour
 
     public static void BeginReload()
     {
-        if(inventory.isOpen || currentItem == null || currentItem.gun == null || GetAmmo() == currentItem.gun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || inventory.GetTotalCount(currentItem.gun.ammoType) == 0) return;
+        if(Inventory.instance.isOpen || currentItem == null || currentItem.gun == null || GetAmmo() == currentItem.gun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || Inventory.instance.GetTotalCount(currentItem.gun.ammoType) == 0) return;
         gunReloadTimer = currentItem.gun.reloadTime;
         reloadSound = AudioManager.PlayClip(currentItem.gun.audio_reload, currentItem.gun.volume_reload, Mixer.SFX);
     }
@@ -32,23 +101,23 @@ public class PlayerState : MonoBehaviour
 
     public static void FinishReload()
     {
-        int _ammo = inventory.GetTotalCount(currentItem.gun.ammoType)/currentItem.gun.ammoPerShot;
+        int _ammo = Inventory.instance.GetTotalCount(currentItem.gun.ammoType)/currentItem.gun.ammoPerShot;
         int _clip = GetAmmo()/currentItem.gun.ammoPerShot;
         int _clipSize = currentItem.gun.clipSize/currentItem.gun.ammoPerShot;
         
         if(_ammo > _clipSize - _clip)
         {
-            inventory.RemoveItemCount(currentItem.gun.ammoType, (_clipSize - _clip)*currentItem.gun.ammoPerShot);
+            Inventory.instance.RemoveItemCount(currentItem.gun.ammoType, (_clipSize - _clip)*currentItem.gun.ammoPerShot);
             SetAmmo(currentItem.gun.clipSize);
         }
         else if(_ammo > 0)
         {
             int num = _ammo*currentItem.gun.ammoPerShot;
             SetAmmo(GetAmmo()+num);
-            inventory.RemoveItemCount(currentItem.gun.ammoType, num);
+            Inventory.instance.RemoveItemCount(currentItem.gun.ammoType, num);
         }
 
-        hud.UpdateAmmo();
+        PlayerHUD.instance.UpdateAmmo();
     }
 
     public static void BeginMelee()
@@ -56,15 +125,16 @@ public class PlayerState : MonoBehaviour
         CancelReload();
         melee = true;
         instance.knifeRotationPoint.gameObject.SetActive(true);
-        playerAnimator.BeginMelee();
+        PlayerAnimator.instance.BeginMelee();
         instance.knifeStart.localEulerAngles = Vector3.forward*PlayerInput.angle;
         knifeDirection = Random.value>0.5f ? (sbyte)-1 : (sbyte)1;
         instance.knifeRotationPoint.localEulerAngles = Vector3.forward*k_KNIFE_ARC*knifeDirection;
     }
 
-    public static void EndMelee() {
+    public static void EndMelee()
+    {
         instance.knifeRotationPoint.gameObject.SetActive(false);
-        playerAnimator.EndMelee();
+        PlayerAnimator.instance.EndMelee();
         melee = false;
     }
 
@@ -80,19 +150,19 @@ public class PlayerState : MonoBehaviour
 
         if(nullNode) currentItemNode = null;
 
-        playerAnimator.UpdateGunImage();
+        PlayerAnimator.instance.UpdateGunImage();
 
-        hud.UpdateAmmo();
-        hud.UpdateHotbar();
+        PlayerHUD.instance.UpdateAmmo();
+        PlayerHUD.instance.UpdateHotbar();
     }
 
     void Update()
     {
         if(melee)
         {
-            instance.knifeRotationPoint.localEulerAngles += Vector3.back*Time.deltaTime*k_KNIFE_SPEED*knifeDirection;
+            knifeRotationPoint.localEulerAngles += Vector3.back*Time.deltaTime*k_KNIFE_SPEED*knifeDirection;
             
-            if(instance.knifeRotationPoint.localEulerAngles.z < 360-k_KNIFE_ARC && instance.knifeRotationPoint.localEulerAngles.z > k_KNIFE_ARC)
+            if(knifeRotationPoint.localEulerAngles.z < 360-k_KNIFE_ARC && knifeRotationPoint.localEulerAngles.z > k_KNIFE_ARC)
             {
                 EndMelee();
             }

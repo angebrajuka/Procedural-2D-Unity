@@ -42,18 +42,18 @@ public class ItemStats
         switch(name)
         {
         case "bomb":
-            MonoBehaviour.Instantiate(PlayerStats.instance.prefab_bomb, PlayerStats.rigidbody.position, Quaternion.identity);
+            MonoBehaviour.Instantiate(PlayerStats.instance.prefab_bomb, PlayerMovement.rb.position, Quaternion.identity);
             PlayerStats.SubtractCurrentItem();
             break;
         case "Blade":
             PlayerState.BeginMelee();
             break;
         case "Medkit":
-            PlayerStats.target.Heal(20);
+            PlayerTarget.target.Heal(20);
             PlayerStats.RemoveCurrentItem();
             break;
         case "Stimpack":
-            PlayerStats.target.Heal(10);
+            PlayerTarget.target.Heal(10);
             PlayerStats.RemoveCurrentItem();
             break;
         case "Potion":
@@ -120,29 +120,4 @@ public class Items
             items.Add(jsonItem.name, new ItemStats(jsonItem));
         }
     }
-
-    // {
-        // new ItemStats("NONE",           new Vector2Int(0, 0),   0,  false),
-        // new ItemStats("BLADE",          new Vector2Int(2, 1),   1,  true),
-        // new ItemStats("BOMB",           new Vector2Int(2, 2),   1,  true),
-        // new ItemStats("MEDKIT",         new Vector2Int(3, 2),   1,  true),
-        // new ItemStats("STIMPACK",       new Vector2Int(1, 1),   1,  true),
-        // new ItemStats("COMPASS",        new Vector2Int(2, 2),   1,  true),
-        // new ItemStats("POTION",         new Vector2Int(2, 3),   1,  true),
-        // new ItemStats("FISHING_ROD",    new Vector2Int(3, 3),   1,  true),
-
-        // new ItemStats("BULLETS_SMALL",  new Vector2Int(1, 1),   30, false),
-        // new ItemStats("BULLETS_LARGE",  new Vector2Int(1, 1),   20, false),
-        // new ItemStats("SHELLS",         new Vector2Int(1, 1),   16, false),
-        // new ItemStats("PLASMA",         new Vector2Int(1, 1),   60, false),
-
-
-        // new ItemStats("PISTOL",         new Vector2Int(3, 2),   0,  1,  true,   UseNone),
-        // new ItemStats("SMG",            new Vector2Int(4, 3),   1,  1,  true,   UseNone),
-        // new ItemStats("ASSAULT_RIFLE",  new Vector2Int(6, 3),   2,  1,  true,   UseNone),
-        // new ItemStats("DMR",            new Vector2Int(7, 3),   3,  1,  true,   UseNone),
-        // new ItemStats("SHOTGUN_PUMP",   new Vector2Int(6, 3),   4,  1,  true,   UseNone),
-        // new ItemStats("SHOTGUN_DOUBLE", new Vector2Int(5, 3),   5,  1,  true,   UseNone),
-        // new ItemStats("SHOTGUN_AUTO",   new Vector2Int(6, 3),   6,  1,  true,   UseNone),
-    // };
 }

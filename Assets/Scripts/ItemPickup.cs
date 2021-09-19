@@ -24,9 +24,9 @@ public class ItemPickup : MonoBehaviour
     {
         if(other.gameObject.layer == 8)
         {
-            PlayerStats.hud.interact.text = "press   <F>   to   loot";// + Items.names[(int)item];
-            PlayerStats.interactItem = item;
-            PlayerStats.interactPickup = this;
+            PlayerHUD.instance.interact.text = "press   <F>   to   loot";// + Items.names[(int)item];
+            PlayerState.interactItem = item;
+            PlayerState.interactPickup = this;
         }
         else if(other.gameObject.layer == gameObject.layer)
         {
@@ -41,8 +41,8 @@ public class ItemPickup : MonoBehaviour
     void OnTriggerExit2D(Collider2D other)
     {
         if(other.gameObject.layer != 8) return;
-        PlayerStats.hud.interact.text = "";
-        PlayerStats.interactItem = null;
-        PlayerStats.interactPickup = null;
+        PlayerHUD.instance.interact.text = "";
+        PlayerState.interactItem = null;
+        PlayerState.interactPickup = null;
     }
 }
