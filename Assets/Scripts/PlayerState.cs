@@ -147,6 +147,10 @@ public class PlayerState : MonoBehaviour
             _currentItem = _gun;
             currentItem = Items.items[_gun];
         }
+        else
+        {
+            currentItem = null;
+        }
 
         if(nullNode) currentItemNode = null;
 

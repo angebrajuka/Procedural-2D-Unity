@@ -42,7 +42,7 @@ public class ItemStats
         switch(name)
         {
         case "bomb":
-            MonoBehaviour.Instantiate(PlayerStats.instance.prefab_bomb, PlayerMovement.rb.position, Quaternion.identity);
+            MonoBehaviour.Instantiate(Items.prefab_bomb, PlayerMovement.rb.position, Quaternion.identity).SetActive(true);
             PlayerStats.SubtractCurrentItem();
             break;
         case "Blade":
@@ -95,11 +95,15 @@ public class JsonGun
 
 public class Items 
 {
+    public static GameObject prefab_bomb;
     public static Dictionary<string, ItemStats> items;
     public static Dictionary<string, Gun> guns;
 
     public static void Init(Transform gunSpriteTransform)
     {
+        prefab_bomb = Resources.Load<GameObject>("ItemData/Bomb");
+        prefab_bomb.SetActive(false);
+
         var gunsJson = JsonUtility.FromJson<GunsJson>(Resources.Load<TextAsset>("ItemData/guns").text).guns;
         guns = new Dictionary<string, Gun>();
         items = new Dictionary<string, ItemStats>();

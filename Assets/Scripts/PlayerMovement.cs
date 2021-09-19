@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // hierarchy
+    public float debugSpode;
+
     public static PlayerMovement instance;
 
     public static Rigidbody2D rb;
@@ -26,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
         speedMult = 1;
         speedMult *= (ProceduralGeneration.s_shallowWater.Contains(biome) || biome == 0) ? 0.6f : 1;
         speedMult *= PlayerState.sprinting ? PlayerStats.k_SPRINT_MULTIPLIER : (Flashlight.on ? PlayerStats.k_FLASHLIGHT_MULTIPLIER : 1);
-        speedMult *= PlayerStats.instance.debugSpode;
+        speedMult *= debugSpode;
     }
 
     void FixedUpdate()

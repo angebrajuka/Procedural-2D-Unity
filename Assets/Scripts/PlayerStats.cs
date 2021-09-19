@@ -7,10 +7,6 @@ public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats instance;
 
-    // hierarchy
-    public Transform prefab_bomb;
-    public float debugSpode;
-
     // constant
     public const float k_RUN_ACCELL = 90.0f;
     public const float k_SPRINT_MULTIPLIER = 1.2f;

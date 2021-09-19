@@ -1181,7 +1181,6 @@ MonoBehaviour:
   pauseHandler: {fileID: 1378529023}
   devConsole: {fileID: 194415836}
   daylightCycle: {fileID: 911958957}
-  proceduralGeneration: {fileID: 0}
   fadeTransition: {fileID: 1461331824}
   mainMenuObject: {fileID: 449472433}
   gameWorldObject: {fileID: 73507468}
@@ -3580,6 +3579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b1c5bc247c4a54db257c0c9bf2776c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugSpode: 1
 --- !u!50 &1422633254
 Rigidbody2D:
   serializedVersion: 4
@@ -3710,10 +3710,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 790ba56e30cd0f147a467bc13cc8bbb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab_bomb: {fileID: 84844878014446521, guid: b67bc57e41f2d404396a7b09dbe10e5b,
-    type: 3}
-  weapons: {fileID: 561793919}
-  debugSpode: 1
 --- !u!114 &1422633262
 MonoBehaviour:
   m_ObjectHideFlags: 0

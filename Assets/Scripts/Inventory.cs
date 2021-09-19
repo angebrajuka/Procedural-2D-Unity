@@ -214,12 +214,12 @@ public class Inventory : MonoBehaviour
             if(!node.Value.WithinGrid() || node.Value.followMouse)
             {
                 // DROP
-
+                
                 if(PlayerState.currentItemNode == node)
                 {
                     if(PlayerState.currentItemNode.Value.item.gun != null)
                     {
-                        PlayerState.SwitchGun("", false);
+                        PlayerState.SwitchGun("", true);
                     }
                     else
                     {
