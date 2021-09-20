@@ -38,13 +38,14 @@ public class EnemyObject : MonoBehaviour
         attackCooldown = 0;
     }
 
-    public bool OnDamage(float damage)
+    public bool OnDamage(float damage, float angle)
     {
         flash = 1;
+        Instantiate(DynamicEnemySpawning.instance.bloodSplatter, m_rigidbody.position, Quaternion.Euler(0, 0, angle));
         return true;
     }
 
-    public bool OnKill(float damage)
+    public bool OnKill(float damage, float angle)
     {
         DynamicEnemySpawning.OnKilled(this);
         Destroy(this.gameObject);

@@ -23,11 +23,12 @@ public class Enemy
 
 public class DynamicEnemySpawning : MonoBehaviour
 {
+    [HideInInspector] public static DynamicEnemySpawning instance;
+
     // hierarchy
     public GameObject enemyPrefab;
+    public GameObject bloodSplatter;
     public float minRadius, maxRadius;
-
-    [HideInInspector] public static DynamicEnemySpawning instance;
 
     // stats
     public static Dictionary<string, Enemy> enemies;

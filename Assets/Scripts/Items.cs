@@ -104,6 +104,7 @@ public class JsonGun
     public float    volume_shoot;
     public float    volume_reload;
     public string   muzzleFlashPrefab;
+    public string   bulletTrailPrefab;
     public float[]  barrelTip;
 }
 

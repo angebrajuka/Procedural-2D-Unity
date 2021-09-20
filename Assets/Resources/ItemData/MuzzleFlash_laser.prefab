@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &895993858792262751
+--- !u!1 &6824673540702398004
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1616051307232338703}
-  - component: {fileID: 6467094975099435590}
-  - component: {fileID: 1600264528873561917}
+  - component: {fileID: 818606567540708658}
+  - component: {fileID: 5256910141613916978}
+  - component: {fileID: 1914841676235778530}
   m_Layer: 0
   m_Name: MuzzleFlash_laser
   m_TagString: Untagged
@@ -18,27 +18,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1616051307232338703
+--- !u!4 &818606567540708658
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 895993858792262751}
+  m_GameObject: {fileID: 6824673540702398004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 551, y: 310, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6467094975099435590
+--- !u!114 &5256910141613916978
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 895993858792262751}
+  m_GameObject: {fileID: 6824673540702398004}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
@@ -69,22 +69,25 @@ MonoBehaviour:
   m_ShapeLightFalloffSize: 2
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
-  - {x: 25, y: -0.15, z: 0}
-  - {x: 25, y: 0.15, z: 0}
-  - {x: 1.1807756, y: 0.15, z: 0}
+  - {x: 1.4861145, y: 0, z: 0}
+  - {x: 1.2018573, y: 0.073582545, z: 0}
+  - {x: 1.497004, y: 0.24223757, z: 0}
+  - {x: 1.1807756, y: 0.24223758, z: 0}
   - {x: 0.42, y: 0.25, z: 0}
   - {x: 0.12702733, y: 0.32431754, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0.13405442, y: -0.3243175, z: 0}
   - {x: 0.42, y: -0.25, z: 0}
-  - {x: 1.045166, y: -0.15, z: 0}
---- !u!114 &1600264528873561917
+  - {x: 1.2018573, y: -0.20750953, z: 0}
+  - {x: 1.4899769, y: -0.19345483, z: 0}
+  - {x: 1.258076, y: -0.066963494, z: 0}
+--- !u!114 &1914841676235778530
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 895993858792262751}
+  m_GameObject: {fileID: 6824673540702398004}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 112af65437a136f4e809b39a9665bc7b, type: 3}

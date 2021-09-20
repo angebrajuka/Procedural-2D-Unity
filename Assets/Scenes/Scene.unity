@@ -3654,6 +3654,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 1562518597343047322, guid: d3a2a2af39dd3674ba3b374ea4a35dd0,
     type: 3}
+  bloodSplatter: {fileID: 5999835423130064721, guid: 1574f0bf3162cff45ba7e93322c4fb37,
+    type: 3}
   minRadius: 20
   maxRadius: 35
 --- !u!114 &1422633258
@@ -18995,7 +18997,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 11
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

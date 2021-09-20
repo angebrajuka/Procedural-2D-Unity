@@ -16,13 +16,13 @@ public class PlayerTarget : MonoBehaviour
         target.OnHeal = OnHeal;
     }
 
-    public bool OnDamage(float damage)
+    public bool OnDamage(float damage, float angle=0)
     {
         m_playerHUD.UpdateHealth();
         return true;
     }
 
-    public bool OnKill(float damage)
+    public bool OnKill(float damage, float angle=0)
     {
         m_playerHUD.UpdateHealth();
         return true;

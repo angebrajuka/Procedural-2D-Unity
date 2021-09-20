@@ -15,6 +15,7 @@
             "volume_shoot": 0.6,
             "volume_reload": 0.5,
             "muzzleFlashPrefab": "default",
+            "bulletTrailPrefab": "default",
             "barrelTip": [1.3, 0.1]
         },
         {
@@ -32,6 +33,7 @@
             "volume_shoot": 0.6,
             "volume_reload": 0.2,
             "muzzleFlashPrefab": "default",
+            "bulletTrailPrefab": "default",
             "barrelTip": [1.3, 0.2]
         },
         {
@@ -49,6 +51,7 @@
             "volume_shoot": 0.6,
             "volume_reload": 0.2,
             "muzzleFlashPrefab": "default",
+            "bulletTrailPrefab": "default",
             "barrelTip": [2.1, 0.1]
         },
         {
@@ -66,6 +69,7 @@
             "volume_shoot": 0.3,
             "volume_reload": 0.5,
             "muzzleFlashPrefab": "default",
+            "bulletTrailPrefab": "default",
             "barrelTip": [2.4, 0]
         },
         {
@@ -83,6 +87,7 @@
             "volume_shoot": 0.9,
             "volume_reload": 0.7,
             "muzzleFlashPrefab": "default",
+            "bulletTrailPrefab": "default",
             "barrelTip": [2, 0]
         },
         {
@@ -100,6 +105,7 @@
             "volume_shoot": 0.3,
             "volume_reload": 0.7,
             "muzzleFlashPrefab": "default",
+            "bulletTrailPrefab": "default",
             "barrelTip": [2, 0]
         },
         {
@@ -117,6 +123,7 @@
             "volume_shoot": 0.9,
             "volume_reload": 0.7,
             "muzzleFlashPrefab": "default",
+            "bulletTrailPrefab": "default",
             "barrelTip": [2, 0]
         },
         {
@@ -133,7 +140,8 @@
             "pellets": 1,
             "volume_shoot": 0.5,
             "volume_reload": 0.6,
-            "muzzleFlashPrefab": "energyRifle",
+            "muzzleFlashPrefab": "laser",
+            "bulletTrailPrefab": "laser",
             "barrelTip": [2, 0]
         },
         {
@@ -151,6 +159,7 @@
             "volume_shoot": 0.5,
             "volume_reload": 0.6,
             "muzzleFlashPrefab": "laser",
+            "bulletTrailPrefab": "laser",
             "barrelTip": [2, 0]
         }
     ]

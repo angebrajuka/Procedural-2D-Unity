@@ -19,11 +19,13 @@ public class Gun
     public AudioClip audio_reload;
     public float volume_reload;
     public GameObject muzzleFlashPrefab;
+    public GameObject bulletTrailPrefab;
     public float secondsBetweenShots;
     public Vector3 barrelTip;
     public Transform transform;
 
     public static Dictionary<string, GameObject> muzzleFlashes = new Dictionary<string, GameObject>();
+    public static Dictionary<string, GameObject> bulletTrails = new Dictionary<string, GameObject>();
 
     public Gun(JsonGun json, Transform transform)
     {
@@ -46,6 +48,11 @@ public class Gun
             muzzleFlashes.Add(json.muzzleFlashPrefab, Resources.Load<GameObject>("ItemData/MuzzleFlash_"+json.muzzleFlashPrefab));
         }
         muzzleFlashPrefab = muzzleFlashes[json.muzzleFlashPrefab];
+        if(!bulletTrails.ContainsKey(json.bulletTrailPrefab))
+        {
+            bulletTrails.Add(json.bulletTrailPrefab, Resources.Load<GameObject>("ItemData/BulletTrail_"+json.bulletTrailPrefab));
+        }
+        bulletTrailPrefab = bulletTrails[json.bulletTrailPrefab];
         secondsBetweenShots = 60.0f/json.rpm;
         damage /= pellets;
         barrelTip = new Vector3(json.barrelTip[0], json.barrelTip[1], 0);
@@ -55,10 +62,9 @@ public class Gun
     public bool Shoot(Vector3 position, Vector2 direction, float angle, Rigidbody2D rigidbody)
     {
         AudioManager.PlayClip(audio_shoot, volume_shoot, Mixer.SFX, 0.5f, position);
-        Transform flash = MonoBehaviour.Instantiate(muzzleFlashPrefab, transform.position, transform.rotation, transform).transform;
-        var tip = barrelTip;
-        if(direction.x < 0) tip.y *= -1;
-        flash.localPosition += tip;
+        Transform flash = MonoBehaviour.Instantiate(muzzleFlashPrefab, position, transform.rotation, transform).transform;
+        if(direction.x < 0) barrelTip.y *= -1;
+        flash.localPosition += barrelTip;
         Vector3 vec = flash.localScale;
         vec.x /= transform.localScale.x;
         vec.y /= transform.localScale.y;
@@ -88,9 +94,14 @@ public class Gun
         angle += (Random.value-0.5f)*spread;
 
         Vector3 direction = AngleToVector3(angle);
+        position += direction*barrelTip[0];
 
         const int layerMask = ~(1<<8 | 1<<2 | 1<<10 | 1<<12);
         RaycastHit2D raycast = Physics2D.Raycast(position, direction, range, layerMask);
+
+        Transform trail = MonoBehaviour.Instantiate(bulletTrailPrefab, position, Quaternion.Euler(0, 0, angle)).transform;
+        trail.GetComponent<BulletTrail>().Init(new Vector3(raycast.collider == null ? range*Random.Range(0.95f, 1.05f) : raycast.distance, 0, 0));
+
         if(raycast.collider != null)
         {    
             Target target = raycast.transform.GetComponent<Target>();
@@ -98,21 +109,9 @@ public class Gun
             if(target != null)
             {
                 raycast.transform.GetComponent<Rigidbody2D>().AddForceAtPosition(direction*100, raycast.point);
-                return target.Damage(damage);
+                return target.Damage(damage, angle);
             }
         }
-
-        // if(bulletTrailPrefab != null)
-        // {
-        //     Transform trail = Instantiate(bulletTrailPrefab, barrelTip.position, bulletTrailPrefab.rotation);
-        //     trail.localEulerAngles *= angle;
-        //     Transform child = trail.GetChild(0);
-        //     child.localPosition += Vector3.right*range/2;
-            
-        //     ParticleSystem ps = child.GetComponent<ParticleSystem>();
-        //     ParticleSystem.ShapeModule shape = ps.shape;
-        //     shape.scale += Vector3.right*range;
-        // }
 
         return false;
     }
