@@ -2,7 +2,7 @@
     "guns": [
         {
             "name": "pistol",
-            "damage": 3,
+            "damage": 4,
             "ammoType": "ammo_9mm",
             "rpm": 300,
             "spread": 0.05,

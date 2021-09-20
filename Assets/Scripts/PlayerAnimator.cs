@@ -50,6 +50,7 @@ public class PlayerAnimator : MonoBehaviour
         m_animator.SetBool("moving", PlayerMovement.moving);
         m_animator.SetInteger("biome", PlayerMovement.biome);
         m_animator.SetBool("shooting", PlayerState.shooting);
+        m_animator.SetBool("punching", PlayerState.punching);
         m_animator.speed = PlayerMovement.moving ? PlayerMovement.rb.velocity.magnitude * 0.07f : 1;
 
         m_renderer_gun.sprite = PlayerState.currentItem == null || PlayerState.currentItem.gun == null ? null : PlayerState.currentItem.sprite;

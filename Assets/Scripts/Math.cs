@@ -85,4 +85,10 @@ public static class Math
     {
         return Mathf.Abs(value1-value2) < range;
     }
+
+    public static Vector2 AngleToVector2(float degrees)
+    {
+        degrees *= Mathf.Deg2Rad;
+        return new Vector2(Mathf.Cos(degrees), Mathf.Sin(degrees));
+    }
 }

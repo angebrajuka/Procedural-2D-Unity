@@ -25,6 +25,7 @@ public struct Biome
     public static Dictionary<string, int> s_altSortingOrders = new Dictionary<string, int>();
     public static Dictionary<string, GameObject> s_decorations = new Dictionary<string, GameObject>();
     public static Dictionary<string, Vector2Int> s_decorationSizes = new Dictionary<string, Vector2Int>();
+    public static Dictionary<string, float> s_decorationMaxHealths = new Dictionary<string, float>();
 
     public GameObject[] decorations;
     public bool[] hasCollider;
@@ -37,28 +38,14 @@ public struct Biome
         hasCollider = new bool[decorations.Length];
         decorationThreshholds = new float[jsonBiome.decorations.Length];
         decorationSizes = new Vector2Int[jsonBiome.decorations.Length];
+
         for(int i=0; i<decorations.Length; i++)
         {
             var name = jsonBiome.decorations[i];
             if(!s_decorations.ContainsKey(name))
             {
-                GameObject go = new GameObject(name, typeof(SpriteRenderer));
-                
-                var sr = go.GetComponent<SpriteRenderer>();
-                sr.sprite = Resources.Load<Sprite>("Sprites/Decorations/"+name);
-                sr.sortingOrder = s_altSortingOrders.ContainsKey(name) ? s_altSortingOrders[name] : 1;
-                sr.spriteSortPoint = SpriteSortPoint.Pivot;
-                sr.material = material;
-                
-                if(s_colliders.ContainsKey(name))
-                {
-                    var c = go.AddComponent<PolygonCollider2D>();
-                    c.pathCount = 1;
-                    c.SetPath(0, s_colliders[name]);
-                }
-
-                s_decorations.Add(name, go);
-                s_decorationSizes.Add(name, new Vector2Int(sr.sprite.texture.width/(int)sr.sprite.pixelsPerUnit, (int)Mathf.Ceil(sr.sprite.texture.height/2f/sr.sprite.pixelsPerUnit)));
+                GameObject go = new GameObject(name, typeof(SpriteRenderer), typeof(Decoration), typeof(Target));
+                go.GetComponent<Decoration>().Init(name);
                 go.SetActive(false);
             }
             decorations[i] = s_decorations[name];
@@ -72,12 +59,12 @@ public struct Biome
 
 public class ProceduralGeneration : MonoBehaviour
 {
+    public static ProceduralGeneration instance;
+
     // hierarchy
     public GameObject prefab_chunk;
     public Material material;
 
-    public static ProceduralGeneration instance;
-    
     [HideInInspector]
     private Vector2Int currPos=Vector2Int.zero;
     private Vector2Int prevPos;

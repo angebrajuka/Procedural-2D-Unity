@@ -134,20 +134,27 @@ public class PlayerInput : MonoBehaviour
         
         shooting = PlayerState.gunRpmTimer > 0 || PlayerState.gunReloadTimer > 0;
         // pew pew
-        if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerState.currentItem != null && PlayerMovement.biome != 0)
+        if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerMovement.biome != 0)
         {
-            if(PlayerState.currentItem.gun != null && PlayerState.CanShoot())
+            if(PlayerState.currentItem == null)
             {
-                shooting = true;
-                if(PlayerState.gunRpmTimer <= 0)
-                {
-                    PlayerState.currentItem.gun.Shoot(PlayerMovement.rb.position, mouse_offset, angle, PlayerMovement.rb);
-                    PlayerHUD.instance.UpdateAmmo();
-                }
+                PlayerState.punching = true;
             }
-            else if(!PlayerState.melee && Input.GetKeyDown(keybinds[Keybind.shoot]))
+            else
             {
-                PlayerState.currentItem.Use();
+                if(PlayerState.currentItem.gun != null && PlayerState.CanShoot())
+                {
+                    shooting = true;
+                    if(PlayerState.gunRpmTimer <= 0)
+                    {
+                        PlayerState.currentItem.gun.Shoot(PlayerMovement.rb.position, mouse_offset, angle, PlayerMovement.rb);
+                        PlayerHUD.instance.UpdateAmmo();
+                    }
+                }
+                else if(!PlayerState.melee && Input.GetKeyDown(keybinds[Keybind.shoot]))
+                {
+                    PlayerState.currentItem.Use();
+                }
             }
         }
 
@@ -156,7 +163,7 @@ public class PlayerInput : MonoBehaviour
             input_move.x = 0;
             input_move.y = 0;
 
-            if(!shooting)
+            if(!shooting && !punching)
             {
                 if(Input.GetKey(keybinds[Keybind.moveEast]))  input_move.x ++;
                 if(Input.GetKey(keybinds[Keybind.moveNorth])) input_move.y ++;

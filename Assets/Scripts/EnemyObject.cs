@@ -30,6 +30,7 @@ public class EnemyObject : MonoBehaviour
         m_target = GetComponent<Target>();
         m_target.OnDamage = OnDamage;
         m_target.OnKill = OnKill;
+        m_target.OnHeal = Target.DefaultHeal;
         m_trigger = transform.GetChild(1).GetComponent<CircleCollider2D>();
         nearbyColliders = new Dictionary<Transform, Vector2>();
         flash = 0;

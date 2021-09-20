@@ -13,6 +13,8 @@ public class PlayerStats : MonoBehaviour
     public const float k_FLASHLIGHT_MULTIPLIER = 0.88f;
     public const float k_KNIFE_SPEED = 500f;
     public const float k_KNIFE_ARC = 70f;
+    public const float k_PUNCH_RANGE = 1;
+    public const float k_PUNCH_DAMAGE = 3;
 
     // upgrades + resources
     public static float g_KNIFE_DAMAGE=4;

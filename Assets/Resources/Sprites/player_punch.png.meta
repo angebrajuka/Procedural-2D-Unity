@@ -1,31 +1,19 @@
 fileFormatVersion: 2
-guid: b8d8922a5fbd77144a4c6af88c3d673b
+guid: ade73e5deda6e264cb6292bf17ff55ce
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8667466294985060184
-    second: tree_0
+      213: -3316543167459877813
+    second: player_punch_0
   - first:
-      213: 5281997702118322174
-    second: tree_1
+      213: -4561140491649568499
+    second: player_punch_1
   - first:
-      213: 515398547636034221
-    second: tree_0_0
+      213: -8690625837858855543
+    second: player_punch_2
   - first:
-      213: 3096763353497586428
-    second: tree_0_1
-  - first:
-      213: -2699505154609008287
-    second: tree_oak_0
-  - first:
-      213: -4708098214230497653
-    second: tree_oak_1
-  - first:
-      213: -5590696268459541370
-    second: tree_oak_2
-  - first:
-      213: -8970930855085875946
-    second: tree_oak_3
+      213: -7514080720495144117
+    second: player_punch_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -44,7 +32,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -68,8 +56,8 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 6
-  spritePivot: {x: 0, y: 0}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 0
@@ -111,101 +99,68 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tree_oak_0
+      name: player_punch_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
-        height: 64
-      alignment: 6
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 161b13e4d5e698ad0800000000000000
-      internalID: -2699505154609008287
+      spriteID: b4c1e4d9f8549f1d0800000000000000
+      internalID: -3316543167459877813
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tree_oak_1
+      name: player_punch_1
       rect:
         serializedVersion: 2
-        x: 48
+        x: 32
         y: 0
-        width: 48
-        height: 64
-      alignment: 6
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b86e3256e9979aeb0800000000000000
-      internalID: -4708098214230497653
+      spriteID: d01b39883e293b0c0800000000000000
+      internalID: -4561140491649568499
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tree_oak_2
+      name: player_punch_2
       rect:
         serializedVersion: 2
-        x: 96
+        x: 64
         y: 0
-        width: 48
-        height: 64
-      alignment: 6
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 68cfd575d5bd962b0800000000000000
-      internalID: -5590696268459541370
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tree_oak_3
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 0
-        width: 48
-        height: 64
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 61dd306dae9d08380800000000000000
-      internalID: -8970930855085875946
+      spriteID: 985679a68d1b46780800000000000000
+      internalID: -8690625837858855543
       vertices: []
       indices: 
       edges: []

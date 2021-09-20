@@ -45,12 +45,16 @@ public class Gun
         volume_reload = json.volume_reload;
         if(!muzzleFlashes.ContainsKey(json.muzzleFlashPrefab))
         {
-            muzzleFlashes.Add(json.muzzleFlashPrefab, Resources.Load<GameObject>("ItemData/MuzzleFlash_"+json.muzzleFlashPrefab));
+            var go = Resources.Load<GameObject>("ItemData/MuzzleFlash_"+json.muzzleFlashPrefab);
+            go.SetActive(false);
+            muzzleFlashes.Add(json.muzzleFlashPrefab, go);
         }
         muzzleFlashPrefab = muzzleFlashes[json.muzzleFlashPrefab];
         if(!bulletTrails.ContainsKey(json.bulletTrailPrefab))
         {
-            bulletTrails.Add(json.bulletTrailPrefab, Resources.Load<GameObject>("ItemData/BulletTrail_"+json.bulletTrailPrefab));
+            var go = Resources.Load<GameObject>("ItemData/BulletTrail_"+json.bulletTrailPrefab);
+            go.SetActive(false);
+            bulletTrails.Add(json.bulletTrailPrefab, go);
         }
         bulletTrailPrefab = bulletTrails[json.bulletTrailPrefab];
         secondsBetweenShots = 60.0f/json.rpm;
@@ -63,6 +67,7 @@ public class Gun
     {
         AudioManager.PlayClip(audio_shoot, volume_shoot, Mixer.SFX, 0.5f, position);
         Transform flash = MonoBehaviour.Instantiate(muzzleFlashPrefab, position, transform.rotation, transform).transform;
+        flash.gameObject.SetActive(true);
         if(direction.x < 0) barrelTip.y *= -1;
         flash.localPosition += barrelTip;
         Vector3 vec = flash.localScale;
@@ -83,32 +88,28 @@ public class Gun
         return hit;
     }
 
-    public static Vector3 AngleToVector3(float degrees)
-    {
-        degrees *= Mathf.Deg2Rad;
-        return new Vector3(Mathf.Cos(degrees), Mathf.Sin(degrees), 0);
-    }
-
     protected bool ShootBullet(Vector3 position, float angle)
     {
         angle += (Random.value-0.5f)*spread;
 
-        Vector3 direction = AngleToVector3(angle);
-        position += direction*barrelTip[0];
+        Vector2 direction = Math.AngleToVector2(angle);
+        position += Math.Vec3(direction)*barrelTip[0];
 
-        const int layerMask = ~(1<<8 | 1<<2 | 1<<10 | 1<<12);
+        const int layerMask = ~(1<<8 | 1<<2 | 1<<10 | 1<<12); // 8 to ignore player, 2 to ignore ignore raycast, 10 to ignore ground, 12 to ignore knife
         RaycastHit2D raycast = Physics2D.Raycast(position, direction, range, layerMask);
 
         Transform trail = MonoBehaviour.Instantiate(bulletTrailPrefab, position, Quaternion.Euler(0, 0, angle)).transform;
+        trail.gameObject.SetActive(true);
         trail.GetComponent<BulletTrail>().Init(new Vector3(raycast.collider == null ? range*Random.Range(0.95f, 1.05f) : raycast.distance, 0, 0));
 
         if(raycast.collider != null)
         {    
-            Target target = raycast.transform.GetComponent<Target>();
+            var target = raycast.transform.GetComponent<Target>();
 
             if(target != null)
             {
-                raycast.transform.GetComponent<Rigidbody2D>().AddForceAtPosition(direction*100, raycast.point);
+                var rb = raycast.transform.GetComponent<Rigidbody2D>();
+                if(rb != null) rb.AddForceAtPosition(direction*100, raycast.point);
                 return target.Damage(damage, angle);
             }
         }

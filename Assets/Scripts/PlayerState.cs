@@ -15,6 +15,7 @@ public class PlayerState : MonoBehaviour
     public static bool moving=false;
     public static bool sprinting=false;
     public static bool shooting=false;
+    public static bool punching=false;
 
     // weapons
     public static float gunRpmTimer;

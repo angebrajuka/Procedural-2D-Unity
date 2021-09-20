@@ -10,12 +10,12 @@ public class Target : MonoBehaviour
     public bool damageable = false;
     public bool dead = false;
 
-    public static bool Default1(float f) { return false; }
-    public static bool Default2(float f1, float f2) { return false; }
+    public static bool DefaultHeal(float f) { return false; }
+    public static bool DefaultDmgK(float f1, float f2) { return false; }
 
-    public Func<float, float, bool> OnDamage=Default2;
-    public Func<float, float, bool> OnKill=Default2;
-    public Func<float, bool> OnHeal=Default1;
+    public Func<float, float, bool> OnDamage=DefaultDmgK;
+    public Func<float, float, bool> OnKill=DefaultDmgK;
+    public Func<float, bool> OnHeal=DefaultHeal;
     
     public bool Damage(float damage, float angle=0)
     {
