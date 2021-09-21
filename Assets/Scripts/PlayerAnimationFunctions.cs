@@ -4,7 +4,7 @@ public class PlayerAnimationFunctions : MonoBehaviour
 {
     public void OnPunchImpact()
     {
-        var direction = Math.AngleToVector2(PlayerInput.angle);
+        var direction = ((PlayerAnimator.direction == 0 ? Vector2.right : Vector2.left)+Random.insideUnitCircle.normalized/3).normalized;
 
         const int layerMask = ~(1<<8 | 1<<2 | 1<<10 | 1<<12); // 8 to ignore player, 2 to ignore ignore raycast, 10 to ignore ground, 12 to ignore knife
         RaycastHit2D raycast = Physics2D.Raycast(PlayerMovement.rb.position+direction, direction, PlayerStats.k_PUNCH_RANGE, layerMask);
@@ -15,7 +15,7 @@ public class PlayerAnimationFunctions : MonoBehaviour
 
             if(target != null)
             {
-                target.Damage(PlayerStats.k_PUNCH_DAMAGE, PlayerInput.angle);
+                target.Damage(PlayerStats.k_PUNCH_DAMAGE, Math.NormalizedVecToAngle(direction));
             }
         }
     }

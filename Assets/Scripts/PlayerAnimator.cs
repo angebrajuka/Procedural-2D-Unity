@@ -20,7 +20,7 @@ public class PlayerAnimator : MonoBehaviour
     public Transform armRotatePoint;
 
     // input
-    public static int direction=0;
+    public static int direction=0; // 0 = right, 1 = left
 
     public void Init()
     {
@@ -53,7 +53,7 @@ public class PlayerAnimator : MonoBehaviour
         m_animator.SetBool("punching", PlayerState.punching);
         m_animator.speed = PlayerMovement.moving ? PlayerMovement.rb.velocity.magnitude * 0.07f : 1;
 
-        m_renderer_gun.sprite = PlayerState.currentItem == null || PlayerState.currentItem.gun == null ? null : PlayerState.currentItem.sprite;
+        m_renderer_gun.sprite = PlayerState.currentGun == null ? null : PlayerState.currentItem.sprite;
         m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
         m_renderer_arm.flipY = m_renderer_gun.flipY;
         gunSortingGroup.localPosition = m_renderer_gun.flipY ? gunBack : gunFront;

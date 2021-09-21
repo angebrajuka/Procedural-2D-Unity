@@ -40,6 +40,13 @@ public class PlayerState : MonoBehaviour
             return currentItemNode == null ? null : currentItemNode.Value.item;
         }
     }
+    public static Gun currentGun
+    {
+        get
+        {
+            return currentItem == null ? null : currentItem.gun;
+        }
+    }
     public static string interactItem = null;
     public static ItemPickup interactPickup;
 
@@ -89,14 +96,14 @@ public class PlayerState : MonoBehaviour
 
     public static bool CanShoot()
     {
-        return currentItem != null && currentItem.gun != null && GetAmmo() > 0 && gunReloadTimer <= 0;
+        return currentGun != null && GetAmmo() > 0 && gunReloadTimer <= 0;
     }
 
     public static void BeginReload()
     {
-        if(Inventory.instance.isOpen || currentItem == null || currentItem.gun == null || GetAmmo() == currentItem.gun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || Inventory.instance.GetTotalCount(currentItem.gun.ammoType) == 0) return;
-        gunReloadTimer = currentItem.gun.reloadTime;
-        reloadSound = AudioManager.PlayClip(currentItem.gun.audio_reload, currentItem.gun.volume_reload, Mixer.SFX);
+        if(Inventory.instance.isOpen || currentGun == null || GetAmmo() == currentGun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || Inventory.instance.GetTotalCount(currentGun.ammoType) < currentGun.ammoPerShot) return;
+        gunReloadTimer = currentGun.reloadTime;
+        reloadSound = AudioManager.PlayClip(currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
     }
 
     public static void CancelReload()
@@ -107,20 +114,20 @@ public class PlayerState : MonoBehaviour
 
     public static void FinishReload()
     {
-        int _ammo = Inventory.instance.GetTotalCount(currentItem.gun.ammoType)/currentItem.gun.ammoPerShot;
-        int _clip = GetAmmo()/currentItem.gun.ammoPerShot;
-        int _clipSize = currentItem.gun.clipSize/currentItem.gun.ammoPerShot;
+        int _ammo = Inventory.instance.GetTotalCount(currentGun.ammoType)/currentGun.ammoPerShot;
+        int _clip = GetAmmo()/currentGun.ammoPerShot;
+        int _clipSize = currentGun.clipSize/currentGun.ammoPerShot;
         
         if(_ammo > _clipSize - _clip)
         {
-            Inventory.instance.RemoveItemCount(currentItem.gun.ammoType, (_clipSize - _clip)*currentItem.gun.ammoPerShot);
-            SetAmmo(currentItem.gun.clipSize);
+            Inventory.instance.RemoveItemCount(currentGun.ammoType, (_clipSize - _clip)*currentGun.ammoPerShot);
+            SetAmmo(currentGun.clipSize);
         }
         else if(_ammo > 0)
         {
-            int num = _ammo*currentItem.gun.ammoPerShot;
+            int num = _ammo*currentGun.ammoPerShot;
             SetAmmo(GetAmmo()+num);
-            Inventory.instance.RemoveItemCount(currentItem.gun.ammoType, num);
+            Inventory.instance.RemoveItemCount(currentGun.ammoType, num);
         }
 
         PlayerHUD.instance.UpdateAmmo();

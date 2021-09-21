@@ -108,8 +108,6 @@ public class Gun
 
             if(target != null)
             {
-                var rb = raycast.transform.GetComponent<Rigidbody2D>();
-                if(rb != null) rb.AddForceAtPosition(direction*100, raycast.point);
                 return target.Damage(damage, angle);
             }
         }

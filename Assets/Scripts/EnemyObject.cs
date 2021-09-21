@@ -15,7 +15,7 @@ public class EnemyObject : MonoBehaviour
     // members
     [HideInInspector] public Dictionary<Transform, Vector2> nearbyColliders;
     [HideInInspector] public Vector2 targetMovement;
-    float flash;
+    // float flash;
     public int state;
     public float frame;
     public float attackCooldown;
@@ -33,7 +33,7 @@ public class EnemyObject : MonoBehaviour
         m_target.OnHeal = Target.DefaultHeal;
         m_trigger = transform.GetChild(1).GetComponent<CircleCollider2D>();
         nearbyColliders = new Dictionary<Transform, Vector2>();
-        flash = 0;
+        // flash = 0;
         state = 0;
         frame = (UnityEngine.Random.value+0.2f);;
         attackCooldown = 0;
@@ -41,7 +41,7 @@ public class EnemyObject : MonoBehaviour
 
     public bool OnDamage(float damage, float angle)
     {
-        flash = 1;
+        m_rigidbody.AddForce(Math.AngleToVector2(angle)*300*damage);
         Instantiate(DynamicEnemySpawning.instance.bloodSplatter, m_rigidbody.position, Quaternion.Euler(0, 0, angle));
         return true;
     }
@@ -148,12 +148,12 @@ public class EnemyObject : MonoBehaviour
 
             m_renderer.sprite = enemy.sprites[state][(int)Mathf.Floor(frame)];
 
-            if(flash > 0)
-            {
-                flash -= Time.fixedDeltaTime*6;
-                if(flash < 0) flash = 0;
-                m_material.SetFloat("_Blend", flash);
-            }
+            // if(flash > 0)
+            // {
+            //     flash -= Time.fixedDeltaTime*6;
+            //     if(flash < 0) flash = 0;
+            //     m_material.SetFloat("_Blend", flash);
+            // }
             
             m_rigidbody.AddForce(targetMovement*enemy.speed_move);
         }

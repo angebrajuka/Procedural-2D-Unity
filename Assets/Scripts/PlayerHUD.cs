@@ -57,33 +57,30 @@ new public Transform transform;
         ammoTxt.gameObject.SetActive(false);
         currentItem.transform.localScale = Vector3.zero;
 
-        if(PlayerState.currentItem != null)
+        if(PlayerState.currentGun != null)
         {
-            if(PlayerState.currentItem.gun != null)
-            {
-                ammoTxt.gameObject.SetActive(true);
-                ammoImage.sprite = ammoImages[PlayerState.currentItem.gun.ammoType];
-            }
-            else
-            {
-                currentItem.sprite = PlayerState.currentItem.sprite;
-                currentItem.transform.localScale = new Vector3(PlayerState.currentItem.size.x > PlayerState.currentItem.size.y ? 1 : (float)PlayerState.currentItem.size.x/PlayerState.currentItem.size.y, PlayerState.currentItem.size.y > PlayerState.currentItem.size.x ? 1 : (float)PlayerState.currentItem.size.y/PlayerState.currentItem.size.x, 1);
-                
-                int count = Inventory.instance.GetTotalCount(PlayerState.currentItem.name);
-                currentItemCount.text = count == 1 ? "" : count+"";
-            }
+            ammoTxt.gameObject.SetActive(true);
+            ammoImage.sprite = ammoImages[PlayerState.currentGun.ammoType];
+        }
+        else if(PlayerState.currentItem != null)
+        {
+            currentItem.sprite = PlayerState.currentItem.sprite;
+            currentItem.transform.localScale = new Vector3(PlayerState.currentItem.size.x > PlayerState.currentItem.size.y ? 1 : (float)PlayerState.currentItem.size.x/PlayerState.currentItem.size.y, PlayerState.currentItem.size.y > PlayerState.currentItem.size.x ? 1 : (float)PlayerState.currentItem.size.y/PlayerState.currentItem.size.x, 1);
+            
+            int count = Inventory.instance.GetTotalCount(PlayerState.currentItem.name);
+            currentItemCount.text = count == 1 ? "" : count+"";
         }
 
-        currentItem.transform.parent.gameObject.SetActive(PlayerState.currentItem != null && PlayerState.currentItem.gun == null);
+        currentItem.transform.parent.gameObject.SetActive(PlayerState.currentItem != null && PlayerState.currentGun == null);
     }
 
     public void UpdateAmmo()
     {
-        if(PlayerState.currentItem != null && PlayerState.currentItem.gun != null)
+        if(PlayerState.currentGun != null)
         {
             currentGunAmmoTxt.text = PlayerStats.GetAmmo() < 10 ? "0" : "";
             currentGunAmmoTxt.text += PlayerStats.GetAmmo()+"";
-            currentReserveTxt.text = "/"+Inventory.instance.GetTotalCount(PlayerState.currentItem.gun.ammoType);
+            currentReserveTxt.text = "/"+Inventory.instance.GetTotalCount(PlayerState.currentGun.ammoType);
         }
     }
 

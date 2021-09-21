@@ -142,12 +142,12 @@ public class PlayerInput : MonoBehaviour
             }
             else
             {
-                if(PlayerState.currentItem.gun != null && PlayerState.CanShoot())
+                if(PlayerState.currentGun != null && PlayerState.CanShoot())
                 {
                     shooting = true;
                     if(PlayerState.gunRpmTimer <= 0)
                     {
-                        PlayerState.currentItem.gun.Shoot(PlayerMovement.rb.position, mouse_offset, angle, PlayerMovement.rb);
+                        PlayerState.currentGun.Shoot(PlayerMovement.rb.position, mouse_offset, angle, PlayerMovement.rb);
                         PlayerHUD.instance.UpdateAmmo();
                     }
                 }
