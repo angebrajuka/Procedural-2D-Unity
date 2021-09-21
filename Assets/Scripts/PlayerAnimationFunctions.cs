@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PlayerAnimationFunctions : MonoBehaviour
 {
+    public AudioClip punch_miss;
+    public AudioClip punch_hit;
+
     public void OnPunchImpact()
     {
         var direction = ((PlayerAnimator.direction == 0 ? Vector2.right : Vector2.left)+Random.insideUnitCircle.normalized/3).normalized;
@@ -9,13 +12,17 @@ public class PlayerAnimationFunctions : MonoBehaviour
         const int layerMask = ~(1<<8 | 1<<2 | 1<<10 | 1<<12); // 8 to ignore player, 2 to ignore ignore raycast, 10 to ignore ground, 12 to ignore knife
         RaycastHit2D raycast = Physics2D.Raycast(PlayerMovement.rb.position+direction, direction, PlayerStats.k_PUNCH_RANGE, layerMask);
 
-        if(raycast.collider != null)
-        {    
+        if(raycast.collider == null)
+        {
+            AudioManager.PlayClip(punch_miss);
+        }
+        else
+        {
             var target = raycast.transform.GetComponent<Target>();
-
             if(target != null)
             {
                 target.Damage(PlayerStats.k_PUNCH_DAMAGE, Math.NormalizedVecToAngle(direction));
+                AudioManager.PlayClip(punch_hit);
             }
         }
     }

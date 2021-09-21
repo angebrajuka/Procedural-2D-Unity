@@ -862,6 +862,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7c6f5c526e0b248bdfb89cc4c27371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  punch_miss: {fileID: 8300000, guid: 3f1afb0d54be4854989a347f4b0cfb71, type: 3}
+  punch_hit: {fileID: 8300000, guid: 80558e9c3cf8d3749a25a7352528a926, type: 3}
 --- !u!1 &274863757
 GameObject:
   m_ObjectHideFlags: 0

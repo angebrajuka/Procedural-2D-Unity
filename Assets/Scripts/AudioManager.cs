@@ -90,7 +90,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public static GameObject PlayClip(AudioClip clip, float volume, Mixer mixer, float spatialBlend=0.0f, Vector3 position=default(Vector3))
+    public static GameObject PlayClip(AudioClip clip, float volume=1, Mixer mixer=Mixer.SFX, float spatialBlend=0.0f, Vector3 position=default(Vector3))
     {
         GameObject gameObject = new GameObject();
         gameObject.transform.parent = instance.transform;
