@@ -46,12 +46,7 @@ public class ProceduralChunk : MonoBehaviour
             int y = (int)transform.localPosition.y+tilePos.y;
             int tile = ProceduralGeneration.GetTile(x, y);
             tileArray[i] = ProceduralGeneration.tiles[tile];
-            GameObject decoration = ProceduralGeneration.GetDecoration(x, y, tile);
-            if(decoration != null)
-            {
-                var go = Instantiate(decoration, decorations.position+tilePos, Quaternion.identity, decorations);
-                go.SetActive(true);
-            }
+            ProceduralGeneration.SpawnDecoration(x, y, tile, decorations);
         }
         m_tilemap.SetTiles(positionArray, tileArray);
         tilePos.x++;
