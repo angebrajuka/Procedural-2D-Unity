@@ -88,6 +88,9 @@ public class Gun
         return hit;
     }
 
+    public const int layerMask = ~(1<<8 | 1<<2 | 1<<10 | 1<<12 | 1<<11 | 1<<14);
+    // 8 to ignore player, 2 to ignore ignore raycast, 10 to ignore ground, 12 to ignore knife, 11 & 14 to avoid items
+
     protected bool ShootBullet(Vector3 position, float angle)
     {
         angle += (Random.value-0.5f)*spread;
@@ -95,7 +98,6 @@ public class Gun
         Vector2 direction = Math.AngleToVector2(angle);
         position += Math.Vec3(direction)*barrelTip[0];
 
-        const int layerMask = ~(1<<8 | 1<<2 | 1<<10 | 1<<12); // 8 to ignore player, 2 to ignore ignore raycast, 10 to ignore ground, 12 to ignore knife
         RaycastHit2D raycast = Physics2D.Raycast(position, direction, range, layerMask);
 
         Transform trail = MonoBehaviour.Instantiate(bulletTrailPrefab, position, Quaternion.Euler(0, 0, angle)).transform;

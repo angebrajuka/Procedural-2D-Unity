@@ -14,6 +14,7 @@ public enum Keybind:byte
     flashlight,
     shoot,
     reload,
+    melee,
     interact,
     inventory,
     i_equip,
@@ -49,6 +50,7 @@ public class PlayerInput : MonoBehaviour
         {Keybind.flashlight,    "flashlight"            },
         {Keybind.shoot,         "shoot"                 },
         {Keybind.reload,        "reload"                },
+        {Keybind.melee,         "switch to melee"       },
         {Keybind.interact,      "interact"              },
         {Keybind.inventory,     "open inventory"        },
         {Keybind.i_equip,       "inventory equip item"  },
@@ -67,6 +69,7 @@ public class PlayerInput : MonoBehaviour
             {Keybind.flashlight,    KeyCode.LeftShift   },
             {Keybind.shoot,         KeyCode.Mouse0      },
             {Keybind.reload,        KeyCode.R           },
+            {Keybind.melee,         KeyCode.Q           },
             {Keybind.interact,      KeyCode.F           },
             {Keybind.inventory,     KeyCode.Tab         },
             {Keybind.i_equip,       KeyCode.E           },
@@ -131,7 +134,12 @@ public class PlayerInput : MonoBehaviour
             mouse_offset.Normalize();
             angle = Math.NormalizedVecToAngle(mouse_offset);
         }
-        
+
+        if(Input.GetKeyDown(keybinds[Keybind.melee]))
+        {
+            PlayerState.currentItemNode = null;
+        }
+
         shooting = PlayerState.gunRpmTimer > 0 || PlayerState.gunReloadTimer > 0;
         // pew pew
         if(Input.GetKey(keybinds[Keybind.shoot]) && PlayerMovement.biome != 0)
@@ -206,7 +214,7 @@ public class PlayerInput : MonoBehaviour
         if(Input.GetKey(keybinds[Keybind.reload]) && PlayerMovement.biome != 0) PlayerState.BeginReload();
 
         // interact
-        if(Input.GetKeyDown(keybinds[Keybind.interact]))
+        if(Input.GetKey(keybinds[Keybind.interact]))
         {
             if(PlayerState.interactItem != null)
             {

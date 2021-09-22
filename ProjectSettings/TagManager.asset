@@ -16,10 +16,10 @@ TagManager:
   - Player
   - ThrownItem
   - Ground
-  - ThrownItemTrigger
+  - ItemPickupTrigger
   - Knife
   - DecorationHigh
-  - 
+  - ItemPickup
   - 
   - 
   - 

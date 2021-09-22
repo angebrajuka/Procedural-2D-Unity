@@ -25,7 +25,19 @@ public class PlayerState : MonoBehaviour
     // items
     public static bool melee;
     public static sbyte knifeDirection;
-    public static LinkedListNode<GridItem> currentItemNode;
+    private static LinkedListNode<GridItem> p_currentItemNode;
+    public static LinkedListNode<GridItem> currentItemNode
+    {
+        get
+        {
+            return p_currentItemNode;
+        }
+        set
+        {
+            p_currentItemNode = value;
+            SwitchGun();
+        }
+    }
     public static string _currentItem
     {
         get
@@ -60,7 +72,7 @@ public class PlayerState : MonoBehaviour
         PauseHandler.Pause();
         PauseHandler.Blur();
 
-        PlayerState.SwitchGun(true);
+        currentItemNode = null;
         gunRpmTimer = 0;
         gunReloadTimer = 0;
         melee = false;
@@ -151,11 +163,9 @@ public class PlayerState : MonoBehaviour
         melee = false;
     }
 
-    public static void SwitchGun(bool nullNode)
+    public static void SwitchGun()
     {
         CancelReload();
-
-        if(nullNode) currentItemNode = null;
 
         PlayerHUD.instance.UpdateAmmo();
         PlayerHUD.instance.UpdateHotbar();

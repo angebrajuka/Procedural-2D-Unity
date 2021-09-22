@@ -4,7 +4,8 @@ public class Decoration : MonoBehaviour
 {
     public DecorationStats stats;
     public SpriteRenderer sr;
-    public int sprite;
+    public Target m_target;
+    public float sprite;
 
     public void Init(DecorationStats stats)
     {
@@ -19,12 +20,7 @@ public class Decoration : MonoBehaviour
 
         if(stats.collider != null)
         {
-            var target = gameObject.AddComponent<Target>();
-            target.damageable = true;
-            target.OnDamage = OnDamage;
-            target.OnKill = OnKill;
-            target.maxHealth = stats.sprites.Length*PlayerStats.k_PUNCH_DAMAGE;
-            target.health = target.maxHealth;
+            m_target = gameObject.AddComponent<Target>();
 
             var c = gameObject.AddComponent<PolygonCollider2D>();
             c.pathCount = 1;
@@ -32,10 +28,37 @@ public class Decoration : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        if(m_target != null)
+        {
+            m_target.damageable = true;
+            m_target.OnDamage = OnDamage;
+            m_target.OnKill = OnKill;
+            m_target.maxHealth = stats.health*PlayerStats.k_PUNCH_DAMAGE;
+            m_target.health = m_target.maxHealth;
+        }
+    }
+
     public bool OnDamage(float damage, float angle)
     {
-        sprite += (int)Mathf.Round(damage/PlayerStats.k_PUNCH_DAMAGE);
-        if(sprite < stats.sprites.Length) sr.sprite = stats.sprites[sprite];
+        for(int i=0; i<damage/PlayerStats.k_PUNCH_DAMAGE; i++)
+        {
+            float val = Random.value;
+            for(int j=0; j<stats.itemDrops.Length; j++)
+            {
+                if(val < stats.itemDrops[j].f)
+                {
+                    var go = Instantiate(Inventory.instance.itemPickupPrefab, transform.position+new Vector3(stats.size.x/2f, stats.size.y/3f, 0), Quaternion.identity, Entities.t);
+                    var pickup = go.GetComponent<ItemPickup>();
+                    pickup.Init(stats.itemDrops[j].s, 1);
+                    break;
+                }
+            }
+
+            sprite += stats.sprites.Length / stats.health;
+            if(sprite < stats.sprites.Length) sr.sprite = stats.sprites[(int)Mathf.Floor(sprite)];
+        }
 
         return false;
     }

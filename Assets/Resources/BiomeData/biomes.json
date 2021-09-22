@@ -72,8 +72,8 @@
             "tile_name": "grass_rainforest",
             "rain_temp_map_color": [0, 0, 255],
             "decorations": [
-                {"s": "tree_rainforest_0", "f": 0.025},
-                {"s": "tree_rainforest_1", "f": 0.035},
+                {"s": "tree_rainforest_big", "f": 0.025},
+                {"s": "tree_rainforest_small", "f": 0.035},
                 {"s": "grass", "f": 0.1},
                 {"s": "flower_orange", "f": 0.03},
                 {"s": "flower_red", "f": 0.03}

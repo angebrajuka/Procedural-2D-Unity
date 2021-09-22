@@ -14,7 +14,6 @@ public class Inventory : MonoBehaviour
     public PlayerInput playerInput;
     public Rigidbody2D player_rb;
     public PlayerAnimator playerAnimator;
-    public Transform entities;
 
     [HideInInspector] public bool isOpen=false;
 
@@ -47,7 +46,7 @@ public class Inventory : MonoBehaviour
     public void Equip(LinkedListNode<GridItem> node)
     {
         PlayerState.currentItemNode = node;
-        PlayerState.SwitchGun(false);
+        PlayerState.SwitchGun();
         PlayerHUD.instance.UpdateHotbar();
     }
 
@@ -216,18 +215,14 @@ public class Inventory : MonoBehaviour
                 
                 if(PlayerState.currentItemNode == node)
                 {
-                    PlayerState.SwitchGun(true);
+                    PlayerState.currentItemNode = null;
                 }
 
                 GameObject item = Instantiate(itemPickupPrefab, player_rb.position, Quaternion.identity, Entities.t);
-                item.transform.parent = entities;
                 ItemPickup pickup = item.GetComponent<ItemPickup>();
                 pickup.item = node.Value.item.name;
                 pickup.count = node.Value.count;
                 pickup.ammo = node.Value.ammo;
-                SpriteRenderer sprite = item.GetComponent<SpriteRenderer>();
-                sprite.sprite = node.Value.item.sprite;
-                item.GetComponent<Rigidbody2D>().AddForce(new Vector2((Random.value-0.5f)*100, (Random.value-0.5f)*100));
                 Destroy(node.Value.gameObject);
                 items.Remove(node);
             }

@@ -14,6 +14,7 @@ public class JsonDecoration
 {
     public string name;
     public StringFloat[] item_drops;
+    public int health;
     public float[] collider;
 }
 
@@ -41,24 +42,30 @@ public class BiomesJson
 
 public class DecorationStats
 {
+    public int health;
     public Sprite[] sprites;
     public Vector2Int size;
     public Vector2[] collider;
     public StringFloat[] itemDrops;
     public int sortingLayer;
 
-    public DecorationStats(string name, Vector2[] collider, StringFloat[] itemDrops, int sortingLayer)
+    public DecorationStats(string name, int health, Vector2[] collider, StringFloat[] itemDrops, int sortingLayer)
     {
+        this.health = health;
         this.sprites = Resources.LoadAll<Sprite>("Sprites/Decorations/"+name);
         this.size = new Vector2Int((int)sprites[0].rect.width/(int)sprites[0].pixelsPerUnit, (int)Mathf.Ceil(sprites[0].rect.height/2f/sprites[0].pixelsPerUnit));
         this.collider = collider;
         this.itemDrops = itemDrops;
+        for(int i=0; i<itemDrops.Length; i++)
+        {
+            itemDrops[i].f += i > 0 ? itemDrops[i-1].f : 0;
+        }
         this.sortingLayer = sortingLayer;
     }
 
     public static DecorationStats Default(string name)
     {
-        return new DecorationStats(name, null, new StringFloat[0], 1);
+        return new DecorationStats(name, 1, null, new StringFloat[0], 1);
     }
 }
 
@@ -69,7 +76,7 @@ public struct Biome
 
     public static void Init()
     {
-        var decorationsJson = JsonUtility.FromJson<DecorationsJson>(Resources.Load<TextAsset>("DecorationData/decorations").text);
+        var decorationsJson = JsonUtility.FromJson<DecorationsJson>(Resources.Load<TextAsset>("BiomeData/decorations").text);
         
         var sortingLayers = new Dictionary<string, int>();
         foreach(var layer in decorationsJson.alt_sorting_layers)
@@ -92,6 +99,7 @@ public struct Biome
 
             s_decorationStats.Add(name, new DecorationStats(
                 name,
+                decorations[i].health,
                 collider,
                 decorations[i].item_drops,
                 sortingLayers.ContainsKey(name) ? sortingLayers[name] : 1
@@ -119,6 +127,7 @@ public struct Biome
             if(!s_decorations.ContainsKey(name))
             {
                 GameObject go = new GameObject(name, typeof(SpriteRenderer), typeof(Decoration));
+                go.layer = 13; // decoration high
                 s_decorations.Add(name, go.GetComponent<Decoration>());
                 s_decorations[name].Init(s_decorationStats[name]);
                 go.SetActive(false);

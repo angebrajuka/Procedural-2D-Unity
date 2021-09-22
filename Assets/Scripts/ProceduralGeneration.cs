@@ -11,7 +11,6 @@ public class ProceduralGeneration : MonoBehaviour
     public GameObject prefab_chunk;
     public Material material;
 
-    [HideInInspector]
     private Vector2Int currPos=Vector2Int.zero;
     private Vector2Int prevPos;
     public const int chunkSize=50;
@@ -239,7 +238,13 @@ public class ProceduralGeneration : MonoBehaviour
                             {
                                 for(int y=0; y<biomes[val].decorations[i].stats.size.y; y++)
                                 {
-                                    if(mapTexture_decor[pos.x+x, pos.y+y] != 254 && (mapTexture_decor[pos.x+x, pos.y+y] == 255 || biomes[val].decorations[mapTexture_decor[pos.x+x, pos.y+y]].stats.collider != null || mapTexture_biome[pos.x+x, pos.y+y] != val)) goto BreakBreak;
+                                    if(mapTexture_decor[pos.x+x, pos.y+y] != 254 &&
+                                    (mapTexture_decor[pos.x+x, pos.y+y] == 255 ||
+                                    biomes[val].decorations[mapTexture_decor[pos.x+x, pos.y+y]].stats.collider != null ||
+                                    mapTexture_biome[pos.x+x, pos.y+y] != val))
+                                    {
+                                        goto BreakBreak;
+                                    }
                                 }
                             }
                             for(int x=0; x<biomes[val].decorations[i].stats.size.x; x++)
@@ -271,6 +276,7 @@ public class ProceduralGeneration : MonoBehaviour
 
         var decoration = biomes[tile].decorations[i];
         var go = Instantiate(decoration.gameObject, new Vector3(x, y, 0), Quaternion.identity, parent);
+        go.GetComponent<Decoration>().stats = decoration.stats; // not cloned because reference?
         go.SetActive(true);
     }
 

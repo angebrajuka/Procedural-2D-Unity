@@ -20,6 +20,9 @@
             "maxStack": 30,
             "equipable": false
         },
+
+
+
         {
             "name": "fishing_rod",
             "maxStack": 1,
@@ -54,6 +57,18 @@
             "name": "potion",
             "maxStack": 1,
             "equipable": true
+        },
+
+
+        {
+            "name": "stick",
+            "maxStack": 10,
+            "equipable": false
+        },
+        {
+            "name": "leaf_oak",
+            "maxStack": 10,
+            "equipable": false
         }
     ]
 }

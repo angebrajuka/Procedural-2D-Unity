@@ -11,7 +11,10 @@ public class Target : MonoBehaviour
     public bool dead = false;
 
     public static bool DefaultHeal(float f) { return false; }
-    public static bool DefaultDmgK(float f1, float f2) { return false; }
+    public static bool DefaultDmgK(float f1, float f2) {
+        Debug.Log("fuck you");
+        return false;
+    }
 
     public Func<float, float, bool> OnDamage=DefaultDmgK;
     public Func<float, float, bool> OnKill=DefaultDmgK;
