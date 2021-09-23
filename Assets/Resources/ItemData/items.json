@@ -57,18 +57,6 @@
             "name": "potion",
             "maxStack": 1,
             "equipable": true
-        },
-
-
-        {
-            "name": "stick",
-            "maxStack": 10,
-            "equipable": false
-        },
-        {
-            "name": "leaf_oak",
-            "maxStack": 10,
-            "equipable": false
         }
     ]
 }

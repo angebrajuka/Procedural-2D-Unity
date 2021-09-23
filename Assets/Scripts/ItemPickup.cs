@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
-{    
+{
     static readonly Vector2 vecLength2 = new Vector2(2, 2);
 
     // hierarchy
@@ -16,11 +16,11 @@ public class ItemPickup : MonoBehaviour
     public int count;
     public int ammo=0;
 
-    public void Init(string item, int count)
+    public void Init(string item, int count, bool applyForce=true)
     {
         this.item = item;
         this.count = count;
-        GetComponent<Rigidbody2D>().AddForce(new Vector2((Random.value-0.5f)*100, (Random.value-0.5f)*100));
+        if(applyForce) GetComponent<Rigidbody2D>().AddForce(new Vector2((Random.value-0.5f)*100, (Random.value-0.5f)*100));
     }
 
     void Start()
@@ -44,14 +44,6 @@ public class ItemPickup : MonoBehaviour
             PlayerState.interactItem = item;
             PlayerState.interactPickup = this;
         }
-        // else if(other.gameObject.layer == gameObject.layer)
-        // {
-        //     Rigidbody2D o_rigidbody = other.gameObject.GetComponent<Rigidbody2D>();
-
-        //     var delta = (vecLength2-(o_rigidbody.position - rb.position))*1.3f;
-        //     o_rigidbody.AddForce(-delta+Random.insideUnitCircle);
-        //     rb.AddForce(delta);
-        // }
     }
 
     void OnTriggerExit2D(Collider2D other)

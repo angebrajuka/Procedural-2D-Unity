@@ -49,7 +49,7 @@ public class Decoration : MonoBehaviour
             {
                 if(val < stats.itemDrops[j].f)
                 {
-                    var go = Instantiate(Inventory.instance.itemPickupPrefab, transform.position+new Vector3(stats.size.x/2f, stats.size.y/3f, 0), Quaternion.identity, Entities.t);
+                    var go = Instantiate(Inventory.instance.itemPickupPrefab, transform.position+new Vector3(stats.size.x/2f, stats.size.y/3f, 0)+Math.Vec3(Random.insideUnitCircle.normalized*0.5f), Quaternion.identity, Entities.t);
                     var pickup = go.GetComponent<ItemPickup>();
                     pickup.Init(stats.itemDrops[j].s, 1);
                     break;

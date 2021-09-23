@@ -28,12 +28,12 @@ public class ItemStats
     public Gun gun;
     public GameObject[] prefabs;
 
-    public ItemStats(JsonItem jsonItem)
+    public ItemStats(Sprite sprite, int maxStack=16, bool equipable=false)
     {
-        name = jsonItem.name;
-        maxStack = jsonItem.maxStack;
-        equipable = jsonItem.equipable;
-        sprite = Resources.Load<Sprite>("Sprites/Items/"+name);
+        name = sprite.name;
+        this.maxStack = maxStack;
+        this.equipable = equipable;
+        this.sprite = sprite;
         size = new Vector2Int((int)(sprite.texture.width/8f), (int)(sprite.texture.height/8f));
         gun = Items.guns.ContainsKey(name) ? Items.guns[name] : null;
 
@@ -49,6 +49,11 @@ public class ItemStats
             prefabs[i].SetActive(false);
             Array.Resize(ref prefabs, prefabs.Length*2);
         }
+    }
+
+    public static ItemStats FromJson(JsonItem jsonItem)
+    {
+        return new ItemStats(Resources.Load<Sprite>("Sprites/Items/"+jsonItem.name), jsonItem.maxStack, jsonItem.equipable);
     }
 
     public void Use()
@@ -126,13 +131,22 @@ public class Items
             item.name = gun.name;
             item.maxStack = 1;
             item.equipable = true;
-            items.Add(item.name, new ItemStats(item));
+            items.Add(item.name, ItemStats.FromJson(item));
         }
 
         var itemsJson = JsonUtility.FromJson<ItemsJson>(Resources.Load<TextAsset>("ItemData/items").text).items;
         foreach(var jsonItem in itemsJson)
         {
-            items.Add(jsonItem.name, new ItemStats(jsonItem));
+            items.Add(jsonItem.name, ItemStats.FromJson(jsonItem));
+        }
+
+        var sprites = Resources.LoadAll<Sprite>("Sprites/Items");
+        foreach(var sprite in sprites)
+        {
+            if(!items.ContainsKey(sprite.name))
+            {
+                items.Add(sprite.name, new ItemStats(sprite));
+            }
         }
     }
 
