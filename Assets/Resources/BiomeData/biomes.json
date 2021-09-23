@@ -44,8 +44,8 @@
             "rain_temp_map_color": [255, 0, 0],
             "decorations": [
                 {"s": "cactus_0", "f": 0.03},
-                {"s": "deadbush_0", "f": 0.07},
-                {"s": "deadbush_1", "f": 0.07}
+                {"s": "deadbush_0", "f": 0.007},
+                {"s": "deadbush_1", "f": 0.007}
             ]
         },
         {

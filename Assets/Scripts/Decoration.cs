@@ -5,7 +5,8 @@ public class Decoration : MonoBehaviour
     public DecorationStats stats;
     public SpriteRenderer sr;
     public Target m_target;
-    public float sprite;
+    public Vector2Int[] availableMasks;
+    public int size;
 
     public void Init(DecorationStats stats)
     {
@@ -13,10 +14,7 @@ public class Decoration : MonoBehaviour
 
         sr = GetComponent<SpriteRenderer>();
         sr.sortingOrder = stats.sortingLayer;
-        sr.spriteSortPoint = SpriteSortPoint.Pivot;
-        sr.material = ProceduralGeneration.instance.material;
-        sprite = 0;
-        sr.sprite = stats.sprites[0];
+        sr.sprite = stats.sprite;
 
         if(stats.collider != null)
         {
@@ -25,6 +23,15 @@ public class Decoration : MonoBehaviour
             var c = gameObject.AddComponent<PolygonCollider2D>();
             c.pathCount = 1;
             c.SetPath(0, stats.collider);
+        }
+
+        size = stats.renderSize.x*stats.renderSize.y;
+        availableMasks = new Vector2Int[size];
+        int i=0;
+        for(int x=0; x<stats.renderSize.x; x++) for(int y=0; y<stats.renderSize.y; y++)
+        {
+            availableMasks[i] = new Vector2Int(x, y);
+            i++;
         }
     }
 
@@ -40,24 +47,39 @@ public class Decoration : MonoBehaviour
         }
     }
 
+    void Drop()
+    {
+        
+
+        float val = Random.value;
+        for(int j=0; j<stats.itemDrops.Length; j++)
+        {
+            if(val < stats.itemDrops[j].f)
+            {
+                var go = Instantiate(Inventory.instance.itemPickupPrefab, transform.position+new Vector3(stats.size.x/2f, stats.size.y/3f, 0)+Math.Vec3(Random.insideUnitCircle.normalized*0.5f), Quaternion.identity, Entities.t);
+                var pickup = go.GetComponent<ItemPickup>();
+                pickup.Init(stats.itemDrops[j].s, 1);
+                break;
+            }
+        }
+    }
+
     public bool OnDamage(float damage, float angle)
     {
         for(int i=0; i<damage/PlayerStats.k_PUNCH_DAMAGE; i++)
         {
-            float val = Random.value;
-            for(int j=0; j<stats.itemDrops.Length; j++)
+            int vLength = availableMasks.Length;
+            for(int j=0, k=0; j<size*1.5f/stats.health; j++)
             {
-                if(val < stats.itemDrops[j].f)
-                {
-                    var go = Instantiate(Inventory.instance.itemPickupPrefab, transform.position+new Vector3(stats.size.x/2f, stats.size.y/3f, 0)+Math.Vec3(Random.insideUnitCircle.normalized*0.5f), Quaternion.identity, Entities.t);
-                    var pickup = go.GetComponent<ItemPickup>();
-                    pickup.Init(stats.itemDrops[j].s, 1);
-                    break;
-                }
+                if(vLength == 0) break;
+                k = Random.Range(0, vLength); // min inclusive, max exclusive
+                var mask = Instantiate(ProceduralGeneration.instance.prefab_mask, transform.position+Math.Vec3(availableMasks[k]), Quaternion.identity, transform);
+                mask.GetComponent<SpriteMask>().sprite = ProceduralGeneration.instance.sprite_masks[Random.Range(0, ProceduralGeneration.instance.sprite_masks.Length)];
+                availableMasks[k] = availableMasks[--vLength];
             }
+            System.Array.Resize(ref availableMasks, vLength);
 
-            sprite += stats.sprites.Length / stats.health;
-            if(sprite < stats.sprites.Length) sr.sprite = stats.sprites[(int)Mathf.Floor(sprite)];
+            Drop();
         }
 
         return false;
@@ -65,6 +87,11 @@ public class Decoration : MonoBehaviour
 
     public bool OnKill(float damage, float angle)
     {
+        for(int i=0; i<5; i++)
+        {
+            Drop();
+        }
+
         Destroy(gameObject);
 
         return false;

@@ -91,4 +91,9 @@ public static class Math
         degrees *= Mathf.Deg2Rad;
         return new Vector2(Mathf.Cos(degrees), Mathf.Sin(degrees));
     }
+
+    public static Vector2Int Divide(Vector2Int vec1, Vector2Int vec2)
+    {
+        return new Vector2Int(vec1.x/vec2.x, vec1.y/vec2.y);
+    }
 }

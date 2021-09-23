@@ -40,7 +40,6 @@ public class Init : MonoBehaviour
 
             audioManager.Init();
             musicManager.Init();
-            player.GetComponent<Prefabs>().Init();
             entities.Init();
             pauseHandler.Init();
             devConsole.Init();

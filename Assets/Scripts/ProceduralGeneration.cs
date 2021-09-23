@@ -9,7 +9,9 @@ public class ProceduralGeneration : MonoBehaviour
 
     // hierarchy
     public GameObject prefab_chunk;
-    public Material material;
+    public GameObject prefab_mask;
+    public Sprite[] sprite_masks;
+    public GameObject prefab_decoration;
 
     private Vector2Int currPos=Vector2Int.zero;
     private Vector2Int prevPos;
@@ -234,14 +236,14 @@ public class ProceduralGeneration : MonoBehaviour
                     {
                         if(rval < biomes[val].decorationThreshholds[i])
                         {
-                            for(int x=0; x<biomes[val].decorations[i].stats.size.x; x++)
+                            for(int x=0; x<biomes[val].decorations[i].stats.renderSize.x; x++)
                             {
-                                for(int y=0; y<biomes[val].decorations[i].stats.size.y; y++)
+                                for(int y=0; y<biomes[val].decorations[i].stats.renderSize.y; y++)
                                 {
-                                    if(mapTexture_decor[pos.x+x, pos.y+y] != 254 &&
-                                    (mapTexture_decor[pos.x+x, pos.y+y] == 255 ||
-                                    biomes[val].decorations[mapTexture_decor[pos.x+x, pos.y+y]].stats.collider != null ||
-                                    mapTexture_biome[pos.x+x, pos.y+y] != val))
+                                    if(MapClamped(mapTexture_biome, pos.x+x, pos.y+y) != val ||
+                                    (MapClamped(mapTexture_decor, pos.x+x, pos.y+y) != 254 &&
+                                    (MapClamped(mapTexture_decor, pos.x+x, pos.y+y) == 255 ||
+                                    biomes[val].decorations[MapClamped(mapTexture_decor, pos.x+x, pos.y+y)].stats.collider != null)))
                                     {
                                         goto BreakBreak;
                                     }

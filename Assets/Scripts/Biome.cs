@@ -43,17 +43,21 @@ public class BiomesJson
 public class DecorationStats
 {
     public int health;
-    public Sprite[] sprites;
+    public Sprite sprite;
     public Vector2Int size;
+    public Vector2Int renderSize;
     public Vector2[] collider;
     public StringFloat[] itemDrops;
     public int sortingLayer;
 
+    static readonly Vector2Int one_two = new Vector2Int(1, 2);
+
     public DecorationStats(string name, int health, Vector2[] collider, StringFloat[] itemDrops, int sortingLayer)
     {
         this.health = health;
-        this.sprites = Resources.LoadAll<Sprite>("Sprites/Decorations/"+name);
-        this.size = new Vector2Int((int)sprites[0].rect.width/(int)sprites[0].pixelsPerUnit, (int)Mathf.Ceil(sprites[0].rect.height/2f/sprites[0].pixelsPerUnit));
+        this.sprite = Resources.Load<Sprite>("Sprites/Decorations/"+name);
+        this.renderSize = new Vector2Int((int)sprite.rect.width/(int)sprite.pixelsPerUnit, (int)sprite.rect.height/(int)sprite.pixelsPerUnit);
+        this.size = Math.Divide(renderSize, one_two);
         this.collider = collider;
         this.itemDrops = itemDrops;
         for(int i=0; i<itemDrops.Length; i++)
@@ -126,8 +130,8 @@ public struct Biome
 
             if(!s_decorations.ContainsKey(name))
             {
-                GameObject go = new GameObject(name, typeof(SpriteRenderer), typeof(Decoration));
-                go.layer = 13; // decoration high
+                GameObject go = MonoBehaviour.Instantiate(ProceduralGeneration.instance.prefab_decoration);
+                go.name = name;
                 s_decorations.Add(name, go.GetComponent<Decoration>());
                 s_decorations[name].Init(s_decorationStats[name]);
                 go.SetActive(false);
