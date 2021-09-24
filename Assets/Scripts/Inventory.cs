@@ -10,7 +10,8 @@ public class Inventory : MonoBehaviour
     // hierarchy
     public GameObject gridItemPrefab;
     public GameObject itemPickupPrefab;
-    public Transform grid;
+    public RectTransform[] grids;
+    public Transform inventory;
     public PlayerInput playerInput;
     public Rigidbody2D player_rb;
     public PlayerAnimator playerAnimator;
@@ -19,16 +20,21 @@ public class Inventory : MonoBehaviour
 
     public LinkedList<GridItem> items = new LinkedList<GridItem>();
     public static readonly Vector2Int gridSize = new Vector2Int(9, 12);
-    public const float cellSize = 384f/9f;
+    public const float cellSize = 32f;
 
     public void Init()
     {
         instance = this;
     }
 
+    public void CheckCrafting()
+    {
+        
+    }
+
     public GridItem Add(string item, int x, int y, int count=1, int ammo=0)
     {
-        GameObject gameObject = Instantiate(gridItemPrefab, Vector3.zero, Quaternion.identity, grid);
+        GameObject gameObject = Instantiate(gridItemPrefab, Vector3.zero, Quaternion.identity, inventory);
         GridItem gridItem = gameObject.GetComponent<GridItem>();
         gridItem.item = Items.items.ContainsKey(item) ? Items.items[item] : null;
         gridItem.count = count;
@@ -36,7 +42,7 @@ public class Inventory : MonoBehaviour
         items.AddLast(gridItem);
         gridItem.node = items.Last;
         gridItem.Start();
-        gridItem.SetPos(x, y);
+        gridItem.SetPos(x, y, grids[0]);
 
         PlayerHUD.instance.UpdateHotbar();
         PlayerHUD.instance.UpdateAmmo();
@@ -83,16 +89,17 @@ public class Inventory : MonoBehaviour
         }
 
         Add(item, 0, 0, Mathf.Min(count, itemStats.maxStack), ammo);
+        // return true;
         GridItem gridItem = items.Last.Value;
         count -= gridItem.count;
         for(int y=gridSize.y-1; y>=0; y--)
         {
             for(int x=0; x<gridSize.x; x++)
             {
-                gridItem.SetPos(x, y);
+                gridItem.SetPos(x, y, grids[0]);
                 for(int i=0; i<2; i++)
                 {
-                    if(items.Last.Value.Collides() == null && items.Last.Value.WithinGrid())
+                    if(items.Last.Value.Collides() == null && items.Last.Value.WithinGrid(grids[0]))
                     {
                         if(count == 0)
                             return true;
@@ -100,7 +107,7 @@ public class Inventory : MonoBehaviour
                         return AutoAdd(item, count);
                     }
                     items.Last.Value.Rotate();
-                    items.Last.Value.SetPos(x, y);
+                    items.Last.Value.SetPos(x, y, grids[0]);
                 }
             }
         }
@@ -209,7 +216,7 @@ public class Inventory : MonoBehaviour
         while(node != null)
         {
             next = node.Next;
-            if(!node.Value.WithinGrid() || node.Value.followMouse)
+            if(!node.Value.WithinGrid(grids[0]) || node.Value.followMouse)
             {
                 // DROP
                 

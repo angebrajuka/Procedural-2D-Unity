@@ -22,8 +22,8 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public ItemStats item;
     public int count=1;
     public int ammo=0;
+    public bool crafted=false; // not craftable items, just the item that was crafted last, to clear crafting table when removing
     RectTransform rectTransform;
-    RectTransform grid;
     public bool followMouse;
     public LinkedListNode<GridItem> node;
     RectTransform image;
@@ -32,7 +32,6 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void Start()
     {
-        grid = transform.parent.GetComponent<RectTransform>();
         if(rectTransform != null) return;
         eventTrigger = GetComponent<EventTrigger>();
         rotated = false;
@@ -50,34 +49,46 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void UpdateCount()
     {
         Text countText = transform.GetChild(0).GetChild(4).GetComponent<Text>();
-        if(count == 1)  countText.text = "";
-        else            countText.text = ""+count;
+        countText.text = count == 1 ? "" : ""+count;
     }
 
-    public int GetX()       { return (int)Mathf.Round((rectTransform.localPosition.x-rectTransform.sizeDelta.x/2)/Inventory.cellSize); }
-    public int GetY()       { return (int)Mathf.Round((rectTransform.localPosition.y-rectTransform.sizeDelta.y/2)/Inventory.cellSize); }
-    int GetWidth()          { return (int)Mathf.Round(rectTransform.sizeDelta.x/Inventory.cellSize); }
-    int GetHeight()         { return (int)Mathf.Round(rectTransform.sizeDelta.y/Inventory.cellSize); }
+    float rawX                  { get { return rectTransform.offsetMin.x; } }
+    float rawY                  { get { return rectTransform.offsetMin.y; } }
+    float rawW                  { get { return W*Inventory.cellSize; } }
+    float rawH                  { get { return H*Inventory.cellSize; } }
+    public int X(RectTransform grid)  { return (int)Mathf.Round((rawX-GridXRaw(grid))/Inventory.cellSize); }
+    public int Y(RectTransform grid)  { return (int)Mathf.Round((rawY-GridYRaw(grid))/Inventory.cellSize); }
+    int W                       { get { return rotated ? item.size.y : item.size.x; } }
+    int H                       { get { return rotated ? item.size.x : item.size.y; } }
 
-    float RawX()        { return rectTransform.localPosition.x; }
-    float RawY()        { return rectTransform.localPosition.y; }
-    float RawWidth()    { return rectTransform.sizeDelta.x; }
-    float RawHeight()   { return rectTransform.sizeDelta.y; }
+    float GridXRaw(RectTransform grid) { return grid.offsetMin.x; }
+    float GridYRaw(RectTransform grid) { return grid.offsetMin.y; }
+    float GridWRaw(RectTransform grid) { return grid.sizeDelta.x; }
+    float GridHRaw(RectTransform grid) { return grid.sizeDelta.y; }
+    float GridX(RectTransform grid)    { return GridXRaw(grid)/Inventory.cellSize; }
+    float GridY(RectTransform grid)    { return GridYRaw(grid)/Inventory.cellSize; }
+    float GridW(RectTransform grid)    { return GridWRaw(grid)/Inventory.cellSize; }
+    float GridH(RectTransform grid)    { return GridHRaw(grid)/Inventory.cellSize; }
 
-
-    public bool WithinGrid()
+    public bool WithinGrid(RectTransform grid)
     {
-        return (GetX() >= 0 && GetY() >= 0 && GetX()+GetWidth() <= Inventory.gridSize.x && GetY()+GetHeight() <= Inventory.gridSize.y);
+        return (X(grid) >= 0 && Y(grid) >= 0 && X(grid)+W <= GridW(grid) && Y(grid)+H <= GridH(grid));
     }
 
-    public bool WithinGridRaw()
+    public bool WithinGridRaw(RectTransform grid)
     {
-        return (RawX()+RawWidth()/2 > 0 && RawX()-RawWidth()/2 < grid.sizeDelta.x && RawY()+RawHeight()/2 > 0 && RawY()-RawHeight()/2 < grid.sizeDelta.y);
+        return (rawX+rawW > GridXRaw(grid) && rawX < GridXRaw(grid)+GridWRaw(grid) && rawY+rawH > GridYRaw(grid) && rawY < GridYRaw(grid)+GridHRaw(grid));
     }
 
-    public void SetPos(int x, int y)
+    public void SetPos(int x, int y, RectTransform grid)
     {
-        rectTransform.localPosition = Vector3.right*Inventory.cellSize*(x+GetWidth()/2f) + Vector3.up*Inventory.cellSize*(y+GetHeight()/2f);
+        rectTransform.offsetMin = new Vector2(GridXRaw(grid)+x*Inventory.cellSize, GridYRaw(grid)+y*Inventory.cellSize);
+        rectTransform.offsetMax = rectTransform.offsetMin+new Vector2(rawW, rawH);
+    }
+
+    public void SnapToGrid(RectTransform grid)
+    {
+        SetPos(X(grid), Y(grid), grid);
     }
 
     public LinkedListNode<GridItem> Collides()
@@ -85,7 +96,21 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         LinkedListNode<GridItem> other = Inventory.instance.items.First;
         while(other != null)
         {
-            if(other.Value != this && GetX()+GetWidth() > other.Value.GetX() && GetX() < other.Value.GetX()+other.Value.GetWidth() && GetY()+GetHeight() > other.Value.GetY() && GetY() < other.Value.GetY()+other.Value.GetHeight())
+            if(other.Value != this && rawX+rawW > other.Value.rawX && rawX < other.Value.rawX+other.Value.rawW && rawY+rawH > other.Value.rawY && rawY < other.Value.rawY+other.Value.rawH)
+                return other;
+            
+            other = other.Next;
+        }
+
+        return null;
+    }
+
+    public LinkedListNode<GridItem> CollidesSnap(RectTransform grid)
+    {
+        LinkedListNode<GridItem> other = Inventory.instance.items.First;
+        while(other != null)
+        {
+            if(other.Value != this && X(grid)+W > other.Value.X(grid) && X(grid) < other.Value.X(grid)+other.Value.W && Y(grid)+H > other.Value.Y(grid) && Y(grid) < other.Value.Y(grid)+other.Value.H)
                 return other;
             
             other = other.Next;
@@ -98,27 +123,44 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if(followMouse)
         {
-            if(Collides() != null || (WithinGridRaw() && !WithinGrid())) return;
-            if(WithinGrid()) SetPos(GetX(), GetY());
+            foreach(var grid in Inventory.instance.grids)
+            {
+                if(WithinGrid(grid) && CollidesSnap(grid) == null)
+                {
+                    SnapToGrid(grid);
+                    break;
+                }
+                else if(Collides() != null || (WithinGridRaw(grid) && !WithinGrid(grid)))
+                {
+                    return;
+                }
+            }
         }
         else
         {
             transform.SetAsLastSibling();
         }
 
+        // change pivot without moving:
+        Vector2 pivot = Vector2.one*0.5f-rectTransform.pivot;
+        Vector2 size = rectTransform.rect.size;
+        Vector2 deltaPivot = rectTransform.pivot - pivot;
+        Vector3 deltaPosition = new Vector3(deltaPivot.x * size.x, deltaPivot.y * size.y);
+        rectTransform.pivot = pivot;
+        rectTransform.localPosition -= deltaPosition;
+
         followMouse=!followMouse;
         eventTrigger.enabled = !followMouse;
+
+        Inventory.instance.CheckCrafting();
     }
 
     public void Rotate()
     {
-        int x=GetX();
-        int y=GetY();
         rotated = !rotated;
         image.eulerAngles = Vector3.back*90-image.eulerAngles;
         Vector2 size = rectTransform.sizeDelta;
         rectTransform.sizeDelta = new Vector2(size.y, size.x);
-        if(!followMouse) SetPos(x, y);
     }
 
     void Update()

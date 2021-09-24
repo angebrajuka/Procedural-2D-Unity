@@ -16,8 +16,8 @@ public class GridItemSerializable
     {
         GridItem gridItem = node.Value;
         item = gridItem.item.name;
-        x = gridItem.GetX();
-        y = gridItem.GetY();
+        x = gridItem.X(Inventory.instance.grids[0]);
+        y = gridItem.Y(Inventory.instance.grids[0]);
         rotated = gridItem.rotated;
         count = gridItem.count;
         ammo = gridItem.ammo;
@@ -49,6 +49,7 @@ public class SaveData
     float seed;
     GridItemSerializable[] inventoryItems;
     EnemySerializable[] enemies;
+    
     float health, energy;
     float[] position;
     float timeOfDay;
@@ -58,6 +59,7 @@ public class SaveData
         difficulty = PlayerStats.difficulty;
         seed = ProceduralGeneration.seed_main;
         
+        Inventory.instance.Close();
         inventoryItems = new GridItemSerializable[Inventory.instance.items.Count];
         LinkedListNode<GridItem> node = Inventory.instance.items.First;
         for(int i=0; i<inventoryItems.Length; i++)

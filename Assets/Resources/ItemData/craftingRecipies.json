@@ -1,0 +1,13 @@
+{
+    "recipies": [
+        {
+            "items": [
+                {
+                    "name": "itemName",
+                    "position": [0, 0],
+                    "rotated": false
+                }
+            ]
+        }
+    ]
+}

@@ -12,7 +12,7 @@ public class Target : MonoBehaviour
 
     public static bool DefaultHeal(float f) { return false; }
     public static bool DefaultDmgK(float f1, float f2) {
-        Debug.Log("fuck you");
+        Debug.Log("default damage");
         return false;
     }
 
