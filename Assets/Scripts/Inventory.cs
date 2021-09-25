@@ -10,6 +10,8 @@ public class CraftingRecipe
     public int[] x;
     public int[] y;
     public bool[] rotations;
+    public string result_name;
+    public int result_count;
 }
 
 [System.Serializable]
@@ -28,6 +30,7 @@ public class Inventory : MonoBehaviour
     public Transform inventory;
     public RectTransform grid_inventory;
     public RectTransform grid_crafting;
+    public RectTransform grid_result;
     public PlayerInput playerInput;
     public Rigidbody2D player_rb;
     public PlayerAnimator playerAnimator;
@@ -36,6 +39,7 @@ public class Inventory : MonoBehaviour
 
     [HideInInspector] public RectTransform[] grids;
     public LinkedList<GridItem> items = new LinkedList<GridItem>();
+    public GridItem crafted=null;
     public CraftingRecipe[] recipies;
     public static readonly Vector2Int gridSize = new Vector2Int(9, 12);
     public const float cellSize = 32f;
@@ -47,6 +51,30 @@ public class Inventory : MonoBehaviour
         grids[0] = grid_inventory;
         grids[1] = grid_crafting;
         recipies = JsonUtility.FromJson<CraftingRecipiesJson>(Resources.Load<TextAsset>("ItemData/craftingRecipies").text).recipies;
+    }
+
+    public void RemoveIngredients()
+    {
+        LinkedListNode<GridItem> item = items.First;
+        while(item != null)
+        {
+            if(!item.Value.followMouse && item.Value.WithinGrid(grid_crafting))
+            {
+                item.Value.count --;
+                item.Value.UpdateCount();
+            }
+
+            item = item.Next;
+        }
+    }
+
+    void RemoveResult()
+    {
+        if(crafted != null)
+        {
+            items.Remove(crafted);
+            Destroy(crafted.gameObject);
+        }
     }
 
     public void CheckCrafting()
@@ -63,37 +91,40 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if(count == 0) return;
-
-        foreach(var recipe in recipies)
+        if(count != 0)
         {
-            if(recipe.items.Length != count) continue;
-
-            foreach(var item in craftingItems)
+            foreach(var recipe in recipies)
             {
-                for(int i=0; i<recipe.items.Length; i++)
+                if(recipe.items.Length != count) continue;
+
+                foreach(var item in craftingItems)
                 {
-                    if(recipe.items[i] == item.item.name && recipe.x[i] == item.X(grid_crafting) && recipe.y[i] == item.Y(grid_crafting) && recipe.rotations[i] == item.rotated)
+                    for(int i=0; i<recipe.items.Length; i++)
                     {
-                        goto RecipeItemSucceed;
+                        if(recipe.items[i] == item.item.name && recipe.x[i] == item.X(grid_crafting) && recipe.y[i] == item.Y(grid_crafting) && (item.item.size.x == item.item.size.y || recipe.rotations[i] == item.rotated))
+                        {
+                            goto RecipeItemSucceed;
+                        }
+                    }
+                    break; // recipe fail
+
+                    RecipeItemSucceed:
+                    if(item == craftingItems.Last.Value)
+                    {
+                        RemoveResult();
+                        crafted = Add(recipe.result_name, 0, 0, recipe.result_count, 0, grid_result);
+                        return;
                     }
                 }
-                goto RecipeFail;
-                RecipeItemSucceed:
-                if(item == craftingItems.Last.Value)
-                {
-                    // craft item
-                    Debug.Log("succ");
-
-                    return;
-                }
             }
-            RecipeFail: continue;
         }
+
+        RemoveResult();
     }
 
-    public GridItem Add(string item, int x, int y, int count=1, int ammo=0)
+    public GridItem Add(string item, int x, int y, int count=1, int ammo=0, RectTransform grid=null)
     {
+        if(grid == null) grid = grid_inventory;
         GameObject gameObject = Instantiate(gridItemPrefab, Vector3.zero, Quaternion.identity, inventory);
         GridItem gridItem = gameObject.GetComponent<GridItem>();
         gridItem.item = Items.items.ContainsKey(item) ? Items.items[item] : null;
@@ -102,7 +133,8 @@ public class Inventory : MonoBehaviour
         items.AddLast(gridItem);
         gridItem.node = items.Last;
         gridItem.Start();
-        gridItem.SetPos(x, y, grids[0]);
+        if(grid == grid_result) gridItem.crafted = true;
+        gridItem.SetPos(x, y, grid);
 
         PlayerHUD.instance.UpdateHotbar();
         PlayerHUD.instance.UpdateAmmo();

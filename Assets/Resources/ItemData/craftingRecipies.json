@@ -2,18 +2,19 @@
     "recipies": [
         {
             "items": [
-                "sticks"
+                "sticks", "rocks", "rocks"
             ],
             "x": [
-                0
+                1, 1, 1
             ],
             "y": [
-                0
+                0, 2, 3
             ],
             "rotations": [
-                false
+                true, false, false
             ],
-            "result": "ammo_556"
+            "result_name": "stone_sword",
+            "result_count": 1
         }
     ]
 }

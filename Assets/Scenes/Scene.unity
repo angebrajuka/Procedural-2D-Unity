@@ -3716,6 +3716,7 @@ MonoBehaviour:
   inventory: {fileID: 1970200089}
   grid_inventory: {fileID: 2104654369}
   grid_crafting: {fileID: 1197301256}
+  grid_result: {fileID: 1495632124}
   playerInput: {fileID: 1422633255}
   player_rb: {fileID: 1422633254}
   playerAnimator: {fileID: 1422633252}
@@ -3723,6 +3724,8 @@ MonoBehaviour:
   grids:
   - {fileID: 2104654369}
   - {fileID: 1197301256}
+  crafted: {fileID: 0}
+  recipies: []
 --- !u!114 &1422633252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4184,7 +4187,7 @@ GameObject:
   - component: {fileID: 1495632126}
   - component: {fileID: 1495632125}
   m_Layer: 5
-  m_Name: Result
+  m_Name: GridResult
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4204,11 +4207,11 @@ RectTransform:
   m_Father: {fileID: 1970200089}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 240, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1200, y: 476}
   m_SizeDelta: {x: 128, y: 128}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1495632125
 MonoBehaviour:
   m_ObjectHideFlags: 0

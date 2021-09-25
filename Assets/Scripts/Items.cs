@@ -64,7 +64,7 @@ public class ItemStats
             MonoBehaviour.Instantiate(prefabs[0], PlayerMovement.rb.position, Quaternion.identity, Entities.t).SetActive(true);
             PlayerStats.SubtractCurrentItem();
             break;
-        case "blade":
+        case "stone_sword":
             PlayerState.BeginMelee();
             break;
         case "medkit":

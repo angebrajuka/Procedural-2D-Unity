@@ -22,7 +22,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public ItemStats item;
     public int count=1;
     public int ammo=0;
-    public bool crafted=false; // not craftable items, just the item that was crafted last, to clear crafting table when removing
+    public bool crafted; // not craftable items, just the item that was crafted last, to clear crafting table when removing
     RectTransform rectTransform;
     public bool followMouse;
     public LinkedListNode<GridItem> node;
@@ -37,6 +37,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         rotated = false;
         highlighted = false;
         followMouse = false;
+        crafted = false;
         rectTransform = GetComponent<RectTransform>();
         rectTransform.sizeDelta = new Vector2(item.size.x*Inventory.cellSize, item.size.y*Inventory.cellSize);
         Transform child = transform.GetChild(0);
@@ -50,6 +51,11 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         Text countText = transform.GetChild(0).GetChild(4).GetComponent<Text>();
         countText.text = count == 1 ? "" : ""+count;
+        if(count == 0)
+        {
+            Inventory.instance.items.Remove(node);
+            Destroy(gameObject);
+        }
     }
 
     float rawX                  { get { return rectTransform.offsetMin.x; } }
@@ -123,6 +129,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if(followMouse)
         {
+            if(WithinGridRaw(Inventory.instance.grid_result)) return;
             foreach(var grid in Inventory.instance.grids)
             {
                 if(WithinGrid(grid) && CollidesSnap(grid) == null)
@@ -141,7 +148,12 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         else
         {
-            transform.SetAsLastSibling();
+            if(crafted)
+            {
+                crafted = false;
+                Inventory.instance.crafted = null;
+                Inventory.instance.RemoveIngredients();
+            }
         }
 
         BreakBreak:
@@ -172,6 +184,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if(followMouse)
         {
+            transform.SetAsLastSibling();
             rectTransform.position = Input.mousePosition;
             if(Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_rotate]))
             {

@@ -34,7 +34,7 @@
             "equipable": true
         },
         {
-            "name": "blade",
+            "name": "stone_sword",
             "maxStack": 1,
             "equipable": true
         },
