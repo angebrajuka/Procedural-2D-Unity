@@ -16,10 +16,11 @@ public class ItemPickup : MonoBehaviour
     public int count;
     public int ammo=0;
 
-    public void Init(string item, int count, bool applyForce=true)
+    public void Init(string item, int count, int ammo=0, bool applyForce=true)
     {
         this.item = item;
         this.count = count;
+        this.ammo = ammo;
         if(applyForce) GetComponent<Rigidbody2D>().AddForce(new Vector2((Random.value-0.5f)*100, (Random.value-0.5f)*100));
     }
 

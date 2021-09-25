@@ -15,7 +15,6 @@ public class EnemyObject : MonoBehaviour
     // members
     [HideInInspector] public Dictionary<Transform, Vector2> nearbyColliders;
     [HideInInspector] public Vector2 targetMovement;
-    // float flash;
     public int state;
     public float frame;
     public float attackCooldown;
@@ -33,7 +32,6 @@ public class EnemyObject : MonoBehaviour
         m_target.OnHeal = Target.DefaultHeal;
         m_trigger = transform.GetChild(1).GetComponent<CircleCollider2D>();
         nearbyColliders = new Dictionary<Transform, Vector2>();
-        // flash = 0;
         state = 0;
         frame = (UnityEngine.Random.value+0.2f);;
         attackCooldown = 0;
@@ -56,6 +54,7 @@ public class EnemyObject : MonoBehaviour
     void UpdateTarget()
     {
         targetMovement = (PlayerMovement.rb.position-m_rigidbody.position).normalized;
+        if(!DynamicEnemySpawning.SpawnEnemies()) targetMovement *= -1;
 
         foreach(var pair in nearbyColliders)
         {
@@ -147,14 +146,6 @@ public class EnemyObject : MonoBehaviour
             }
 
             m_renderer.sprite = enemy.sprites[state][(int)Mathf.Floor(frame)];
-
-            // if(flash > 0)
-            // {
-            //     flash -= Time.fixedDeltaTime*6;
-            //     if(flash < 0) flash = 0;
-            //     m_material.SetFloat("_Blend", flash);
-            // }
-            
             m_rigidbody.AddForce(targetMovement*enemy.speed_move);
         }
     }

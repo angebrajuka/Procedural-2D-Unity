@@ -8,8 +8,8 @@ public class PlayerState : MonoBehaviour
     public static PlayerState instance;
 
     // hierarchy
-    public Transform knifeRotationPoint;
-    public Transform knifeStart;
+    // public Transform knifeRotationPoint;
+    // public Transform knifeStart;
 
     // general
     public static bool moving=false;
@@ -24,7 +24,7 @@ public class PlayerState : MonoBehaviour
 
     // items
     public static bool melee;
-    public static sbyte knifeDirection;
+    // public static sbyte knifeDirection;
     private static LinkedListNode<GridItem> p_currentItemNode;
     public static LinkedListNode<GridItem> currentItemNode
     {
@@ -36,6 +36,7 @@ public class PlayerState : MonoBehaviour
         {
             p_currentItemNode = value;
             SwitchGun();
+            PlayerState.EndMelee();
         }
     }
     public static string _currentItem
@@ -95,6 +96,7 @@ public class PlayerState : MonoBehaviour
             DaylightCycle.time = DaylightCycle.k_DAY*2f/3f;
 
             energy = energyMax;
+            PlayerTarget.target.health = PlayerTarget.target.maxHealth;
 
             Inventory.instance.Clear();
 
@@ -149,16 +151,16 @@ public class PlayerState : MonoBehaviour
     {
         CancelReload();
         melee = true;
-        instance.knifeRotationPoint.gameObject.SetActive(true);
+        // instance.knifeRotationPoint.gameObject.SetActive(true);
         PlayerAnimator.instance.BeginMelee();
-        instance.knifeStart.localEulerAngles = Vector3.forward*PlayerInput.angle;
-        knifeDirection = Random.value>0.5f ? (sbyte)-1 : (sbyte)1;
-        instance.knifeRotationPoint.localEulerAngles = Vector3.forward*k_KNIFE_ARC*knifeDirection;
+        // instance.knifeStart.localEulerAngles = Vector3.forward*PlayerInput.angle;
+        // knifeDirection = Random.value>0.5f ? (sbyte)-1 : (sbyte)1;
+        // instance.knifeRotationPoint.localEulerAngles = Vector3.forward*k_KNIFE_ARC*knifeDirection;
     }
 
     public static void EndMelee()
     {
-        instance.knifeRotationPoint.gameObject.SetActive(false);
+        // instance.knifeRotationPoint.gameObject.SetActive(false);
         PlayerAnimator.instance.EndMelee();
         melee = false;
     }
@@ -175,12 +177,12 @@ public class PlayerState : MonoBehaviour
     {
         if(melee)
         {
-            knifeRotationPoint.localEulerAngles += Vector3.back*Time.deltaTime*k_KNIFE_SPEED*knifeDirection;
+            // knifeRotationPoint.localEulerAngles += Vector3.back*Time.deltaTime*k_KNIFE_SPEED*knifeDirection;
             
-            if(knifeRotationPoint.localEulerAngles.z < 360-k_KNIFE_ARC && knifeRotationPoint.localEulerAngles.z > k_KNIFE_ARC)
-            {
-                EndMelee();
-            }
+            // if(knifeRotationPoint.localEulerAngles.z < 360-k_KNIFE_ARC && knifeRotationPoint.localEulerAngles.z > k_KNIFE_ARC)
+            // {
+            //     EndMelee();
+            // }
         }
 
         if(gunReloadTimer > 0)

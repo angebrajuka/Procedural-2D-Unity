@@ -55,16 +55,18 @@ public class Inventory : MonoBehaviour
 
     public void RemoveIngredients()
     {
-        LinkedListNode<GridItem> item = items.First;
+        var item = items.First;
+        LinkedListNode<GridItem> next;
         while(item != null)
         {
+            next = item.Next;
             if(!item.Value.followMouse && item.Value.WithinGrid(grid_crafting))
             {
                 item.Value.count --;
                 item.Value.UpdateCount();
             }
 
-            item = item.Next;
+            item = next;
         }
     }
 
@@ -120,6 +122,11 @@ public class Inventory : MonoBehaviour
         }
 
         RemoveResult();
+    }
+
+    public GridItem Add(string item, Vector2Int pos, int count=1, int ammo=0, RectTransform grid=null)
+    {
+        return Add(item, pos.x, pos.y, count, ammo, grid);
     }
 
     public GridItem Add(string item, int x, int y, int count=1, int ammo=0, RectTransform grid=null)
@@ -302,6 +309,8 @@ public class Inventory : MonoBehaviour
 
     public void Close()
     {
+        RemoveResult();
+
         LinkedListNode<GridItem> node = items.First;
         LinkedListNode<GridItem> next;
         
@@ -319,9 +328,7 @@ public class Inventory : MonoBehaviour
 
                 GameObject item = Instantiate(itemPickupPrefab, player_rb.position, Quaternion.identity, Entities.t);
                 ItemPickup pickup = item.GetComponent<ItemPickup>();
-                pickup.item = node.Value.item.name;
-                pickup.count = node.Value.count;
-                pickup.ammo = node.Value.ammo;
+                pickup.Init(node.Value.item.name, node.Value.count, node.Value.ammo, true);
                 Destroy(node.Value.gameObject);
                 items.Remove(node);
             }

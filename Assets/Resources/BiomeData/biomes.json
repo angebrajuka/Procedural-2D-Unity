@@ -26,7 +26,8 @@
                 {"s": "grass", "f": 0.05},
                 {"s": "flower_orange", "f": 0.01},
                 {"s": "flower_violet", "f": 0.01},
-                {"s": "flower_red", "f": 0.01}
+                {"s": "flower_red", "f": 0.01},
+                {"s": "rock_big", "f": 0.005}
             ]
         },
         {

@@ -159,7 +159,7 @@ public class PlayerInput : MonoBehaviour
                         PlayerHUD.instance.UpdateAmmo();
                     }
                 }
-                else if(!PlayerState.melee && Input.GetKeyDown(keybinds[Keybind.shoot]))
+                else if(Input.GetKeyDown(keybinds[Keybind.shoot]))
                 {
                     PlayerState.currentItem.Use();
                 }
@@ -171,7 +171,7 @@ public class PlayerInput : MonoBehaviour
             input_move.x = 0;
             input_move.y = 0;
 
-            if(!shooting && !punching)
+            if(!melee && !shooting && !punching)
             {
                 if(Input.GetKey(keybinds[Keybind.moveEast]))  input_move.x ++;
                 if(Input.GetKey(keybinds[Keybind.moveNorth])) input_move.y ++;

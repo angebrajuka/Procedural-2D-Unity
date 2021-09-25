@@ -64,7 +64,7 @@ public class DynamicEnemySpawning : MonoBehaviour
 
     public static int GetDifficultyValue()
     {
-        return PlayerStats.difficulty * 40 + 30;
+        return PlayerStats.difficulty * 30 + 20;
     }
 
     public static float GetDynamicDifficulty()
@@ -101,9 +101,14 @@ public class DynamicEnemySpawning : MonoBehaviour
         enemyObjects.Remove(enemyObject);
     }
 
+    public static bool SpawnEnemies()
+    {
+        return (DaylightCycle.time > (DaylightCycle.k_EVENING + DaylightCycle.k_NIGHT) / 2 || DaylightCycle.time < DaylightCycle.k_DAY / 2);
+    }
+
     void Update()
     {
-        if(!PauseHandler.paused && (DaylightCycle.time > (DaylightCycle.k_EVENING + DaylightCycle.k_NIGHT) / 2 || DaylightCycle.time < DaylightCycle.k_DAY / 2))
+        if(!PauseHandler.paused && SpawnEnemies())
         {
             timer -= Time.deltaTime;
             if(timer <= 0 && totalDifficulty < GetDifficultyValue())

@@ -65,7 +65,10 @@ public class ItemStats
             PlayerStats.SubtractCurrentItem();
             break;
         case "stone_sword":
-            PlayerState.BeginMelee();
+            if(!PlayerState.melee)
+                PlayerState.BeginMelee();
+            else
+                PlayerState.EndMelee();
             break;
         case "medkit":
             PlayerTarget.target.Heal(20);

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {    
     public bool highlighted;
 
@@ -94,7 +94,13 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void SnapToGrid(RectTransform grid)
     {
-        SetPos(X(grid), Y(grid), grid);
+        var pos = SnappedToGrid(grid);
+        SetPos(pos.x, pos.y, grid);
+    }
+
+    public Vector2Int SnappedToGrid(RectTransform grid)
+    {
+        return new Vector2Int(X(grid), Y(grid));
     }
 
     public LinkedListNode<GridItem> Collides()
@@ -125,16 +131,40 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         return null;
     }
 
-    public void OnClick()
+    public void OnPointerClick(PointerEventData eventData)
     {
         if(followMouse)
         {
             if(WithinGridRaw(Inventory.instance.grid_result)) return;
             foreach(var grid in Inventory.instance.grids)
             {
-                if(WithinGrid(grid) && CollidesSnap(grid) == null)
+                var collides = CollidesSnap(grid);
+                if(WithinGrid(grid) && (collides == null || collides.Value.item == item))
                 {
-                    SnapToGrid(grid);
+                    if(eventData.button == PointerEventData.InputButton.Left)
+                    {
+                        if(collides == null)
+                        {
+                            SnapToGrid(grid);
+                        }
+                        else
+                        {
+                            int diff = Mathf.Min(collides.Value.item.maxStack - collides.Value.count, count);
+                            collides.Value.count += diff;
+                            collides.Value.UpdateCount();
+                            count -= diff;
+                            UpdateCount();
+                            goto CheckCrafting;
+                        }
+                    }
+                    else if(eventData.button == PointerEventData.InputButton.Right)
+                    {
+                        GridItem gridItem = Inventory.instance.Add(item.name, SnappedToGrid(grid), 1, 0, grid);
+                        if(rotated) gridItem.Rotate();
+                        count --;
+                        UpdateCount();
+                        goto CheckCrafting;
+                    }
                     goto BreakBreak;
                 }
             }
@@ -169,6 +199,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         followMouse=!followMouse;
         eventTrigger.enabled = !followMouse;
 
+        CheckCrafting:
         Inventory.instance.CheckCrafting();
     }
 

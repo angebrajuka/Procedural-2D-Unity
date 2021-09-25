@@ -13,7 +13,7 @@ public class _EditorGetCollider : MonoBehaviour
         output = sr.sprite.texture.name+": ";
         foreach(var vec in c.points)
         {
-            output += (vec.ToString().Replace(" ", "")+"; ").Replace("(", "").Replace(")", "");
+            output += (vec.ToString().Replace(" ", "")+", ").Replace("(", "").Replace(")", "");
         }
         output = output.Remove(output.Length - 2);
     }
