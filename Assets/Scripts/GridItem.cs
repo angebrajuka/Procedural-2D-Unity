@@ -133,6 +133,8 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if(eventData.button == PointerEventData.InputButton.Middle) return;
+
         if(followMouse)
         {
             if(WithinGridRaw(Inventory.instance.grid_result)) return;
@@ -141,31 +143,25 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 var collides = CollidesSnap(grid);
                 if(WithinGrid(grid) && (collides == null || collides.Value.item == item))
                 {
-                    if(eventData.button == PointerEventData.InputButton.Left)
+                    int _count = eventData.button == PointerEventData.InputButton.Left ? count : 1;
+
+                    if(collides == null)
                     {
-                        if(collides == null)
-                        {
-                            SnapToGrid(grid);
-                        }
-                        else
-                        {
-                            int diff = Mathf.Min(collides.Value.item.maxStack - collides.Value.count, count);
-                            collides.Value.count += diff;
-                            collides.Value.UpdateCount();
-                            count -= diff;
-                            UpdateCount();
-                            goto CheckCrafting;
-                        }
-                    }
-                    else if(eventData.button == PointerEventData.InputButton.Right)
-                    {
-                        GridItem gridItem = Inventory.instance.Add(item.name, SnappedToGrid(grid), 1, 0, grid);
+                        GridItem gridItem = Inventory.instance.Add(item.name, SnappedToGrid(grid), _count, 0, grid);
                         if(rotated) gridItem.Rotate();
-                        count --;
+                        count -= _count;
                         UpdateCount();
                         goto CheckCrafting;
                     }
-                    goto BreakBreak;
+                    else
+                    {
+                        int diff = Mathf.Min(collides.Value.item.maxStack - collides.Value.count, count, _count);
+                        collides.Value.count += diff;
+                        collides.Value.UpdateCount();
+                        count -= diff;
+                        UpdateCount();
+                        goto CheckCrafting;
+                    }
                 }
             }
             foreach(var grid in Inventory.instance.grids)
@@ -185,8 +181,6 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 Inventory.instance.RemoveIngredients();
             }
         }
-
-        BreakBreak:
 
         // change pivot without moving:
         Vector2 pivot = Vector2.one*0.5f-rectTransform.pivot;

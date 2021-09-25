@@ -16,7 +16,7 @@ PlayerSettings:
   productName: Caedis
   defaultCursor: {fileID: 2800000, guid: d502de66b777acd49a0db775898ff56a, type: 3}
   cursorHotspot: {x: 8, y: 8}
-  m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
+  m_SplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 1
   m_SplashScreenOverlayOpacity: 1
@@ -128,11 +128,11 @@ PlayerSettings:
   vulkanEnablePreTransform: 0
   vulkanEnableLateAcquireNextImage: 0
   m_SupportedAspectRatios:
-    4:3: 0
-    5:4: 0
-    16:10: 0
+    4:3: 1
+    5:4: 1
+    16:10: 1
     16:9: 1
-    Others: 0
+    Others: 1
   bundleVersion: 0.1
   preloadedAssets: []
   metroInputSource: 0
