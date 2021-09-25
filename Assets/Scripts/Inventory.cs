@@ -3,6 +3,21 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+[System.Serializable]
+public class CraftingRecipe
+{
+    public string[] items;
+    public int[] x;
+    public int[] y;
+    public bool[] rotations;
+}
+
+[System.Serializable]
+public class CraftingRecipiesJson
+{
+    public CraftingRecipe[] recipies;
+}
+
 public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
@@ -10,26 +25,71 @@ public class Inventory : MonoBehaviour
     // hierarchy
     public GameObject gridItemPrefab;
     public GameObject itemPickupPrefab;
-    public RectTransform[] grids;
     public Transform inventory;
+    public RectTransform grid_inventory;
+    public RectTransform grid_crafting;
     public PlayerInput playerInput;
     public Rigidbody2D player_rb;
     public PlayerAnimator playerAnimator;
 
     [HideInInspector] public bool isOpen=false;
 
+    [HideInInspector] public RectTransform[] grids;
     public LinkedList<GridItem> items = new LinkedList<GridItem>();
+    public CraftingRecipe[] recipies;
     public static readonly Vector2Int gridSize = new Vector2Int(9, 12);
     public const float cellSize = 32f;
 
     public void Init()
     {
         instance = this;
+        grids = new RectTransform[2];
+        grids[0] = grid_inventory;
+        grids[1] = grid_crafting;
+        recipies = JsonUtility.FromJson<CraftingRecipiesJson>(Resources.Load<TextAsset>("ItemData/craftingRecipies").text).recipies;
     }
 
     public void CheckCrafting()
     {
-        
+        var craftingItems = new LinkedList<GridItem>();
+        var count=0;
+
+        foreach(var item in items)
+        {
+            if(!item.followMouse && item.WithinGrid(grid_crafting))
+            {
+                craftingItems.AddLast(item);
+                count ++;
+            }
+        }
+
+        if(count == 0) return;
+
+        foreach(var recipe in recipies)
+        {
+            if(recipe.items.Length != count) continue;
+
+            foreach(var item in craftingItems)
+            {
+                for(int i=0; i<recipe.items.Length; i++)
+                {
+                    if(recipe.items[i] == item.item.name && recipe.x[i] == item.X(grid_crafting) && recipe.y[i] == item.Y(grid_crafting) && recipe.rotations[i] == item.rotated)
+                    {
+                        goto RecipeItemSucceed;
+                    }
+                }
+                goto RecipeFail;
+                RecipeItemSucceed:
+                if(item == craftingItems.Last.Value)
+                {
+                    // craft item
+                    Debug.Log("succ");
+
+                    return;
+                }
+            }
+            RecipeFail: continue;
+        }
     }
 
     public GridItem Add(string item, int x, int y, int count=1, int ammo=0)

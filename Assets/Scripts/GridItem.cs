@@ -128,9 +128,12 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 if(WithinGrid(grid) && CollidesSnap(grid) == null)
                 {
                     SnapToGrid(grid);
-                    break;
+                    goto BreakBreak;
                 }
-                else if(Collides() != null || (WithinGridRaw(grid) && !WithinGrid(grid)))
+            }
+            foreach(var grid in Inventory.instance.grids)
+            {
+                if(Collides() != null || (WithinGridRaw(grid) && !WithinGrid(grid)))
                 {
                     return;
                 }
@@ -140,6 +143,8 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             transform.SetAsLastSibling();
         }
+
+        BreakBreak:
 
         // change pivot without moving:
         Vector2 pivot = Vector2.one*0.5f-rectTransform.pivot;

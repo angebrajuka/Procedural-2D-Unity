@@ -2,12 +2,18 @@
     "recipies": [
         {
             "items": [
-                {
-                    "name": "itemName",
-                    "position": [0, 0],
-                    "rotated": false
-                }
-            ]
+                "sticks"
+            ],
+            "x": [
+                0
+            ],
+            "y": [
+                0
+            ],
+            "rotations": [
+                false
+            ],
+            "result": "ammo_556"
         }
     ]
 }

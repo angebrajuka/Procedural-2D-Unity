@@ -3713,14 +3713,16 @@ MonoBehaviour:
     type: 3}
   itemPickupPrefab: {fileID: 2360450869158527370, guid: a7dc66cdf5b245a41b0c52670df00334,
     type: 3}
-  grids:
-  - {fileID: 2104654369}
-  - {fileID: 1197301256}
   inventory: {fileID: 1970200089}
+  grid_inventory: {fileID: 2104654369}
+  grid_crafting: {fileID: 1197301256}
   playerInput: {fileID: 1422633255}
   player_rb: {fileID: 1422633254}
   playerAnimator: {fileID: 1422633252}
   isOpen: 0
+  grids:
+  - {fileID: 2104654369}
+  - {fileID: 1197301256}
 --- !u!114 &1422633252
 MonoBehaviour:
   m_ObjectHideFlags: 0
