@@ -12,6 +12,7 @@ public class ProceduralGeneration : MonoBehaviour
     public GameObject prefab_mask;
     public Sprite[] sprite_masks;
     public GameObject prefab_decoration;
+    public Transform chunks;
 
     private Vector2Int currPos=Vector2Int.zero;
     private Vector2Int prevPos;
@@ -101,7 +102,7 @@ public class ProceduralGeneration : MonoBehaviour
 
         while(disabledChunks.Count < Math.Sqr(renderDistance*2))
         {
-            disabledChunks.AddLast(Instantiate(prefab_chunk).GetComponent<ProceduralChunk>());
+            disabledChunks.AddLast(Instantiate(prefab_chunk, chunks).GetComponent<ProceduralChunk>());
             disabledChunks.Last.Value._Start();
         }
     }

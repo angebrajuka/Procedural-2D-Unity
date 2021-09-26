@@ -42,10 +42,7 @@ public class MenuHandler
             prevMenu.Clear();
         }
 
-        if(fade)
-        {
-            currentMenu.GetComponent<Menu>().alpha = 0;
-        }
+        currentMenu.GetComponent<Menu>().alpha = fade ? 0 : 1;
     }
 
     public static void Start()
@@ -69,7 +66,7 @@ public class MenuHandler
         mainMenuObject.SetActive(true);
         if(setMenu)
         {
-            SetMenu(menuMain, true);
+            SetMenu(menuMain, fade);
         }
         PauseHandler.UnBlur();
     }
