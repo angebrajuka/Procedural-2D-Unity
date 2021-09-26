@@ -99,6 +99,10 @@ public class PlayerState : MonoBehaviour
             PlayerTarget.target.health = PlayerTarget.target.maxHealth;
 
             Inventory.instance.Clear();
+            currentItemNode = Inventory.instance.AutoAdd("pump_shotgun", 1);
+            SwitchGun();
+            Inventory.instance.AutoAdd("ammo_12gauge", 10);
+            BeginReload();
 
             difficulty = 2;
 
@@ -117,7 +121,6 @@ public class PlayerState : MonoBehaviour
     {
         if(Inventory.instance.isOpen || currentGun == null || GetAmmo() == currentGun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || Inventory.instance.GetTotalCount(currentGun.ammoType) < currentGun.ammoPerShot) return;
         gunReloadTimer = currentGun.reloadTime;
-        reloadSound = AudioManager.PlayClip(currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
     }
 
     public static void CancelReload()
@@ -175,18 +178,24 @@ public class PlayerState : MonoBehaviour
 
     void Update()
     {
-        if(melee)
-        {
-            // knifeRotationPoint.localEulerAngles += Vector3.back*Time.deltaTime*k_KNIFE_SPEED*knifeDirection;
+        if(PauseHandler.paused) return;
+
+        // if(melee)
+        // {
+        //     knifeRotationPoint.localEulerAngles += Vector3.back*Time.deltaTime*k_KNIFE_SPEED*knifeDirection;
             
-            // if(knifeRotationPoint.localEulerAngles.z < 360-k_KNIFE_ARC && knifeRotationPoint.localEulerAngles.z > k_KNIFE_ARC)
-            // {
-            //     EndMelee();
-            // }
-        }
+        //     if(knifeRotationPoint.localEulerAngles.z < 360-k_KNIFE_ARC && knifeRotationPoint.localEulerAngles.z > k_KNIFE_ARC)
+        //     {
+        //         EndMelee();
+        //     }
+        // }
 
         if(gunReloadTimer > 0)
         {
+            if(reloadSound == null)
+            {
+                reloadSound = AudioManager.PlayClip(currentGun.audio_reload, currentGun.volume_reload, Mixer.SFX);
+            }
             gunReloadTimer -= Time.deltaTime;
             if(gunReloadTimer <= 0) FinishReload();
         }

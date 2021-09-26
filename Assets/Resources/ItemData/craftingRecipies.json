@@ -2,19 +2,19 @@
     "recipies": [
         {
             "items": [
-                "sticks", "rocks", "rocks"
+                "sticks"
             ],
             "x": [
-                1, 1, 1
+                0
             ],
             "y": [
-                0, 2, 3
+                0
             ],
             "rotations": [
-                true, false, false
+                false
             ],
-            "result_name": "stone_sword",
-            "result_count": 1
+            "result_name": "ammo_12gauge",
+            "result_count": 8
         }
     ]
 }

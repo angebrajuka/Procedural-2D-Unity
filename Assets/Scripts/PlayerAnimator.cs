@@ -59,6 +59,7 @@ public class PlayerAnimator : MonoBehaviour
         m_renderer_gun.sprite = PlayerState.currentGun == null ? null : PlayerState.currentItem.sprite;
         m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
         m_renderer_arm.flipY = m_renderer_gun.flipY;
+        m_renderer_sword.gameObject.SetActive(PlayerState.melee);
         m_renderer_sword.flipX = m_renderer_gun.flipY;
         var swordPos = m_renderer_sword.transform.localPosition;
         swordPos.y = Mathf.Abs(swordPos.y)*(m_renderer_sword.flipX ? -1 : 1);

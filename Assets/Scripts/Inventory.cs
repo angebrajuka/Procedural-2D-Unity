@@ -169,7 +169,7 @@ public class Inventory : MonoBehaviour
         PlayerHUD.instance.UpdateAmmo();
     }
 
-    public bool AutoAdd(string item, int count=1, int ammo=0)
+    public LinkedListNode<GridItem> AutoAdd(string item, int count=1, int ammo=0)
     {
         ItemStats itemStats = Items.items[item];
         if(count < itemStats.maxStack)
@@ -182,13 +182,12 @@ public class Inventory : MonoBehaviour
                     count = other.count - itemStats.maxStack;
                     other.count = Mathf.Min(itemStats.maxStack, other.count);
                     other.UpdateCount();
-                    if(count <= 0) return true;
+                    if(count <= 0) return other.node;
                 }
             }
         }
 
         Add(item, 0, 0, Mathf.Min(count, itemStats.maxStack), ammo);
-        // return true;
         GridItem gridItem = items.Last.Value;
         count -= gridItem.count;
         for(int y=gridSize.y-1; y>=0; y--)
@@ -201,7 +200,7 @@ public class Inventory : MonoBehaviour
                     if(items.Last.Value.Collides() == null && items.Last.Value.WithinGrid(grids[0]))
                     {
                         if(count == 0)
-                            return true;
+                            return items.Last;
 
                         return AutoAdd(item, count);
                     }
@@ -214,7 +213,7 @@ public class Inventory : MonoBehaviour
         Destroy(items.Last.Value.gameObject);
         items.RemoveLast();
 
-        return false;
+        return null;
     }
 
     public int GetTotalCount(string item)

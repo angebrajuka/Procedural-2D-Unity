@@ -12,7 +12,7 @@
         },
         {
             "name": "ammo_12gauge",
-            "maxStack": 15,
+            "maxStack": 8,
             "equipable": false
         },
         {
