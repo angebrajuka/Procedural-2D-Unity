@@ -70,7 +70,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    void RemoveResult()
+    public void RemoveResult()
     {
         if(crafted != null)
         {
@@ -82,28 +82,30 @@ public class Inventory : MonoBehaviour
     public void CheckCrafting()
     {
         var craftingItems = new LinkedList<GridItem>();
-        var count=0;
+
+        var minPos = new Vector2Int(3, 3);
 
         foreach(var item in items)
         {
             if(!item.followMouse && item.WithinGrid(grid_crafting))
             {
                 craftingItems.AddLast(item);
-                count ++;
+                if(item.X(grid_crafting) < minPos.x) minPos.x = item.X(grid_crafting);
+                if(item.Y(grid_crafting) < minPos.y) minPos.y = item.Y(grid_crafting);
             }
         }
 
-        if(count != 0)
+        if(craftingItems.Count != 0)
         {
             foreach(var recipe in recipies)
             {
-                if(recipe.items.Length != count) continue;
+                if(recipe.items.Length != craftingItems.Count) continue;
 
                 foreach(var item in craftingItems)
                 {
                     for(int i=0; i<recipe.items.Length; i++)
                     {
-                        if(recipe.items[i] == item.item.name && recipe.x[i] == item.X(grid_crafting) && recipe.y[i] == item.Y(grid_crafting) && (item.item.size.x == item.item.size.y || recipe.rotations[i] == item.rotated))
+                        if(recipe.items[i] == item.item.name && recipe.x[i] == item.X(grid_crafting)-minPos.x && recipe.y[i] == item.Y(grid_crafting)-minPos.y && (recipe.rotations.Length == 0 || item.item.size.x == item.item.size.y || recipe.rotations[i] == item.rotated))
                         {
                             goto RecipeItemSucceed;
                         }

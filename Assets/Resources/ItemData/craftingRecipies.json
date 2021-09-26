@@ -1,20 +1,36 @@
 {
     "recipies": [
         {
-            "items": [
-                "sticks"
-            ],
-            "x": [
-                0
-            ],
-            "y": [
-                0
-            ],
-            "rotations": [
-                false
-            ],
+            "items": ["sticks"],
+            "x": [0],
+            "y": [0],
+            "rotations": [],
+            "result_name": "wood_chips",
+            "result_count": 2
+        },
+        {
+            "items": ["wood_chips", "wood_chips", "wood_chips", "wood_chips"],
+            "x": [0, 0, 1, 1],
+            "y": [0, 1, 0, 1],
+            "rotations": [],
+            "result_name": "paper",
+            "result_count": 1
+        },
+        {
+            "items": ["paper", "sulfur", "sulfur", "rocks", "rocks"],
+            "x": [0, 0, 1, 0, 1],
+            "y": [0, 2, 2, 3, 3],
+            "rotations": [],
             "result_name": "ammo_12gauge",
-            "result_count": 8
+            "result_count": 1
+        },
+        {
+            "items": ["paper", "sulfur", "sulfur", "sulfur", "sulfur", "sulfur", "sulfur", "sulfur", "sulfur"],
+            "x": [1, 1, 2, 0, 0, 3, 3, 1, 2],
+            "y": [1, 0, 0, 1, 2, 1, 2, 3, 3],
+            "rotations": [],
+            "result_name": "bomb",
+            "result_count": 1
         }
     ]
 }

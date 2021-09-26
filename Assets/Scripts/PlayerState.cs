@@ -101,7 +101,7 @@ public class PlayerState : MonoBehaviour
             Inventory.instance.Clear();
             currentItemNode = Inventory.instance.AutoAdd("pump_shotgun", 1);
             SwitchGun();
-            Inventory.instance.AutoAdd("ammo_12gauge", 10);
+            Inventory.instance.AutoAdd("ammo_12gauge", Items.items["ammo_12gauge"].maxStack+1);
             BeginReload();
 
             difficulty = 2;

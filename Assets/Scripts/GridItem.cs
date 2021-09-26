@@ -29,6 +29,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     RectTransform image;
     EventTrigger eventTrigger;
     public bool rotated;
+    RectTransform grid;
 
     public void Start()
     {
@@ -90,6 +91,7 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         rectTransform.offsetMin = new Vector2(GridXRaw(grid)+x*Inventory.cellSize, GridYRaw(grid)+y*Inventory.cellSize);
         rectTransform.offsetMax = rectTransform.offsetMin+new Vector2(rawW, rawH);
+        this.grid = grid;
     }
 
     public void SnapToGrid(RectTransform grid)
@@ -137,7 +139,21 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         if(followMouse)
         {
-            if(WithinGridRaw(Inventory.instance.grid_result)) return;
+            if(WithinGridRaw(Inventory.instance.grid_result))
+            {
+                var collides = CollidesSnap(Inventory.instance.grid_result);
+
+                if(collides != null && collides.Value.item.name == item.name && collides.Value.count + count <= item.maxStack)
+                {
+                    count += collides.Value.count;
+                    UpdateCount();
+                    Inventory.instance.RemoveResult();
+                    Inventory.instance.RemoveIngredients();
+                    Inventory.instance.CheckCrafting();
+                }
+
+                return;
+            }
             foreach(var grid in Inventory.instance.grids)
             {
                 var collides = CollidesSnap(grid);
@@ -151,7 +167,8 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                         if(rotated) gridItem.Rotate();
                         count -= _count;
                         UpdateCount();
-                        goto CheckCrafting;
+                        Inventory.instance.CheckCrafting();
+                        return;
                     }
                     else
                     {
@@ -160,7 +177,8 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                         collides.Value.UpdateCount();
                         count -= diff;
                         UpdateCount();
-                        goto CheckCrafting;
+                        Inventory.instance.CheckCrafting();
+                        return;
                     }
                 }
             }
@@ -180,7 +198,15 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 Inventory.instance.crafted = null;
                 Inventory.instance.RemoveIngredients();
             }
+            if(eventData.button == PointerEventData.InputButton.Right && count > 1)
+            {
+                int halfCount = count/2; // necessary because of integer division rounding
+                Inventory.instance.Add(item.name, X(grid), Y(grid), halfCount, 0, grid);
+                count -= halfCount;
+                UpdateCount();
+            }
         }
+
 
         // change pivot without moving:
         Vector2 pivot = Vector2.one*0.5f-rectTransform.pivot;
@@ -193,7 +219,6 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         followMouse=!followMouse;
         eventTrigger.enabled = !followMouse;
 
-        CheckCrafting:
         Inventory.instance.CheckCrafting();
     }
 
