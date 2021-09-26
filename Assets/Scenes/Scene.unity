@@ -599,6 +599,21 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6926267321923249462, guid: 201bb4bac53026b49812157102de7c96,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926267321923249462, guid: 201bb4bac53026b49812157102de7c96,
+        type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926267321923249462, guid: 201bb4bac53026b49812157102de7c96,
+        type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 7803719050321581512, guid: 201bb4bac53026b49812157102de7c96,
         type: 3}
       propertyPath: m_RootOrder
@@ -658,6 +673,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Campfire
+      objectReference: {fileID: 0}
+    - target: {fileID: 8336391524210526331, guid: 201bb4bac53026b49812157102de7c96,
+        type: 3}
+      propertyPath: averageIntensity
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8336391524210526331, guid: 201bb4bac53026b49812157102de7c96,
+        type: 3}
+      propertyPath: useBeginningRadius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 201bb4bac53026b49812157102de7c96, type: 3}
@@ -1392,6 +1417,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 449472434}
+  - component: {fileID: 449472435}
   m_Layer: 0
   m_Name: MainMenu
   m_TagString: Untagged
@@ -1419,6 +1445,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &449472435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449472433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177ede6afa4455043a54320b3e98f0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &456767483
 GameObject:
   m_ObjectHideFlags: 0
@@ -3265,7 +3303,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1212482297}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
@@ -3408,7 +3446,8 @@ MonoBehaviour:
   changeSpeed: 0.3
   averageRadius: 40
   averageIntensity: 0.47
-  useBeginningRadiusAndIntensity: 0
+  useBeginningRadius: 0
+  useBeginningIntensity: 0
 --- !u!114 &1225463320
 MonoBehaviour:
   m_ObjectHideFlags: 0

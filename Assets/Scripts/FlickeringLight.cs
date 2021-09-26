@@ -8,8 +8,9 @@ public class FlickeringLight : MonoBehaviour
     // hierarchy
     public float radiusRange, intensityRange, timingAverage, timingRange, changeSpeed;
     public float averageRadius, averageIntensity;
-    public bool useBeginningRadiusAndIntensity;
-    
+    public bool useBeginningRadius;
+    public bool useBeginningIntensity;
+
     private Light2D m_light;
     private float timer, interval;
     private float targetIntensity;
@@ -19,10 +20,13 @@ public class FlickeringLight : MonoBehaviour
     {
         m_light = GetComponent<Light2D>();
 
-        if(useBeginningRadiusAndIntensity)
+        if(useBeginningRadius)
+        {
+            averageRadius = m_light.pointLightOuterRadius;
+        }
+        if(useBeginningIntensity)
         {
             averageIntensity = m_light.intensity;
-            averageRadius = m_light.pointLightOuterRadius;
         }
         timer = 0;
         interval = 0;

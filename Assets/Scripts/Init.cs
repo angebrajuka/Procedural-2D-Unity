@@ -61,7 +61,8 @@ public class Init : MonoBehaviour
             MenuHandler.mainMenuObject = mainMenuObject;
             MenuHandler.gameWorldObject = gameWorldObject;
 
-            MenuHandler.MainMenu();
+
+            MenuHandler.MainMenu(false);
         }
 
         Destroy(gameObject);

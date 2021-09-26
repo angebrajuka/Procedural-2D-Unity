@@ -31,7 +31,7 @@ public class MenuHandler
         return false;
     }
 
-    public static void SetMenu(GameObject menu)
+    public static void SetMenu(GameObject menu, bool fade=false)
     {
         if(currentMenuPrefab != null) prevMenu.Push(currentMenuPrefab);
 
@@ -40,6 +40,11 @@ public class MenuHandler
         if(menu == menuMain)
         {
             prevMenu.Clear();
+        }
+
+        if(fade)
+        {
+            currentMenu.GetComponent<Menu>().alpha = 0;
         }
     }
 
@@ -58,11 +63,14 @@ public class MenuHandler
         PlayerStats.loadingFirstChunks = true;
     }
 
-    public static void MainMenu()
+    public static void MainMenu(bool setMenu=true, bool fade=false)
     {
         gameWorldObject.SetActive(false);
         mainMenuObject.SetActive(true);
-        SetMenu(menuMain);
+        if(setMenu)
+        {
+            SetMenu(menuMain, true);
+        }
         PauseHandler.UnBlur();
     }
 }
