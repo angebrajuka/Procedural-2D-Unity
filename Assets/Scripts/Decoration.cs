@@ -39,7 +39,7 @@ public class Decoration : MonoBehaviour
     {
         if(m_target != null)
         {
-            m_target.damageable = true;
+            m_target.damageable = stats.health > 0;
             m_target.OnDamage = OnDamage;
             m_target.OnKill = OnKill;
             m_target.maxHealth = stats.health*PlayerStats.k_PUNCH_DAMAGE;
@@ -49,8 +49,6 @@ public class Decoration : MonoBehaviour
 
     void Drop()
     {
-        
-
         float val = Random.value;
         for(int j=0; j<stats.itemDrops.Length; j++)
         {

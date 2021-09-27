@@ -121,6 +121,8 @@ public class PlayerState : MonoBehaviour
     {
         if(Inventory.instance.isOpen || currentGun == null || GetAmmo() == currentGun.clipSize || gunReloadTimer > 0 || gunRpmTimer > 0 || Inventory.instance.GetTotalCount(currentGun.ammoType) < currentGun.ammoPerShot) return;
         gunReloadTimer = currentGun.reloadTime;
+        Destroy(reloadSound);
+        reloadSound = null;
     }
 
     public static void CancelReload()

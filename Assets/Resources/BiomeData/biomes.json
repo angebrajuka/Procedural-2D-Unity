@@ -100,6 +100,14 @@
                 {"s": "lillypad_1", "f": 0.02},
                 {"s": "grass", "f": 0.01}
             ]
+        },
+        {
+            "biome_name": "village_0",
+            "tile_name": "grass_plains",
+            "rain_temp_map_color": [255, 255, 255],
+            "decorations": [
+                {"s": "house_0_0", "f": 0.1}
+            ]
         }
     ]
 }
