@@ -1,18 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.LWRP;
+
 
 public class Flashlight : MonoBehaviour
 {
-    private UnityEngine.Experimental.Rendering.Universal.Light2D flashlight;
+    private UnityEngine.Rendering.Universal.Light2D flashlight;
     public FlickeringLight flickeringLight;
 
     public static bool on=false;
 
     void Start()
     {
-        flashlight = GetComponent<UnityEngine.Experimental.Rendering.Universal.Light2D>();
+        flashlight = GetComponent<UnityEngine.Rendering.Universal.Light2D>();
     }
 
     void Update()

@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.LWRP;
+
 
 public class Explosion : MonoBehaviour
 {
     private CircleCollider2D trigger;
-    public UnityEngine.Experimental.Rendering.Universal.Light2D m_light;
+    public UnityEngine.Rendering.Universal.Light2D m_light;
 
     void OnEnable()
     {

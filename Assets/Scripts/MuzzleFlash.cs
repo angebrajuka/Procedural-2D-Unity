@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.LWRP;
+
 
 public class MuzzleFlash : MonoBehaviour
 {
-    UnityEngine.Experimental.Rendering.Universal.Light2D light2D;
+    UnityEngine.Rendering.Universal.Light2D light2D;
 
     void Start()
     {
-        light2D = GetComponent<UnityEngine.Experimental.Rendering.Universal.Light2D>();
+        light2D = GetComponent<UnityEngine.Rendering.Universal.Light2D>();
         Destroy(gameObject, 0.05f);
         
         for(int i=0; i<light2D.shapePath.Length; i++)

@@ -42,6 +42,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -244,6 +245,13 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      player_swim_1: 6049524551616940714
+      player_swim_5: -1192432977818412499
+      player_swim_0: 6568415118543638498
+      player_swim_3: -6608727119230766129
+      player_swim_4: 5958769299165553547
+      player_swim_2: -2287005486989715844
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

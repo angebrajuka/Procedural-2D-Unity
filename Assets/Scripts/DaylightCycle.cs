@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.LWRP;
+
 
 public class DaylightCycle : MonoBehaviour
 {
@@ -12,11 +12,11 @@ public class DaylightCycle : MonoBehaviour
 
     public static float time = k_DAY;
 
-    UnityEngine.Experimental.Rendering.Universal.Light2D globalLight;
+    UnityEngine.Rendering.Universal.Light2D globalLight;
 
     public void Init()
     {
-        globalLight = GetComponent<UnityEngine.Experimental.Rendering.Universal.Light2D>();
+        globalLight = GetComponent<UnityEngine.Rendering.Universal.Light2D>();
     }
 
     void Update()

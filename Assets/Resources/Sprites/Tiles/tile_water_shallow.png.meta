@@ -1,31 +1,13 @@
 fileFormatVersion: 2
-guid: b8d8922a5fbd77144a4c6af88c3d673b
+guid: 4928083db23ec424e8787c775d00dd81
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8667466294985060184
-    second: tree_0
+      213: 5045714044771024420
+    second: tile_water_shallow_0
   - first:
-      213: 5281997702118322174
-    second: tree_1
-  - first:
-      213: 515398547636034221
-    second: tree_0_0
-  - first:
-      213: 3096763353497586428
-    second: tree_0_1
-  - first:
-      213: -2699505154609008287
-    second: tree_oak_0
-  - first:
-      213: -4708098214230497653
-    second: tree_oak_1
-  - first:
-      213: -5590696268459541370
-    second: tree_oak_2
-  - first:
-      213: -8970930855085875946
-    second: tree_oak_3
+      213: 7172409826061988360
+    second: tile_water_shallow_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -66,11 +48,11 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 6
-  spritePivot: {x: 0, y: 0}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 0
@@ -112,101 +94,47 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tree_oak_0
+      name: tile_water_shallow_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
-        height: 64
-      alignment: 6
+        width: 16
+        height: 16
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 161b13e4d5e698ad0800000000000000
-      internalID: -2699505154609008287
+      spriteID: 42eb6ccb03af50640800000000000000
+      internalID: 5045714044771024420
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tree_oak_1
+      name: tile_water_shallow_1
       rect:
         serializedVersion: 2
-        x: 48
+        x: 16
         y: 0
-        width: 48
-        height: 64
-      alignment: 6
+        width: 16
+        height: 16
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b86e3256e9979aeb0800000000000000
-      internalID: -4708098214230497653
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tree_oak_2
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 48
-        height: 64
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 68cfd575d5bd962b0800000000000000
-      internalID: -5590696268459541370
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tree_oak_3
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 0
-        width: 48
-        height: 64
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 61dd306dae9d08380800000000000000
-      internalID: -8970930855085875946
+      spriteID: 80232f95cb4898360800000000000000
+      internalID: 7172409826061988360
       vertices: []
       indices: 
       edges: []
@@ -222,10 +150,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      tree_oak_1: -4708098214230497653
-      tree_oak_0: -2699505154609008287
-      tree_oak_2: -5590696268459541370
-      tree_oak_3: -8970930855085875946
+      tile_water_shallow_1: 7172409826061988360
+      tile_water_shallow_0: 5045714044771024420
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

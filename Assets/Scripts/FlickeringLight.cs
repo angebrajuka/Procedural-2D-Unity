@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
+
 
 public class FlickeringLight : MonoBehaviour
 {
@@ -11,14 +11,14 @@ public class FlickeringLight : MonoBehaviour
     public bool useBeginningRadius;
     public bool useBeginningIntensity;
 
-    private Light2D m_light;
+    private UnityEngine.Rendering.Universal.Light2D m_light;
     private float timer, interval;
     private float targetIntensity;
     private float targetRadius;
 
     void Start()
     {
-        m_light = GetComponent<Light2D>();
+        m_light = GetComponent<UnityEngine.Rendering.Universal.Light2D>();
 
         if(useBeginningRadius)
         {
