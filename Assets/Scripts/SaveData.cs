@@ -46,7 +46,7 @@ public class EnemySerializable
 public class SaveData
 {
     byte difficulty;
-    float seed;
+    ushort seed;
     GridItemSerializable[] inventoryItems;
     EnemySerializable[] enemies;
     
@@ -57,7 +57,7 @@ public class SaveData
     public SaveData()
     {
         difficulty = PlayerStats.difficulty;
-        seed = ProceduralGeneration.seed_main;
+        seed = ProceduralGeneration.seed;
         
         Inventory.instance.Close();
         inventoryItems = new GridItemSerializable[Inventory.instance.items.Count];

@@ -7,64 +7,56 @@ using UnityEngine.Audio;
 
 public class Init : MonoBehaviour
 {
-    public static Init instance;
+    // public static Init instance;
 
-    // hierarchy
-    public AudioManager audioManager;
-    public MusicManager musicManager;
-    public GameObject h_menuMain;
-    public GameObject h_menuPause;
-    public Entities entities;
-    public Transform player;
-    public Transform gunSpriteTransform;
-    public PauseHandler pauseHandler;
-    public DevConsole devConsole;
-    public DaylightCycle daylightCycle;
-    public FadeTransition fadeTransition;
+    // // hierarchy
+    // public MusicManager musicManager;
+    // public GameObject h_menuMain;
+    // public GameObject h_menuPause;
+    // public Entities entities;
+    // public Transform player;
+    // public Transform gunSpriteTransform;
+    // public FadeTransition fadeTransition;
 
-    public GameObject mainMenuObject;
-    public GameObject gameWorldObject;
+    // public GameObject mainMenuObject;
+    // public GameObject gameWorldObject;
 
-    static bool init=false;
+    // static bool init=false;
     
-    void Start()
-    {
-        instance = this;
+    // void Start()
+    // {
+    //     instance = this;
 
-        if(!init)
-        {
-            init = true;
+    //     if(!init)
+    //     {
+    //         init = true;
 
-            MenuHandler.menuMain = h_menuMain;
-            MenuHandler.menuPause = h_menuPause;
-
-            audioManager.Init();
-            musicManager.Init();
-            entities.Init();
-            pauseHandler.Init();
-            devConsole.Init();
-            daylightCycle.Init();
-            fadeTransition.Init();
-            player.GetComponent<DynamicEnemySpawning>().Init();
-            player.GetComponent<PlayerTarget>().Init();
-            player.GetComponent<PlayerStats>().Init();
-            player.GetComponent<PlayerState>().Init();
-            Items.Init(gunSpriteTransform);
-            player.GetComponent<PlayerHUD>().Init();
-            player.GetComponent<ProceduralGeneration>().Init();
-            player.GetComponent<PlayerInput>().Init();
-            PlayerInput.LoadKeybinds();
-            player.GetComponent<Inventory>().Init();
-            player.GetComponent<PlayerMovement>().Init();
-            player.GetComponent<PlayerAnimator>().Init();
-
-            MenuHandler.mainMenuObject = mainMenuObject;
-            MenuHandler.gameWorldObject = gameWorldObject;
+    //         musicManager.Init();
+    //         entities.Init();
+    //         fadeTransition.Init();
+    //         player.GetComponent<DynamicEnemySpawning>().Init();
+    //         player.GetComponent<PlayerTarget>().Init();
+    //         player.GetComponent<PlayerStats>().Init();
+    //         player.GetComponent<PlayerState>().Init();
+    //         Items.Init(gunSpriteTransform);
+    //         player.GetComponent<PlayerHUD>().Init();
+    //         player.GetComponent<PlayerInput>().Init();
+    //         PlayerInput.LoadKeybinds();
+    //         player.GetComponent<Inventory>().Init();
+    //         player.GetComponent<PlayerMovement>().Init();
+    //         player.GetComponent<PlayerAnimator>().Init();
 
 
-            MenuHandler.MainMenu(false);
-        }
 
-        Destroy(gameObject);
+    //         // MenuHandler.MainMenu(false);
+    //         gameWorldObject.SetActive(false);
+    //         mainMenuObject.SetActive(true);
+    //     }
+
+    //     Destroy(gameObject);
+    // }
+
+    public void Start() {
+        MenuEvents.MainMenu();
     }
 }

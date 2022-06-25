@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[System.Serializable]
+public struct MenuSeedPosition {
+    public ushort seed;
+    public float x, y;
+}
+
 public class ProceduralGeneration : MonoBehaviour
 {
     public static ProceduralGeneration instance;
@@ -13,6 +19,9 @@ public class ProceduralGeneration : MonoBehaviour
     public Sprite[] sprite_masks;
     public GameObject prefab_decoration;
     public Transform chunks;
+    public Transform decorPrefabs;
+    public Transform follow;
+    public MenuSeedPosition[] menuSeeds;
 
     private Vector2Int currPos=Vector2Int.zero;
     private Vector2Int prevPos;
@@ -37,8 +46,8 @@ public class ProceduralGeneration : MonoBehaviour
     public static Texture2D textureBiome;
     public static Texture2D textureDecor;
 
-    public static float seed_main; // determines land/water
-    public static float seed_temp, seed_rain; // used for biome decision making
+    public static ushort seed;
+    public static float seed_main, seed_temp, seed_rain;
     public static int seed_decor;
 
     public static RuleTile LoadTile(string name)
@@ -56,7 +65,7 @@ public class ProceduralGeneration : MonoBehaviour
         }
     }
 
-    public void Init()
+    public void Start()
     {
         instance = this;
 
@@ -105,6 +114,15 @@ public class ProceduralGeneration : MonoBehaviour
             disabledChunks.AddLast(Instantiate(prefab_chunk, chunks).GetComponent<ProceduralChunk>());
             disabledChunks.Last.Value._Start();
         }
+    }
+
+    public void SetMainMenu() {
+        FadeTransition.black = true;
+        var msp = menuSeeds[Random.Range(0, menuSeeds.Length)];
+        SetSeed(msp.seed);
+        follow.position = new Vector3(msp.x, msp.y, follow.position.z);
+
+        GenerateMap();
     }
 
     static Color32 AverageColorFromTexture(Texture2D tex)
@@ -283,18 +301,19 @@ public class ProceduralGeneration : MonoBehaviour
         go.SetActive(true);
     }
 
-    public static float RandomSeed()
+    public static ushort RandomSeed()
     {
-        return Random.Range((float)0, (float)1000000);
+        return (ushort)Random.Range(0, 1000000);
     }
 
-    public static void SetSeed(float seed)
+    public static void SetSeed(ushort seed)
     {
-        seed = Mathf.Abs(seed);
-        seed_main = seed;
-        seed_temp = seed_main+530128.3585825032f; // random values have no meaning, just getting a different area in the perlin noise
-        seed_rain = seed_main+632571.5362583f; // random values have no meaning, just getting a different area in the perlin noise
-        seed_decor = (int)seed_main; // random values have no meaning, just getting a different area in the perlin noise
+        ProceduralGeneration.seed = seed;
+
+        seed_main = 2589.216f+seed*252.3457f;
+        seed_rain = 913.8473f+seed*2345.195f;
+        seed_temp = 111.8325f+seed*762.0934f;
+        seed_decor = seed;
     }
 
     void LoadAll()
@@ -320,8 +339,8 @@ public class ProceduralGeneration : MonoBehaviour
 
     void Update()
     {
-        currPos.x = (int)Mathf.Floor(PlayerMovement.rb.position.x/chunkSize);
-        currPos.y = (int)Mathf.Floor(PlayerMovement.rb.position.y/chunkSize);
+        currPos.x = (int)Mathf.Floor(follow.position.x/chunkSize);
+        currPos.y = (int)Mathf.Floor(follow.position.y/chunkSize);
         
         if(currPos != prevPos || loadedChunks.Count == 0 || reset)
         {
@@ -356,14 +375,9 @@ public class ProceduralGeneration : MonoBehaviour
             if(!pair.Value.loaded) return;
         }
 
-        FadeTransition.Fade(true, OnFadeComplete);
-        PlayerStats.loadingFirstChunks = false;
-    }
-
-    public static bool OnFadeComplete()
-    {
+        FadeTransition.black = false;
         PauseHandler.UnPause();
-        PauseHandler.UnBlur();
-        return true;
+        PauseHandler.blurred = false;
+        PlayerStats.loadingFirstChunks = false;
     }
 }

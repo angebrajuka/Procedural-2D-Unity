@@ -9,8 +9,7 @@ public class ButtonStart : MonoBehaviour
 
     public void OnClick()
     {
-        float seed;
-        ProceduralGeneration.SetSeed(float.TryParse(inputSeed.text, out seed) ? seed : ProceduralGeneration.RandomSeed());
-        MenuHandler.Start();
+        ProceduralGeneration.SetSeed(ushort.TryParse(inputSeed.text, out var seed) ? seed : ProceduralGeneration.RandomSeed());
+        // MenuHandler.Start();
     }
 }

@@ -12,7 +12,7 @@ public class Menu : MonoBehaviour
 
     void Start()
     {
-        if(MenuHandler.currentMenu == null) MenuHandler.currentMenu = gameObject;
+        // if(MenuHandler.currentMenu == null) MenuHandler.currentMenu = gameObject;
         
         if(alpha == 0)
         {
@@ -40,16 +40,16 @@ public class Menu : MonoBehaviour
                 image.color = c;
             }
         }
-        if(canUseEsc && Input.GetKeyDown(KeyCode.Escape))
-        {
-            if(!MenuHandler.Back())
-            {
-                PauseHandler.UnPause();
-                PauseHandler.UnBlur();
-                Destroy(gameObject);
-                MenuHandler.currentMenu = null;
-                MenuHandler.currentMenuPrefab = null;
-            }
-        }
+        // if(canUseEsc && Input.GetKeyDown(KeyCode.Escape))
+        // {
+        //     if(!MenuHandler.Back())
+        //     {
+        //         PauseHandler.UnPause();
+        //         PauseHandler.UnBlur();
+        //         Destroy(gameObject);
+        //         MenuHandler.currentMenu = null;
+        //         MenuHandler.currentMenuPrefab = null;
+        //     }
+        // }
     }
 }

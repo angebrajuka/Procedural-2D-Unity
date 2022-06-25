@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
 
     void OnDestroy()
     {
-        MenuHandler.MainMenu(true, true);
+
+        // MenuHandler.MainMenu(true, true);
     }
 }

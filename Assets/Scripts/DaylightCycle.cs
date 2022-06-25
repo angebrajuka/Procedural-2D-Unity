@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Rendering.Universal;
 
 public class DaylightCycle : MonoBehaviour
 {
@@ -12,17 +12,17 @@ public class DaylightCycle : MonoBehaviour
 
     public static float time = k_DAY;
 
-    UnityEngine.Rendering.Universal.Light2D globalLight;
+    Light2D globalLight;
 
-    public void Init()
+    public void Start()
     {
-        globalLight = GetComponent<UnityEngine.Rendering.Universal.Light2D>();
+        globalLight = GetComponent<Light2D>();
     }
 
     void Update()
     {
         time += PauseHandler.paused ? 0 : Time.deltaTime;
-        if(time >= k_MORNING) time = 0;
+        time %= k_MORNING;
         
         globalLight.intensity = (time < k_DAY)      ? Mathf.Lerp(brightness_night, brightness_day, time/k_DAY)
                               : (time < k_EVENING   ? brightness_day

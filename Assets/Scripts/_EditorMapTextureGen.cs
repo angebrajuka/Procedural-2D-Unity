@@ -6,6 +6,6 @@ public class _EditorMapTextureGen : MonoBehaviour
 {
     public ProceduralGeneration proceduralGeneration;
     public bool randSeed;
-    public float seed;
+    public ushort seed;
     public int resolution;
 }

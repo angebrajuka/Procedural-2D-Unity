@@ -13,8 +13,8 @@ public class InventoryControls : MonoBehaviour {
     {
         if(Input.GetKeyDown(PlayerInput.keybinds[Keybind.inventory]) || Input.GetKeyDown(KeyCode.Escape)) {
             inventory.Close();
-            PauseHandler.UnBlur();
-            PauseHandler.EnableInputAndHUD();
+            PauseHandler.blurred = false;
+            // PauseHandler.EnableInputAndHUD();
             playerInput.enabled = true;
             transform.gameObject.SetActive(false);
         }

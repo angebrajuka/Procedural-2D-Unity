@@ -71,7 +71,7 @@ public class PlayerState : MonoBehaviour
     public void Reset()
     {
         PauseHandler.Pause();
-        PauseHandler.Blur();
+        PauseHandler.blurred = false;
 
         currentItemNode = null;
         gunRpmTimer = 0;

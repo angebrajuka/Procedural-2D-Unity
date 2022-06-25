@@ -130,7 +130,7 @@ public struct Biome
 
             if(!s_decorations.ContainsKey(name))
             {
-                GameObject go = MonoBehaviour.Instantiate(ProceduralGeneration.instance.prefab_decoration);
+                GameObject go = MonoBehaviour.Instantiate(ProceduralGeneration.instance.prefab_decoration, ProceduralGeneration.instance.decorPrefabs);
                 go.name = name;
                 s_decorations.Add(name, go.GetComponent<Decoration>());
                 s_decorations[name].Init(s_decorationStats[name]);

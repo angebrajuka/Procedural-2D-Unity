@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5736efde3ab5dad4080f884b62f7a24f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
   m_Name: water
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: -7430383670088101596, guid: 41bed760b9b0dd04f82ea4e95ec9e69b,
@@ -31,6 +31,3 @@ MonoBehaviour:
     m_Neighbors: 
     m_NeighborPositions: []
     m_RuleTransform: 0
-  connectingTiles: []
-  any: []
-  alsoThis: []

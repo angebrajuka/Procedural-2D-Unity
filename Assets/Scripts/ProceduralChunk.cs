@@ -39,7 +39,7 @@ public class ProceduralChunk : MonoBehaviour
     void Update()
     {
         int i=0;
-        for(tilePos.y=0; tilePos.y<DynamicLoading.chunkSize; tilePos.y++, i++)
+        for(tilePos.y=0; tilePos.y<ProceduralGeneration.chunkSize; tilePos.y++, i++)
         {
             positionArray[i] = tilePos;
             int x = (int)transform.localPosition.x+tilePos.x;
@@ -51,7 +51,7 @@ public class ProceduralChunk : MonoBehaviour
         m_tilemap.SetTiles(positionArray, tileArray);
         tilePos.x++;
 
-        if(tilePos.x == DynamicLoading.chunkSize)
+        if(tilePos.x == ProceduralGeneration.chunkSize)
         {
             m_tilemap.CompressBounds();
             loaded = true;

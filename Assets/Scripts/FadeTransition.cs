@@ -4,51 +4,20 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FadeTransition : MonoBehaviour
-{
-    static Image image;
+public class FadeTransition : MonoBehaviour {
+    // hierarchy
+    public float fadeSpeed=3.0f;
 
-    public static float fadeSpeed=3.0f;
-    public static bool fadingIn=false;
-    public static bool done=true;
+    public static bool black;
+    static RawImage image;
 
-    static Func<bool> onFadeComplete;
-
-    public void Init()
-    {
-        image = GetComponent<Image>();
+    public void Start() {
+        image = GetComponent<RawImage>();
     }
 
-    public static void Fade(bool fadeIn, Func<bool> _onFadeComplete)
-    {
+    public void Update() {
         Color col = image.color;
-        col.a = fadeIn ? 1 : 0;
+        col.a = Mathf.MoveTowards(col.a, black ? 1 : 0, Time.unscaledDeltaTime * fadeSpeed);
         image.color = col;
-        done = false;
-        fadingIn = fadeIn;
-        onFadeComplete = _onFadeComplete;
-    }
-
-    public static void SetAlpha(float alpha)
-    {
-        Color col = image.color;
-        col.a = alpha;
-        image.color = col;
-    }
-
-    public void Update()
-    {
-        if(!done)
-        {
-            Color col = image.color;
-            col.a += (fadingIn ? -1 : 1) * Time.unscaledDeltaTime * fadeSpeed;
-            if((fadingIn && col.a <= 0) || (!fadingIn && col.a >= 1))
-            {
-                col.a = Mathf.Round(col.a);
-                done = true;
-                if(onFadeComplete != null) onFadeComplete();
-            }
-            image.color = col;
-        }
     }
 }

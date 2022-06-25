@@ -119,9 +119,9 @@ public class PlayerInput : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             PauseHandler.Pause();
-            PauseHandler.Blur();
-            MenuHandler.prevMenu.Clear();
-            MenuHandler.SetMenu(MenuHandler.menuPause);
+            PauseHandler.blurred = true;
+            // MenuHandler.prevMenu.Clear();
+            // MenuHandler.SetMenu(MenuHandler.menuPause);
         }
         
         // mouse look
@@ -202,8 +202,8 @@ public class PlayerInput : MonoBehaviour
         if(Input.GetKeyDown(keybinds[Keybind.inventory]))
         {
             PlayerState.EndMelee();
-            PauseHandler.Blur();
-            PauseHandler.DisableInputAndHUD();
+            PauseHandler.blurred = true;
+            // PauseHandler.DisableInputAndHUD();
             inventory.gameObject.SetActive(true);
             Inventory.instance.Open();
             

@@ -6,7 +6,7 @@ public class ButtonSlot : MonoBehaviour
 {
     public bool load;
     public byte save;
-    public GameObject menuWorldSettings;
+    public string menuWorldSettings;
     [HideInInspector] public bool empty = true;
 
     public void OnClick()
@@ -15,7 +15,7 @@ public class ButtonSlot : MonoBehaviour
         {
             PlayerStats.load = true;
             PlayerStats.save = save;
-            MenuHandler.Start();
+            // MenuHandler.Start();
         }
         else if(!load)
         {

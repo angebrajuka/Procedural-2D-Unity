@@ -13,11 +13,11 @@ public class EditorMapTextureGen : Editor
 
         if(GUILayout.Button("generate"))
         {
-            script.proceduralGeneration.Init();
+            script.proceduralGeneration.Start();
             if(script.randSeed)
             {
                 ProceduralGeneration.SetSeed(ProceduralGeneration.RandomSeed());
-                script.seed = ProceduralGeneration.seed_main;
+                script.seed = ProceduralGeneration.seed;
             }
             else
             {
