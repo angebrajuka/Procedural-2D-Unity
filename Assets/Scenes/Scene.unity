@@ -4299,13 +4299,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9459807ab7f09714dba04fcff534886e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: cc754f225e00d67459b67775c6f6bbf2, type: 2}
-  mixer_master: {fileID: 24300002, guid: cc754f225e00d67459b67775c6f6bbf2, type: 2}
-  mixer_music: {fileID: 2781372746179110764, guid: cc754f225e00d67459b67775c6f6bbf2,
+  mixer: {fileID: 24100000, guid: ab337a5817835d046baeecb3695778de, type: 2}
+  mixer_master: {fileID: 24300002, guid: ab337a5817835d046baeecb3695778de, type: 2}
+  mixer_music: {fileID: 2781372746179110764, guid: ab337a5817835d046baeecb3695778de,
     type: 2}
-  mixer_sfx: {fileID: 3131485543777466389, guid: cc754f225e00d67459b67775c6f6bbf2,
+  mixer_sfx: {fileID: 3131485543777466389, guid: ab337a5817835d046baeecb3695778de,
     type: 2}
-  mixer_menu: {fileID: -721336685527153350, guid: cc754f225e00d67459b67775c6f6bbf2,
+  mixer_menu: {fileID: -721336685527153350, guid: ab337a5817835d046baeecb3695778de,
     type: 2}
 --- !u!1 &1098198011
 GameObject:
@@ -6035,6 +6035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43dd240926f11643a69191f628c4342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeSpeed: 3
 --- !u!1 &1485779195
 GameObject:
   m_ObjectHideFlags: 0
