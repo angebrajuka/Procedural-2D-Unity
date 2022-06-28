@@ -8,25 +8,25 @@ public class MenuNewGameLoadGame : MonoBehaviour
 {
     void Start()
     {
-        Transform buttons = transform.GetChild(0);
-        for(int i=0; i<buttons.childCount; i++)
-        {
-            Transform button = buttons.GetChild(i);
-            Text text = button.GetChild(0).GetComponent<Text>();
-            DateTime lastPlayed;
-            if(Save_Load.GetSaveInfo(i, out lastPlayed))
-            {
-                text.text += ("    last played: " + lastPlayed.ToString());
-                var load = button.GetComponent<ButtonSlot>();
-                if(load != null)
-                {
-                    load.empty = false;
-                }
-            }
-            else
-            {
-                text.text += "    (empty)";
-            }
-        }
+        // Transform buttons = transform.GetChild(0);
+        // for(int i=0; i<buttons.childCount; i++)
+        // {
+        //     Transform button = buttons.GetChild(i);
+        //     Text text = button.GetChild(0).GetComponent<Text>();
+        //     DateTime lastPlayed;
+        //     if(Save_Load.GetSaveInfo(i, out lastPlayed))
+        //     {
+        //         text.text += ("    last played: " + lastPlayed.ToString());
+        //         var load = button.GetComponent<ButtonSlot>();
+        //         if(load != null)
+        //         {
+        //             load.empty = false;
+        //         }
+        //     }
+        //     else
+        //     {
+        //         text.text += "    (empty)";
+        //     }
+        // }
     }
 }

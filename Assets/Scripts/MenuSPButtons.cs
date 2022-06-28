@@ -7,10 +7,13 @@ public class MenuSPButtons : MonoBehaviour {
         for(int i=0; i<num; ++i) {
             var buttonTransform = transform.GetChild(i);
             var text = "new game";
-            if(Save_Load.GetSaveInfo(i, out var info)) {
-                text = info.ToString();
+            var subText = "";
+            if(Save_Load.GetSaveInfo(i, out var dateTime, out var saveName)) {
+                text = saveName;
+                subText = dateTime.ToString();
             }
             buttonTransform.GetChild(0).GetComponent<TextMeshProUGUI>().text = text;
+            buttonTransform.GetChild(1).GetComponent<TextMeshProUGUI>().text = subText;
         }
     }
 }

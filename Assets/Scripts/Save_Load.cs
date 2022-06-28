@@ -17,15 +17,19 @@ public static class Save_Load
         return DirectoryPath()+"slot"+slot+".sav";
     }
 
-    public static bool GetSaveInfo(int slot, out DateTime info)
+    public static bool GetSaveInfo(int slot, out DateTime dateTime, out string saveName)
     {
         string filePath = Path(slot);
-        if(File.Exists(filePath))
+        string metaPath = filePath+".meta";
+        if(File.Exists(filePath) && File.Exists(metaPath))
         {
-            info = File.GetLastWriteTime(filePath);
+            dateTime = File.GetLastWriteTime(filePath);
+            var streamReader = new StreamReader(File.OpenRead(metaPath));
+            saveName = streamReader.ReadLine();
             return true;
         }
-        info = default(DateTime);
+        dateTime = default(DateTime);
+        saveName = default(string);
         return false;
     }
 
@@ -40,24 +44,32 @@ public static class Save_Load
         SaveData data = new SaveData();
         formatter.Serialize(stream, data);
         stream.Close();
+
+        // stream = new FileStream(filePath+".meta", FileMode.Create);
+        // stream.Write();
     }
 
     public static void Load(int slot)
     {
+        if(!TryLoad(slot)) {
+            Debug.LogError("file not found at '"+Path(slot)+"'");
+            Application.Quit();
+        }
+    }
+
+    public static bool TryLoad(int slot) {
         string filePath = Path(slot);
-        if(File.Exists(filePath))
-        {
+        try {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(filePath, FileMode.Open);
 
             SaveData data = formatter.Deserialize(stream) as SaveData;
             data.Load();
             stream.Close();
+
+            return true;
         }
-        else
-        {
-            Debug.LogError("file not found at '"+filePath+"'");
-            Application.Quit();
-        }
+        catch {};
+        return false;
     }
 }

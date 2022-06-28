@@ -20,12 +20,12 @@ PrefabInstance:
     - target: {fileID: 6617008212008839709, guid: 1678ee14edcc3304aa721e68be7ef373,
         type: 3}
       propertyPath: m_Color.a
-      value: 0.15686275
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6617008212008839709, guid: 1678ee14edcc3304aa721e68be7ef373,
         type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 0.19814396
       objectReference: {fileID: 0}
     - target: {fileID: 6617008212008839709, guid: 1678ee14edcc3304aa721e68be7ef373,
         type: 3}
@@ -35,7 +35,7 @@ PrefabInstance:
     - target: {fileID: 6617008212008839709, guid: 1678ee14edcc3304aa721e68be7ef373,
         type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6617008212008839710, guid: 1678ee14edcc3304aa721e68be7ef373,
         type: 3}
@@ -172,8 +172,7 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6617008212008839709, guid: 1678ee14edcc3304aa721e68be7ef373, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1678ee14edcc3304aa721e68be7ef373, type: 3}
 --- !u!114 &8454146174120564643 stripped
 MonoBehaviour:

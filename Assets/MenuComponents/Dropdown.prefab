@@ -7,6 +7,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8746105193731283032, guid: 7f5f29e1a5b8d604d9597944584f71fa,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746105193731283032, guid: 7f5f29e1a5b8d604d9597944584f71fa,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746105193731283032, guid: 7f5f29e1a5b8d604d9597944584f71fa,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8746105194004896576, guid: 7f5f29e1a5b8d604d9597944584f71fa,
         type: 3}
       propertyPath: m_Pivot.x
@@ -116,6 +131,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Dropdown
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746105194004896590, guid: 7f5f29e1a5b8d604d9597944584f71fa,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746105194004896590, guid: 7f5f29e1a5b8d604d9597944584f71fa,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746105194004896590, guid: 7f5f29e1a5b8d604d9597944584f71fa,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746105194004896590, guid: 7f5f29e1a5b8d604d9597944584f71fa,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f5f29e1a5b8d604d9597944584f71fa, type: 3}
