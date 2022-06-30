@@ -236,11 +236,13 @@ public class WorldGen : MonoBehaviour
         var psp = Random.insideUnitCircle.normalized;
         playerSpawnPoint = center + psp*mapRadius*chunkSize;
         int jic = 0;
-        while(jic < 999999 && GetTile((int)playerSpawnPoint.x, (int)playerSpawnPoint.y) == 0) { // biome 0 is ocean
+        while(jic < 999999 && GetTile((int)playerSpawnPoint.x, (int)playerSpawnPoint.y) < 2) { // biome 0,1,2 is ocean,shoreline,beach
             playerSpawnPoint -= psp;
             jic ++;
         }
         if(jic == 999999) Debug.Log("broke");
+
+        playerSpawnPoint += Random.insideUnitCircle*5;
 
         for(pos.x=0; pos.x<width; pos.x++)
         {
