@@ -5,13 +5,13 @@ using UnityEngine;
 public class MusicManager : MonoBehaviour {
     // hierarchy
     public float delay;
+    public float swell;
 
     AudioSource m_audioSource;
     Dictionary<bool, AudioClip[]> clips;
     int prevClip=-1;
 
-    public void Start()
-    {
+    public void Start() {
         m_audioSource = GetComponent<AudioSource>();
 
         clips = new Dictionary<bool, AudioClip[]>();
@@ -30,11 +30,21 @@ public class MusicManager : MonoBehaviour {
             clips[true][i] = (AudioClip)defaultMusicClips[i];
         }
 
-        Invoke("NewClip", delay);
+        if(swell > 0) {
+            m_audioSource.volume = 0;
+        }
+        enabled = false;
+        Invoke("Enable", delay);
     }
 
-    void NewClip()
-    {
+    void Enable() {
+        if(swell > 0) {
+            enabled = true;
+        }
+        NewClip();
+    }
+
+    void NewClip() {
         bool isScary = false;//(float)DynamicEnemySpawning.totalDifficulty / (float)DynamicEnemySpawning.GetDifficultyValue() > 0.4f;
         int clip = Random.Range(0, clips[isScary].Length);
         if(clip == prevClip)
@@ -45,13 +55,15 @@ public class MusicManager : MonoBehaviour {
         prevClip = clip;
         m_audioSource.clip = clips[isScary][clip];
         m_audioSource.Play();
+
+        Invoke("NewClip", clips[isScary][clip].length);
     }
 
-    void Update()
-    {
-        if(!m_audioSource.isPlaying && prevClip != -1)
-        {
-            NewClip();
+    void Update() {
+        m_audioSource.volume += Time.unscaledDeltaTime*swell;
+        if(m_audioSource.volume >= 1) {
+            m_audioSource.volume = 1;
+            enabled = false;
         }
     }
 }

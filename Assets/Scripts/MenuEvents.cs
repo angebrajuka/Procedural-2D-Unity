@@ -9,7 +9,6 @@ public class MenuEvents : MonoBehaviour {
         FadeTransition.black = true;
         var msp = singles.worldGen.menuSeeds[Random.Range(0, singles.worldGen.menuSeeds.Length)];
         WorldGen.SetSeed(msp.seed);
-        singles.menuCampfire.SetActive(true);
         singles.menuCampfire.transform.position = new Vector3(msp.x, msp.y, singles.menuCampfire.transform.position.z);
 
         singles.cameraFollow.toFollow = singles.menuCampfire.transform;
@@ -19,6 +18,7 @@ public class MenuEvents : MonoBehaviour {
         DaylightCycle.time = DaylightCycle.k_NIGHT;
         PauseHandler.Pause();
         MenuHandler.MainMenu();
+        singles.menuCampfire.SetActive(true);
     }
 
     public static void LoadGame(int slot) {

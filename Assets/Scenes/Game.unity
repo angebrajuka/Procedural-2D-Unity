@@ -546,7 +546,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e10f9604d1e884eab73aa7988d37df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 1.5
+  delay: 3
+  swell: 0
 --- !u!4 &451141170
 Transform:
   m_ObjectHideFlags: 0
@@ -1026,6 +1027,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1063415191}
     m_Modifications:
+    - target: {fileID: 1657141070948567538, guid: 201bb4bac53026b49812157102de7c96,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6926267321923249462, guid: 201bb4bac53026b49812157102de7c96,
         type: 3}
       propertyPath: m_Vertices.Array.size
@@ -1420,6 +1426,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MenuCampfire
+      objectReference: {fileID: 0}
+    - target: {fileID: 7803719050321581515, guid: 201bb4bac53026b49812157102de7c96,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 201bb4bac53026b49812157102de7c96, type: 3}

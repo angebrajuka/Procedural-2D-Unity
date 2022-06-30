@@ -368,5 +368,8 @@ public class WorldGen : MonoBehaviour
         PauseHandler.UnPause();
         PauseHandler.blurred = false;
         loadingFirstChunks = false;
+        if(singles.menuCampfire.activeSelf) {
+            singles.menuCampfire.GetComponent<AudioSource>().Play();
+        }
     }
 }
