@@ -32,7 +32,7 @@ public class ButtonChangeDifficulty : MonoBehaviour
     public void OnClick()
     {
         gameState.difficulty = difficulty;
-        Save_Load.Save();
+        Save_Load.Save<SaveData>();
         selected.position = transform.position;
     }
 }

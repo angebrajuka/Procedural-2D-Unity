@@ -46,7 +46,7 @@ public class EnemySerializable
 }
 
 [System.Serializable]
-public class SaveData
+public class SaveData : BaseSaveData
 {
     byte difficulty;
     ushort seed;
@@ -88,7 +88,7 @@ public class SaveData
         timeOfDay = DaylightCycle.time;
     }
 
-    public void Load()
+    public override void Load()
     {
         FadeTransition.black = true;
         MenuHandler.CloseAll();

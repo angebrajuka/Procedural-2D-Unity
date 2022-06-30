@@ -22,7 +22,8 @@ public class MenuEvents : MonoBehaviour {
     }
 
     public static void LoadGame(int slot) {
-        if(!Save_Load.TryLoad(slot)) {
+        Save_Load.currentSave = slot;
+        if(!Save_Load.TryLoad<SaveData>(slot)) {
             MenuHandler.SetMenu("NewGame");
             return;
         }

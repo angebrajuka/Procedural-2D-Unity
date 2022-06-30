@@ -9,9 +9,8 @@ public class MusicManager : MonoBehaviour
 
     Dictionary<bool, AudioClip[]> clips;
     int prevClip=-1;
-    float timer;
 
-    public void Init()
+    public void Start()
     {
         m_audioSource = GetComponent<AudioSource>();
 
@@ -31,7 +30,7 @@ public class MusicManager : MonoBehaviour
             clips[true][i] = (AudioClip)defaultMusicClips[i];
         }
 
-        NewClip();
+        Invoke("NewClip", 3);
     }
 
     void NewClip()
@@ -46,12 +45,11 @@ public class MusicManager : MonoBehaviour
         prevClip = clip;
         m_audioSource.clip = clips[isScary][clip];
         m_audioSource.Play();
-        timer = m_audioSource.clip.length;
     }
 
     void Update()
     {
-        if(!m_audioSource.isPlaying)
+        if(!m_audioSource.isPlaying && prevClip != -1)
         {
             NewClip();
         }
