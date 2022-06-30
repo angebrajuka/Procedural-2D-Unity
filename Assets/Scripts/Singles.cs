@@ -11,4 +11,6 @@ public class Singles : MonoBehaviour {
     public Follow cameraFollow;
     public WorldGen worldGen;
     public GameObject menuCampfire;
+    public PlayerAnimator pAnimator;
+    public PlayerMovement pMovement;
 }

@@ -28,6 +28,7 @@ public class WorldGen : MonoBehaviour
     public const int mapRadius=16;
     public const int mapDiameter=mapRadius*2;
     public static readonly Vector2Int center = Vector2Int.one*mapRadius*chunkSize;
+    public static Vector2 playerSpawnPoint = Vector2.zero;
     public static Dictionary<(int x, int y), Chunk> loadedChunks;
     public static LinkedList<Chunk> disabledChunks;
     public int renderDistance;
@@ -231,6 +232,16 @@ public class WorldGen : MonoBehaviour
                 mapTexture_decor[pos.x, pos.y] = 254;
             }
         }
+
+        var psp = Random.insideUnitCircle.normalized;
+        playerSpawnPoint = center + psp*mapRadius*chunkSize;
+        int jic = 0;
+        while(jic < 999999 && GetTile((int)playerSpawnPoint.x, (int)playerSpawnPoint.y) == 0) { // biome 0 is ocean
+            playerSpawnPoint -= psp;
+            jic ++;
+        }
+        if(jic == 999999) Debug.Log("broke");
+
         for(pos.x=0; pos.x<width; pos.x++)
         {
             for(pos.y=0; pos.y<width; pos.y++)

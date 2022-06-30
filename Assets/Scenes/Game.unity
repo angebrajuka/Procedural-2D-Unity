@@ -320,6 +320,7 @@ GameObject:
   - component: {fileID: 413550051}
   - component: {fileID: 413550050}
   - component: {fileID: 413550040}
+  - component: {fileID: 413550054}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -419,6 +420,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &413550054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413550038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bf00e26e15da3c43b768725630087db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_renderer: {fileID: 1163101979}
+  m_animator: {fileID: 1163101976}
+  gunSortingGroup: {fileID: 0}
+  armSortingGroup: {fileID: 0}
+  m_renderer_gun: {fileID: 0}
+  m_renderer_arm: {fileID: 0}
+  m_renderer_sword: {fileID: 0}
+  gun: {fileID: 0}
+  arm_right: {fileID: 0}
+  arm_left: {fileID: 0}
+  gunRotatePoint: {fileID: 0}
+  armRotatePoint: {fileID: 0}
 --- !u!1 &451141167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1535,6 +1560,8 @@ MonoBehaviour:
   cameraFollow: {fileID: 792913058}
   worldGen: {fileID: 1063415190}
   menuCampfire: {fileID: 1415240677}
+  pAnimator: {fileID: 0}
+  pMovement: {fileID: 413550040}
 --- !u!4 &2143826660
 Transform:
   m_ObjectHideFlags: 0

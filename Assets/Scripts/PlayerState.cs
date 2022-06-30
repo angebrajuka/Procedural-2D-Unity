@@ -157,7 +157,7 @@ public class PlayerState : MonoBehaviour
         CancelReload();
         melee = true;
         // instance.knifeRotationPoint.gameObject.SetActive(true);
-        PlayerAnimator.instance.BeginMelee();
+        // PlayerAnimator.instance.BeginMelee();
         // instance.knifeStart.localEulerAngles = Vector3.forward*PlayerInput.angle;
         // knifeDirection = Random.value>0.5f ? (sbyte)-1 : (sbyte)1;
         // instance.knifeRotationPoint.localEulerAngles = Vector3.forward*k_KNIFE_ARC*knifeDirection;
@@ -166,7 +166,7 @@ public class PlayerState : MonoBehaviour
     public static void EndMelee()
     {
         // instance.knifeRotationPoint.gameObject.SetActive(false);
-        PlayerAnimator.instance.EndMelee();
+        // PlayerAnimator.instance.EndMelee();
         melee = false;
     }
 

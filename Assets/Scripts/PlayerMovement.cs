@@ -5,8 +5,6 @@ using UnityEngine;
 using static Singles;
 
 public class PlayerMovement : MonoBehaviour {
-    public static PlayerMovement instance;
-
     // hierarchy
     public float debugSpode;
 
@@ -18,7 +16,6 @@ public class PlayerMovement : MonoBehaviour {
     static Vector2 input_move;
 
     public void Start() {
-        instance = this;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -39,7 +36,7 @@ public class PlayerMovement : MonoBehaviour {
         PlayerAnimator.direction = (input_move.x == 0) ? (Input.mousePosition.x > (Screen.width / 2) ? 0 : 1) : (input_move.x > 0 ? 0 : 1);
 
         moving = (input_move.x != 0 || input_move.y != 0) && (Mathf.Abs(rb.velocity.x) >= 0.01f || Mathf.Abs(rb.velocity.y) >= 0.01f) && !PauseHandler.paused;
-        biome = WorldGen.MapClamped(WorldGen.mapTexture_biome, (int)Mathf.Floor(rb.position.x), (int)Mathf.Floor(rb.position.y));
+        biome = WorldGen.GetTile((int)Mathf.Floor(rb.position.x), (int)Mathf.Floor(rb.position.y));
 
         speedMult = 1;
         speedMult *= (WorldGen.s_shallowWater.Contains(biome) || biome == 0) ? 0.6f : 1;

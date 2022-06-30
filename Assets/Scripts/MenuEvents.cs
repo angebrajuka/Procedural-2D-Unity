@@ -29,7 +29,7 @@ public class MenuEvents : MonoBehaviour {
         }
     }
 
-    public static void NewGame(Transform buttons) {
+    public void NewGame(Transform buttons) {
         FadeTransition.black = true;
         MenuHandler.CloseAll();
         PauseHandler.Pause();
@@ -42,10 +42,15 @@ public class MenuEvents : MonoBehaviour {
         WorldGen.SetSeed((ushort)Mathf.Abs(MathUtils.TryParse(seed, WorldGen.RandomSeed()))); // InputFieldClamp handles bounds
         gameState.difficulty = (byte)dfct;
 
+        Invoke("NewGameSecondHalf", 1);
+    }
+
+    public void NewGameSecondHalf() {
         singles.menuCampfire.SetActive(false);
         DaylightCycle.time = DaylightCycle.k_DAY/2;
         singles.worldGen.GenerateMap();
 
-        PlayerMovement.instance.StartGame();
+        singles.pMovement.StartGame();
+        PlayerMovement.rb.position = WorldGen.playerSpawnPoint;
     }
 }

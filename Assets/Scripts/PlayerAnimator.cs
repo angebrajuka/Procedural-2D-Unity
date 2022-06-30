@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour
-{
-    public static PlayerAnimator instance;
-
+public class PlayerAnimator : MonoBehaviour {
     // hierarchy
     public SpriteRenderer m_renderer;
     public Animator m_animator;
@@ -23,18 +20,11 @@ public class PlayerAnimator : MonoBehaviour
     // input
     public static int direction=0; // 0 = right, 1 = left
 
-    public void Init()
-    {
-        instance = this;
-    }
-
-    public void BeginMelee()
-    {
+    public void BeginMelee() {
         m_renderer_gun.enabled = false;
     }
 
-    public void EndMelee()
-    {
+    public void EndMelee() {
         m_renderer_gun.enabled = true;
     }
 
@@ -46,15 +36,14 @@ public class PlayerAnimator : MonoBehaviour
 
     static Vector3 playerAngle = new Vector3(0, 0, 0);
 
-    void Update()
-    {
-        // m_renderer.flipX = (direction == 1);
+    void Update() {
+        m_renderer.flipX = (direction == 1);
 
-        // m_animator.SetBool("moving", PlayerMovement.moving);
-        // m_animator.SetInteger("biome", PlayerMovement.biome);
+        m_animator.SetBool("moving", PlayerMovement.moving);
+        m_animator.SetInteger("biome", PlayerMovement.biome);
         // m_animator.SetBool("shooting", PlayerState.shooting || PlayerState.melee);
         // m_animator.SetBool("punching", PlayerState.punching);
-        // m_animator.speed = PlayerMovement.moving ? PlayerMovement.rb.velocity.magnitude * 0.07f : 1;
+        m_animator.speed = PlayerMovement.moving ? PlayerMovement.rb.velocity.magnitude * 0.07f : 1;
 
         // m_renderer_gun.sprite = PlayerState.currentGun == null ? null : PlayerState.currentItem.sprite;
         // m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
