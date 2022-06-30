@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using static Singles;
+
 [System.Serializable]
 public class StringFloat
 {
@@ -130,7 +132,7 @@ public struct Biome
 
             if(!s_decorations.ContainsKey(name))
             {
-                GameObject go = MonoBehaviour.Instantiate(ProceduralGeneration.instance.prefab_decoration, ProceduralGeneration.instance.decorPrefabs);
+                GameObject go = MonoBehaviour.Instantiate(singles.worldGen.prefab_decoration, singles.worldGen.decorPrefabs);
                 go.name = name;
                 s_decorations.Add(name, go.GetComponent<Decoration>());
                 s_decorations[name].Init(s_decorationStats[name]);

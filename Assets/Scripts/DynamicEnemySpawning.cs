@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameState;
 
 [System.Serializable]
 public class EnemiesJson
@@ -64,7 +65,7 @@ public class DynamicEnemySpawning : MonoBehaviour
 
     public static int GetDifficultyValue()
     {
-        return PlayerStats.difficulty * 30 + 20;
+        return gameState.difficulty * 30 + 20;
     }
 
     public static float GetDynamicDifficulty()

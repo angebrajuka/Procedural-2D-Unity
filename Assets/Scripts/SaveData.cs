@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using static GameState;
+using static Singles;
+
 [System.Serializable]
 public class GridItemSerializable
 {
@@ -56,7 +59,7 @@ public class SaveData
 
     public SaveData()
     {
-        difficulty = PlayerStats.difficulty;
+        difficulty = gameState.difficulty;
         seed = ProceduralGeneration.seed;
         
         Inventory.instance.Close();
@@ -87,8 +90,12 @@ public class SaveData
 
     public void Load()
     {
-        PlayerStats.difficulty = difficulty;
+        FadeTransition.black = true;
+        MenuHandler.CloseAll();
+
+        gameState.difficulty = difficulty;
         ProceduralGeneration.SetSeed(seed);
+        singles.worldGen.GenerateMap();
 
         Inventory.instance.Clear();
         for(int i=0; i<inventoryItems.Length; i++)

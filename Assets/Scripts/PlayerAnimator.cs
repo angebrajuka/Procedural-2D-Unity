@@ -48,33 +48,33 @@ public class PlayerAnimator : MonoBehaviour
 
     void Update()
     {
-        m_renderer.flipX = (direction == 1);
+        // m_renderer.flipX = (direction == 1);
 
-        m_animator.SetBool("moving", PlayerMovement.moving);
-        m_animator.SetInteger("biome", PlayerMovement.biome);
-        m_animator.SetBool("shooting", PlayerState.shooting || PlayerState.melee);
-        m_animator.SetBool("punching", PlayerState.punching);
-        m_animator.speed = PlayerMovement.moving ? PlayerMovement.rb.velocity.magnitude * 0.07f : 1;
+        // m_animator.SetBool("moving", PlayerMovement.moving);
+        // m_animator.SetInteger("biome", PlayerMovement.biome);
+        // m_animator.SetBool("shooting", PlayerState.shooting || PlayerState.melee);
+        // m_animator.SetBool("punching", PlayerState.punching);
+        // m_animator.speed = PlayerMovement.moving ? PlayerMovement.rb.velocity.magnitude * 0.07f : 1;
 
-        m_renderer_gun.sprite = PlayerState.currentGun == null ? null : PlayerState.currentItem.sprite;
-        m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
-        m_renderer_arm.flipY = m_renderer_gun.flipY;
-        m_renderer_sword.gameObject.SetActive(PlayerState.melee);
-        m_renderer_sword.flipX = m_renderer_gun.flipY;
-        var swordPos = m_renderer_sword.transform.localPosition;
-        swordPos.y = Mathf.Abs(swordPos.y)*(m_renderer_sword.flipX ? -1 : 1);
-        m_renderer_sword.transform.localPosition = swordPos;
-        var swordAngle = m_renderer_sword.transform.localEulerAngles;
-        swordAngle.z = m_renderer_sword.flipX ? -100 : -80;
-        m_renderer_sword.transform.localEulerAngles = swordAngle;
-        gunSortingGroup.localPosition = m_renderer_gun.flipY ? gunBack : gunFront;
-        armSortingGroup.localPosition = m_renderer_gun.flipY ? armBack : armFront;
-        playerAngle.z = PlayerInput.angle;
-        gunRotatePoint.eulerAngles = playerAngle;
-        armRotatePoint.eulerAngles = playerAngle;
+        // m_renderer_gun.sprite = PlayerState.currentGun == null ? null : PlayerState.currentItem.sprite;
+        // m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);
+        // m_renderer_arm.flipY = m_renderer_gun.flipY;
+        // m_renderer_sword.gameObject.SetActive(PlayerState.melee);
+        // m_renderer_sword.flipX = m_renderer_gun.flipY;
+        // var swordPos = m_renderer_sword.transform.localPosition;
+        // swordPos.y = Mathf.Abs(swordPos.y)*(m_renderer_sword.flipX ? -1 : 1);
+        // m_renderer_sword.transform.localPosition = swordPos;
+        // var swordAngle = m_renderer_sword.transform.localEulerAngles;
+        // swordAngle.z = m_renderer_sword.flipX ? -100 : -80;
+        // m_renderer_sword.transform.localEulerAngles = swordAngle;
+        // gunSortingGroup.localPosition = m_renderer_gun.flipY ? gunBack : gunFront;
+        // armSortingGroup.localPosition = m_renderer_gun.flipY ? armBack : armFront;
+        // playerAngle.z = PlayerInput.angle;
+        // gunRotatePoint.eulerAngles = playerAngle;
+        // armRotatePoint.eulerAngles = playerAngle;
 
-        gun.SetActive(PlayerState.shooting);
-        arm_right.SetActive(PlayerState.shooting || PlayerState.melee);
-        arm_left.SetActive((PlayerState.shooting || PlayerState.melee) && direction == 1);
+        // gun.SetActive(PlayerState.shooting);
+        // arm_right.SetActive(PlayerState.shooting || PlayerState.melee);
+        // arm_left.SetActive((PlayerState.shooting || PlayerState.melee) && direction == 1);
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+using static Singles;
+
 public class ProceduralChunk : MonoBehaviour
 {
     // hierarchy
@@ -55,7 +57,7 @@ public class ProceduralChunk : MonoBehaviour
         {
             m_tilemap.CompressBounds();
             loaded = true;
-            ProceduralGeneration.instance.CheckLoaded();
+            singles.worldGen.CheckLoaded();
             enabled = false;
         }
     }

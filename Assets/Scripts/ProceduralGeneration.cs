@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+using static Singles;
+
 [System.Serializable]
 public struct MenuSeedPosition {
     public ushort seed;
@@ -11,8 +13,6 @@ public struct MenuSeedPosition {
 
 public class ProceduralGeneration : MonoBehaviour
 {
-    public static ProceduralGeneration instance;
-
     // hierarchy
     public GameObject prefab_chunk;
     public GameObject prefab_mask;
@@ -20,7 +20,6 @@ public class ProceduralGeneration : MonoBehaviour
     public GameObject prefab_decoration;
     public Transform chunks;
     public Transform decorPrefabs;
-    public Transform follow;
     public MenuSeedPosition[] menuSeeds;
 
     private Vector2Int currPos=Vector2Int.zero;
@@ -33,6 +32,7 @@ public class ProceduralGeneration : MonoBehaviour
     public static LinkedList<ProceduralChunk> disabledChunks;
     public int renderDistance;
     public static bool reset=true;
+    public static bool loadingFirstChunks;
 
     public static RuleTile[] tiles;
     public static HashSet<int> s_shallowWater;
@@ -67,8 +67,6 @@ public class ProceduralGeneration : MonoBehaviour
 
     public void Start()
     {
-        instance = this;
-
         Biome.Init();
 
 
@@ -114,15 +112,6 @@ public class ProceduralGeneration : MonoBehaviour
             disabledChunks.AddLast(Instantiate(prefab_chunk, chunks).GetComponent<ProceduralChunk>());
             disabledChunks.Last.Value._Start();
         }
-    }
-
-    public void SetMainMenu() {
-        FadeTransition.black = true;
-        var msp = menuSeeds[Random.Range(0, menuSeeds.Length)];
-        SetSeed(msp.seed);
-        follow.position = new Vector3(msp.x, msp.y, follow.position.z);
-
-        GenerateMap();
     }
 
     static Color32 AverageColorFromTexture(Texture2D tex)
@@ -283,6 +272,8 @@ public class ProceduralGeneration : MonoBehaviour
                 }
             }
         }
+        loadingFirstChunks = true;
+        reset = true;
     }
 
     public static int GetTile(int x, int y)
@@ -339,13 +330,11 @@ public class ProceduralGeneration : MonoBehaviour
 
     void Update()
     {
-        currPos.x = (int)Mathf.Floor(follow.position.x/chunkSize);
-        currPos.y = (int)Mathf.Floor(follow.position.y/chunkSize);
+        currPos.x = (int)Mathf.Floor(singles.cameraFollow.transform.position.x/chunkSize);
+        currPos.y = (int)Mathf.Floor(singles.cameraFollow.transform.position.y/chunkSize);
         
         if(currPos != prevPos || loadedChunks.Count == 0 || reset)
         {
-            Application.backgroundLoadingPriority = ThreadPriority.Low;
-
             foreach(var key in new List<(int x, int y)>(loadedChunks.Keys))
             {
                 if(Mathf.Abs(key.x-currPos.x) > renderDistance || Mathf.Abs(key.y-currPos.y) > renderDistance || reset)
@@ -368,7 +357,7 @@ public class ProceduralGeneration : MonoBehaviour
 
     public void CheckLoaded()
     {
-        if(!PlayerStats.loadingFirstChunks) return;
+        if(!loadingFirstChunks) return;
 
         foreach(var pair in loadedChunks)
         {
@@ -378,6 +367,6 @@ public class ProceduralGeneration : MonoBehaviour
         FadeTransition.black = false;
         PauseHandler.UnPause();
         PauseHandler.blurred = false;
-        PlayerStats.loadingFirstChunks = false;
+        loadingFirstChunks = false;
     }
 }

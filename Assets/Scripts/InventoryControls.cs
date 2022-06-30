@@ -11,12 +11,12 @@ public class InventoryControls : MonoBehaviour {
 
     void Update()
     {
-        if(Input.GetKeyDown(PlayerInput.keybinds[Keybind.inventory]) || Input.GetKeyDown(KeyCode.Escape)) {
-            inventory.Close();
-            PauseHandler.blurred = false;
-            // PauseHandler.EnableInputAndHUD();
-            playerInput.enabled = true;
-            transform.gameObject.SetActive(false);
-        }
+        // if(Input.GetKeyDown(PlayerInput.keybinds[Keybind.inventory]) || Input.GetKeyDown(KeyCode.Escape)) {
+        //     inventory.Close();
+        //     PauseHandler.blurred = false;
+        //     // PauseHandler.EnableInputAndHUD();
+        //     playerInput.enabled = true;
+        //     transform.gameObject.SetActive(false);
+        // }
     }
 }

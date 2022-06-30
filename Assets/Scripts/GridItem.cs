@@ -236,24 +236,24 @@ public class GridItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             transform.SetAsLastSibling();
             rectTransform.position = Input.mousePosition;
-            if(Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_rotate]))
-            {
-                Rotate();
-            }
+            // if(Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_rotate]))
+            // {
+            //     Rotate();
+            // }
         }
         else if(highlighted)
         {
-            if(item.equipable && Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_equip]))
-            {
-                if(PlayerState.currentItem == item)
-                {
-                    PlayerState.currentItemNode = null;
-                }
-                else
-                {
-                    Inventory.instance.Equip(node);
-                }
-            }
+            // if(item.equipable && Input.GetKeyDown(PlayerInput.keybinds[Keybind.i_equip]))
+            // {
+            //     if(PlayerState.currentItem == item)
+            //     {
+            //         PlayerState.currentItemNode = null;
+            //     }
+            //     else
+            //     {
+            //         Inventory.instance.Equip(node);
+            //     }
+            // }
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static GameState;
 
 public class ButtonChangeDifficulty : MonoBehaviour
 {
@@ -30,8 +31,8 @@ public class ButtonChangeDifficulty : MonoBehaviour
 
     public void OnClick()
     {
-        PlayerStats.difficulty = difficulty;
-        Save_Load.Save(PlayerStats.save);
+        gameState.difficulty = difficulty;
+        Save_Load.Save();
         selected.position = transform.position;
     }
 }

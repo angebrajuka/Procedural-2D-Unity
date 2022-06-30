@@ -9,7 +9,7 @@ public class Knife : MonoBehaviour
         Target target = collider.transform.GetComponent<Target>();
         if(target != null)
         {
-            target.Damage(PlayerStats.g_KNIFE_DAMAGE, PlayerInput.angle);
+            target.Damage(PlayerStats.g_KNIFE_DAMAGE, 0/*PlayerInput.angle*/);
         }
     }
 }

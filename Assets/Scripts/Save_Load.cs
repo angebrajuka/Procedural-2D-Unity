@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
+using static GameState;
 
 public static class Save_Load
 {
@@ -33,6 +34,10 @@ public static class Save_Load
         return false;
     }
 
+    public static void Save() {
+        Save(gameState.save);
+    }
+
     public static void Save(int slot)
     {
         BinaryFormatter formatter = new BinaryFormatter();
@@ -53,7 +58,6 @@ public static class Save_Load
     {
         if(!TryLoad(slot)) {
             Debug.LogError("file not found at '"+Path(slot)+"'");
-            Application.Quit();
         }
     }
 

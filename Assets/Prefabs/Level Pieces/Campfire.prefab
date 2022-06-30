@@ -150,13 +150,37 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0
   m_Vertices:
-  - position: {x: 0, y: 0, z: 0}
-    color: {r: 0, g: 0, b: 0, a: 0}
+  - position: {x: 0.9985302, y: 0.9985302, z: 0}
+    color: {r: 0.70710677, g: 0.70710677, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  m_Triangles: 0000
+  - position: {x: 0.9985302, y: 0.9985302, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    uv: {x: 0, y: 0}
+  - position: {x: -0.9985302, y: 0.9985302, z: 0}
+    color: {r: -0.70710677, g: 0.70710677, b: 0, a: 0}
+    uv: {x: 0, y: 0}
+  - position: {x: -0.9985302, y: 0.9985302, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    uv: {x: 0, y: 0}
+  - position: {x: -0.99853003, y: -0.9985304, z: 0}
+    color: {r: -0.70710665, g: -0.7071069, b: 0, a: 0}
+    uv: {x: 0, y: 0}
+  - position: {x: -0.99853003, y: -0.9985304, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    uv: {x: 0, y: 0}
+  - position: {x: 0.99853003, y: -0.9985304, z: 0}
+    color: {r: 0.70710665, g: -0.7071069, b: 0, a: 0}
+    uv: {x: 0, y: 0}
+  - position: {x: 0.99853003, y: -0.9985304, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    uv: {x: 0, y: 0}
+  - position: {x: 0, y: 0, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    uv: {x: 0, y: 0}
+  m_Triangles: 030001000800020000000100030002000100050003000800040002000300050004000300070005000800060004000500070006000500010007000800000006000700010000000700
   m_LocalBounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 2
@@ -5130,7 +5154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7803719050321581512}
-  - component: {fileID: 4331530859991682504}
+  - component: {fileID: 6587533827825270159}
   - component: {fileID: 1657141070948567538}
   m_Layer: 13
   m_Name: Campfire
@@ -5158,8 +5182,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!68 &4331530859991682504
-EdgeCollider2D:
+--- !u!60 &6587533827825270159
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5172,22 +5196,35 @@ EdgeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   m_Points:
-  - {x: -0.44385242, y: -0.19885826}
-  - {x: -0.31961632, y: -0.05779457}
-  - {x: -0.13894558, y: -0.022380829}
-  - {x: 0.27977467, y: -0.016740799}
-  - {x: 0.45995998, y: -0.16482544}
-  - {x: 0.4256277, y: -0.3454914}
-  - {x: 0.054802895, y: -0.42510223}
-  - {x: -0.22648811, y: -0.41337967}
-  - {x: -0.4116001, y: -0.3420601}
-  - {x: -0.4438524, y: -0.1988583}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+    m_Paths:
+    - - {x: 0.86457694, y: -0.33354568}
+      - {x: 0.7322158, y: -0.12925431}
+      - {x: 0.40713316, y: 0.0019595623}
+      - {x: 0.2343702, y: -0.063290596}
+      - {x: -0.35880682, y: -0.07673049}
+      - {x: -0.45638493, y: -0.20391583}
+      - {x: -0.6661805, y: -0.2018919}
+      - {x: -0.68733335, y: -0.30975533}
+      - {x: -0.87046653, y: -0.39006007}
+      - {x: -0.8801891, y: -0.62156653}
+      - {x: -0.4990058, y: -0.75157154}
+      - {x: -0.47035134, y: -0.8035649}
+      - {x: 0.3336357, y: -0.80587935}
+      - {x: 0.3740629, y: -0.73594177}
+      - {x: 0.5539715, y: -0.72878885}
+      - {x: 0.6190266, y: -0.68971634}
+      - {x: 0.7505245, y: -0.6832336}
+      - {x: 0.88087684, y: -0.55069906}
 --- !u!82 &1657141070948567538
 AudioSource:
   m_ObjectHideFlags: 0

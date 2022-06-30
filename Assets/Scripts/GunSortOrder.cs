@@ -29,7 +29,7 @@ public class GunSortOrder : MonoBehaviour
     {
         rect.GetWorldCorners(corners);
         
-        float a = PlayerInput.angle;
+        float a = 0;//PlayerInput.angle;
         int corner =    a > 0 && a < 90 ? 0 :       // top right
                         a >= 90 && a < 180 ? 1 :    // top left
                         a >= 180 && a < 270 ? 2 :   // bottom left

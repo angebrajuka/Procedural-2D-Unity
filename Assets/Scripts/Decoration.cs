@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using static Singles;
+
 public class Decoration : MonoBehaviour
 {
     public DecorationStats stats;
@@ -71,8 +73,8 @@ public class Decoration : MonoBehaviour
             {
                 if(vLength == 0) break;
                 k = Random.Range(0, vLength); // min inclusive, max exclusive
-                var mask = Instantiate(ProceduralGeneration.instance.prefab_mask, transform.position+Math.Vec3(availableMasks[k]), Quaternion.identity, transform);
-                mask.GetComponent<SpriteMask>().sprite = ProceduralGeneration.instance.sprite_masks[Random.Range(0, ProceduralGeneration.instance.sprite_masks.Length)];
+                var mask = Instantiate(singles.worldGen.prefab_mask, transform.position+Math.Vec3(availableMasks[k]), Quaternion.identity, transform);
+                mask.GetComponent<SpriteMask>().sprite = singles.worldGen.sprite_masks[Random.Range(0, singles.worldGen.sprite_masks.Length)];
                 availableMasks[k] = availableMasks[--vLength];
             }
             System.Array.Resize(ref availableMasks, vLength);

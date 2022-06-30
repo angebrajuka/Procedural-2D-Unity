@@ -70,46 +70,46 @@ public class PlayerState : MonoBehaviour
 
     public void Reset()
     {
-        PauseHandler.Pause();
-        PauseHandler.blurred = false;
+        // PauseHandler.Pause();
+        // PauseHandler.blurred = false;
 
-        currentItemNode = null;
-        gunRpmTimer = 0;
-        gunReloadTimer = 0;
-        melee = false;
-        energyMax = 50;
-        ProceduralGeneration.reset = true;
+        // currentItemNode = null;
+        // gunRpmTimer = 0;
+        // gunReloadTimer = 0;
+        // melee = false;
+        // energyMax = 50;
+        // ProceduralGeneration.reset = true;
 
-        Entities.Clear();
+        // Entities.Clear();
 
-        if(load)
-        {
-            Save_Load.Load(save);
-        }
-        else
-        {
-            PlayerMovement.rb.position = ProceduralGeneration.center;
-            transform.position = PlayerMovement.rb.position;
+        // if(load)
+        // {
+        //     Save_Load.Load(save);
+        // }
+        // else
+        // {
+        //     PlayerMovement.rb.position = ProceduralGeneration.center;
+        //     transform.position = PlayerMovement.rb.position;
 
-            DynamicEnemySpawning.Reset();
+        //     DynamicEnemySpawning.Reset();
 
-            DaylightCycle.time = DaylightCycle.k_DAY*2f/3f;
+        //     DaylightCycle.time = DaylightCycle.k_DAY*2f/3f;
 
-            energy = energyMax;
-            PlayerTarget.target.health = PlayerTarget.target.maxHealth;
+        //     energy = energyMax;
+        //     PlayerTarget.target.health = PlayerTarget.target.maxHealth;
 
-            Inventory.instance.Clear();
-            currentItemNode = Inventory.instance.AutoAdd("pump_shotgun", 1);
-            SwitchGun();
-            Inventory.instance.AutoAdd("ammo_12gauge", Items.items["ammo_12gauge"].maxStack+1);
-            BeginReload();
+        //     Inventory.instance.Clear();
+        //     currentItemNode = Inventory.instance.AutoAdd("pump_shotgun", 1);
+        //     SwitchGun();
+        //     Inventory.instance.AutoAdd("ammo_12gauge", Items.items["ammo_12gauge"].maxStack+1);
+        //     BeginReload();
 
-            difficulty = 2;
+        //     difficulty = 2;
 
-            Save_Load.Save(save);
-        }
+        //     Save_Load.Save(save);
+        // }
         
-        PlayerHUD.instance.UpdateHotbar();
+        // PlayerHUD.instance.UpdateHotbar();
     }
 
     public static bool CanShoot()

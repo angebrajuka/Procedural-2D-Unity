@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameState;
 
 public class MenuChangeDifficulty : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class MenuChangeDifficulty : MonoBehaviour
         {
             var child = buttons.GetChild(i);
             var button = child.GetComponent<ButtonChangeDifficulty>();
-            if(button != null && button.difficulty == PlayerStats.difficulty)
+            if(button != null && button.difficulty == gameState.difficulty)
             {
                 selected.position = child.position;
                 break;

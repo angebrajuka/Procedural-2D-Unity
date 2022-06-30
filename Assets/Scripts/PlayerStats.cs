@@ -20,12 +20,6 @@ public class PlayerStats : MonoBehaviour
     public static float g_KNIFE_DAMAGE=4;
     public static float energyMax, energy;
 
-    // global
-    public static byte difficulty; // 0 to 4
-    public static byte save;
-    public static bool load=false;
-    public static bool loadingFirstChunks=true;
-
 
     public void Init()
     {

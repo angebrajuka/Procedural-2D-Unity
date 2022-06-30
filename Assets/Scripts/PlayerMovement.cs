@@ -2,30 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
-{
+using static Singles;
+
+public class PlayerMovement : MonoBehaviour {
+    public static PlayerMovement instance;
+
     // hierarchy
     public float debugSpode;
-
-    public static PlayerMovement instance;
 
     public static Rigidbody2D rb;
 
     public static bool moving=false;
     public static int biome=0;
     public static float speedMult;
+    static Vector2 input_move;
 
-    public void Init()
-    {
+    public void Start() {
         instance = this;
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
-    {
-        moving = (PlayerInput.input_move.x != 0 || PlayerInput.input_move.y != 0) && (Mathf.Abs(rb.velocity.x) >= 0.01f || Mathf.Abs(rb.velocity.y) >= 0.01f) && !PauseHandler.paused;
+    public void StartGame() {
+        singles.cameraFollow.toFollow = transform;
+        singles.cameraFollow.Snap();
+    }
+
+    void Update() {
+        input_move.x = 0;
+        input_move.y = 0;
+        if(PlayerInput.GetKey("move east" )) input_move.x ++;
+        if(PlayerInput.GetKey("move north")) input_move.y ++;
+        if(PlayerInput.GetKey("move west" )) input_move.x --;
+        if(PlayerInput.GetKey("move south")) input_move.y --;
+        input_move.Normalize();
+
+        PlayerAnimator.direction = (input_move.x == 0) ? (Input.mousePosition.x > (Screen.width / 2) ? 0 : 1) : (input_move.x > 0 ? 0 : 1);
+
+        moving = (input_move.x != 0 || input_move.y != 0) && (Mathf.Abs(rb.velocity.x) >= 0.01f || Mathf.Abs(rb.velocity.y) >= 0.01f) && !PauseHandler.paused;
         biome = ProceduralGeneration.MapClamped(ProceduralGeneration.mapTexture_biome, (int)Mathf.Floor(rb.position.x), (int)Mathf.Floor(rb.position.y));
-        
+
         speedMult = 1;
         speedMult *= (ProceduralGeneration.s_shallowWater.Contains(biome) || biome == 0) ? 0.6f : 1;
         speedMult *= PlayerState.sprinting ? PlayerStats.k_SPRINT_MULTIPLIER : (Flashlight.on ? PlayerStats.k_FLASHLIGHT_MULTIPLIER : 1);
@@ -34,6 +49,6 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.AddForce(PlayerInput.input_move * speedMult * PlayerStats.k_RUN_ACCELL);
+        rb.AddForce(input_move * speedMult * PlayerStats.k_RUN_ACCELL);
     }
 }
