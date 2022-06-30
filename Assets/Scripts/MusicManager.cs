@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusicManager : MonoBehaviour
-{
-    // components
-    AudioSource m_audioSource;
+public class MusicManager : MonoBehaviour {
+    // hierarchy
+    public float delay;
 
+    AudioSource m_audioSource;
     Dictionary<bool, AudioClip[]> clips;
     int prevClip=-1;
 
@@ -30,7 +30,7 @@ public class MusicManager : MonoBehaviour
             clips[true][i] = (AudioClip)defaultMusicClips[i];
         }
 
-        Invoke("NewClip", 3);
+        Invoke("NewClip", delay);
     }
 
     void NewClip()
