@@ -101,8 +101,8 @@ new public Transform transform;
         {
             Vector2 pos = PlayerMovement.rb.position;
 
-            pos /= ProceduralGeneration.chunkSize;
-            pos /= ProceduralGeneration.mapDiameter;
+            pos /= WorldGen.chunkSize;
+            pos /= WorldGen.mapDiameter;
             pos.x *= minimap.sizeDelta.x;
             pos.y *= minimap.sizeDelta.y;
 

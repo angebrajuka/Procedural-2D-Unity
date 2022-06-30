@@ -700,7 +700,7 @@ GameObject:
   - component: {fileID: 1063415191}
   - component: {fileID: 1063415190}
   m_Layer: 0
-  m_Name: ProceduralGeneration
+  m_Name: WorldGen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -715,7 +715,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1063415189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32395ab40368537429038cd06f06a26b, type: 3}
+  m_Script: {fileID: 11500000, guid: 3eb82c605c0c6c3458650bbf98a664b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prefab_chunk: {fileID: 9015538738396015669, guid: bace9ce1bb80b684da2b69a3bd4359b1,

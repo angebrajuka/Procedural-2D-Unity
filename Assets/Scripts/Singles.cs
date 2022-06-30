@@ -9,6 +9,6 @@ public class Singles : MonoBehaviour {
 
     // hierarchy
     public Follow cameraFollow;
-    public ProceduralGeneration worldGen;
+    public WorldGen worldGen;
     public GameObject menuCampfire;
 }

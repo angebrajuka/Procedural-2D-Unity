@@ -11,7 +11,7 @@ public struct MenuSeedPosition {
     public float x, y;
 }
 
-public class ProceduralGeneration : MonoBehaviour
+public class WorldGen : MonoBehaviour
 {
     // hierarchy
     public GameObject prefab_chunk;
@@ -28,8 +28,8 @@ public class ProceduralGeneration : MonoBehaviour
     public const int mapRadius=16;
     public const int mapDiameter=mapRadius*2;
     public static readonly Vector2Int center = Vector2Int.one*mapRadius*chunkSize;
-    public static Dictionary<(int x, int y), ProceduralChunk> loadedChunks;
-    public static LinkedList<ProceduralChunk> disabledChunks;
+    public static Dictionary<(int x, int y), Chunk> loadedChunks;
+    public static LinkedList<Chunk> disabledChunks;
     public int renderDistance;
     public static bool reset=true;
     public static bool loadingFirstChunks;
@@ -104,12 +104,12 @@ public class ProceduralGeneration : MonoBehaviour
             }
         }
 
-        loadedChunks = new Dictionary<(int, int), ProceduralChunk>();
-        disabledChunks = new LinkedList<ProceduralChunk>();
+        loadedChunks = new Dictionary<(int, int), Chunk>();
+        disabledChunks = new LinkedList<Chunk>();
 
         while(disabledChunks.Count < Math.Sqr(renderDistance*2))
         {
-            disabledChunks.AddLast(Instantiate(prefab_chunk, chunks).GetComponent<ProceduralChunk>());
+            disabledChunks.AddLast(Instantiate(prefab_chunk, chunks).GetComponent<Chunk>());
             disabledChunks.Last.Value._Start();
         }
     }
@@ -299,7 +299,7 @@ public class ProceduralGeneration : MonoBehaviour
 
     public static void SetSeed(ushort seed)
     {
-        ProceduralGeneration.seed = seed;
+        WorldGen.seed = seed;
 
         seed_main = 2589.216f+seed*252.3457f;
         seed_rain = 913.8473f+seed*2345.195f;

@@ -78,7 +78,7 @@ public class PlayerState : MonoBehaviour
         // gunReloadTimer = 0;
         // melee = false;
         // energyMax = 50;
-        // ProceduralGeneration.reset = true;
+        // WorldGen.reset = true;
 
         // Entities.Clear();
 
@@ -88,7 +88,7 @@ public class PlayerState : MonoBehaviour
         // }
         // else
         // {
-        //     PlayerMovement.rb.position = ProceduralGeneration.center;
+        //     PlayerMovement.rb.position = WorldGen.center;
         //     transform.position = PlayerMovement.rb.position;
 
         //     DynamicEnemySpawning.Reset();

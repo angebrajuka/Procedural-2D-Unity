@@ -8,7 +8,7 @@ public class MenuEvents : MonoBehaviour {
     public static void MainMenu() {
         FadeTransition.black = true;
         var msp = singles.worldGen.menuSeeds[Random.Range(0, singles.worldGen.menuSeeds.Length)];
-        ProceduralGeneration.SetSeed(msp.seed);
+        WorldGen.SetSeed(msp.seed);
         singles.menuCampfire.SetActive(true);
         singles.menuCampfire.transform.position = new Vector3(msp.x, msp.y, singles.menuCampfire.transform.position.z);
 
@@ -38,7 +38,7 @@ public class MenuEvents : MonoBehaviour {
         var dfct = buttons.GetChild(2).GetComponent<TMP_Dropdown>().value;
 
         gameState.saveName = name;
-        ProceduralGeneration.SetSeed((ushort)Mathf.Abs(MathUtils.TryParse(seed, ProceduralGeneration.RandomSeed()))); // InputFieldClamp handles bounds
+        WorldGen.SetSeed((ushort)Mathf.Abs(MathUtils.TryParse(seed, WorldGen.RandomSeed()))); // InputFieldClamp handles bounds
         gameState.difficulty = (byte)dfct;
 
         singles.menuCampfire.SetActive(false);

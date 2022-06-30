@@ -60,7 +60,7 @@ public class SaveData
     public SaveData()
     {
         difficulty = gameState.difficulty;
-        seed = ProceduralGeneration.seed;
+        seed = WorldGen.seed;
         
         Inventory.instance.Close();
         inventoryItems = new GridItemSerializable[Inventory.instance.items.Count];
@@ -94,7 +94,7 @@ public class SaveData
         MenuHandler.CloseAll();
 
         gameState.difficulty = difficulty;
-        ProceduralGeneration.SetSeed(seed);
+        WorldGen.SetSeed(seed);
         singles.worldGen.GenerateMap();
 
         Inventory.instance.Clear();
