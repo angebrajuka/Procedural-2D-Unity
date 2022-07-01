@@ -222,6 +222,8 @@ public class WorldGen : MonoBehaviour
 
     public void GenerateMap()
     {
+        var state = Random.state;
+
         Random.InitState(seed_decor);
 
         Vector2Int pos = new Vector2Int(0, 0);
@@ -290,6 +292,8 @@ public class WorldGen : MonoBehaviour
         }
         loadingFirstChunks = true;
         reset = true;
+
+        Random.state = state;
     }
 
     public static int GetTile(int x, int y)
