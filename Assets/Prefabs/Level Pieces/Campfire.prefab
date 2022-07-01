@@ -207,15 +207,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79aeb678ad4c3ff41bfb84f3f725b95b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radiusRange: 2
-  intensityRange: 0.3
-  timingAverage: 0.05
-  timingRange: 0.03
-  changeSpeed: 0.06
-  averageRadius: 0
-  averageIntensity: 0.4
+  radiusRange: 1
+  intensityRange: 0.1
+  timingAverage: 0.1
+  timingRange: 0.1
+  changeSpeed: 0.025
+  averageRadius: 10
+  averageIntensity: 0.5
   useBeginningRadius: 1
   useBeginningIntensity: 0
+  on: 0
 --- !u!1 &2234455436247320583
 GameObject:
   m_ObjectHideFlags: 0
@@ -5156,6 +5157,7 @@ GameObject:
   - component: {fileID: 7803719050321581512}
   - component: {fileID: 6587533827825270159}
   - component: {fileID: 1657141070948567538}
+  - component: {fileID: 7620789784186778802}
   m_Layer: 13
   m_Name: Campfire
   m_TagString: Untagged
@@ -5238,7 +5240,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 2c5fa3c62f6795a45992b45ccc3a1d98, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.435
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5322,3 +5324,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7620789784186778802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803719050321581515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44752242ef8a96441bf4fc82dee84d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateSpeed: 1
+  audioSource: {fileID: 1657141070948567538}
+  animator: {fileID: 9199529255484243079}
+  ps: {fileID: 348480900440120165}
+  flicker: {fileID: 8336391524210526331}

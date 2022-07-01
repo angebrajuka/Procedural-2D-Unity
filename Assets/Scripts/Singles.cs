@@ -10,7 +10,7 @@ public class Singles : MonoBehaviour {
     // hierarchy
     public Follow cameraFollow;
     public WorldGen worldGen;
-    public GameObject menuCampfire;
+    public Campfire menuCampfire;
     public PlayerAnimator pAnimator;
     public PlayerMovement pMovement;
 }

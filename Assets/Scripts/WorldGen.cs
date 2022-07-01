@@ -112,7 +112,12 @@ public class WorldGen : MonoBehaviour
         {
             disabledChunks.AddLast(Instantiate(prefab_chunk, chunks).GetComponent<Chunk>());
             disabledChunks.Last.Value._Start();
+            disabledChunks.Last.Value.gameObject.SetActive(false);
         }
+
+        var width = mapDiameter*chunkSize;
+        mapTexture_biome = new byte[width, width];
+        mapTexture_decor = new byte[width, width];
     }
 
     static Color32 AverageColorFromTexture(Texture2D tex)
@@ -218,11 +223,8 @@ public class WorldGen : MonoBehaviour
     {
         Random.InitState(seed_decor);
 
-        var width = mapDiameter*chunkSize;
-        mapTexture_biome = new byte[width, width];
-        mapTexture_decor = new byte[width, width];
-
         Vector2Int pos = new Vector2Int(0, 0);
+        var width = mapDiameter*chunkSize;
         for(pos.x=0; pos.x<width; pos.x++)
         {
             for(pos.y=0; pos.y<width; pos.y++)
@@ -381,8 +383,8 @@ public class WorldGen : MonoBehaviour
         PauseHandler.UnPause();
         PauseHandler.blurred = false;
         loadingFirstChunks = false;
-        if(singles.menuCampfire.activeSelf) {
-            singles.menuCampfire.GetComponent<AudioSource>().Play();
+        if(singles.menuCampfire.gameObject.activeSelf) {
+            singles.menuCampfire.Lit = true;
         }
     }
 }

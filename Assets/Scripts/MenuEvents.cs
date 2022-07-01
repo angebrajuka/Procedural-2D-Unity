@@ -1,16 +1,22 @@
 using UnityEngine;
 using TMPro;
+using System.Threading.Tasks;
 
 using static GameState;
 using static Singles;
 
 public class MenuEvents : MonoBehaviour {
-    public static void MainMenu() {
+    public static async void MainMenu() {
         FadeTransition.black = true;
+        singles.menuCampfire.Lit = false;
+        singles.worldGen.enabled = false;
+
+        await Task.Delay(500);
+
+        singles.worldGen.enabled = true;
         var msp = singles.worldGen.menuSeeds[Random.Range(0, singles.worldGen.menuSeeds.Length)];
         WorldGen.SetSeed(msp.seed);
         singles.menuCampfire.transform.position = new Vector3(msp.x, msp.y, singles.menuCampfire.transform.position.z);
-
         singles.cameraFollow.toFollow = singles.menuCampfire.transform;
         singles.cameraFollow.Snap();
 
@@ -18,7 +24,7 @@ public class MenuEvents : MonoBehaviour {
         DaylightCycle.time = DaylightCycle.k_NIGHT;
         PauseHandler.Pause();
         MenuHandler.MainMenu();
-        singles.menuCampfire.SetActive(true);
+        singles.menuCampfire.gameObject.SetActive(true);
     }
 
     public static void LoadGame(int slot) {
@@ -29,10 +35,12 @@ public class MenuEvents : MonoBehaviour {
         }
     }
 
-    public void NewGame(Transform buttons) {
+    public static async void NewGame(Transform buttons) {
         FadeTransition.black = true;
+        singles.menuCampfire.Lit = false;
         MenuHandler.CloseAll();
-        PauseHandler.Pause();
+
+        await Task.Delay(500);
 
         var name = buttons.GetChild(0).GetComponent<TMP_InputField>().text;
         var seed = buttons.GetChild(1).GetComponent<TMP_InputField>().text;
@@ -42,11 +50,8 @@ public class MenuEvents : MonoBehaviour {
         WorldGen.SetSeed((ushort)Mathf.Abs(MathUtils.TryParse(seed, WorldGen.RandomSeed()))); // InputFieldClamp handles bounds
         gameState.difficulty = (byte)dfct;
 
-        Invoke("NewGameSecondHalf", 1);
-    }
-
-    public void NewGameSecondHalf() {
-        singles.menuCampfire.SetActive(false);
+        PauseHandler.Pause();
+        singles.menuCampfire.gameObject.SetActive(false);
         DaylightCycle.time = DaylightCycle.k_DAY/2;
         singles.worldGen.GenerateMap();
 

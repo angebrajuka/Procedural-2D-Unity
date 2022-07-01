@@ -461,7 +461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &451141168
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1039,12 +1039,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!1 &1415240677 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7803719050321581515, guid: 201bb4bac53026b49812157102de7c96,
-    type: 3}
-  m_PrefabInstance: {fileID: 1517099169}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1517099169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1052,11 +1046,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1063415191}
     m_Modifications:
-    - target: {fileID: 1657141070948567538, guid: 201bb4bac53026b49812157102de7c96,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6926267321923249462, guid: 201bb4bac53026b49812157102de7c96,
         type: 3}
       propertyPath: m_Vertices.Array.size
@@ -1465,6 +1454,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1517099169}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1517099173 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7620789784186778802, guid: 201bb4bac53026b49812157102de7c96,
+    type: 3}
+  m_PrefabInstance: {fileID: 1517099169}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44752242ef8a96441bf4fc82dee84d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1652026527
 GameObject:
   m_ObjectHideFlags: 0
@@ -1559,8 +1560,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraFollow: {fileID: 792913058}
   worldGen: {fileID: 1063415190}
-  menuCampfire: {fileID: 1415240677}
-  pAnimator: {fileID: 0}
+  menuCampfire: {fileID: 1517099173}
+  pAnimator: {fileID: 413550054}
   pMovement: {fileID: 413550040}
 --- !u!4 &2143826660
 Transform:

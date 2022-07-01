@@ -11,6 +11,8 @@ public class FlickeringLight : MonoBehaviour
     public bool useBeginningRadius;
     public bool useBeginningIntensity;
 
+    public bool on;
+
     private Light2D m_light;
     private float timer, interval;
     private float targetIntensity;
@@ -45,7 +47,7 @@ public class FlickeringLight : MonoBehaviour
             interval = timingAverage + Random.value*timingRange*2 - timingRange;
         }
 
-        m_light.intensity = Mathf.Lerp(m_light.intensity, targetIntensity, changeSpeed);
-        m_light.pointLightOuterRadius = Mathf.Lerp(m_light.pointLightOuterRadius, targetRadius, changeSpeed);
+        m_light.intensity = Mathf.MoveTowards(m_light.intensity, on ? targetIntensity : 0, changeSpeed);
+        m_light.pointLightOuterRadius = Mathf.MoveTowards(m_light.pointLightOuterRadius, targetRadius, changeSpeed);
     }
 }
