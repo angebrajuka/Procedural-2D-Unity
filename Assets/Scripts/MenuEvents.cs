@@ -36,10 +36,10 @@ public class MenuEvents : MonoBehaviour {
     }
 
     public static async void NewGame(Transform buttons) {
-        FadeTransition.black = true;
         singles.menuCampfire.Lit = false;
         MenuHandler.CloseAll();
-
+        await Task.Delay(500);
+        FadeTransition.black = true;
         await Task.Delay(500);
 
         var name = buttons.GetChild(0).GetComponent<TMP_InputField>().text;

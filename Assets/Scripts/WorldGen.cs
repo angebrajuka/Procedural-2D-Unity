@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Threading.Tasks;
 
 using static Singles;
 
@@ -370,7 +371,7 @@ public class WorldGen : MonoBehaviour
         prevPos.y = currPos.y;
     }
 
-    public void CheckLoaded()
+    public async void CheckLoaded()
     {
         if(!loadingFirstChunks) return;
 
@@ -383,7 +384,9 @@ public class WorldGen : MonoBehaviour
         PauseHandler.UnPause();
         PauseHandler.blurred = false;
         loadingFirstChunks = false;
+
         if(singles.menuCampfire.gameObject.activeSelf) {
+            await Task.Delay(500);
             singles.menuCampfire.Lit = true;
         }
     }
