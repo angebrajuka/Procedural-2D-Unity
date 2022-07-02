@@ -833,7 +833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toFollow: {fileID: 413550053}
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 2.4, z: 0}
   lockX: 0
   lockY: 0
   lockZ: 1
@@ -1402,41 +1402,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7803719050321581512, guid: 201bb4bac53026b49812157102de7c96,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7803719050321581512, guid: 201bb4bac53026b49812157102de7c96,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7803719050321581512, guid: 201bb4bac53026b49812157102de7c96,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7803719050321581512, guid: 201bb4bac53026b49812157102de7c96,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7803719050321581512, guid: 201bb4bac53026b49812157102de7c96,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7803719050321581512, guid: 201bb4bac53026b49812157102de7c96,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7803719050321581512, guid: 201bb4bac53026b49812157102de7c96,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7803719050321581512, guid: 201bb4bac53026b49812157102de7c96,
         type: 3}

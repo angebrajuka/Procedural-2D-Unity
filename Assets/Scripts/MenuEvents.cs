@@ -18,6 +18,7 @@ public class MenuEvents : MonoBehaviour {
         WorldGen.SetSeed(msp.seed);
         singles.menuCampfire.transform.position = new Vector3(msp.x, msp.y, singles.menuCampfire.transform.position.z);
         singles.cameraFollow.toFollow = singles.menuCampfire.transform;
+        singles.cameraFollow.offset = new Vector3(0, 2.4f, 0);
         singles.cameraFollow.Snap();
 
         singles.worldGen.GenerateMap();

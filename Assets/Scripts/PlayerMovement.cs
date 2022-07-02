@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public void StartGame() {
         singles.cameraFollow.toFollow = transform;
+        singles.cameraFollow.offset = Vector3.zero;
         singles.cameraFollow.Snap();
     }
 
