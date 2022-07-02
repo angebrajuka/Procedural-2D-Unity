@@ -57,6 +57,8 @@ public class Init : MonoBehaviour
     // }
 
     public void Start() {
+        FadeTransition.black = true;
+        FadeTransition.Snap();
         MenuEvents.MainMenu();
     }
 }

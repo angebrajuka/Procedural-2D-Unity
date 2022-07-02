@@ -15,6 +15,12 @@ public class FadeTransition : MonoBehaviour {
         image = GetComponent<RawImage>();
     }
 
+    public static void Snap() {
+        Color col = image.color;
+        col.a = black ? 1 : 0;
+        image.color = col;
+    }
+
     public void Update() {
         Color col = image.color;
         col.a = Mathf.MoveTowards(col.a, black ? 1 : 0, Time.unscaledDeltaTime * fadeSpeed);

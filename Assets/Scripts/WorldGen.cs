@@ -390,7 +390,7 @@ public class WorldGen : MonoBehaviour
         loadingFirstChunks = false;
 
         if(singles.menuCampfire.gameObject.activeSelf) {
-            await Task.Delay(500);
+            await Task.Delay(200);
             singles.menuCampfire.Lit = true;
         }
     }
