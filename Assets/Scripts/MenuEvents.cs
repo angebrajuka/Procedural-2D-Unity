@@ -22,9 +22,10 @@ public class MenuEvents : MonoBehaviour {
 
         singles.worldGen.GenerateMap();
         DaylightCycle.time = DaylightCycle.k_NIGHT;
-        PauseHandler.Pause();
         MenuHandler.MainMenu();
         singles.menuCampfire.gameObject.SetActive(true);
+        PauseHandler.Pause();
+        PauseHandler.blurred = false;
     }
 
     public static void LoadGame(int slot) {

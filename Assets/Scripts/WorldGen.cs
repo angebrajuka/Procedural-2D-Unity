@@ -247,7 +247,6 @@ public class WorldGen : MonoBehaviour
         for(jic=0; jic<1000 && GetTile((int)playerSpawnPoint.x, (int)playerSpawnPoint.y) != 1; jic++) {
             playerSpawnPoint += psp;
         }
-        
 
         playerSpawnPoint += Random.insideUnitCircle*3;
 
@@ -387,13 +386,14 @@ public class WorldGen : MonoBehaviour
         }
 
         FadeTransition.black = false;
-        PauseHandler.UnPause();
         PauseHandler.blurred = false;
         loadingFirstChunks = false;
 
         if(singles.menuCampfire.gameObject.activeSelf) {
             await Task.Delay(200);
             singles.menuCampfire.Lit = true;
+        } else {
+            PauseHandler.UnPause();
         }
     }
 }

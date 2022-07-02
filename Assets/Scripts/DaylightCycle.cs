@@ -22,13 +22,16 @@ public class DaylightCycle : MonoBehaviour
 
     void Update()
     {
-        time += PauseHandler.paused ? 0 : Time.deltaTime;
-        time %= k_MORNING;
+        if(!PauseHandler.paused) {
+            time += Time.deltaTime;
+            time %= k_MORNING;
+        }
 
-        brightness = (time < k_DAY)      ? Mathf.Lerp(brightness_night, brightness_day, time/k_DAY)
-                              : (time < k_EVENING   ? brightness_day
-                              : (time < k_NIGHT     ? Mathf.Lerp(brightness_day, brightness_night, (time-k_EVENING)/(k_NIGHT-k_EVENING))
-                              :  brightness_night));
+        brightness = (time < k_DAY) ?
+            Mathf.Lerp(brightness_night, brightness_day, time/k_DAY)
+          : (time < k_EVENING   ? brightness_day
+          : (time < k_NIGHT     ? Mathf.Lerp(brightness_day, brightness_night, (time-k_EVENING)/(k_NIGHT-k_EVENING))
+          :  brightness_night));
         globalLight.intensity = brightness;
     }
 }
