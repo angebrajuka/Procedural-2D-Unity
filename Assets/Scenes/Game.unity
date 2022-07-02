@@ -588,6 +588,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &639290490 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6926267321923249462, guid: 201bb4bac53026b49812157102de7c96,
+    type: 3}
+  m_PrefabInstance: {fileID: 1517099169}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &668995407
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,7 +656,7 @@ MonoBehaviour:
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
-  m_OverlapOperation: 1
+  m_OverlapOperation: 0
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
@@ -1046,6 +1058,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1063415191}
     m_Modifications:
+    - target: {fileID: 5848676952356361151, guid: 201bb4bac53026b49812157102de7c96,
+        type: 3}
+      propertyPath: light2D
+      value: 
+      objectReference: {fileID: 639290490}
     - target: {fileID: 6926267321923249462, guid: 201bb4bac53026b49812157102de7c96,
         type: 3}
       propertyPath: m_Vertices.Array.size

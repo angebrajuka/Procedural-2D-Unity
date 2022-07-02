@@ -13,22 +13,24 @@ public class FlickeringLight : MonoBehaviour
 
     public bool on;
 
-    private Light2D m_light;
+    private Light2D light2D;
+    private MLight mlight;
     private float timer, interval;
     private float targetIntensity;
     private float targetRadius;
 
     void Start()
     {
-        m_light = GetComponent<Light2D>();
+        light2D = GetComponent<Light2D>();
+        mlight = GetComponent<MLight>();
 
         if(useBeginningRadius)
         {
-            averageRadius = m_light.pointLightOuterRadius;
+            averageRadius = light2D.pointLightOuterRadius;
         }
         if(useBeginningIntensity)
         {
-            averageIntensity = m_light.intensity;
+            averageIntensity = light2D.intensity;
         }
         timer = 0;
         interval = 0;
@@ -47,7 +49,7 @@ public class FlickeringLight : MonoBehaviour
             interval = timingAverage + Random.value*timingRange*2 - timingRange;
         }
 
-        m_light.intensity = Mathf.MoveTowards(m_light.intensity, on ? targetIntensity : 0, changeSpeed);
-        m_light.pointLightOuterRadius = Mathf.MoveTowards(m_light.pointLightOuterRadius, targetRadius, changeSpeed);
+        mlight.brightness = Mathf.MoveTowards(mlight.brightness, on ? targetIntensity : 0, changeSpeed);
+        light2D.pointLightOuterRadius = Mathf.MoveTowards(light2D.pointLightOuterRadius, targetRadius, changeSpeed);
     }
 }
