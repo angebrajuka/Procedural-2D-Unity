@@ -6,6 +6,9 @@ using static GameState;
 using static Singles;
 
 public class MenuEvents : MonoBehaviour {
+    const int FRAMES = 10;
+    // number of frames to wait is arbitrary, just needs to be more than 1 to compensate for delta time, 10 seemed to solve all issues
+
     private static async Task AwaitFade() {
         while(!FadeTransition.Done) await Task.Yield();
     }
@@ -34,8 +37,7 @@ public class MenuEvents : MonoBehaviour {
 
         singles.worldGen.GenerateMap();
         singles.worldGen.ForceLoadAllLagSpike();
-        await NextFrame(10); // makes sure we wait at least 10 frames after lag spike for smooth fade, otherwise deltaTime is too long
-        // number of frames to wait is arbitrary, just needs to be more than 1 to compensate for delta time, 10 seemed to solve all issues
+        await NextFrame(FRAMES); // makes sure we wait several frames after lag spike for smooth fade, otherwise deltaTime is too long
         singles.menuCampfire.gameObject.SetActive(true);
         singles.worldGen.enabled = true;
 
@@ -72,7 +74,7 @@ public class MenuEvents : MonoBehaviour {
         singles.worldGen.GenerateMap();
         singles.pMovement.StartGame();
         singles.worldGen.ForceLoadAllLagSpike();
-        await NextFrame(); // makes sure we wait till next frame after lag spike for smooth fade, otherwise deltaTime is too long
+        await NextFrame(FRAMES); // makes sure we wait till next frame after lag spike for smooth fade, otherwise deltaTime is too long
 
         DaylightCycle.time = DaylightCycle.k_DAY/2;
         FadeTransition.black = false;
