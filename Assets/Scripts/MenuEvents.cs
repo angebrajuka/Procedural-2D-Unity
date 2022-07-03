@@ -17,20 +17,19 @@ public class MenuEvents : MonoBehaviour {
 
         await Task.Delay(FADE_DELAY);
 
-        singles.worldGen.enabled = true;
         singles.worldGen.UnloadFar(true);
         var msp = singles.worldGen.menuSeeds[Random.Range(0, singles.worldGen.menuSeeds.Length)];
         WorldGen.SetSeed(msp.seed);
         singles.menuCampfire.transform.position = new Vector3(msp.x, msp.y, singles.menuCampfire.transform.position.z);
         singles.cameraFollow.toFollow = singles.menuCampfire.transform;
         singles.cameraFollow.offset = new Vector3(0, 2.4f, 0);
-        await Task.Delay(FRAME_DELAY); // makes sure we wait till next frame for transform update
         singles.cameraFollow.Snap();
 
         singles.worldGen.GenerateMap();
         singles.worldGen.ForceLoadAllLagSpike();
         await Task.Delay(FRAME_DELAY); // makes sure we wait till next frame after lag spike for smooth fade, otherwise deltaTime is too long
         singles.menuCampfire.gameObject.SetActive(true);
+        singles.worldGen.enabled = true;
 
         MenuHandler.MainMenu();
         PauseHandler.Pause();
@@ -64,8 +63,6 @@ public class MenuEvents : MonoBehaviour {
         singles.menuCampfire.gameObject.SetActive(false);
         singles.worldGen.GenerateMap();
         singles.pMovement.StartGame();
-        PlayerMovement.rb.position = WorldGen.playerSpawnPoint;
-        await Task.Delay(FRAME_DELAY); // makes sure we wait till next frame for transform update
         singles.worldGen.ForceLoadAllLagSpike();
         await Task.Delay(FRAME_DELAY); // makes sure we wait till next frame after lag spike for smooth fade, otherwise deltaTime is too long
 

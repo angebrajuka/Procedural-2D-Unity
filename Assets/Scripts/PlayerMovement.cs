@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public void StartGame() {
+        transform.position = WorldGen.playerSpawnPoint; // transform.position is updated instantly, rb.position wont update till next frame, caused loading bug
         singles.cameraFollow.toFollow = transform;
         singles.cameraFollow.offset = Vector3.zero;
         singles.cameraFollow.Snap();

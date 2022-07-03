@@ -217,7 +217,6 @@ public class WorldGen : MonoBehaviour {
         for(jic=0; jic<1000 && GetTile((int)playerSpawnPoint.x, (int)playerSpawnPoint.y) != 1; jic++) {
             playerSpawnPoint += psp;
         }
-
         playerSpawnPoint += Random.insideUnitCircle*3;
 
         for(pos.x=0; pos.x<width; pos.x++) {
