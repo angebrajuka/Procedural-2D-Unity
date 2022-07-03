@@ -10,7 +10,7 @@ public class MenuEvents : MonoBehaviour {
         while(!FadeTransition.Done) await Task.Yield();
     }
 
-    // no guaruntee it runs on the very next frame, only guaruntee is waiting AT LEAST one frame
+    // no guaruntee it runs on the very next frame, only guaruntee is waiting AT LEAST one frame (or c frames if c isnt 1)
     private static async Task NextFrame(int c=1) {
         var current = Time.frameCount;
         while(Time.frameCount-c < current) await Task.Yield();
