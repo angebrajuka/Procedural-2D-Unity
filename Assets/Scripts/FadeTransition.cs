@@ -15,6 +15,8 @@ public class FadeTransition : MonoBehaviour {
         image = GetComponent<RawImage>();
     }
 
+    public static bool Done { get { return image.color.a == (black ? 1 : 0); } }
+
     public static void Snap() {
         Color col = image.color;
         col.a = black ? 1 : 0;
