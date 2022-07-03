@@ -45,8 +45,7 @@ public class PlayerMovement : MonoBehaviour {
         speedMult *= debugSpode;
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         rb.AddForce(input_move * speedMult * PlayerStats.k_RUN_ACCELL);
     }
 }

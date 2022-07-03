@@ -5,8 +5,7 @@ using UnityEngine.Tilemaps;
 
 using static Singles;
 
-public class Chunk : MonoBehaviour
-{
+public class Chunk : MonoBehaviour {
     // hierarchy
     public Tilemap m_tilemap;
     public Transform decorations;
@@ -16,33 +15,27 @@ public class Chunk : MonoBehaviour
     TileBase[] tileArray=new TileBase[WorldGen.chunkSize];
     [HideInInspector] public bool loaded;
 
-    public void _Start()
-    {
+    public void _Start() {
         m_tilemap = transform.GetChild(0).GetComponent<Tilemap>();
         enabled = false;
     }
     
-    public void Init()
-    {
+    public void Init() {
         loaded = false;
         tilePos = new Vector3Int(0, 0, 0);
     }
 
-    public void RemoveDecorations()
-    {
-        while(decorations.childCount > 0)
-        {
+    public void RemoveDecorations() {
+        while(decorations.childCount > 0) {
             Transform child = decorations.GetChild(0);
             child.parent = null;
             Destroy(child.gameObject);
         }
     }
 
-    void Update()
-    {
+    public void Update() {
         int i=0;
-        for(tilePos.y=0; tilePos.y<WorldGen.chunkSize; tilePos.y++, i++)
-        {
+        for(tilePos.y=0; tilePos.y<WorldGen.chunkSize; tilePos.y++, i++) {
             positionArray[i] = tilePos;
             int x = (int)transform.localPosition.x+tilePos.x;
             int y = (int)transform.localPosition.y+tilePos.y;
@@ -53,11 +46,9 @@ public class Chunk : MonoBehaviour
         m_tilemap.SetTiles(positionArray, tileArray);
         tilePos.x++;
 
-        if(tilePos.x == WorldGen.chunkSize)
-        {
+        if(tilePos.x == WorldGen.chunkSize) {
             m_tilemap.CompressBounds();
             loaded = true;
-            singles.worldGen.CheckLoaded();
             enabled = false;
         }
     }
