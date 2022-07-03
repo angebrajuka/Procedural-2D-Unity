@@ -212,7 +212,7 @@ MonoBehaviour:
   intensityRange: 0.1
   timingAverage: 0.1
   timingRange: 0.1
-  changeSpeed: 0.025
+  changeSpeed: 0.02
   averageRadius: 10
   averageIntensity: 0.95
   useBeginningRadius: 1

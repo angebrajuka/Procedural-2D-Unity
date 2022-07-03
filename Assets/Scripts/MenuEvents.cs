@@ -6,7 +6,8 @@ using static GameState;
 using static Singles;
 
 public class MenuEvents : MonoBehaviour {
-    const int FADE_DELAY = 400;
+    const int FADE_DELAY = 500;
+    const int FRAME_DELAY = 100;
 
     public static async void MainMenu() {
         FadeTransition.black = true;
@@ -23,11 +24,12 @@ public class MenuEvents : MonoBehaviour {
         singles.menuCampfire.transform.position = new Vector3(msp.x, msp.y, singles.menuCampfire.transform.position.z);
         singles.cameraFollow.toFollow = singles.menuCampfire.transform;
         singles.cameraFollow.offset = new Vector3(0, 2.4f, 0);
+        await Task.Delay(FRAME_DELAY); // makes sure we wait till next frame for transform update
         singles.cameraFollow.Snap();
 
         singles.worldGen.GenerateMap();
         singles.worldGen.ForceLoadAllLagSpike();
-        await Task.Delay(10); // makes sure we wait till next frame after lag spike for smooth fade, otherwise deltaTime is too long
+        await Task.Delay(FRAME_DELAY); // makes sure we wait till next frame after lag spike for smooth fade, otherwise deltaTime is too long
         singles.menuCampfire.gameObject.SetActive(true);
 
         MenuHandler.MainMenu();
@@ -63,9 +65,9 @@ public class MenuEvents : MonoBehaviour {
         singles.worldGen.GenerateMap();
         singles.pMovement.StartGame();
         PlayerMovement.rb.position = WorldGen.playerSpawnPoint;
-        await Task.Delay(10); // makes sure we wait till next frame for transform update
+        await Task.Delay(FRAME_DELAY); // makes sure we wait till next frame for transform update
         singles.worldGen.ForceLoadAllLagSpike();
-        await Task.Delay(10); // makes sure we wait till next frame after lag spike for smooth fade, otherwise deltaTime is too long
+        await Task.Delay(FRAME_DELAY); // makes sure we wait till next frame after lag spike for smooth fade, otherwise deltaTime is too long
 
         DaylightCycle.time = DaylightCycle.k_DAY/2;
         FadeTransition.black = false;
