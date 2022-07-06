@@ -22,8 +22,8 @@ public class WorldGen : MonoBehaviour {
     public Transform decorPrefabs;
     public MenuSeedPosition[] menuSeeds;
 
-    private Vector2Int currPos=Vector2Int.zero;
-    private Vector2Int prevPos;
+    private Vector3Int currPos=Vector3Int.zero;
+    private Vector3Int prevPos;
     public const int chunkSize=50;
     public const int mapRadius=16;
     public const int mapDiameter=mapRadius*2;
@@ -193,10 +193,12 @@ public class WorldGen : MonoBehaviour {
         return map[Mathf.Clamp(x, 0, map.GetLength(0)-1), Mathf.Clamp(y, 0, map.GetLength(1)-1)];
     }
 
-    public void GenerateMap() {
-        var state = Random.state;
+    public async Task GenerateMapAsync() {
+        await Task.Run(() => { GenerateMap(); } );
+    }
 
-        Random.InitState(seed_decor);
+    public void GenerateMap() {
+        var rand = new System.Random(seed_decor);
 
         Vector2Int pos = new Vector2Int(0, 0);
         var width = mapDiameter*chunkSize;
@@ -208,7 +210,7 @@ public class WorldGen : MonoBehaviour {
             }
         }
 
-        var psp = Random.insideUnitCircle.normalized;
+        var psp = rand.OnUnitCircle();
         playerSpawnPoint = center + psp*mapRadius*chunkSize;
         int jic;
         for(jic=0; jic < 999999 && GetTile((int)playerSpawnPoint.x, (int)playerSpawnPoint.y) <= 2; jic++) { // biome 0,1,2 is ocean,shoreline,beach
@@ -217,14 +219,14 @@ public class WorldGen : MonoBehaviour {
         for(jic=0; jic<1000 && GetTile((int)playerSpawnPoint.x, (int)playerSpawnPoint.y) != 1; jic++) {
             playerSpawnPoint += psp;
         }
-        playerSpawnPoint += Random.insideUnitCircle*3;
+        playerSpawnPoint += rand.OnUnitCircle()*3;
 
         for(pos.x=0; pos.x<width; pos.x++) {
             for(pos.y=0; pos.y<width; pos.y++) {
                 int val = mapTexture_biome[pos.x, pos.y];
 
                 if(mapTexture_decor[pos.x, pos.y] == 254) {
-                    float rval = Random.value;
+                    var rval = rand.NextDouble();
                     for(int i=0; i<biomes[val].decorationThreshholds.Length; i++) {
                         if(rval < biomes[val].decorationThreshholds[i]) {
                             for(int x=0; x<biomes[val].decorations[i].stats.renderSize.x; x++) {
@@ -250,8 +252,6 @@ public class WorldGen : MonoBehaviour {
                 }
             }
         }
-
-        Random.state = state;
     }
 
     public static int GetTile(int x, int y) {
@@ -312,6 +312,7 @@ public class WorldGen : MonoBehaviour {
     void UpdatePos() {
         currPos.x = (int)Mathf.Floor(singles.cameraFollow.transform.position.x/chunkSize);
         currPos.y = (int)Mathf.Floor(singles.cameraFollow.transform.position.y/chunkSize);
+        // currPos.z gets manually changed on staircase or smth
     }
 
     void Update() {
@@ -324,6 +325,7 @@ public class WorldGen : MonoBehaviour {
 
         prevPos.x = currPos.x;
         prevPos.y = currPos.y;
+        prevPos.z = currPos.z;
     }
 
     public void ForceLoadAllLagSpike() {
