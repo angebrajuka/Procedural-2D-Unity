@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Threading.Tasks;
 
 [CustomEditor(typeof(_EditorMapTextureGen))]
 public class EditorMapTextureGen : Editor
@@ -13,7 +14,7 @@ public class EditorMapTextureGen : Editor
 
         if(GUILayout.Button("generate"))
         {
-            script.proceduralGeneration.Start();
+            script.worldGen.Start();
             if(script.randSeed)
             {
                 WorldGen.SetSeed(WorldGen.RandomSeed());
@@ -23,15 +24,16 @@ public class EditorMapTextureGen : Editor
             {
                 WorldGen.SetSeed(script.seed);
             }
-            script.proceduralGeneration.GenerateMap();
+            script.worldGen.GenerateMapLagSpike();
             WorldGen.GenerateTexture(script.resolution);
         }
         if(GUILayout.Button("clear"))
         {
-            WorldGen.Clear();
+            script.worldGen.Clear();
         }
 
         if(WorldGen.textureBiome != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), WorldGen.textureBiome, null, ScaleMode.ScaleToFit);
         if(WorldGen.textureDecor != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), WorldGen.textureDecor, null, ScaleMode.ScaleToFit);
+        if(WorldGen.textureDungeons != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), WorldGen.textureDungeons, null, ScaleMode.ScaleToFit);
     }
 }

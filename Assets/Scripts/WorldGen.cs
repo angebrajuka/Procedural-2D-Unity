@@ -39,25 +39,27 @@ public class WorldGen : MonoBehaviour {
     public static int rain_temp_map_width=100;
     public static byte[,] rain_temp_map;
 
-    public static byte[,] mapTexture_biome;
-    public static byte[,] mapTexture_decor;
+    public static byte[,] mapTexture_biome, mapTexture_decor, mapTexture_dungeons;
 
-    public static Texture2D textureBiome;
-    public static Texture2D textureDecor;
+    public static Texture2D textureBiome, textureDecor, textureDungeons;
 
     public static ushort seed;
     public static float seed_main, seed_temp, seed_rain;
-    public static int seed_decor;
 
     public static RuleTile LoadTile(string name) {
         return Resources.Load<RuleTile>("Tiles/"+name);
     }
 
-    public static void Clear() {
+    public void Clear() {
         textureBiome = null;
         textureDecor = null;
+        textureDungeons = null;
         foreach(var pair in Biome.s_decorations) {
-            Destroy(pair.Value.gameObject);
+            if(pair.Value == null) continue;
+            DestroyImmediate(pair.Value.gameObject);
+        }
+        while(chunks.childCount != 0) {
+            DestroyImmediate(chunks.GetChild(0).gameObject);
         }
     }
 
@@ -77,7 +79,7 @@ public class WorldGen : MonoBehaviour {
             if(biomesJson[i].tile_name.Equals("water_shallow")) {
                 s_shallowWater.Add(i);
             }
-            biomes[i] = new Biome(biomesJson[i]);
+            biomes[i] = new Biome(this, biomesJson[i]);
             if(biomesJson[i].rain_temp_map_color.Length == 3) {
                 for(int x=0; x<rain_temp_map_width; x++) {
                     for(int y=0; y<rain_temp_map_width; y++) {
@@ -104,6 +106,7 @@ public class WorldGen : MonoBehaviour {
         var width = mapDiameter*chunkSize;
         mapTexture_biome = new byte[width, width];
         mapTexture_decor = new byte[width, width];
+        mapTexture_dungeons = new byte[width, width];
     }
 
     static Color32 AverageColorFromTexture(Texture2D tex) {
@@ -128,7 +131,7 @@ public class WorldGen : MonoBehaviour {
         for(int i=0; i<tiles.Length; i++) {
             colors[i] = AverageColorFromTexture(tiles[i].m_DefaultSprite.texture);
         }
-        
+
         textureBiome = new Texture2D(width, width);
         for(int x=0; x<textureBiome.width; x++) {
             for(int y=0; y<textureBiome.height; y++) {
@@ -136,14 +139,22 @@ public class WorldGen : MonoBehaviour {
             }
         }
         textureBiome.Apply();
-        
+
         textureDecor = new Texture2D(width, width);
         for(int x=0; x<textureBiome.width; x++) {
             for(int y=0; y<textureBiome.height; y++) {
-                textureDecor.SetPixel(x, y, mapTexture_decor[(int)(((float)x/textureDecor.width)*mapDiameter*chunkSize), (int)(((float)y/textureDecor.height)*mapDiameter*chunkSize)] == 0 ? Color.white : Color.black);
+                textureDecor.SetPixel(x, y, mapTexture_decor[(int)(((float)x/textureDecor.width)*mapDiameter*chunkSize), (int)(((float)y/textureDecor.height)*mapDiameter*chunkSize)] < 254 ? Color.white : Color.black);
             }
         }
         textureDecor.Apply();
+
+        textureDungeons = new Texture2D(width, width);
+        for(int x=0; x<textureBiome.width; x++) {
+            for(int y=0; y<textureBiome.height; y++) {
+                textureDungeons.SetPixel(x, y, mapTexture_dungeons[(int)(((float)x/textureDungeons.width)*mapDiameter*chunkSize), (int)(((float)y/textureDungeons.height)*mapDiameter*chunkSize)] == 0 ? Color.white : Color.black);
+            }
+        }
+        textureDungeons.Apply();
     }
 
     const int perlinOffset = 5429; // prevents mirroring
@@ -193,13 +204,8 @@ public class WorldGen : MonoBehaviour {
         return map[Mathf.Clamp(x, 0, map.GetLength(0)-1), Mathf.Clamp(y, 0, map.GetLength(1)-1)];
     }
 
-    public async Task GenerateMapAsync() {
-        await Task.Run(() => { GenerateMap(); } );
-    }
-
-    public void GenerateMap() {
-        var rand = new System.Random(seed_decor);
-
+    void GenOverworld() {
+        var rand = new System.Random(seed);
         Vector2Int pos = new Vector2Int(0, 0);
         var width = mapDiameter*chunkSize;
         for(pos.x=0; pos.x<width; pos.x++) {
@@ -254,6 +260,24 @@ public class WorldGen : MonoBehaviour {
         }
     }
 
+    void GenDungeons() {
+        var rand = new System.Random(seed);
+        int numDungeons = rand.Next(3, 6);
+
+        for(int i=0; i<numDungeons; ++i) {
+
+        }
+    }
+
+    public void GenerateMapLagSpike() {
+        GenOverworld();
+        GenDungeons();
+    }
+
+    public async Task GenerateMap() {
+        await Task.WhenAll(Task.Run(()=>{GenOverworld();}), Task.Run(()=>{GenDungeons();}));
+    }
+
     public static int GetTile(int x, int y) {
         return MapClamped(mapTexture_biome, x, y);
     }
@@ -278,7 +302,6 @@ public class WorldGen : MonoBehaviour {
         seed_main = 2589.216f+seed*252.3457f;
         seed_rain = 913.8473f+seed*2345.195f;
         seed_temp = 111.8325f+seed*762.0934f;
-        seed_decor = seed;
     }
 
     void LoadAll() {

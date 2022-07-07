@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 using static GameState;
 using static Singles;
@@ -95,7 +96,7 @@ public class SaveData : BaseSaveData
 
         gameState.difficulty = difficulty;
         WorldGen.SetSeed(seed);
-        singles.worldGen.GenerateMap();
+        var t = singles.worldGen.GenerateMap();
 
         Inventory.instance.Clear();
         for(int i=0; i<inventoryItems.Length; i++)
@@ -128,5 +129,7 @@ public class SaveData : BaseSaveData
 
         PlayerMovement.rb.position = new Vector2(position[0], position[1]);
         PlayerMovement.rb.transform.position = PlayerMovement.rb.position;
+
+        Task.WaitAll(t);
     }
 }

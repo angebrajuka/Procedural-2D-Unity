@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class _EditorMapTextureGen : MonoBehaviour
 {
-    public WorldGen proceduralGeneration;
+    public WorldGen worldGen;
     public bool randSeed;
     public ushort seed;
     public int resolution;

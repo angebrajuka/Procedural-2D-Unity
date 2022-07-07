@@ -35,7 +35,7 @@ public class MenuEvents : MonoBehaviour {
         singles.cameraFollow.offset = new Vector3(0, 2.4f, 0);
         singles.cameraFollow.Snap();
 
-        await singles.worldGen.GenerateMapAsync();
+        await singles.worldGen.GenerateMap();
         singles.worldGen.ForceLoadAllLagSpike();
         await NextFrame(FRAMES); // makes sure we wait several frames after lag spike for smooth fade, otherwise deltaTime is too long
         singles.menuCampfire.gameObject.SetActive(true);
@@ -71,7 +71,7 @@ public class MenuEvents : MonoBehaviour {
 
         PauseHandler.Pause();
         singles.menuCampfire.gameObject.SetActive(false);
-        await singles.worldGen.GenerateMapAsync();
+        await singles.worldGen.GenerateMap();
         singles.pMovement.StartGame();
         singles.worldGen.ForceLoadAllLagSpike();
         await NextFrame(FRAMES); // makes sure we wait till next frame after lag spike for smooth fade, otherwise deltaTime is too long

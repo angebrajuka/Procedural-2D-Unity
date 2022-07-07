@@ -116,7 +116,7 @@ public struct Biome
     public Decoration[] decorations;
     public float[] decorationThreshholds;
 
-    public Biome(JsonBiome jsonBiome)
+    public Biome(WorldGen worldGen, JsonBiome jsonBiome)
     {
         decorations = new Decoration[jsonBiome.decorations.Length];
         decorationThreshholds = new float[jsonBiome.decorations.Length];
@@ -132,7 +132,7 @@ public struct Biome
 
             if(!s_decorations.ContainsKey(name))
             {
-                GameObject go = MonoBehaviour.Instantiate(singles.worldGen.prefab_decoration, singles.worldGen.decorPrefabs);
+                GameObject go = MonoBehaviour.Instantiate(worldGen.prefab_decoration, worldGen.decorPrefabs);
                 go.name = name;
                 s_decorations.Add(name, go.GetComponent<Decoration>());
                 s_decorations[name].Init(s_decorationStats[name]);
