@@ -22,15 +22,16 @@ public class WorldGen : MonoBehaviour {
     public Transform decorPrefabs;
     public MenuSeedPosition[] menuSeeds;
 
-    private Vector3Int currPos=Vector3Int.zero;
-    private Vector3Int prevPos;
     public const int chunkSize=50;
     public const int mapRadius=16;
     public const int mapDiameter=mapRadius*2;
     public static readonly Vector2Int center = Vector2Int.one*mapRadius*chunkSize;
-    public static Vector2 playerSpawnPoint = Vector2.zero;
-    public static Dictionary<(int x, int y), Chunk> loadedChunks;
-    public static LinkedList<Chunk> disabledChunks;
+
+    private Vector3Int currPos=Vector3Int.zero;
+    private Vector3Int prevPos;
+    public Vector2 playerSpawnPoint = Vector2.zero;
+    public Dictionary<(int x, int y), Chunk> loadedChunks;
+    public LinkedList<Chunk> disabledChunks;
     public int renderDistance;
 
     public static RuleTile[] tiles;
@@ -41,7 +42,7 @@ public class WorldGen : MonoBehaviour {
 
     public static byte[,] mapTexture_biome, mapTexture_decor, mapTexture_dungeons;
 
-    public static Texture2D textureBiome, textureDecor, textureDungeons;
+    public Texture2D textureBiome, textureDecor, textureDungeons;
 
     public static ushort seed;
     public static float seed_main, seed_temp, seed_rain;
@@ -126,7 +127,7 @@ public class WorldGen : MonoBehaviour {
         return new Color32((byte)(r / total) , (byte)(g / total) , (byte)(b / total) , 255);
     }
 
-    public static void GenerateTexture(int width) {
+    public void GenerateTexture(int width) {
         var colors = new Color32[tiles.Length];
         for(int i=0; i<tiles.Length; i++) {
             colors[i] = AverageColorFromTexture(tiles[i].m_DefaultSprite.texture);
@@ -204,8 +205,7 @@ public class WorldGen : MonoBehaviour {
         return map[Mathf.Clamp(x, 0, map.GetLength(0)-1), Mathf.Clamp(y, 0, map.GetLength(1)-1)];
     }
 
-    void GenOverworld() {
-        var rand = new System.Random(seed);
+    void GenLand() {
         Vector2Int pos = new Vector2Int(0, 0);
         var width = mapDiameter*chunkSize;
         for(pos.x=0; pos.x<width; pos.x++) {
@@ -215,18 +215,12 @@ public class WorldGen : MonoBehaviour {
                 mapTexture_decor[pos.x, pos.y] = 254;
             }
         }
+    }
 
-        var psp = rand.OnUnitCircle();
-        playerSpawnPoint = center + psp*mapRadius*chunkSize;
-        int jic;
-        for(jic=0; jic < 999999 && GetTile((int)playerSpawnPoint.x, (int)playerSpawnPoint.y) <= 2; jic++) { // biome 0,1,2 is ocean,shoreline,beach
-            playerSpawnPoint -= psp*6;
-        }
-        for(jic=0; jic<1000 && GetTile((int)playerSpawnPoint.x, (int)playerSpawnPoint.y) != 1; jic++) {
-            playerSpawnPoint += psp;
-        }
-        playerSpawnPoint += rand.OnUnitCircle()*3;
+    void GenDecorations(System.Random rand) {
+        var width = mapDiameter*chunkSize;
 
+        Vector2Int pos = new Vector2Int(0, 0);
         for(pos.x=0; pos.x<width; pos.x++) {
             for(pos.y=0; pos.y<width; pos.y++) {
                 int val = mapTexture_biome[pos.x, pos.y];
@@ -260,22 +254,47 @@ public class WorldGen : MonoBehaviour {
         }
     }
 
-    void GenDungeons() {
-        var rand = new System.Random(seed);
+    void GenDungeons(System.Random rand) {
         int numDungeons = rand.Next(3, 6);
 
-        for(int i=0; i<numDungeons; ++i) {
+        // for(int i=0; i<numDungeons; ++i) {
 
+        var entrance = new Vector2Int(800, 800);
+        // spawn decoration
+
+        Vector2Int TL=entrance, BR;
+        TL.Add(rand.Next(-3, -10), rand.Next(-2, -7));
+        BR = TL;
+        BR.Add(24, 18);
+
+        // while(something) add side rooms
+
+        // generate alternative enterances/exits
+
+        // populate rooms
+
+        // }
+    }
+
+    void GenPlayerSpawn(System.Random rand) {
+        var psp = rand.OnUnitCircle();
+        playerSpawnPoint = center + psp*mapRadius*chunkSize;
+        int jic;
+        for(jic=0; jic < 999999 && GetTile((int)playerSpawnPoint.x, (int)playerSpawnPoint.y) <= 2; jic++) { // biome 0,1,2 is ocean,shoreline,beach
+            playerSpawnPoint -= psp*6;
         }
+        for(jic=0; jic<1000 && GetTile((int)playerSpawnPoint.x, (int)playerSpawnPoint.y) != 1; jic++) {
+            playerSpawnPoint += psp;
+        }
+        playerSpawnPoint += rand.OnUnitCircle()*3;
     }
 
-    public void GenerateMapLagSpike() {
-        GenOverworld();
-        GenDungeons();
-    }
-
-    public async Task GenerateMap() {
-        await Task.WhenAll(Task.Run(()=>{GenOverworld();}), Task.Run(()=>{GenDungeons();}));
+    public void GenerateMap() {
+        var rand = new System.Random(seed);
+        GenLand();
+        GenDungeons(rand);
+        GenDecorations(rand);
+        GenPlayerSpawn(rand);
     }
 
     public static int GetTile(int x, int y) {

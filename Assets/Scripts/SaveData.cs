@@ -96,7 +96,7 @@ public class SaveData : BaseSaveData
 
         gameState.difficulty = difficulty;
         WorldGen.SetSeed(seed);
-        var t = singles.worldGen.GenerateMap();
+        var t = Task.Run(() => { singles.worldGen.GenerateMap(); });
 
         Inventory.instance.Clear();
         for(int i=0; i<inventoryItems.Length; i++)

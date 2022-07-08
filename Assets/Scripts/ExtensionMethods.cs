@@ -7,4 +7,8 @@ public static class ExtensionMethods {
         var angle = rand.NextDouble()*2*System.Math.PI;
         return new UnityEngine.Vector2((float)System.Math.Cos(angle), (float)System.Math.Sin(angle));
     }
+
+    public static void Add(this ref UnityEngine.Vector2Int vec, int x, int y) {
+        vec.Set(vec.x+x, vec.y+y);
+    }
 }

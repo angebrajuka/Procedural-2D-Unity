@@ -24,16 +24,16 @@ public class EditorMapTextureGen : Editor
             {
                 WorldGen.SetSeed(script.seed);
             }
-            script.worldGen.GenerateMapLagSpike();
-            WorldGen.GenerateTexture(script.resolution);
+            script.worldGen.GenerateMap();
+            script.worldGen.GenerateTexture(script.resolution);
         }
         if(GUILayout.Button("clear"))
         {
             script.worldGen.Clear();
         }
 
-        if(WorldGen.textureBiome != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), WorldGen.textureBiome, null, ScaleMode.ScaleToFit);
-        if(WorldGen.textureDecor != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), WorldGen.textureDecor, null, ScaleMode.ScaleToFit);
-        if(WorldGen.textureDungeons != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), WorldGen.textureDungeons, null, ScaleMode.ScaleToFit);
+        if(script.worldGen.textureBiome != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), script.worldGen.textureBiome, null, ScaleMode.ScaleToFit);
+        if(script.worldGen.textureDecor != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), script.worldGen.textureDecor, null, ScaleMode.ScaleToFit);
+        if(script.worldGen.textureDungeons != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), script.worldGen.textureDungeons, null, ScaleMode.ScaleToFit);
     }
 }
