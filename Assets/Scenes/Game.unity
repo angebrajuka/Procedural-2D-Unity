@@ -3997,9 +3997,13 @@ MonoBehaviour:
   decorPrefabs: {fileID: 376448174}
   menuSeeds:
   - seed: 10
-    x: 478.1
-    y: 458.7
+    x: 475
+    y: 458
+  playerSpawnPoint: {x: 0, y: 0}
   renderDistance: 2
+  textureBiome: {fileID: 0}
+  textureDecor: {fileID: 0}
+  textureDungeons: {fileID: 0}
 --- !u!4 &1063415191
 Transform:
   m_ObjectHideFlags: 0

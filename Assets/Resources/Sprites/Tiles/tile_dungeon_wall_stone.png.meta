@@ -108,7 +108,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 48
+        y: 240
         width: 16
         height: 16
       alignment: 0
@@ -129,7 +129,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 48
+        y: 240
         width: 16
         height: 16
       alignment: 0
@@ -150,7 +150,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 48
+        y: 240
         width: 16
         height: 16
       alignment: 0
@@ -171,7 +171,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 48
+        y: 240
         width: 16
         height: 16
       alignment: 0
@@ -191,8 +191,8 @@ TextureImporter:
       name: tile_dungeon_wall_stone_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
+        x: 64
+        y: 240
         width: 16
         height: 16
       alignment: 0
@@ -212,8 +212,8 @@ TextureImporter:
       name: tile_dungeon_wall_stone_5
       rect:
         serializedVersion: 2
-        x: 16
-        y: 32
+        x: 80
+        y: 240
         width: 16
         height: 16
       alignment: 0
@@ -233,8 +233,8 @@ TextureImporter:
       name: tile_dungeon_wall_stone_6
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
+        x: 96
+        y: 240
         width: 16
         height: 16
       alignment: 0
@@ -254,8 +254,8 @@ TextureImporter:
       name: tile_dungeon_wall_stone_7
       rect:
         serializedVersion: 2
-        x: 48
-        y: 32
+        x: 112
+        y: 240
         width: 16
         height: 16
       alignment: 0
@@ -276,7 +276,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
+        y: 224
         width: 16
         height: 16
       alignment: 0
@@ -297,7 +297,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 16
+        y: 224
         width: 16
         height: 16
       alignment: 0
@@ -318,7 +318,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 16
+        y: 224
         width: 16
         height: 16
       alignment: 0
@@ -339,7 +339,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 16
+        y: 224
         width: 16
         height: 16
       alignment: 0
@@ -359,8 +359,8 @@ TextureImporter:
       name: tile_dungeon_wall_stone_12
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 64
+        y: 224
         width: 16
         height: 16
       alignment: 0
@@ -380,8 +380,8 @@ TextureImporter:
       name: tile_dungeon_wall_stone_13
       rect:
         serializedVersion: 2
-        x: 16
-        y: 0
+        x: 80
+        y: 224
         width: 16
         height: 16
       alignment: 0
@@ -401,8 +401,8 @@ TextureImporter:
       name: tile_dungeon_wall_stone_14
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
+        x: 96
+        y: 224
         width: 16
         height: 16
       alignment: 0
@@ -422,8 +422,8 @@ TextureImporter:
       name: tile_dungeon_wall_stone_15
       rect:
         serializedVersion: 2
-        x: 48
-        y: 0
+        x: 112
+        y: 224
         width: 16
         height: 16
       alignment: 0
@@ -435,6 +435,678 @@ TextureImporter:
       bones: []
       spriteID: 6df35e0a908b8ff4cb3d92b6042b8f84
       internalID: -13236437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a5adce7ce61b0243996754f7b461fc4
+      internalID: -838679951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_17
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fcb1f701df87d842bc9310aa67c0c0b
+      internalID: -860251264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_18
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e4cc857561045c4885f408ec98248ca
+      internalID: -1762266711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_19
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f21996636457e444b0b68451b0ae36f
+      internalID: 1589646910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_20
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13c3106f1011f2e489ce1791763d4d25
+      internalID: 324258083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_21
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3eb4f07a5b785554ab446b41aca15ca3
+      internalID: -2094362054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_22
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18a19ac06bcd8fa4e9b2d6176bc6f290
+      internalID: -121198885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_23
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f9eda98acde42743812d265694a3b15
+      internalID: -919833766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c0cbdc6217fc7d43b76567488356494
+      internalID: 1699627808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_25
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32833abf1e42b7543bbab290aec18b4c
+      internalID: 440672851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_26
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1d670ced9262394885020f7e7922ac0
+      internalID: 1582354581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_27
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd8a3434ab9889e4eb0e988cf06a155c
+      internalID: 273665994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_28
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 970f5093319b43440ac8d6a3a8ff7c57
+      internalID: 1775297164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_29
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16e281918a2a46e4fa533d4df0539cac
+      internalID: -1294531495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_30
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 911ab3eb9f46ee84a89c3e76c73e14f7
+      internalID: -1742512206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_31
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b616b76a15b917340b5d178ad97032a4
+      internalID: -1199235197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7c65cf987d75a245bfdf3bbbb66b0d0
+      internalID: -704056851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_33
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b785b43232355e49ab4a35a2cebd895
+      internalID: 767278349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_34
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ca11d5fcfac69840a69695aeed79165
+      internalID: 1769920599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_35
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad0a6d02f604b71499b7202501884705
+      internalID: 180771664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_36
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 425fb84d8ce0df646b22acb0e3427b20
+      internalID: 1594160428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_37
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ebeddccf0663ac47aab112fb0d26d3b
+      internalID: 981870995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_38
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f3c0a5f042091f40a2e71b04c8e5689
+      internalID: 1582768906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_39
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc1d6c5eed88b594fb0a0423a2b7ad3c
+      internalID: 2125642827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e704a6b23fe52b141a7cc436b6d1484b
+      internalID: 105404059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_41
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 014fda6d01bdf754abeb7d7f86f0c5d0
+      internalID: -1789493158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_42
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1302225a9342e846a968f7d3578d9ae
+      internalID: 64217771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_43
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcdea97673bc9bd4f851b2f6890a4805
+      internalID: 499637299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_44
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 592a4332d341cca46abfb7f8123b3409
+      internalID: -808609805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_45
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c06fde8bc16598479f310c6a0dd37c9
+      internalID: -1218217912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_46
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a757726f4a86264ea8f5d2ef22ad6b6
+      internalID: 1619202465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_dungeon_wall_stone_47
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13292469855b50f428d454132481a887
+      internalID: -1723941947
       vertices: []
       indices: 
       edges: []
@@ -451,21 +1123,53 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       tile_dungeon_wall_stone_5: -801848834
-      tile_dungeon_wall_stone_6: 566370947
+      tile_dungeon_wall_stone_24: 1699627808
+      tile_dungeon_wall_stone_12: -219933568
+      tile_dungeon_wall_stone_26: 1582354581
       tile_dungeon_wall_stone_9: 1314336482
-      tile_dungeon_wall_stone_11: 726310042
+      tile_dungeon_wall_stone_35: 180771664
       tile_dungeon_wall_stone_2: -1335570747
       tile_dungeon_wall_stone_1: 1528718555
-      tile_dungeon_wall_stone_15: -13236437
       tile_dungeon_wall_stone_7: -1260742510
+      tile_dungeon_wall_stone_36: 1594160428
+      tile_dungeon_wall_stone_41: -1789493158
+      tile_dungeon_wall_stone_21: -2094362054
       tile_dungeon_wall_stone_3: 1105207583
       tile_dungeon_wall_stone_13: 1427685766
-      tile_dungeon_wall_stone_10: 1255442232
       tile_dungeon_wall_stone_14: 503332022
-      tile_dungeon_wall_stone_4: 2098551720
+      tile_dungeon_wall_stone_30: -1742512206
+      tile_dungeon_wall_stone_46: 1619202465
+      tile_dungeon_wall_stone_47: -1723941947
+      tile_dungeon_wall_stone_19: 1589646910
+      tile_dungeon_wall_stone_42: 64217771
       tile_dungeon_wall_stone_0: -1865091190
+      tile_dungeon_wall_stone_18: -1762266711
       tile_dungeon_wall_stone_8: -2096345524
-      tile_dungeon_wall_stone_12: -219933568
+      tile_dungeon_wall_stone_37: 981870995
+      tile_dungeon_wall_stone_16: -838679951
+      tile_dungeon_wall_stone_6: 566370947
+      tile_dungeon_wall_stone_29: -1294531495
+      tile_dungeon_wall_stone_11: 726310042
+      tile_dungeon_wall_stone_39: 2125642827
+      tile_dungeon_wall_stone_28: 1775297164
+      tile_dungeon_wall_stone_15: -13236437
+      tile_dungeon_wall_stone_44: -808609805
+      tile_dungeon_wall_stone_25: 440672851
+      tile_dungeon_wall_stone_22: -121198885
+      tile_dungeon_wall_stone_43: 499637299
+      tile_dungeon_wall_stone_32: -704056851
+      tile_dungeon_wall_stone_31: -1199235197
+      tile_dungeon_wall_stone_20: 324258083
+      tile_dungeon_wall_stone_23: -919833766
+      tile_dungeon_wall_stone_38: 1582768906
+      tile_dungeon_wall_stone_45: -1218217912
+      tile_dungeon_wall_stone_10: 1255442232
+      tile_dungeon_wall_stone_4: 2098551720
+      tile_dungeon_wall_stone_34: 1769920599
+      tile_dungeon_wall_stone_33: 767278349
+      tile_dungeon_wall_stone_17: -860251264
+      tile_dungeon_wall_stone_27: 273665994
+      tile_dungeon_wall_stone_40: 105404059
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -39,9 +39,9 @@ public class Chunk : MonoBehaviour {
             positionArray[i] = tilePos;
             int x = (int)transform.localPosition.x+tilePos.x;
             int y = (int)transform.localPosition.y+tilePos.y;
-            int tile = WorldGen.GetTile(x, y);
+            int tile = singles.worldGen.GetTile(x, y);
             tileArray[i] = WorldGen.tiles[tile];
-            WorldGen.SpawnDecoration(x, y, tile, decorations);
+            singles.worldGen.SpawnDecoration(x, y, tile, decorations);
         }
         m_tilemap.SetTiles(positionArray, tileArray);
         tilePos.x++;
