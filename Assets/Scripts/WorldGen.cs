@@ -28,7 +28,7 @@ public class WorldGen : MonoBehaviour {
     public const int WIDTH = mapDiameter*chunkSize;
     public static readonly Vector2Int center = Vector2Int.one*mapRadius*chunkSize;
 
-    private Vector3Int currPos=-Vector3Int.forward;
+    private Vector3Int currPos=Vector3Int.zero;
     private Vector3Int prevPos;
     public Vector2 playerSpawnPoint = Vector2.zero;
     public Dictionary<(int x, int y), Chunk> loadedChunks;

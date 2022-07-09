@@ -11,8 +11,8 @@ public class Chunk : MonoBehaviour {
     public Transform decorations;
 
     Vector3Int tilePos;
-    Vector3Int[] positionArray=new Vector3Int[WorldGen.chunkSize];
-    TileBase[] tileArray=new TileBase[WorldGen.chunkSize];
+    Vector3Int[] positionArray=new Vector3Int[WorldGen.chunkSize+3];
+    TileBase[] tileArray=new TileBase[WorldGen.chunkSize+3];
     [HideInInspector] public bool loaded;
 
     public void _Start() {
@@ -22,7 +22,7 @@ public class Chunk : MonoBehaviour {
     
     public void Init() {
         loaded = false;
-        tilePos = new Vector3Int(0, 0, 0);
+        tilePos = new Vector3Int(-1, 0, 0);
     }
 
     public void RemoveDecorations() {
@@ -35,7 +35,7 @@ public class Chunk : MonoBehaviour {
 
     public void Update() {
         int i=0;
-        for(tilePos.y=0; tilePos.y<WorldGen.chunkSize; tilePos.y++, i++) {
+        for(tilePos.y=-2; tilePos.y<=WorldGen.chunkSize; tilePos.y++, i++) {
             positionArray[i] = tilePos;
             int x = (int)transform.localPosition.x+tilePos.x;
             int y = (int)transform.localPosition.y+tilePos.y;
@@ -46,7 +46,7 @@ public class Chunk : MonoBehaviour {
         m_tilemap.SetTiles(positionArray, tileArray);
         tilePos.x++;
 
-        if(tilePos.x == WorldGen.chunkSize) {
+        if(tilePos.x == WorldGen.chunkSize+1) {
             m_tilemap.CompressBounds();
             loaded = true;
             enabled = false;

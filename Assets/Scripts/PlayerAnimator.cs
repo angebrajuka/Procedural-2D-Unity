@@ -40,7 +40,7 @@ public class PlayerAnimator : MonoBehaviour {
         m_renderer.flipX = (direction == 1);
 
         m_animator.SetBool("moving", PlayerMovement.moving);
-        m_animator.SetInteger("biome", PlayerMovement.biome);
+        m_animator.SetInteger("biome", 2);
         // m_animator.SetBool("shooting", PlayerState.shooting || PlayerState.melee);
         // m_animator.SetBool("punching", PlayerState.punching);
         m_animator.speed = PlayerMovement.moving ? PlayerMovement.rb.velocity.magnitude * 0.07f : 1;
