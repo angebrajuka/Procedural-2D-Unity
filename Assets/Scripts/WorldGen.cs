@@ -399,10 +399,10 @@ public class WorldGen : MonoBehaviour {
         int i=0;
         foreach(var bounds in toFill) {
             for(pos.x=bounds.min.x; pos.x<bounds.max.x; pos.x++) for(pos.y=bounds.min.y; pos.y<bounds.max.y; pos.y++) {
-            positionArray[i] = pos;
-            tilebaseArray[i] = tiles[GetTile(pos.x, pos.y)];
-            ++i;
-        }
+                positionArray[i] = pos;
+                tilebaseArray[i] = tiles[GetTile(pos.x, pos.y)];
+                ++i;
+            }
         }
         tilemap.SetTiles(positionArray, tilebaseArray);
     }
