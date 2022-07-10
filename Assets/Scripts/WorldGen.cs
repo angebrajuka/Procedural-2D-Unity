@@ -14,26 +14,19 @@ public struct MenuSeedPosition {
 
 public class WorldGen : MonoBehaviour {
     // hierarchy
-    public GameObject prefab_chunk;
-    public GameObject prefab_mask;
-    public Sprite[] sprite_masks;
+    public Tilemap tilemap;
     public GameObject prefab_decoration;
-    public Transform chunks;
     public Transform decorPrefabs;
     public MenuSeedPosition[] menuSeeds;
+    public Vector2Int renderDistance;
 
-    public const int chunkSize=50;
-    public const int mapRadius=16;
-    public const int mapDiameter=mapRadius*2;
-    public const int WIDTH = mapDiameter*chunkSize;
-    public static readonly Vector2Int center = Vector2Int.one*mapRadius*chunkSize;
+    public const int mapRadius = 800;
+    public const int mapDiameter = mapRadius*2;
+    public static readonly Vector2Int center = Vector2Int.one*mapRadius;
 
-    private Vector3Int currPos=Vector3Int.zero;
-    private Vector3Int prevPos;
+    private Vector3Int currPos = Vector3Int.zero;
+    private Vector3Int prevPos = Vector3Int.zero;
     public Vector2 playerSpawnPoint = Vector2.zero;
-    public Dictionary<(int x, int y), Chunk> loadedChunks;
-    public LinkedList<Chunk> disabledChunks;
-    public int renderDistance;
 
     public static RuleTile[] tiles;
     public static HashSet<int> waterTiles;
@@ -43,7 +36,7 @@ public class WorldGen : MonoBehaviour {
 
     public static byte[,] mapTexture_biome, mapTexture_decor, mapTexture_dungeons, mapTexture_dungeonDecor;
 
-    public Texture2D textureBiome, textureDecor, textureDungeons;
+    [HideInInspector] public Texture2D textureBiome, textureDecor, textureDungeons;
 
     public static ushort seed;
     public static float seed_main, seed_temp, seed_rain;
@@ -59,9 +52,6 @@ public class WorldGen : MonoBehaviour {
         foreach(var pair in Biome.s_decorations) {
             if(pair.Value == null) continue;
             DestroyImmediate(pair.Value.gameObject);
-        }
-        while(chunks.childCount != 0) {
-            DestroyImmediate(chunks.GetChild(0).gameObject);
         }
     }
 
@@ -86,7 +76,7 @@ public class WorldGen : MonoBehaviour {
                 for(int x=0; x<rain_temp_map_width; x++) {
                     for(int y=0; y<rain_temp_map_width; y++) {
                         Color32 c = rain_temp_map_tex.GetPixel(x, y);
-                        
+
                         int[] arr = biomesJson[i].rain_temp_map_color;
                         if(c.r == arr[0] && c.g == arr[1] && c.b == arr[2]) {
                             rain_temp_map[x,y] = (byte)i;
@@ -96,19 +86,10 @@ public class WorldGen : MonoBehaviour {
             }
         }
 
-        loadedChunks = new Dictionary<(int, int), Chunk>();
-        disabledChunks = new LinkedList<Chunk>();
-
-        while(disabledChunks.Count < Math.Sqr(renderDistance*2)) {
-            disabledChunks.AddLast(Instantiate(prefab_chunk, chunks).GetComponent<Chunk>());
-            disabledChunks.Last.Value._Start();
-            disabledChunks.Last.Value.gameObject.SetActive(false);
-        }
-
-        mapTexture_biome = new byte[WIDTH, WIDTH];
-        mapTexture_decor = new byte[WIDTH, WIDTH];
-        mapTexture_dungeons = new byte[WIDTH, WIDTH];
-        mapTexture_dungeonDecor = new byte[WIDTH, WIDTH];
+        mapTexture_biome = new byte[mapDiameter, mapDiameter];
+        mapTexture_decor = new byte[mapDiameter, mapDiameter];
+        mapTexture_dungeons = new byte[mapDiameter, mapDiameter];
+        mapTexture_dungeonDecor = new byte[mapDiameter, mapDiameter];
     }
 
     static Color32 AverageColorFromTexture(Texture2D tex) {
@@ -137,7 +118,7 @@ public class WorldGen : MonoBehaviour {
         textureBiome = new Texture2D(resolution, resolution);
         for(int x=0; x<resolution; x++) {
             for(int y=0; y<resolution; y++) {
-                textureBiome.SetPixel(x, y, colors[mapTexture_biome[(int)(((float)x/resolution)*mapDiameter*chunkSize), (int)(((float)y/resolution)*mapDiameter*chunkSize)]]);
+                textureBiome.SetPixel(x, y, colors[mapTexture_biome[(int)(((float)x/resolution)*mapDiameter), (int)(((float)y/resolution)*mapDiameter)]]);
             }
         }
         textureBiome.Apply();
@@ -145,7 +126,7 @@ public class WorldGen : MonoBehaviour {
         textureDecor = new Texture2D(resolution, resolution);
         for(int x=0; x<resolution; x++) {
             for(int y=0; y<resolution; y++) {
-                textureDecor.SetPixel(x, y, mapTexture_decor[(int)(((float)x/resolution)*mapDiameter*chunkSize), (int)(((float)y/resolution)*mapDiameter*chunkSize)] < 254 ? Color.white : Color.black);
+                textureDecor.SetPixel(x, y, mapTexture_decor[(int)(((float)x/resolution)*mapDiameter), (int)(((float)y/resolution)*mapDiameter)] < 254 ? Color.white : Color.black);
             }
         }
         textureDecor.Apply();
@@ -153,7 +134,7 @@ public class WorldGen : MonoBehaviour {
         textureDungeons = new Texture2D(resolution, resolution);
         for(int x=0; x<resolution; x++) {
             for(int y=0; y<resolution; y++) {
-                textureDungeons.SetPixel(x, y, mapTexture_dungeons[(int)(((float)x/resolution)*mapDiameter*chunkSize), (int)(((float)y/resolution)*mapDiameter*chunkSize)] == 0 ? Color.black : Color.white);
+                textureDungeons.SetPixel(x, y, mapTexture_dungeons[(int)(((float)x/resolution)*mapDiameter), (int)(((float)y/resolution)*mapDiameter)] == 0 ? Color.black : Color.white);
             }
         }
         textureDungeons.Apply();
@@ -166,7 +147,7 @@ public class WorldGen : MonoBehaviour {
         const float perlinScale = 0.004f;
         float perlinVal = Mathf.PerlinNoise((seed_main + pos.x + perlinOffset)*perlinScale, (seed_main + pos.y + perlinOffset)*perlinScale); // 0 to 1
         perlinVal = Math.Remap(perlinVal, 0, 1, 0.3f, 1);
-        float gradientVal = 1-Vector2Int.Distance(pos, center)/(chunkSize*mapRadius); // 1 in center, 0 at edge of map
+        float gradientVal = 1-Vector2Int.Distance(pos, center)/(mapRadius); // 1 in center, 0 at edge of map
         float perlinScaleFine = 0.1f;
         float fineNoise = Mathf.PerlinNoise((seed_main + pos.x + perlinOffset)*perlinScaleFine, (seed_main + pos.y + perlinOffset)*perlinScaleFine);
         fineNoise = Math.Remap(fineNoise, 0, 1, 0, 0.05f);
@@ -208,8 +189,8 @@ public class WorldGen : MonoBehaviour {
 
     void GenLand() {
         Vector2Int pos = new Vector2Int(0, 0);
-        for(pos.x=0; pos.x<WIDTH; pos.x++) {
-            for(pos.y=0; pos.y<WIDTH; pos.y++) {
+        for(pos.x=0; pos.x<mapDiameter; pos.x++) {
+            for(pos.y=0; pos.y<mapDiameter; pos.y++) {
                 byte val = PerlinMain(pos);
                 mapTexture_biome[pos.x, pos.y] = val;
             }
@@ -218,13 +199,13 @@ public class WorldGen : MonoBehaviour {
 
     void GenDecorations(System.Random rand) {
         Vector2Int pos = new Vector2Int(0, 0);
-        for(pos.x=0; pos.x<WIDTH; pos.x++) {
-            for(pos.y=0; pos.y<WIDTH; pos.y++) {
+        for(pos.x=0; pos.x<mapDiameter; pos.x++) {
+            for(pos.y=0; pos.y<mapDiameter; pos.y++) {
                 mapTexture_decor[pos.x, pos.y] = 254;
             }
         }
-        for(pos.x=0; pos.x<WIDTH; pos.x++) {
-            for(pos.y=0; pos.y<WIDTH; pos.y++) {
+        for(pos.x=0; pos.x<mapDiameter; pos.x++) {
+            for(pos.y=0; pos.y<mapDiameter; pos.y++) {
                 int val = mapTexture_biome[pos.x, pos.y];
 
                 if(mapTexture_decor[pos.x, pos.y] == 254) {
@@ -306,14 +287,14 @@ public class WorldGen : MonoBehaviour {
             }
         }
 
-        for(int x=0; x<WIDTH; ++x) for(int y=0; y<WIDTH; ++y) {
+        for(int x=0; x<mapDiameter; ++x) for(int y=0; y<mapDiameter; ++y) {
             mapTexture_dungeonDecor[x,y] = 254;
         }
     }
 
     void GenPlayerSpawn(System.Random rand) {
         var psp = rand.OnUnitCircle();
-        playerSpawnPoint = center + psp*mapRadius*chunkSize;
+        playerSpawnPoint = center + psp*mapRadius;
         int jic;
         for(jic=0; jic < 999999 && GetTile((int)playerSpawnPoint.x, (int)playerSpawnPoint.y) <= 2; jic++) { // biome 0,1,2 is ocean,shoreline,beach
             playerSpawnPoint -= psp*6;
@@ -366,45 +347,56 @@ public class WorldGen : MonoBehaviour {
         seed_temp = 111.8325f+seed*762.0934f;
     }
 
-    void LoadAll() {
-        for(int x=currPos.x-(renderDistance-1); x<=currPos.x+(renderDistance-1); x++) {
-            for(int y=currPos.y-(renderDistance-1); y<=currPos.y+(renderDistance-1); y++) {
-                if(!loadedChunks.ContainsKey((x, y))) {
-                    var chunk = disabledChunks.First.Value;
-                    var chunkObj = disabledChunks.First.Value.gameObject;
-                    disabledChunks.RemoveFirst();
-                    chunkObj.SetActive(true);
-                    chunkObj.transform.localPosition = new Vector3(x*chunkSize, y*chunkSize, 0);
-                    chunk.enabled = true;
-                    chunk.Init();
-                    loadedChunks.Add((x, y), chunk);
-                }
-            }
-        }
+    public void AdjustBounds() {
+        Vector3Int origin = tilemap.origin;
+        origin.x = currPos.x - renderDistance.x;
+        origin.y = currPos.y - renderDistance.y;
+        tilemap.origin = origin;
+        Vector3Int size = tilemap.size;
+        size.x = renderDistance.x*2;
+        size.y = renderDistance.y*2;
+        tilemap.size = size;
+        tilemap.ResizeBounds();
     }
 
-    public void UnloadFar(bool all=false) {
-        foreach(var key in new List<(int x, int y)>(loadedChunks.Keys)) { // list to avoid concurrent modification
-            if(all || Mathf.Abs(key.x-currPos.x) > renderDistance || Mathf.Abs(key.y-currPos.y) > renderDistance) {
-                loadedChunks[key].RemoveDecorations();
-                loadedChunks[key].gameObject.SetActive(false);
-                disabledChunks.AddLast(loadedChunks[key]);
-                loadedChunks.Remove(key);
-            }
-        };
+    void LoadAll() {
+        var positionArray = new Vector3Int[tilemap.size.x*tilemap.size.y];
+        var tilebaseArray = new TileBase[positionArray.Length];
+
+        Vector3Int pos=Vector3Int.zero;
+        int i;
+        for(i=0, pos.x=tilemap.origin.x; pos.x<tilemap.origin.x+tilemap.size.x; pos.x++) for(pos.y=tilemap.origin.y; pos.y<tilemap.origin.y+tilemap.size.y; pos.y++, ++i) {
+            positionArray[i] = pos;
+            tilebaseArray[i] = tiles[GetTile(pos.x, pos.y)];
+        }
+        tilemap.SetTiles(positionArray, tilebaseArray);
+
+        // for(int x=currPos.x-(renderDistance-1); x<=currPos.x+(renderDistance-1); x++) {
+        //     for(int y=currPos.y-(renderDistance-1); y<=currPos.y+(renderDistance-1); y++) {
+        //         if(!loadedChunks.ContainsKey((x, y))) {
+        //             var chunk = disabledChunks.First.Value;
+        //             var chunkObj = disabledChunks.First.Value.gameObject;
+        //             disabledChunks.RemoveFirst();
+        //             chunkObj.SetActive(true);
+        //             chunk.enabled = true;
+        //             chunk.Init(x*chunkSize, y*chunkSize, 0);
+        //             loadedChunks.Add((x, y), chunk);
+        //         }
+        //     }
+        // }
     }
 
     void UpdatePos() {
-        currPos.x = (int)Mathf.Floor(singles.cameraFollow.transform.position.x/chunkSize);
-        currPos.y = (int)Mathf.Floor(singles.cameraFollow.transform.position.y/chunkSize);
+        currPos.x = (int)Mathf.Floor(singles.cameraFollow.transform.position.x);
+        currPos.y = (int)Mathf.Floor(singles.cameraFollow.transform.position.y);
         // currPos.z gets manually changed on staircase or smth
     }
 
     void Update() {
         UpdatePos();
 
-        if(currPos != prevPos || loadedChunks.Count == 0) {
-            UnloadFar();
+        if(currPos != prevPos) {
+            AdjustBounds();
             LoadAll();
         }
 
@@ -415,12 +407,7 @@ public class WorldGen : MonoBehaviour {
 
     public void ForceLoadAllLagSpike() {
         UpdatePos();
-        UnloadFar(true);
+        AdjustBounds();
         LoadAll();
-        foreach(var pair in loadedChunks) {
-            while(!pair.Value.loaded) {
-                pair.Value.Update();
-            }
-        }
     }
 }

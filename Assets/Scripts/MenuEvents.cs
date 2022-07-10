@@ -27,7 +27,6 @@ public class MenuEvents : MonoBehaviour {
 
         await AwaitFade();
 
-        singles.worldGen.UnloadFar(true);
         var msp = singles.worldGen.menuSeeds[Random.Range(0, singles.worldGen.menuSeeds.Length)];
         WorldGen.SetSeed(msp.seed);
         singles.menuCampfire.transform.position = new Vector3(msp.x, msp.y, singles.menuCampfire.transform.position.z);
