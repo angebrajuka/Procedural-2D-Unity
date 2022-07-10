@@ -364,26 +364,47 @@ public class WorldGen : MonoBehaviour {
         var tilebaseArray = new TileBase[positionArray.Length];
 
         Vector3Int pos=Vector3Int.zero;
-        int i;
-        for(i=0, pos.x=tilemap.origin.x; pos.x<tilemap.origin.x+tilemap.size.x; pos.x++) for(pos.y=tilemap.origin.y; pos.y<tilemap.origin.y+tilemap.size.y; pos.y++, ++i) {
+        int i=0;
+        for(pos.x=tilemap.origin.x; pos.x<tilemap.origin.x+tilemap.size.x; pos.x++) for(pos.y=tilemap.origin.y; pos.y<tilemap.origin.y+tilemap.size.y; pos.y++) {
             positionArray[i] = pos;
             tilebaseArray[i] = tiles[GetTile(pos.x, pos.y)];
+            ++i;
         }
         tilemap.SetTiles(positionArray, tilebaseArray);
+        tilemap.RefreshAllTiles();
+    }
 
-        // for(int x=currPos.x-(renderDistance-1); x<=currPos.x+(renderDistance-1); x++) {
-        //     for(int y=currPos.y-(renderDistance-1); y<=currPos.y+(renderDistance-1); y++) {
-        //         if(!loadedChunks.ContainsKey((x, y))) {
-        //             var chunk = disabledChunks.First.Value;
-        //             var chunkObj = disabledChunks.First.Value.gameObject;
-        //             disabledChunks.RemoveFirst();
-        //             chunkObj.SetActive(true);
-        //             chunk.enabled = true;
-        //             chunk.Init(x*chunkSize, y*chunkSize, 0);
-        //             loadedChunks.Add((x, y), chunk);
-        //         }
-        //     }
-        // }
+    void LoadMissing() {
+        Vector2Int diff = (Vector2Int)(currPos-prevPos);
+        diff.x = Mathf.Abs(diff.x);
+        diff.y = Mathf.Abs(diff.y);
+        if(diff.x+diff.x >= renderDistance.x || diff.y+diff.y >= renderDistance.y) {
+            LoadAll();
+            return;
+        }
+
+        var toFill = new (Vector2Int min, Vector2Int max)[2];
+        toFill[0].min = new Vector2Int(currPos.x > prevPos.x ? prevPos.x+renderDistance.x : currPos.x-renderDistance.x, currPos.y-renderDistance.y);
+        toFill[0].max = new Vector2Int(currPos.x > prevPos.x ? currPos.x+renderDistance.x : prevPos.x-renderDistance.x, currPos.y+renderDistance.y);
+        toFill[1].min = new Vector2Int(Mathf.Max(currPos.x, prevPos.x)-renderDistance.x, currPos.y > prevPos.y ? prevPos.y+renderDistance.y : currPos.y-renderDistance.y);
+        toFill[1].max = new Vector2Int(Mathf.Min(currPos.x, prevPos.x)+renderDistance.x, currPos.y > prevPos.y ? currPos.y+renderDistance.y : prevPos.y-renderDistance.y);
+
+        int area = 0;
+        foreach(var bounds in toFill) {
+            area += (bounds.max.x-bounds.min.x)*(bounds.max.y-bounds.min.y);
+        }
+        var positionArray = new Vector3Int[area];
+        var tilebaseArray = new TileBase[positionArray.Length];
+        Vector3Int pos=Vector3Int.zero;
+        int i=0;
+        foreach(var bounds in toFill) {
+            for(pos.x=bounds.min.x; pos.x<bounds.max.x; pos.x++) for(pos.y=bounds.min.y; pos.y<bounds.max.y; pos.y++) {
+            positionArray[i] = pos;
+            tilebaseArray[i] = tiles[GetTile(pos.x, pos.y)];
+            ++i;
+        }
+        }
+        tilemap.SetTiles(positionArray, tilebaseArray);
     }
 
     void UpdatePos() {
@@ -397,8 +418,10 @@ public class WorldGen : MonoBehaviour {
 
         if(currPos != prevPos) {
             AdjustBounds();
-            LoadAll();
+            LoadMissing();
         }
+
+        if(Input.GetKeyDown(KeyCode.Space)) tilemap.SetTile(currPos, tiles[0]);
 
         prevPos.x = currPos.x;
         prevPos.y = currPos.y;
