@@ -191,7 +191,7 @@ MonoBehaviour:
   - seed: 10
     x: 475
     y: 458
-  renderDistance: {x: 32, y: 24}
+  renderDistance: {x: 48, y: 32}
   playerSpawnPoint: {x: 0, y: 0}
   textureBiome: {fileID: 0}
   textureDecor: {fileID: 0}
@@ -999,7 +999,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 13
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
