@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class DaylightCycle : MonoBehaviour
-{
+public class DaylightCycle : MonoBehaviour {
     public const float k_MORNING=240, k_DAY=15, k_EVENING=135, k_NIGHT=150;
     
     // hierarchy
@@ -15,13 +14,15 @@ public class DaylightCycle : MonoBehaviour
 
     Light2D globalLight;
 
-    public void Start()
-    {
+    public void Start() {
         globalLight = GetComponent<Light2D>();
     }
 
-    void Update()
-    {
+    public void Set(float time) {
+        DaylightCycle.time = time;
+    }
+
+    void Update() {
         if(!PauseHandler.paused) {
             time += Time.deltaTime;
             time %= k_MORNING;

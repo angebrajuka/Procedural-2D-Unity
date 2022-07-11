@@ -19,6 +19,7 @@ public class WorldGen : MonoBehaviour {
     public Transform decorPrefabs;
     public MenuSeedPosition[] menuSeeds;
     public Vector2Int renderDistance;
+    public RuleTile[] dungeonTiles;
 
     public const int mapRadius = 800;
     public const int mapDiameter = mapRadius*2;

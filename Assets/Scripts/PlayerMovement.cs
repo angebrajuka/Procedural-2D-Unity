@@ -7,6 +7,7 @@ using static Singles;
 public class PlayerMovement : MonoBehaviour {
     // hierarchy
     public float debugSpode;
+    public WorldGen worldGen;
 
     public static Rigidbody2D rb;
 
@@ -20,7 +21,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public void StartGame() {
-        transform.position = singles.worldGen.playerSpawnPoint; // transform.position is updated instantly, rb.position wont update till next frame, caused loading bug
+        transform.position = worldGen.playerSpawnPoint; // transform.position is updated instantly, rb.position wont update till next frame, caused loading bug
         singles.cameraFollow.toFollow = transform;
         singles.cameraFollow.offset = Vector3.zero;
         singles.cameraFollow.Snap();
@@ -40,7 +41,7 @@ public class PlayerMovement : MonoBehaviour {
         moving = (input_move.x != 0 || input_move.y != 0) && (Mathf.Abs(rb.velocity.x) >= 0.01f || Mathf.Abs(rb.velocity.y) >= 0.01f) && !PauseHandler.paused;
 
         speedMult = 1;
-        speedMult *= singles.worldGen.IsWater((int)Mathf.Floor(rb.position.x), (int)Mathf.Floor(rb.position.y)) ? 0.6f : 1;
+        speedMult *= worldGen.IsWater((int)Mathf.Floor(rb.position.x), (int)Mathf.Floor(rb.position.y)) ? 0.6f : 1;
         speedMult *= PlayerState.sprinting ? PlayerStats.k_SPRINT_MULTIPLIER : (Flashlight.on ? PlayerStats.k_FLASHLIGHT_MULTIPLIER : 1);
         speedMult *= debugSpode;
     }
