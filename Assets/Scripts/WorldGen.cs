@@ -335,7 +335,7 @@ public class WorldGen : MonoBehaviour {
     public void AdjustBounds() {
         var origin = tilemap.origin;
         origin.x = currPos.x - renderDistance.x;
-        origin.y = currPos.x - renderDistance.y;
+        origin.y = currPos.y - renderDistance.y;
         tilemap.origin = origin;
         var size = tilemap.size;
         size.x = renderDistance.x*2;
@@ -409,8 +409,6 @@ public class WorldGen : MonoBehaviour {
             AdjustBounds();
             LoadMissing();
         }
-
-        if(Input.GetKeyDown(KeyCode.Space)) tilemap.SetTile(currPos, tiles[0]);
 
         prevPos.x = currPos.x;
         prevPos.y = currPos.y;

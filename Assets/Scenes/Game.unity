@@ -185,6 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraFollow: {fileID: 792913058}
   tilemap: {fileID: 650357004}
+  tilemapRenderer: {fileID: 650357003}
   prefab_decoration: {fileID: 1271242055900781240, guid: 17c288cd53f085047b61f22e4754c8e9,
     type: 3}
   decorPrefabs: {fileID: 376448174}
@@ -376,7 +377,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 413550053}
-  - component: {fileID: 413550052}
+  - component: {fileID: 413550056}
   - component: {fileID: 413550051}
   - component: {fileID: 413550050}
   - component: {fileID: 413550040}
@@ -440,32 +441,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &413550052
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 413550038}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: e6a8b8b7a3ccd114f8ddf549ea8b3730, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.03279364, y: -0.6197635}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.5654713, y: 0.7522342}
-  m_EdgeRadius: 0
 --- !u!4 &413550053
 Transform:
   m_ObjectHideFlags: 0
@@ -506,6 +481,22 @@ MonoBehaviour:
   arm_left: {fileID: 0}
   gunRotatePoint: {fileID: 0}
   armRotatePoint: {fileID: 0}
+--- !u!70 &413550056
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413550038}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: e6a8b8b7a3ccd114f8ddf549ea8b3730, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.030407727, y: -0.5712305}
+  m_Size: {x: 0.5695033, y: 0.84796154}
+  m_Direction: 0
 --- !u!1 &451141167
 GameObject:
   m_ObjectHideFlags: 0
@@ -847,12 +838,12 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
+  m_ChunkCullingBounds: {x: 999999, y: 999999, z: 999999}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
   m_Mode: 0
-  m_DetectChunkCullingBounds: 0
+  m_DetectChunkCullingBounds: 1
   m_MaskInteraction: 0
 --- !u!1839735485 &650357004
 Tilemap:
@@ -1046,7 +1037,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: 0
+  m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -1685,7 +1676,7 @@ PrefabInstance:
     - target: {fileID: 7803719050321581512, guid: 201bb4bac53026b49812157102de7c96,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7803719050321581512, guid: 201bb4bac53026b49812157102de7c96,
         type: 3}
