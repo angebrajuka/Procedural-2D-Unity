@@ -396,7 +396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugSpode: 1
   worldGen: {fileID: 27163493}
-  cameraFollow: {fileID: 0}
+  cameraFollow: {fileID: 792913058}
 --- !u!114 &413550050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1833,11 +1833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93da25eae3f821947bc686173e6d112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraFollow: {fileID: 792913058}
   worldGen: {fileID: 27163493}
-  menuCampfire: {fileID: 1517099173}
-  pAnimator: {fileID: 413550054}
-  pMovement: {fileID: 413550040}
 --- !u!4 &2143826660
 Transform:
   m_ObjectHideFlags: 0
