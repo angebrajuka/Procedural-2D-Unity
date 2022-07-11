@@ -8,9 +8,5 @@ public class Singles : MonoBehaviour {
     }
 
     // hierarchy
-    public Follow cameraFollow;
     public WorldGen worldGen;
-    public Campfire menuCampfire;
-    public PlayerAnimator pAnimator;
-    public PlayerMovement pMovement;
 }

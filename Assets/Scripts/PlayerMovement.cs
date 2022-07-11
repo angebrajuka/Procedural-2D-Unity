@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour {
     // hierarchy
     public float debugSpode;
     public WorldGen worldGen;
+    public Follow cameraFollow;
 
     public static Rigidbody2D rb;
 
@@ -22,9 +23,9 @@ public class PlayerMovement : MonoBehaviour {
 
     public void StartGame() {
         transform.position = worldGen.playerSpawnPoint; // transform.position is updated instantly, rb.position wont update till next frame, caused loading bug
-        singles.cameraFollow.toFollow = transform;
-        singles.cameraFollow.offset = Vector3.zero;
-        singles.cameraFollow.Snap();
+        cameraFollow.toFollow = transform;
+        cameraFollow.offset = Vector3.zero;
+        cameraFollow.Snap();
     }
 
     void Update() {

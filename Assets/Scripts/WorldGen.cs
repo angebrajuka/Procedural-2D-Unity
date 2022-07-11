@@ -14,6 +14,7 @@ public struct MenuSeedPosition {
 
 public class WorldGen : MonoBehaviour {
     // hierarchy
+    public Follow cameraFollow;
     public Tilemap tilemap;
     public GameObject prefab_decoration;
     public Transform decorPrefabs;
@@ -409,8 +410,8 @@ public class WorldGen : MonoBehaviour {
     }
 
     void UpdatePos() {
-        currPos.x = (int)Mathf.Floor(singles.cameraFollow.transform.position.x);
-        currPos.y = (int)Mathf.Floor(singles.cameraFollow.transform.position.y);
+        currPos.x = (int)Mathf.Floor(cameraFollow.transform.position.x);
+        currPos.y = (int)Mathf.Floor(cameraFollow.transform.position.y);
         // currPos.z gets manually changed on staircase or smth
     }
 

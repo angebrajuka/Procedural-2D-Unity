@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb82c605c0c6c3458650bbf98a664b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraFollow: {fileID: 792913058}
   tilemap: {fileID: 650357004}
   prefab_decoration: {fileID: 1271242055900781240, guid: 17c288cd53f085047b61f22e4754c8e9,
     type: 3}
@@ -226,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7744adc2a8c2a64380442adc17ad7c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuEvents: {fileID: 4739587857152599023}
 --- !u!4 &200618065
 Transform:
   m_ObjectHideFlags: 0
@@ -394,6 +396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugSpode: 1
   worldGen: {fileID: 27163493}
+  cameraFollow: {fileID: 0}
 --- !u!114 &413550050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3316,6 +3319,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d4fe716de2bf8b45accbfb4f15e77c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldGen: {fileID: 27163493}
+  menuCampfire: {fileID: 1517099173}
+  cameraFollow: {fileID: 792913058}
+  pMovement: {fileID: 413550040}
 --- !u!1 &4835582770836984468
 GameObject:
   m_ObjectHideFlags: 0
