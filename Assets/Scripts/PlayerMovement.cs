@@ -28,6 +28,13 @@ public class PlayerMovement : MonoBehaviour {
         cameraFollow.Snap();
     }
 
+    public void tp(float x, float y) {
+        var pos = transform.position;
+        pos.x = x;
+        pos.y = y;
+        transform.position = pos;
+    }
+
     void Update() {
         input_move.x = 0;
         input_move.y = 0;

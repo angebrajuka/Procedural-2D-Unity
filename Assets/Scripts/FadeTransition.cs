@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class FadeTransition : MonoBehaviour {
     // hierarchy
@@ -16,6 +17,10 @@ public class FadeTransition : MonoBehaviour {
     }
 
     public static bool Done { get { return image.color.a == (black ? 1 : 0); } }
+
+    public static async Task AwaitFade() {
+        while(!FadeTransition.Done) await Task.Yield();
+    }
 
     public static void Snap() {
         Color col = image.color;

@@ -13,26 +13,16 @@ public class MenuEvents : MonoBehaviour {
     const int FRAMES = 10;
     // number of frames to wait is arbitrary, just needs to be more than 1 to compensate for delta time, 10 seemed to solve all issues
 
-    private async Task AwaitFade() {
-        while(!FadeTransition.Done) await Task.Yield();
-    }
-
-    // no guaruntee it runs on the very next frame, only guaruntee is waiting AT LEAST one frame (or c frames if c isnt 1)
-    private async Task NextFrame(int c=1) {
-        var current = Time.frameCount;
-        while(Time.frameCount-c < current) await Task.Yield();
-    }
-
     public async void MainMenu() {
         FadeTransition.black = true;
         DaylightCycle.time = DaylightCycle.k_NIGHT;
         menuCampfire.Lit = false;
         worldGen.enabled = false;
 
-        await AwaitFade();
+        await FadeTransition.AwaitFade();
 
         var msp = worldGen.menuSeeds[Random.Range(0, worldGen.menuSeeds.Length)];
-        WorldGen.SetSeed(msp.seed);
+        worldGen.SetSeed(msp.seed);
         menuCampfire.transform.position = new Vector3(msp.x, msp.y, menuCampfire.transform.position.z);
         cameraFollow.toFollow = menuCampfire.transform;
         cameraFollow.offset = new Vector3(0, 2.4f, 0);
@@ -40,7 +30,7 @@ public class MenuEvents : MonoBehaviour {
 
         await worldGen.GenerateMapAsync();
         worldGen.ForceLoadAllLagSpike();
-        await NextFrame(FRAMES); // makes sure we wait several frames after lag spike for smooth fade, otherwise deltaTime is too long
+        await General.NextFrame(FRAMES); // makes sure we wait several frames after lag spike for smooth fade, otherwise deltaTime is too long
         menuCampfire.gameObject.SetActive(true);
         worldGen.enabled = true;
 
@@ -49,7 +39,7 @@ public class MenuEvents : MonoBehaviour {
         PauseHandler.blurred = false;
         FadeTransition.black = false;
 
-        await AwaitFade();
+        await FadeTransition.AwaitFade();
         menuCampfire.Lit = true;
     }
 
@@ -66,10 +56,10 @@ public class MenuEvents : MonoBehaviour {
         MenuHandler.CloseAll();
         await Task.Delay(350);
         FadeTransition.black = true;
-        await AwaitFade();
+        await FadeTransition.AwaitFade();
 
         gameState.saveName = buttons.GetChild(0).GetComponent<TMP_InputField>().text;
-        WorldGen.SetSeed((ushort)Mathf.Abs(MathUtils.TryParse(buttons.GetChild(1).GetComponent<TMP_InputField>().text, WorldGen.RandomSeed()))); // InputFieldClamp handles bounds
+        worldGen.SetSeed((ushort)Mathf.Abs(MathUtils.TryParse(buttons.GetChild(1).GetComponent<TMP_InputField>().text, worldGen.RandomSeed()))); // InputFieldClamp handles bounds
         gameState.difficulty = (byte)buttons.GetChild(2).GetComponent<TMP_Dropdown>().value;
 
         PauseHandler.Pause();
@@ -77,7 +67,7 @@ public class MenuEvents : MonoBehaviour {
         await worldGen.GenerateMapAsync();
         pMovement.StartGame();
         worldGen.ForceLoadAllLagSpike();
-        await NextFrame(FRAMES); // makes sure we wait till next frame after lag spike for smooth fade, otherwise deltaTime is too long
+        await General.NextFrame(FRAMES); // makes sure we wait till next frame after lag spike for smooth fade, otherwise deltaTime is too long
 
         DaylightCycle.time = DaylightCycle.k_DAY/2;
         FadeTransition.black = false;

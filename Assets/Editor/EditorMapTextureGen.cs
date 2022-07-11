@@ -17,12 +17,12 @@ public class EditorMapTextureGen : Editor
             script.worldGen.Start();
             if(script.randSeed)
             {
-                WorldGen.SetSeed(WorldGen.RandomSeed());
-                script.seed = WorldGen.seed;
+                script.worldGen.SetSeed(script.worldGen.RandomSeed());
+                script.seed = script.worldGen.seed;
             }
             else
             {
-                WorldGen.SetSeed(script.seed);
+                script.worldGen.SetSeed(script.seed);
             }
             script.worldGen.GenerateMap();
             script.worldGen.GenerateTexture(script.resolution);

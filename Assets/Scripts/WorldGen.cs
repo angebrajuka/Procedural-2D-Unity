@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Threading.Tasks;
 
-using static Singles;
-
 [System.Serializable]
 public struct MenuSeedPosition {
     public ushort seed;
@@ -30,20 +28,20 @@ public class WorldGen : MonoBehaviour {
     private Vector3Int prevPos = Vector3Int.zero;
     public Vector2 playerSpawnPoint = Vector2.zero;
 
-    public static RuleTile[] tiles;
-    public static HashSet<int> waterTiles;
-    public static Biome[] biomes;
-    public static int rain_temp_map_width=100;
-    public static byte[,] rain_temp_map;
+    private RuleTile[] tiles;
+    private HashSet<int> waterTiles;
+    private Biome[] biomes;
+    private const int rain_temp_map_width=100;
+    private byte[,] rain_temp_map;
 
-    public static byte[,] mapTexture_biome, mapTexture_decor, mapTexture_dungeons, mapTexture_dungeonDecor;
+    private byte[,] mapTexture_biome, mapTexture_decor, mapTexture_dungeons, mapTexture_dungeonDecor;
 
     [HideInInspector] public Texture2D textureBiome, textureDecor, textureDungeons;
 
-    public static ushort seed;
-    public static float seed_main, seed_temp, seed_rain;
+    [HideInInspector] public ushort seed;
+    [HideInInspector] public float seed_main, seed_temp, seed_rain;
 
-    public static RuleTile LoadTile(string name) {
+    public RuleTile LoadTile(string name) {
         return Resources.Load<RuleTile>("Tiles/"+name);
     }
 
@@ -94,27 +92,10 @@ public class WorldGen : MonoBehaviour {
         mapTexture_dungeonDecor = new byte[mapDiameter, mapDiameter];
     }
 
-    static Color32 AverageColorFromTexture(Texture2D tex) {
-        Color32[] texColors = tex.GetPixels32();
-
-        int total = texColors.Length;
-        float r = 0;
-        float g = 0;
-        float b = 0;
-
-        for(int i = 0; i < total; i++) {
-            r += texColors[i].r;
-            g += texColors[i].g;
-            b += texColors[i].b;
-        }
-
-        return new Color32((byte)(r / total) , (byte)(g / total) , (byte)(b / total) , 255);
-    }
-
     public void GenerateTexture(int resolution) {
         var colors = new Color32[tiles.Length];
         for(int i=0; i<tiles.Length; i++) {
-            colors[i] = AverageColorFromTexture(tiles[i].m_DefaultSprite.texture);
+            colors[i] = tiles[i].m_DefaultSprite.texture.AverageColorFromTexture();
         }
 
         textureBiome = new Texture2D(resolution, resolution);
@@ -145,7 +126,7 @@ public class WorldGen : MonoBehaviour {
     const int perlinOffset = 5429; // prevents mirroring
 
     // returns 0 for water, 1 for shallow water, 2 for sand, 3 for biome gen
-    public static byte PerlinMain(Vector2Int pos) {
+    public byte PerlinMain(Vector2Int pos) {
         const float perlinScale = 0.004f;
         float perlinVal = Mathf.PerlinNoise((seed_main + pos.x + perlinOffset)*perlinScale, (seed_main + pos.y + perlinOffset)*perlinScale); // 0 to 1
         perlinVal = Math.Remap(perlinVal, 0, 1, 0.3f, 1);
@@ -162,7 +143,7 @@ public class WorldGen : MonoBehaviour {
         return (byte)(val > landVal ? PerlinBiome(pos) : val > sandVal ? 2 : val > shallowWaterVal ? 1 : 0);
     }
 
-    public static byte PerlinBiome(Vector2Int pos) {
+    public byte PerlinBiome(Vector2Int pos) {
         const float perlinScaleRain = 0.003f;
         const float perlinScaleTemp = 0.003f;
 
@@ -178,15 +159,7 @@ public class WorldGen : MonoBehaviour {
         perlinValRain -= fineNoise;
         perlinValRain = Mathf.Round(perlinValRain * rain_temp_map_width);
 
-        return MapClamped(rain_temp_map, (int)perlinValTemp, (int)perlinValRain);
-    }
-
-    static Color32 MultiplyColor(Color32 c, int x) {
-        return new Color32((byte)(c.r*x), (byte)(c.g*x), (byte)(c.b*x), (byte)(c.a*x));
-    }
-
-    public static byte MapClamped(byte[,] map, int x, int y) {
-        return map[Mathf.Clamp(x, 0, map.GetLength(0)-1), Mathf.Clamp(y, 0, map.GetLength(1)-1)];
+        return rain_temp_map.Clamped((int)perlinValTemp, (int)perlinValRain);
     }
 
     void GenLand() {
@@ -216,10 +189,10 @@ public class WorldGen : MonoBehaviour {
                         if(rval < biomes[val].decorationThreshholds[i]) {
                             for(int x=0; x<biomes[val].decorations[i].stats.renderSize.x; x++) {
                                 for(int y=0; y<biomes[val].decorations[i].stats.renderSize.y; y++) {
-                                    if(MapClamped(mapTexture_biome, pos.x+x, pos.y+y) != val ||
-                                    (MapClamped(mapTexture_decor, pos.x+x, pos.y+y) != 254 &&
-                                    (MapClamped(mapTexture_decor, pos.x+x, pos.y+y) == 255 ||
-                                    biomes[val].decorations[MapClamped(mapTexture_decor, pos.x+x, pos.y+y)].stats.collider != null))) {
+                                    if(mapTexture_biome.Clamped(pos.x+x, pos.y+y) != val ||
+                                    (mapTexture_decor.Clamped(pos.x+x, pos.y+y) != 254 &&
+                                    (mapTexture_decor.Clamped(pos.x+x, pos.y+y) == 255 ||
+                                    biomes[val].decorations[mapTexture_decor.Clamped(pos.x+x, pos.y+y)].stats.collider != null))) {
                                         goto BreakBreak;
                                     }
                                 }
@@ -319,16 +292,26 @@ public class WorldGen : MonoBehaviour {
         GenPlayerSpawn(rand);
     }
 
+    public async void EnterExitDungeon(int enter) {
+        FadeTransition.black = true;
+        await FadeTransition.AwaitFade();
+        currPos.z = (enter == 0 ? 0 : -1);
+        AdjustBounds();
+        LoadAll();
+        await General.NextFrame(10);
+        FadeTransition.black = false;
+    }
+
     public bool IsWater(int x, int y) {
-        return waterTiles.Contains(GetTile(x,y));
+        return currPos.z == -1 ? false : waterTiles.Contains(GetTile(x,y));
     }
 
     public int GetTile(int x, int y) {
-        return MapClamped(currPos.z == 0 ? mapTexture_biome : mapTexture_dungeons, x, y);
+        return (currPos.z == 0 ? mapTexture_biome : mapTexture_dungeons).Clamped(x, y);
     }
 
     public void SpawnDecoration(int x, int y, int tile, Transform parent) {
-        int i = MapClamped(currPos.z == 0 ? mapTexture_decor : mapTexture_dungeonDecor, x, y);
+        int i = (currPos.z == 0 ? mapTexture_decor : mapTexture_dungeonDecor).Clamped(x, y);
         if(i == 254 || i == 255) return;
 
         var decoration = biomes[tile].decorations[i];
@@ -337,12 +320,12 @@ public class WorldGen : MonoBehaviour {
         go.SetActive(true);
     }
 
-    public static ushort RandomSeed() {
+    public ushort RandomSeed() {
         return (ushort)Random.Range(0, 1000000);
     }
 
-    public static void SetSeed(ushort seed) {
-        WorldGen.seed = seed;
+    public void SetSeed(ushort seed) {
+        this.seed = seed;
 
         seed_main = 2589.216f+seed*252.3457f;
         seed_rain = 913.8473f+seed*2345.195f;
@@ -350,15 +333,19 @@ public class WorldGen : MonoBehaviour {
     }
 
     public void AdjustBounds() {
-        Vector3Int origin = tilemap.origin;
+        var origin = tilemap.origin;
         origin.x = currPos.x - renderDistance.x;
-        origin.y = currPos.y - renderDistance.y;
+        origin.y = currPos.x - renderDistance.y;
         tilemap.origin = origin;
-        Vector3Int size = tilemap.size;
+        var size = tilemap.size;
         size.x = renderDistance.x*2;
         size.y = renderDistance.y*2;
         tilemap.size = size;
         tilemap.ResizeBounds();
+    }
+
+    TileBase GetTileBase(int x, int y) {
+        return (currPos.z == 0 ? tiles : dungeonTiles)[GetTile(x, y)];
     }
 
     void LoadAll() {
@@ -369,7 +356,7 @@ public class WorldGen : MonoBehaviour {
         int i=0;
         for(pos.x=tilemap.origin.x; pos.x<tilemap.origin.x+tilemap.size.x; pos.x++) for(pos.y=tilemap.origin.y; pos.y<tilemap.origin.y+tilemap.size.y; pos.y++) {
             positionArray[i] = pos;
-            tilebaseArray[i] = tiles[GetTile(pos.x, pos.y)];
+            tilebaseArray[i] = GetTileBase(pos.x, pos.y);
             ++i;
         }
         tilemap.SetTiles(positionArray, tilebaseArray);
@@ -402,7 +389,7 @@ public class WorldGen : MonoBehaviour {
         foreach(var bounds in toFill) {
             for(pos.x=bounds.min.x; pos.x<bounds.max.x; pos.x++) for(pos.y=bounds.min.y; pos.y<bounds.max.y; pos.y++) {
                 positionArray[i] = pos;
-                tilebaseArray[i] = tiles[GetTile(pos.x, pos.y)];
+                tilebaseArray[i] = GetTileBase(pos.x, pos.y);
                 ++i;
             }
         }
