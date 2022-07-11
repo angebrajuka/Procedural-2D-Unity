@@ -11,14 +11,21 @@ public class PlayerMovement : MonoBehaviour {
     public Follow cameraFollow;
 
     public static Rigidbody2D rb;
+    Collider2D c2d;
+    float halfColliderHeight;
 
     public static bool moving=false;
-    public static int biome=0;
+    private bool inWater;
+    public bool InWater { get { return inWater; } }
+    private bool inOcean;
+    public bool InOcean { get { return inOcean; } }
     public static float speedMult;
     static Vector2 input_move;
 
     public void Start() {
         rb = GetComponent<Rigidbody2D>();
+        c2d = GetComponent<Collider2D>();
+        halfColliderHeight = (c2d.bounds.max.y - c2d.bounds.min.y) / 2f;
     }
 
     public void StartGame() {
@@ -48,8 +55,13 @@ public class PlayerMovement : MonoBehaviour {
 
         moving = (input_move.x != 0 || input_move.y != 0) && (Mathf.Abs(rb.velocity.x) >= 0.01f || Mathf.Abs(rb.velocity.y) >= 0.01f) && !PauseHandler.paused;
 
+        int x = (int)Mathf.Floor(rb.position.x+c2d.offset.x),
+            y = (int)Mathf.Floor(rb.position.y+c2d.offset.y-halfColliderHeight);
+        inWater = worldGen.IsWater(x,y);
+        inOcean = worldGen.IsOcean(x,y);
+
         speedMult = 1;
-        speedMult *= worldGen.IsWater((int)Mathf.Floor(rb.position.x), (int)Mathf.Floor(rb.position.y)) ? 0.6f : 1;
+        speedMult *= InWater ? 0.6f : 1;
         speedMult *= PlayerState.sprinting ? PlayerStats.k_SPRINT_MULTIPLIER : (Flashlight.on ? PlayerStats.k_FLASHLIGHT_MULTIPLIER : 1);
         speedMult *= debugSpode;
     }

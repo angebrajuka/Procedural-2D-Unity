@@ -305,6 +305,9 @@ public class WorldGen : MonoBehaviour {
     public bool IsWater(int x, int y) {
         return currPos.z == -1 ? false : waterTiles.Contains(GetTile(x,y));
     }
+    public bool IsOcean(int x, int y) {
+        return currPos.z == -1 ? false : GetTile(x,y) == 0;
+    }
 
     public int GetTile(int x, int y) {
         return (currPos.z == 0 ? mapTexture_biome : mapTexture_dungeons).Clamped(x, y);

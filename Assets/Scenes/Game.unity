@@ -185,7 +185,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraFollow: {fileID: 792913058}
   tilemap: {fileID: 650357004}
-  tilemapRenderer: {fileID: 650357003}
   prefab_decoration: {fileID: 1271242055900781240, guid: 17c288cd53f085047b61f22e4754c8e9,
     type: 3}
   decorPrefabs: {fileID: 376448174}
@@ -197,14 +196,14 @@ MonoBehaviour:
   dungeonTiles:
   - {fileID: 11400000, guid: 0e4861ab6d5ac464c83a8770b1619e26, type: 2}
   - {fileID: 11400000, guid: cdbb0c1e2aa6f384ba1c2616bba2981b, type: 2}
-  playerSpawnPoint: {x: 657.7215, y: 336.3545}
+  playerSpawnPoint: {x: 1231.4022, y: 998.3763}
   textureBiome: {fileID: 0}
   textureDecor: {fileID: 0}
   textureDungeons: {fileID: 0}
-  seed: 0
-  seed_main: 0
-  seed_temp: 0
-  seed_rain: 0
+  seed: 8075
+  seed_main: 2040280.8
+  seed_temp: 6154016
+  seed_rain: 18938364
 --- !u!1 &200618063
 GameObject:
   m_ObjectHideFlags: 0
@@ -1785,7 +1784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldGen: {fileID: 27163493}
   randSeed: 1
-  seed: 4446
+  seed: 8075
   resolution: 300
 --- !u!114 &1652026530
 MonoBehaviour:
@@ -2938,50 +2937,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 494162886}
     m_Modifications:
-    - target: {fileID: 4184491338698337100, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -25.139982
-      objectReference: {fileID: 0}
-    - target: {fileID: 4184491338698337100, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 12.570068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4184491338698337101, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 32
-      objectReference: {fileID: 0}
     - target: {fileID: 4184491338698337101, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
         type: 3}
       propertyPath: m_fontSizeBase
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 4184491338918643983, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.89990234
-      objectReference: {fileID: 0}
-    - target: {fileID: 4184491339066387393, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -25.139982
-      objectReference: {fileID: 0}
-    - target: {fileID: 4184491339066387393, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 12.570068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4184491339066387399, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 32
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4184491339066387399, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
         type: 3}
       propertyPath: m_fontSizeBase
-      value: 32
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4184491339088824272, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
         type: 3}
@@ -3125,18 +3089,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4184491339668778712, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
         type: 3}
-      propertyPath: m_fontSize
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 4184491339668778712, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
-        type: 3}
       propertyPath: m_fontSizeBase
       value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 4184491339668778715, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 18.599976
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44d8b5e842b9b0e42a57bed26b5c6222, type: 3}
