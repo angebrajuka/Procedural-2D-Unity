@@ -13,7 +13,7 @@ public struct MenuSeedPosition {
 public class WorldGen : MonoBehaviour {
     // hierarchy
     public Follow cameraFollow;
-    public Tilemap tilemap;
+    public Tilemap[] tilemaps;
     public GameObject prefab_decoration;
     public Transform decorPrefabs;
     public MenuSeedPosition[] menuSeeds;
@@ -336,34 +336,42 @@ public class WorldGen : MonoBehaviour {
     }
 
     public void AdjustBounds() {
-        var origin = tilemap.origin;
+        var origin = tilemaps[0].origin;
+        var size = tilemaps[0].size;
         origin.x = currPos.x - renderDistance.x;
         origin.y = currPos.y - renderDistance.y;
-        tilemap.origin = origin;
-        var size = tilemap.size;
         size.x = renderDistance.x*2;
         size.y = renderDistance.y*2;
-        tilemap.size = size;
-        tilemap.ResizeBounds();
+        foreach(var tilemap in tilemaps) {
+            tilemap.origin = origin;
+            tilemap.size = size;
+            tilemap.ResizeBounds();
+        }
     }
 
-    TileBase GetTileBase(int x, int y) {
-        return (currPos.z == 0 ? tiles : dungeonTiles)[GetTile(x, y)];
+    TileBase GetTileBase(int x, int y, int layer) {
+        int tile = GetTile(x, y);
+        if(currPos.z == -1) {
+            return tile != layer ? dungeonTiles[tile] : null;
+        }
+        return layer == 0 ? tiles[tile] : null;
     }
 
     void LoadAll() {
-        var positionArray = new Vector3Int[tilemap.size.x*tilemap.size.y];
-        var tilebaseArray = new TileBase[positionArray.Length];
+        for(int layer=0; layer<tilemaps.Length; ++layer) {
+            var positionArray = new Vector3Int[tilemaps[layer].size.x*tilemaps[layer].size.y];
+            var tilebaseArray = new TileBase[positionArray.Length];
 
-        Vector3Int pos=Vector3Int.zero;
-        int i=0;
-        for(pos.x=tilemap.origin.x; pos.x<tilemap.origin.x+tilemap.size.x; pos.x++) for(pos.y=tilemap.origin.y; pos.y<tilemap.origin.y+tilemap.size.y; pos.y++) {
-            positionArray[i] = pos;
-            tilebaseArray[i] = GetTileBase(pos.x, pos.y);
-            ++i;
+            Vector3Int pos = new Vector3Int(0, 0, 0);
+            int i=0;
+            for(pos.x=tilemaps[layer].origin.x; pos.x<tilemaps[layer].origin.x+tilemaps[layer].size.x; pos.x++) for(pos.y=tilemaps[layer].origin.y; pos.y<tilemaps[layer].origin.y+tilemaps[layer].size.y; pos.y++) {
+                positionArray[i] = pos;
+                tilebaseArray[i] = GetTileBase(pos.x, pos.y, layer);
+                ++i;
+            }
+            tilemaps[layer].SetTiles(positionArray, tilebaseArray);
+            tilemaps[layer].RefreshAllTiles();
         }
-        tilemap.SetTiles(positionArray, tilebaseArray);
-        tilemap.RefreshAllTiles();
     }
 
     void LoadMissing() {
@@ -387,16 +395,18 @@ public class WorldGen : MonoBehaviour {
         }
         var positionArray = new Vector3Int[area];
         var tilebaseArray = new TileBase[positionArray.Length];
-        Vector3Int pos=Vector3Int.zero;
-        int i=0;
-        foreach(var bounds in toFill) {
-            for(pos.x=bounds.min.x; pos.x<bounds.max.x; pos.x++) for(pos.y=bounds.min.y; pos.y<bounds.max.y; pos.y++) {
-                positionArray[i] = pos;
-                tilebaseArray[i] = GetTileBase(pos.x, pos.y);
-                ++i;
+        Vector3Int pos = new Vector3Int(0, 0, 0);
+        for(int layer=0; layer<tilemaps.Length; ++layer) {
+            int i=0;
+            foreach(var bounds in toFill) {
+                for(pos.x=bounds.min.x; pos.x<bounds.max.x; pos.x++) for(pos.y=bounds.min.y; pos.y<bounds.max.y; pos.y++) {
+                    positionArray[i] = pos;
+                    tilebaseArray[i] = GetTileBase(pos.x, pos.y, layer);
+                    ++i;
+                }
             }
+            tilemaps[layer].SetTiles(positionArray, tilebaseArray);
         }
-        tilemap.SetTiles(positionArray, tilebaseArray);
     }
 
     void UpdatePos() {
