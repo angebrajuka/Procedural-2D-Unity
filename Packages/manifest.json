@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.juka.menu": "file:C:/Users/braju/workspaces/Unity-workspace/Packages/com.juka.menu",
     "com.juka.utils": "file:C:/Users/braju/workspaces/Unity-workspace/Packages/com.juka.utils",
     "com.unity.2d.animation": "7.0.5",
     "com.unity.2d.pixel-perfect": "5.0.1",
