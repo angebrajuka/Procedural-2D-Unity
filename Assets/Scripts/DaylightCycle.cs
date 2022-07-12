@@ -8,6 +8,8 @@ public class DaylightCycle : MonoBehaviour {
     
     // hierarchy
     public float brightness_day, brightness_night;
+    public Color color_day, color_night;
+    public WorldGen worldGen;
 
     public static float time = k_DAY;
     public static float brightness;
@@ -28,11 +30,24 @@ public class DaylightCycle : MonoBehaviour {
             time %= k_MORNING;
         }
 
+        if(worldGen.InDungeon) {
+            brightness = Mathf.Lerp(brightness_night, brightness_day, 0.4f);
+            globalLight.intensity = brightness;
+            globalLight.color = color_night;
+            return;
+        }
+
         brightness = (time < k_DAY) ?
             Mathf.Lerp(brightness_night, brightness_day, time/k_DAY)
           : (time < k_EVENING   ? brightness_day
           : (time < k_NIGHT     ? Mathf.Lerp(brightness_day, brightness_night, (time-k_EVENING)/(k_NIGHT-k_EVENING))
           :  brightness_night));
         globalLight.intensity = brightness;
+
+        globalLight.color = (time < k_DAY) ?
+            Color.Lerp(color_night, color_day, time/k_DAY)
+          : (time < k_EVENING   ? color_day
+          : (time < k_NIGHT     ? Color.Lerp(color_day, color_night, (time-k_EVENING)/(k_NIGHT-k_EVENING))
+          :  color_night));
     }
 }

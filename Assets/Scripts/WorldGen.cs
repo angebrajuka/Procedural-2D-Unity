@@ -24,8 +24,7 @@ public class WorldGen : MonoBehaviour {
     public const int mapDiameter = mapRadius*2;
     public static readonly Vector2Int center = Vector2Int.one*mapRadius;
 
-    private Vector3Int currPos = Vector3Int.zero;
-    private Vector3Int prevPos = Vector3Int.zero;
+    private Vector3Int currPos = Vector3Int.zero, prevPos = Vector3Int.zero;
     public Vector2 playerSpawnPoint = Vector2.zero;
 
     private RuleTile[] tiles;
@@ -295,26 +294,33 @@ public class WorldGen : MonoBehaviour {
     public async void EnterExitDungeon(int enter) {
         FadeTransition.black = true;
         await FadeTransition.AwaitFade();
-        currPos.z = (enter == 0 ? 0 : -1);
+        InDungeon = (enter != 0);
         AdjustBounds();
         LoadAll();
         await General.NextFrame(10);
         FadeTransition.black = false;
     }
 
+    public bool InDungeon {
+        get { return currPos.z == -1; }
+        set { currPos.z = (value ? -1 : 0); } }
+
     public bool IsWater(int x, int y) {
-        return currPos.z == -1 ? false : waterTiles.Contains(GetTile(x,y));
+        return InDungeon ? false : waterTiles.Contains(GetTile(x,y));
     }
     public bool IsOcean(int x, int y) {
-        return currPos.z == -1 ? false : GetTile(x,y) == 0;
+        return InDungeon ? false : GetTile(x,y) == 0;
     }
 
+    public byte[,] ActiveMap { get { return InDungeon ? mapTexture_dungeons : mapTexture_biome; } }
+    public byte[,] ActiveDecor { get { return InDungeon ? mapTexture_dungeonDecor : mapTexture_decor; } }
+
     public int GetTile(int x, int y) {
-        return (currPos.z == 0 ? mapTexture_biome : mapTexture_dungeons).Clamped(x, y);
+        return ActiveMap.Clamped(x, y);
     }
 
     public void SpawnDecoration(int x, int y, int tile, Transform parent) {
-        int i = (currPos.z == 0 ? mapTexture_decor : mapTexture_dungeonDecor).Clamped(x, y);
+        int i = ActiveDecor.Clamped(x, y);
         if(i == 254 || i == 255) return;
 
         var decoration = biomes[tile].decorations[i];
@@ -351,7 +357,7 @@ public class WorldGen : MonoBehaviour {
 
     TileBase GetTileBase(int x, int y, int layer) {
         int tile = GetTile(x, y);
-        if(currPos.z == -1) {
+        if(InDungeon) {
             return tile != layer ? dungeonTiles[tile] : null;
         }
         return layer == 0 ? tiles[tile] : null;
@@ -412,7 +418,6 @@ public class WorldGen : MonoBehaviour {
     void UpdatePos() {
         currPos.x = (int)Mathf.Floor(cameraFollow.transform.position.x);
         currPos.y = (int)Mathf.Floor(cameraFollow.transform.position.y);
-        // currPos.z gets manually changed on staircase or smth
     }
 
     void Update() {
@@ -425,7 +430,6 @@ public class WorldGen : MonoBehaviour {
 
         prevPos.x = currPos.x;
         prevPos.y = currPos.y;
-        prevPos.z = currPos.z;
     }
 
     public void ForceLoadAllLagSpike() {

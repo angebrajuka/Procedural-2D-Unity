@@ -1099,7 +1099,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 30
+      scalar: 0
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5356,3 +5356,4 @@ MonoBehaviour:
   animator: {fileID: 9199529255484243079}
   ps: {fileID: 348480900440120165}
   flicker: {fileID: 8336391524210526331}
+  rateOverTime: 30

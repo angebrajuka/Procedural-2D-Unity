@@ -1070,6 +1070,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brightness_day: 0.95
   brightness_night: 0.1
+  color_day: {r: 1, g: 1, b: 1, a: 1}
+  color_night: {r: 0.5801887, g: 0.6925922, b: 1, a: 1}
+  worldGen: {fileID: 27163493}
 --- !u!114 &668995409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1086,7 +1089,7 @@ MonoBehaviour:
   m_LightType: 4
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.99708295, g: 1, b: 0.7783019, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 0
   m_LightVolumeIntensityEnabled: 0

@@ -7,6 +7,11 @@ public class Campfire : MonoBehaviour {
     public Animator animator;
     public ParticleSystem ps;
     public FlickeringLight flicker;
+    public int rateOverTime;
+
+    void Start() {
+        Lit = false;
+    }
 
     bool lit = false;
     public bool Lit {
@@ -15,11 +20,8 @@ public class Campfire : MonoBehaviour {
         }
         set {
             lit = value;
-            if(lit) {
-                ps.Play();
-            } else {
-                ps.Pause();
-            }
+            var emission = ps.emission;
+            emission.rateOverTime = lit ? rateOverTime : 0;
             flicker.on = lit;
             bool active = gameObject.activeSelf;
             gameObject.SetActive(true);
