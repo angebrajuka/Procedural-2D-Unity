@@ -1069,9 +1069,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brightness_day: 0.95
-  brightness_night: 0.1
-  color_day: {r: 1, g: 1, b: 1, a: 1}
-  color_night: {r: 0.5801887, g: 0.6925922, b: 1, a: 1}
+  brightness_night: 0.2
+  color_day: {r: 0.9957729, g: 1, b: 0.6839622, a: 1}
+  color_night: {r: 0.5896226, g: 0.6829635, b: 1, a: 1}
   worldGen: {fileID: 27163493}
 --- !u!114 &668995409
 MonoBehaviour:
@@ -3229,11 +3229,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4184491339262646766, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
-        type: 3}
-      propertyPath: m_GlobalPointSize
-      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4184491339668778712, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
         type: 3}
