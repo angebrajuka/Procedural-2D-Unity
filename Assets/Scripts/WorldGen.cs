@@ -191,7 +191,7 @@ public class WorldGen : MonoBehaviour {
                                     if(mapTexture_biome.Clamped(pos.x+x, pos.y+y) != val ||
                                     (mapTexture_decor.Clamped(pos.x+x, pos.y+y) != 254 &&
                                     (mapTexture_decor.Clamped(pos.x+x, pos.y+y) == 255 ||
-                                    biomes[val].decorations[mapTexture_decor.Clamped(pos.x+x, pos.y+y)].stats.collider != null))) {
+                                    biomes[val].decorations[mapTexture_decor.Clamped(pos.x+x, pos.y+y)].stats.collider))) {
                                         goto BreakBreak;
                                     }
                                 }

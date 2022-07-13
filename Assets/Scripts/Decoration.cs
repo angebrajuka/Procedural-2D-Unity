@@ -2,45 +2,35 @@ using UnityEngine;
 
 using static Singles;
 
-public class Decoration : MonoBehaviour
-{
+public class Decoration : MonoBehaviour {
     public DecorationStats stats;
     public SpriteRenderer sr;
     public Target m_target;
     public Vector2Int[] availableMasks;
     public int size;
 
-    public void Init(DecorationStats stats)
-    {
+    public void Init(DecorationStats stats) {
         this.stats = stats;
 
         sr = GetComponent<SpriteRenderer>();
         sr.sortingOrder = stats.sortingLayer;
         sr.sprite = stats.sprite;
 
-        if(stats.collider != null)
-        {
+        if(stats.collider) {
             m_target = gameObject.AddComponent<Target>();
-
-            var c = gameObject.AddComponent<PolygonCollider2D>();
-            c.pathCount = 1;
-            c.SetPath(0, stats.collider);
         }
 
         size = stats.renderSize.x*stats.renderSize.y;
         availableMasks = new Vector2Int[size];
         int i=0;
-        for(int x=0; x<stats.renderSize.x; x++) for(int y=0; y<stats.renderSize.y; y++)
-        {
+        for(int x=0; x<stats.renderSize.x; x++) for(int y=0; y<stats.renderSize.y; y++) {
             availableMasks[i] = new Vector2Int(x, y);
             i++;
         }
     }
 
-    void Start()
-    {
-        if(m_target != null)
-        {
+    void Start() {
+        if(m_target != null) {
             m_target.damageable = stats.health > 0;
             m_target.OnDamage = OnDamage;
             m_target.OnKill = OnKill;
