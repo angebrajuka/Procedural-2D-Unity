@@ -5,23 +5,12 @@ using System;
 public class WorldLoading : MonoBehaviour {
     // hierarchy
     public WorldGen worldGen;
+    public Tilemap[] tilemaps;
     public Follow cameraFollow;
     public Vector2Int renderDistance;
 
     [HideInInspector] public World world;
-    private Tilemap[] tilemaps;
     private Vector3Int currPos = Vector3Int.zero, prevPos = Vector3Int.zero;
-
-    void Start() {
-        tilemaps = new Tilemap[transform.childCount];
-        int t=0;
-        for(int c=0; c<transform.childCount; ++c) {
-            if(transform.GetChild(c).gameObject.ComponentExists<Tilemap>(out var tilemap)) {
-                tilemaps[t++] = tilemap;
-            }
-        }
-        Array.Resize(ref tilemaps, t);
-    }
 
     public bool InDungeon {
         get { return currPos.z == -1; }

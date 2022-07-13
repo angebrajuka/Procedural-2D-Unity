@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 public class WorldGen : MonoBehaviour {
     // hierarchy
-    public RuleTile[] dungeonTiles;
+    public RuleTile tile_dungeonFloor;
+    public RuleTile tile_dungeonWall;
     public Biome ocean, shoreline, beach;
     public Biome[] biomes;
 
@@ -162,7 +163,15 @@ public class WorldGen : MonoBehaviour {
     }
 
     RuleTile[][,] GenDungeons(System.Random rand) {
-        int numDungeons = rand.Next(3, 6);
+        var floor = new RuleTile[World.diameter, World.diameter];
+        var decor = new RuleTile[World.diameter, World.diameter];
+        Vector2Int pos = new Vector2Int(0, 0);
+        for(pos.x=0; pos.x<World.diameter; pos.x++) {
+            for(pos.y=0; pos.y<World.diameter; pos.y++) {
+                floor[pos.x, pos.y] = null;
+                decor[pos.x, pos.y] = tile_dungeonWall;
+            }
+        }
 
         var rooms = new List<Room>();
 
@@ -170,7 +179,7 @@ public class WorldGen : MonoBehaviour {
 
         rooms.Add(entrance);
 
-        // for(int i=0; i<numDungeons; ++i) {
+        // for(int i=0; i<9; ++i) {
 
         // add to mapTexture_decor
 
@@ -189,20 +198,14 @@ public class WorldGen : MonoBehaviour {
 
         // }
 
-        for(int x=0; x<World.diameter; ++x) for(int y=0; y<World.diameter; ++y) {
-            // mapTexture_dungeonDecor[x,y] = 0;
-        }
-
         foreach(var room in rooms) {
             for(int x=room.BL.x; x<=room.TR.x; ++x) for(int y=room.BL.y; y<=room.TR.y; ++y) {
-                // mapTexture_dungeons[x, y] = 1;
-                // mapTexture_dungeonDecor[x,y] = 254;
+                floor[x,y] = tile_dungeonFloor;
+                decor[x,y] = null;
             }
         }
 
-        var h = new RuleTile[1][,];
-        h[0] = new RuleTile[1,1];
-        return h;
+        return new RuleTile[][,]{floor, decor};
     }
 
     Vector2 GenPlayerSpawn(System.Random rand, World world) {

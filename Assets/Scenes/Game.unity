@@ -185,9 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb82c605c0c6c3458650bbf98a664b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dungeonTiles:
-  - {fileID: 11400000, guid: 0e4861ab6d5ac464c83a8770b1619e26, type: 2}
-  - {fileID: 11400000, guid: cdbb0c1e2aa6f384ba1c2616bba2981b, type: 2}
+  tile_dungeonFloor: {fileID: 11400000, guid: cdbb0c1e2aa6f384ba1c2616bba2981b, type: 2}
+  tile_dungeonWall: {fileID: 11400000, guid: 0e4861ab6d5ac464c83a8770b1619e26, type: 2}
   ocean:
     biome_name: ocean
     tile: {fileID: 11400000, guid: b62ba4808d5c9b04ca2c13b71cd9ac1f, type: 2}
@@ -220,7 +219,7 @@ MonoBehaviour:
       threshhold: 0.06
       collider: 0
     - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
-      threshhold: 0.03
+      threshhold: 0.089999996
       collider: 0
   - biome_name: forest
     tile: {fileID: 11400000, guid: 28136ec728890d84b844f5d17adefde4, type: 2}
@@ -232,7 +231,7 @@ MonoBehaviour:
       threshhold: 0.03
       collider: 1
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.03
+      threshhold: 0.06
       collider: 0
   - biome_name: desert
     tile: {fileID: 11400000, guid: 7e9560d2059432d4cb16cd174653d837, type: 2}
@@ -244,7 +243,7 @@ MonoBehaviour:
       threshhold: 0.03
       collider: 1
     - tile: {fileID: 11400000, guid: ec954a85d33fff844a6addf4f9209444, type: 2}
-      threshhold: 0.014
+      threshhold: 0.044
       collider: 0
   - biome_name: taiga
     tile: {fileID: 11400000, guid: 241c7afd028f41e4e9c7d65f8a555f86, type: 2}
@@ -256,10 +255,10 @@ MonoBehaviour:
       threshhold: 0.02
       collider: 1
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.02
+      threshhold: 0.04
       collider: 0
     - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
-      threshhold: 0.03
+      threshhold: 0.07
       collider: 0
   - biome_name: tundra
     tile: {fileID: 11400000, guid: 241c7afd028f41e4e9c7d65f8a555f86, type: 2}
@@ -271,7 +270,7 @@ MonoBehaviour:
       threshhold: 0.02
       collider: 0
     - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
-      threshhold: 0.02
+      threshhold: 0.04
       collider: 0
   - biome_name: rainforest
     tile: {fileID: 11400000, guid: b4dcf2dbfc3cb484a82896273b6719d9, type: 2}
@@ -283,13 +282,13 @@ MonoBehaviour:
       threshhold: 0.025
       collider: 1
     - tile: {fileID: 11400000, guid: 2cbf413d445415a4a8272615921dafd8, type: 2}
-      threshhold: 0.035
+      threshhold: 0.060000002
       collider: 1
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.1
+      threshhold: 0.16
       collider: 0
     - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
-      threshhold: 0.06
+      threshhold: 0.22
       collider: 0
   - biome_name: savanna
     tile: {fileID: 11400000, guid: 1049f7248b015ed41937199a322de3b6, type: 2}
@@ -301,10 +300,10 @@ MonoBehaviour:
       threshhold: 0.01
       collider: 1
     - tile: {fileID: 11400000, guid: ec954a85d33fff844a6addf4f9209444, type: 2}
-      threshhold: 0.014
+      threshhold: 0.024
       collider: 0
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.007
+      threshhold: 0.031
       collider: 0
   - biome_name: swamp
     tile: {fileID: 11400000, guid: e9add67c912fa7a499de92ea46c0d6b1, type: 2}
@@ -316,7 +315,7 @@ MonoBehaviour:
       threshhold: 0.04
       collider: 0
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.01
+      threshhold: 0.049999997
       collider: 0
 --- !u!114 &27163494
 MonoBehaviour:
@@ -331,6 +330,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldGen: {fileID: 27163493}
+  tilemaps:
+  - {fileID: 650357004}
+  - {fileID: 50124701}
   cameraFollow: {fileID: 792913058}
   renderDistance: {x: 48, y: 32}
   world:
@@ -352,7 +354,7 @@ GameObject:
   - component: {fileID: 50124700}
   - component: {fileID: 50124699}
   m_Layer: 0
-  m_Name: Tilemap1
+  m_Name: Decoration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1046,7 +1048,7 @@ GameObject:
   - component: {fileID: 650357003}
   - component: {fileID: 650357005}
   m_Layer: 0
-  m_Name: Tilemap0
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2044,7 +2046,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldGen: {fileID: 27163493}
   randSeed: 1
-  seed: 17319
+  seed: 4504
   resolution: 100
 --- !u!114 &1652026530
 MonoBehaviour:
@@ -3240,7 +3242,7 @@ PrefabInstance:
     - target: {fileID: 4184491339088824275, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
         type: 3}
       propertyPath: objects.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4184491339088824275, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
         type: 3}
@@ -3257,6 +3259,11 @@ PrefabInstance:
       propertyPath: objects.Array.data[2]
       value: 
       objectReference: {fileID: 27163493}
+    - target: {fileID: 4184491339088824275, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
+        type: 3}
+      propertyPath: objects.Array.data[3]
+      value: 
+      objectReference: {fileID: 27163494}
     - target: {fileID: 4184491339088824285, guid: 44d8b5e842b9b0e42a57bed26b5c6222,
         type: 3}
       propertyPath: m_Name
