@@ -101,7 +101,7 @@ new public Transform transform;
         {
             Vector2 pos = PlayerMovement.rb.position;
 
-            pos /= WorldGen.mapDiameter;
+            pos /= World.diameter;
             pos.x *= minimap.sizeDelta.x;
             pos.y *= minimap.sizeDelta.y;
 

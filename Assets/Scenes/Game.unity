@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 27163492}
   - component: {fileID: 27163493}
+  - component: {fileID: 27163494}
   - component: {fileID: 27163491}
   m_Layer: 0
   m_Name: worldGen
@@ -184,29 +185,160 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb82c605c0c6c3458650bbf98a664b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraFollow: {fileID: 792913058}
-  tilemaps:
-  - {fileID: 650357004}
-  - {fileID: 50124701}
-  prefab_decoration: {fileID: 1271242055900781240, guid: 17c288cd53f085047b61f22e4754c8e9,
-    type: 3}
-  decorPrefabs: {fileID: 376448174}
-  menuSeeds:
-  - seed: 10
-    x: 475
-    y: 458
-  renderDistance: {x: 48, y: 32}
   dungeonTiles:
   - {fileID: 11400000, guid: 0e4861ab6d5ac464c83a8770b1619e26, type: 2}
   - {fileID: 11400000, guid: cdbb0c1e2aa6f384ba1c2616bba2981b, type: 2}
-  playerSpawnPoint: {x: 1231.4022, y: 998.3763}
-  textureBiome: {fileID: 0}
-  textureDecor: {fileID: 0}
-  textureDungeons: {fileID: 0}
-  seed: 8075
-  seed_main: 2040280.8
-  seed_temp: 6154016
-  seed_rain: 18938364
+  ocean:
+    biome_name: ocean
+    tile: {fileID: 11400000, guid: b62ba4808d5c9b04ca2c13b71cd9ac1f, type: 2}
+    rain_temp_map_color:
+      serializedVersion: 2
+      rgba: 0
+    decorations: []
+  shoreline:
+    biome_name: shoreline
+    tile: {fileID: 11400000, guid: e9add67c912fa7a499de92ea46c0d6b1, type: 2}
+    rain_temp_map_color:
+      serializedVersion: 2
+      rgba: 0
+    decorations: []
+  beach:
+    biome_name: beach
+    tile: {fileID: 11400000, guid: f12cdc614d298b04d8f3805a8243ec23, type: 2}
+    rain_temp_map_color:
+      serializedVersion: 2
+      rgba: 0
+    decorations: []
+  biomes:
+  - biome_name: plains
+    tile: {fileID: 11400000, guid: 4c8859130b716584eb1c90ae1c00f5f1, type: 2}
+    rain_temp_map_color:
+      serializedVersion: 2
+      rgba: 4284572159
+    decorations:
+    - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
+      threshhold: 0.06
+      collider: 0
+    - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
+      threshhold: 0.03
+      collider: 0
+  - biome_name: forest
+    tile: {fileID: 11400000, guid: 28136ec728890d84b844f5d17adefde4, type: 2}
+    rain_temp_map_color:
+      serializedVersion: 2
+      rgba: 4294918335
+    decorations:
+    - tile: {fileID: 11400000, guid: 959dfe680357bcf47a8eeb2b4292bed4, type: 2}
+      threshhold: 0.03
+      collider: 1
+    - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
+      threshhold: 0.03
+      collider: 0
+  - biome_name: desert
+    tile: {fileID: 11400000, guid: 7e9560d2059432d4cb16cd174653d837, type: 2}
+    rain_temp_map_color:
+      serializedVersion: 2
+      rgba: 4278190335
+    decorations:
+    - tile: {fileID: 11400000, guid: 866ab9df977aef94cb68ec920e665dde, type: 2}
+      threshhold: 0.03
+      collider: 1
+    - tile: {fileID: 11400000, guid: ec954a85d33fff844a6addf4f9209444, type: 2}
+      threshhold: 0.014
+      collider: 0
+  - biome_name: taiga
+    tile: {fileID: 11400000, guid: 241c7afd028f41e4e9c7d65f8a555f86, type: 2}
+    rain_temp_map_color:
+      serializedVersion: 2
+      rgba: 4294934783
+    decorations:
+    - tile: {fileID: 11400000, guid: a7f17e2db061cdc4894bfcca610fe301, type: 2}
+      threshhold: 0.02
+      collider: 1
+    - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
+      threshhold: 0.02
+      collider: 0
+    - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
+      threshhold: 0.03
+      collider: 0
+  - biome_name: tundra
+    tile: {fileID: 11400000, guid: 241c7afd028f41e4e9c7d65f8a555f86, type: 2}
+    rain_temp_map_color:
+      serializedVersion: 2
+      rgba: 4292132863
+    decorations:
+    - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
+      threshhold: 0.02
+      collider: 0
+    - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
+      threshhold: 0.02
+      collider: 0
+  - biome_name: rainforest
+    tile: {fileID: 11400000, guid: b4dcf2dbfc3cb484a82896273b6719d9, type: 2}
+    rain_temp_map_color:
+      serializedVersion: 2
+      rgba: 4294901760
+    decorations:
+    - tile: {fileID: 11400000, guid: 682e64be4a7c2c542850532c3fbe425c, type: 2}
+      threshhold: 0.025
+      collider: 1
+    - tile: {fileID: 11400000, guid: 2cbf413d445415a4a8272615921dafd8, type: 2}
+      threshhold: 0.035
+      collider: 1
+    - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
+      threshhold: 0.1
+      collider: 0
+    - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
+      threshhold: 0.06
+      collider: 0
+  - biome_name: savanna
+    tile: {fileID: 11400000, guid: 1049f7248b015ed41937199a322de3b6, type: 2}
+    rain_temp_map_color:
+      serializedVersion: 2
+      rgba: 4289331455
+    decorations:
+    - tile: {fileID: 11400000, guid: 458288d9b8c386448b2a4cdf872ed174, type: 2}
+      threshhold: 0.01
+      collider: 1
+    - tile: {fileID: 11400000, guid: ec954a85d33fff844a6addf4f9209444, type: 2}
+      threshhold: 0.014
+      collider: 0
+    - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
+      threshhold: 0.007
+      collider: 0
+  - biome_name: swamp
+    tile: {fileID: 11400000, guid: e9add67c912fa7a499de92ea46c0d6b1, type: 2}
+    rain_temp_map_color:
+      serializedVersion: 2
+      rgba: 4294918208
+    decorations:
+    - tile: {fileID: 11400000, guid: 609998d9017979748ad6b615a8568392, type: 2}
+      threshhold: 0.04
+      collider: 0
+    - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
+      threshhold: 0.01
+      collider: 0
+--- !u!114 &27163494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27163490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5021b5578c953674c97608445a965fc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldGen: {fileID: 27163493}
+  cameraFollow: {fileID: 792913058}
+  renderDistance: {x: 48, y: 32}
+  world:
+    seed: 0
+    seed_main: 0
+    seed_temp: 0
+    seed_rain: 0
+    playerSpawnPoint: {x: 0, y: 0}
 --- !u!1 &50124697
 GameObject:
   m_ObjectHideFlags: 0
@@ -541,7 +673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugSpode: 1
-  worldGen: {fileID: 27163493}
+  worldLoading: {fileID: 27163494}
   cameraFollow: {fileID: 792913058}
 --- !u!114 &413550050
 MonoBehaviour:
@@ -1072,7 +1204,7 @@ MonoBehaviour:
   brightness_night: 0.2
   color_day: {r: 0.9957729, g: 1, b: 0.6839622, a: 1}
   color_night: {r: 0.5896226, g: 0.6829635, b: 1, a: 1}
-  worldGen: {fileID: 27163493}
+  worldLoading: {fileID: 27163494}
 --- !u!114 &668995409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1912,8 +2044,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldGen: {fileID: 27163493}
   randSeed: 1
-  seed: 8075
-  resolution: 300
+  seed: 17319
+  resolution: 100
 --- !u!114 &1652026530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3320,9 +3452,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldGen: {fileID: 27163493}
+  worldLoading: {fileID: 27163494}
   menuCampfire: {fileID: 1517099173}
   cameraFollow: {fileID: 792913058}
   pMovement: {fileID: 413550040}
+  menuSeeds:
+  - seed: 10
+    x: 475
+    y: 458
 --- !u!1 &4835582770836984468
 GameObject:
   m_ObjectHideFlags: 0

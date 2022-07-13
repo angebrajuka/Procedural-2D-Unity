@@ -9,7 +9,7 @@ public class DaylightCycle : MonoBehaviour {
     // hierarchy
     public float brightness_day, brightness_night;
     public Color color_day, color_night;
-    public WorldGen worldGen;
+    public WorldLoading worldLoading;
 
     public static float time = k_DAY;
     public static float brightness;
@@ -30,7 +30,7 @@ public class DaylightCycle : MonoBehaviour {
             time %= k_MORNING;
         }
 
-        if(worldGen.InDungeon) {
+        if(worldLoading.InDungeon) {
             brightness = Mathf.Lerp(brightness_night, brightness_day, 0.4f);
             globalLight.intensity = brightness;
             globalLight.color = color_night;

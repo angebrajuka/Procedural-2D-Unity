@@ -7,7 +7,7 @@ using static Singles;
 public class PlayerMovement : MonoBehaviour {
     // hierarchy
     public float debugSpode;
-    public WorldGen worldGen;
+    public WorldLoading worldLoading;
     public Follow cameraFollow;
 
     public static Rigidbody2D rb;
@@ -26,13 +26,6 @@ public class PlayerMovement : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         c2d = GetComponent<Collider2D>();
         halfColliderHeight = (c2d.bounds.max.y - c2d.bounds.min.y) / 2f;
-    }
-
-    public void StartGame() {
-        transform.position = worldGen.playerSpawnPoint; // transform.position is updated instantly, rb.position wont update till next frame, caused loading bug
-        cameraFollow.toFollow = transform;
-        cameraFollow.offset = Vector3.zero;
-        cameraFollow.Snap();
     }
 
     public void tp(float x, float y) {
@@ -57,8 +50,8 @@ public class PlayerMovement : MonoBehaviour {
 
         int x = (int)Mathf.Floor(rb.position.x+c2d.offset.x),
             y = (int)Mathf.Floor(rb.position.y+c2d.offset.y-halfColliderHeight);
-        inWater = worldGen.IsWater(x,y);
-        inOcean = worldGen.IsOcean(x,y);
+        inWater = worldLoading.IsWater(x,y);
+        inOcean = worldLoading.IsDeepWater(x,y);
 
         speedMult = 1;
         speedMult *= InWater ? 0.6f : 1;

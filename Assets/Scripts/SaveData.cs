@@ -61,7 +61,7 @@ public class SaveData : BaseSaveData
     public SaveData()
     {
         difficulty = gameState.difficulty;
-        seed = singles.worldGen.seed;
+        // seed = singles.worldGen.seed;
         
         Inventory.instance.Close();
         inventoryItems = new GridItemSerializable[Inventory.instance.items.Count];
@@ -95,8 +95,8 @@ public class SaveData : BaseSaveData
         MenuHandler.CloseAll();
 
         gameState.difficulty = difficulty;
-        singles.worldGen.SetSeed(seed);
-        var t = Task.Run(() => { singles.worldGen.GenerateMap(); });
+        // singles.worldGen.SetSeed(seed);
+        // var t = Task.Run(() => { singles.worldGen.GenerateMap(); });
 
         Inventory.instance.Clear();
         for(int i=0; i<inventoryItems.Length; i++)
@@ -130,6 +130,6 @@ public class SaveData : BaseSaveData
         PlayerMovement.rb.position = new Vector2(position[0], position[1]);
         PlayerMovement.rb.transform.position = PlayerMovement.rb.position;
 
-        Task.WaitAll(t);
+        // Task.WaitAll(t);
     }
 }

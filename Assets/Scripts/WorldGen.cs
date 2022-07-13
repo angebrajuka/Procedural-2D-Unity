@@ -4,145 +4,51 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Threading.Tasks;
 
-[System.Serializable]
-public struct MenuSeedPosition {
-    public ushort seed;
-    public float x, y;
-}
-
 public class WorldGen : MonoBehaviour {
     // hierarchy
-    public Follow cameraFollow;
-    public Tilemap[] tilemaps;
-    public GameObject prefab_decoration;
-    public Transform decorPrefabs;
-    public MenuSeedPosition[] menuSeeds;
-    public Vector2Int renderDistance;
     public RuleTile[] dungeonTiles;
+    public Biome ocean, shoreline, beach;
+    public Biome[] biomes;
 
-    public const int mapRadius = 800;
-    public const int mapDiameter = mapRadius*2;
-    public static readonly Vector2Int center = Vector2Int.one*mapRadius;
-
-    private Vector3Int currPos = Vector3Int.zero, prevPos = Vector3Int.zero;
-    public Vector2 playerSpawnPoint = Vector2.zero;
-
-    private RuleTile[] tiles;
-    private HashSet<int> waterTiles;
-    private Biome[] biomes;
+    public HashSet<RuleTile> waterTiles;
+    public HashSet<RuleTile> deepWaterTiles;
     private const int rain_temp_map_width=100;
-    private byte[,] rain_temp_map;
-
-    private byte[,] mapTexture_biome, mapTexture_decor, mapTexture_dungeons, mapTexture_dungeonDecor;
-
-    [HideInInspector] public Texture2D textureBiome, textureDecor, textureDungeons;
-
-    [HideInInspector] public ushort seed;
-    [HideInInspector] public float seed_main, seed_temp, seed_rain;
-
-    public RuleTile LoadTile(string name) {
-        return Resources.Load<RuleTile>("Tiles/"+name);
-    }
-
-    public void Clear() {
-        textureBiome = null;
-        textureDecor = null;
-        textureDungeons = null;
-        foreach(var pair in Biome.s_decorations) {
-            if(pair.Value == null) continue;
-            DestroyImmediate(pair.Value.gameObject);
-        }
-    }
+    private Biome[,] rain_temp_map;
 
     public void Start() {
-        Biome.Init();
-
         var rain_temp_map_tex = Resources.Load<Texture2D>("BiomeData/rain_temp_map");
-        var biomesJson = JsonUtility.FromJson<BiomesJson>(Resources.Load<TextAsset>("BiomeData/biomes").text).biomes;
 
-        tiles = new RuleTile[biomesJson.Length];
-        biomes = new Biome[biomesJson.Length];
-        waterTiles = new HashSet<int>();
-        rain_temp_map = new byte[rain_temp_map_width, rain_temp_map_width];
+        waterTiles = new HashSet<RuleTile>();
+        deepWaterTiles = new HashSet<RuleTile>();
+        rain_temp_map = new Biome[rain_temp_map_width, rain_temp_map_width];
 
-        for(int i=0; i<biomes.Length; i++) {
-            tiles[i] = LoadTile(biomesJson[i].tile_name);
-            if(biomesJson[i].tile_name.Equals("water_shallow") || biomesJson[i].tile_name.Equals("water")) {
-                waterTiles.Add(i);
+        foreach(var biome in biomes) {
+            biome.Init();
+            if(biome.tile.name == "water_shallow" || biome.tile.name == "water") {
+                waterTiles.Add(biome.tile);
+                if(biome.tile.name == "water") {
+                    deepWaterTiles.Add(biome.tile);
+                }
             }
-            biomes[i] = new Biome(this, biomesJson[i]);
-            if(biomesJson[i].rain_temp_map_color.Length == 3) {
-                for(int x=0; x<rain_temp_map_width; x++) {
-                    for(int y=0; y<rain_temp_map_width; y++) {
-                        Color32 c = rain_temp_map_tex.GetPixel(x, y);
-
-                        int[] arr = biomesJson[i].rain_temp_map_color;
-                        if(c.r == arr[0] && c.g == arr[1] && c.b == arr[2]) {
-                            rain_temp_map[x,y] = (byte)i;
-                        }
-                    }
+            for(int x=0; x<rain_temp_map_width; x++) for(int y=0; y<rain_temp_map_width; y++) {
+                if(rain_temp_map_tex.GetPixel(x, y) == (Color)biome.rain_temp_map_color) {
+                    rain_temp_map[x,y] = biome;
                 }
             }
         }
-
-        mapTexture_biome = new byte[mapDiameter, mapDiameter];
-        mapTexture_decor = new byte[mapDiameter, mapDiameter];
-        mapTexture_dungeons = new byte[mapDiameter, mapDiameter];
-        mapTexture_dungeonDecor = new byte[mapDiameter, mapDiameter];
     }
 
-    public void GenerateTexture(int resolution) {
-        var colors = new Color32[tiles.Length];
-        for(int i=0; i<tiles.Length; i++) {
-            colors[i] = tiles[i].m_DefaultSprite.texture.AverageColorFromTexture();
-        }
-
-        textureBiome = new Texture2D(resolution, resolution);
-        for(int x=0; x<resolution; x++) {
-            for(int y=0; y<resolution; y++) {
-                textureBiome.SetPixel(x, y, colors[mapTexture_biome[(int)(((float)x/resolution)*mapDiameter), (int)(((float)y/resolution)*mapDiameter)]]);
-            }
-        }
-        textureBiome.Apply();
-
-        textureDecor = new Texture2D(resolution, resolution);
-        for(int x=0; x<resolution; x++) {
-            for(int y=0; y<resolution; y++) {
-                textureDecor.SetPixel(x, y, mapTexture_decor[(int)(((float)x/resolution)*mapDiameter), (int)(((float)y/resolution)*mapDiameter)] < 254 ? Color.white : Color.black);
-            }
-        }
-        textureDecor.Apply();
-
-        textureDungeons = new Texture2D(resolution, resolution);
-        for(int x=0; x<resolution; x++) {
-            for(int y=0; y<resolution; y++) {
-                textureDungeons.SetPixel(x, y, mapTexture_dungeons[(int)(((float)x/resolution)*mapDiameter), (int)(((float)y/resolution)*mapDiameter)] == 0 ? Color.black : Color.white);
-            }
-        }
-        textureDungeons.Apply();
+    public ushort RandomSeed() {
+        return (ushort)Random.Range(0, 1000000);
     }
+
+
+
+
 
     const int perlinOffset = 5429; // prevents mirroring
 
-    // returns 0 for water, 1 for shallow water, 2 for sand, 3 for biome gen
-    public byte PerlinMain(Vector2Int pos) {
-        const float perlinScale = 0.004f;
-        float perlinVal = Mathf.PerlinNoise((seed_main + pos.x + perlinOffset)*perlinScale, (seed_main + pos.y + perlinOffset)*perlinScale); // 0 to 1
-        perlinVal = Math.Remap(perlinVal, 0, 1, 0.3f, 1);
-        float gradientVal = 1-Vector2Int.Distance(pos, center)/(mapRadius); // 1 in center, 0 at edge of map
-        float perlinScaleFine = 0.1f;
-        float fineNoise = Mathf.PerlinNoise((seed_main + pos.x + perlinOffset)*perlinScaleFine, (seed_main + pos.y + perlinOffset)*perlinScaleFine);
-        fineNoise = Math.Remap(fineNoise, 0, 1, 0, 0.05f);
-        
-        const float landVal = 0.52f;
-        const float sandVal = 0.5f;
-        const float shallowWaterVal = 0.48f;
-
-        float val = (perlinVal+gradientVal)/2-fineNoise;
-        return (byte)(val > landVal ? PerlinBiome(pos) : val > sandVal ? 2 : val > shallowWaterVal ? 1 : 0);
-    }
-
-    public byte PerlinBiome(Vector2Int pos) {
+    public Biome PerlinBiome(Vector2Int pos, float seed_main, float seed_rain, float seed_temp) {
         const float perlinScaleRain = 0.003f;
         const float perlinScaleTemp = 0.003f;
 
@@ -161,54 +67,82 @@ public class WorldGen : MonoBehaviour {
         return rain_temp_map.Clamped((int)perlinValTemp, (int)perlinValRain);
     }
 
-    void GenLand() {
-        Vector2Int pos = new Vector2Int(0, 0);
-        for(pos.x=0; pos.x<mapDiameter; pos.x++) {
-            for(pos.y=0; pos.y<mapDiameter; pos.y++) {
-                byte val = PerlinMain(pos);
-                mapTexture_biome[pos.x, pos.y] = val;
-            }
-        }
+    public Biome PerlinMain(Vector2Int pos, float seed_main, float seed_rain, float seed_temp) {
+        const float perlinScale = 0.004f;
+        float perlinVal = Mathf.PerlinNoise((seed_main + pos.x + perlinOffset)*perlinScale, (seed_main + pos.y + perlinOffset)*perlinScale); // 0 to 1
+        perlinVal = Math.Remap(perlinVal, 0, 1, 0.3f, 1);
+        float gradientVal = 1-Vector2Int.Distance(pos, World.center)/(World.radius); // 1 in center, 0 at edge of map
+        float perlinScaleFine = 0.1f;
+        float fineNoise = Mathf.PerlinNoise((seed_main + pos.x + perlinOffset)*perlinScaleFine, (seed_main + pos.y + perlinOffset)*perlinScaleFine);
+        fineNoise = Math.Remap(fineNoise, 0, 1, 0, 0.05f);
+        
+        const float landVal = 0.52f;
+        const float sandVal = 0.5f;
+        const float shallowWaterVal = 0.48f;
+
+        float val = (perlinVal+gradientVal)/2-fineNoise;
+        return (val > landVal ? PerlinBiome(pos, seed_main, seed_rain, seed_temp) : val > sandVal ? beach : val > shallowWaterVal ? shoreline : ocean);
     }
 
-    void GenDecorations(System.Random rand) {
+    RuleTile[,] GenLand(float seed_main, float seed_rain, float seed_temp) {
+        var layer = new RuleTile[World.diameter, World.diameter];
         Vector2Int pos = new Vector2Int(0, 0);
-        for(pos.x=0; pos.x<mapDiameter; pos.x++) {
-            for(pos.y=0; pos.y<mapDiameter; pos.y++) {
-                mapTexture_decor[pos.x, pos.y] = 254;
+        for(pos.x=0; pos.x<World.diameter; pos.x++) {
+            for(pos.y=0; pos.y<World.diameter; pos.y++) {
+                layer[pos.x, pos.y] = PerlinMain(pos, seed_main, seed_rain, seed_temp).tile;
             }
         }
-        for(pos.x=0; pos.x<mapDiameter; pos.x++) {
-            for(pos.y=0; pos.y<mapDiameter; pos.y++) {
-                int val = mapTexture_biome[pos.x, pos.y];
+        return layer;
+    }
 
-                if(mapTexture_decor[pos.x, pos.y] == 254) {
+    RuleTile[,] GenDecorations(System.Random rand, float seed_main, float seed_rain, float seed_temp) {
+        var layer = new RuleTile[World.diameter, World.diameter];
+        var filled = new bool[World.diameter, World.diameter];
+        Vector2Int pos = new Vector2Int(0, 0);
+        for(pos.x=0; pos.x<World.diameter; pos.x++) {
+            for(pos.y=0; pos.y<World.diameter; pos.y++) {
+                layer[pos.x, pos.y] = null;
+                filled[pos.x, pos.y] = false;
+            }
+        }
+        for(pos.x=0; pos.x<World.diameter; pos.x++) {
+            for(pos.y=0; pos.y<World.diameter; pos.y++) {
+                Biome biome = PerlinMain(pos, seed_main, seed_rain, seed_temp);
+
+                if(layer[pos.x, pos.y] == null) {
                     var rval = rand.NextDouble();
-                    for(int i=0; i<biomes[val].decorationThreshholds.Length; i++) {
-                        if(rval < biomes[val].decorationThreshholds[i]) {
-                            for(int x=0; x<biomes[val].decorations[i].stats.renderSize.x; x++) {
-                                for(int y=0; y<biomes[val].decorations[i].stats.renderSize.y; y++) {
-                                    if(mapTexture_biome.Clamped(pos.x+x, pos.y+y) != val ||
-                                    (mapTexture_decor.Clamped(pos.x+x, pos.y+y) != 254 &&
-                                    (mapTexture_decor.Clamped(pos.x+x, pos.y+y) == 255 ||
-                                    biomes[val].decorations[mapTexture_decor.Clamped(pos.x+x, pos.y+y)].stats.collider))) {
-                                        goto BreakBreak;
+                    foreach(var decoration in biome.decorations) {
+                        if(rval < decoration.threshhold) {
+
+                            bool DecorationFits() {
+                                for(int x=0; x<decoration.Size.x; x++) {
+                                    for(int y=0; y<decoration.Size.y; y++) {
+                                        if(PerlinMain(pos+new Vector2Int(x, y), seed_main, seed_rain, seed_temp) != biome || filled[pos.x+x, pos.y+y]) {
+                                            return false;
+                                        }
                                     }
                                 }
+                                return true;
                             }
-                            for(int x=0; x<biomes[val].decorations[i].stats.size.x; x++) {
-                                for(int y=0; y<biomes[val].decorations[i].stats.size.y; y++) {
-                                    mapTexture_decor[pos.x+x, pos.y+y] = 255;
+
+                            if(DecorationFits()) {
+                                if(decoration.collider) {
+                                    for(int x=0; x<decoration.Size.x; x++) {
+                                        for(int y=0; y<decoration.Size.y; y++) {
+                                            filled[pos.x+x, pos.y+y] = true;
+                                        }
+                                    }
                                 }
+                                layer[pos.x, pos.y] = decoration.tile;
+                                break;
                             }
-                            mapTexture_decor[pos.x, pos.y] = (byte)(i);
-                            BreakBreak:
-                            break;
                         }
                     }
                 }
             }
         }
+
+        return layer;
     }
 
     public struct Room {
@@ -227,7 +161,7 @@ public class WorldGen : MonoBehaviour {
         return room;
     }
 
-    void GenDungeons(System.Random rand) {
+    RuleTile[][,] GenDungeons(System.Random rand) {
         int numDungeons = rand.Next(3, 6);
 
         var rooms = new List<Room>();
@@ -255,186 +189,88 @@ public class WorldGen : MonoBehaviour {
 
         // }
 
+        for(int x=0; x<World.diameter; ++x) for(int y=0; y<World.diameter; ++y) {
+            // mapTexture_dungeonDecor[x,y] = 0;
+        }
+
         foreach(var room in rooms) {
             for(int x=room.BL.x; x<=room.TR.x; ++x) for(int y=room.BL.y; y<=room.TR.y; ++y) {
-                mapTexture_dungeons[x, y] = 1;
+                // mapTexture_dungeons[x, y] = 1;
+                // mapTexture_dungeonDecor[x,y] = 254;
             }
         }
 
-        for(int x=0; x<mapDiameter; ++x) for(int y=0; y<mapDiameter; ++y) {
-            mapTexture_dungeonDecor[x,y] = 254;
-        }
+        var h = new RuleTile[1][,];
+        h[0] = new RuleTile[1,1];
+        return h;
     }
 
-    void GenPlayerSpawn(System.Random rand) {
+    Vector2 GenPlayerSpawn(System.Random rand, World world) {
         var psp = rand.OnUnitCircle();
-        playerSpawnPoint = center + psp*mapRadius;
+        var playerSpawnPoint = World.center + psp*World.radius;
         int jic;
-        for(jic=0; jic < 999999 && GetTile((int)playerSpawnPoint.x, (int)playerSpawnPoint.y) <= 2; jic++) { // biome 0,1,2 is ocean,shoreline,beach
-            playerSpawnPoint -= psp*6;
+        RuleTile GetTile() {
+            return world.layers_overworld[0][(int)playerSpawnPoint.x, (int)playerSpawnPoint.y];
         }
-        for(jic=0; jic<1000 && GetTile((int)playerSpawnPoint.x, (int)playerSpawnPoint.y) != 2; jic++) {
+        for(jic=0; jic < 999999; jic++) { // move in until land
+            playerSpawnPoint -= psp*6;
+            RuleTile tile = GetTile();
+            if(tile != ocean.tile && tile != shoreline.tile) break;
+        }
+        for(jic=0; jic<1000 && GetTile() != beach.tile; jic++) { // move out until beach
             playerSpawnPoint += psp;
         }
         playerSpawnPoint += rand.OnUnitCircle()*3;
+        return playerSpawnPoint;
     }
 
-    public async Task GenerateMapAsync() {
-        await Task.Run(()=> { GenerateMap(); });
-    }
-
-    public void GenerateMap() {
+    public World GenerateWorld(ushort seed) {
+        World world = new World();
+        world.seed = seed;
+        world.seed_main = 2589.216f+seed*252.3457f;
+        world.seed_rain = 913.8473f+seed*2345.195f;
+        world.seed_temp = 111.8325f+seed*762.0934f;
+        world.layers_overworld = new RuleTile[2][,];
         var rand = new System.Random(seed);
-        GenLand();
-        GenDungeons(rand);
-        GenDecorations(rand);
-        GenPlayerSpawn(rand);
+        world.layers_overworld[0] = GenLand(world.seed_main, world.seed_rain, world.seed_temp);
+        world.layers_dungeon = GenDungeons(rand);
+        world.layers_overworld[1] = GenDecorations(rand, world.seed_main, world.seed_rain, world.seed_temp);
+        world.playerSpawnPoint = GenPlayerSpawn(rand, world);
+        return world;
     }
 
-    public async void EnterExitDungeon(int enter) {
-        FadeTransition.black = true;
-        await FadeTransition.AwaitFade();
-        InDungeon = (enter != 0);
-        AdjustBounds();
-        LoadAll();
-        await General.NextFrame(10);
-        FadeTransition.black = false;
-    }
 
-    public bool InDungeon {
-        get { return currPos.z == -1; }
-        set { currPos.z = (value ? -1 : 0); } }
 
-    public bool IsWater(int x, int y) {
-        return InDungeon ? false : waterTiles.Contains(GetTile(x,y));
-    }
-    public bool IsOcean(int x, int y) {
-        return InDungeon ? false : GetTile(x,y) == 0;
-    }
 
-    public byte[,] ActiveMap { get { return InDungeon ? mapTexture_dungeons : mapTexture_biome; } }
-    public byte[,] ActiveDecor { get { return InDungeon ? mapTexture_dungeonDecor : mapTexture_decor; } }
+    public (Texture2D[] textures_overworld, Texture2D[] textures_dungeons) GenerateTextures(int resolution, World world) {
+        Texture2D[] textures_overworld = new Texture2D[world.layers_overworld.Length],
+                    textures_dungeons = new Texture2D[world.layers_dungeon.Length];
 
-    public int GetTile(int x, int y) {
-        return ActiveMap.Clamped(x, y);
-    }
+        var tile_to_color = new Dictionary<RuleTile, Color32>();
 
-    public void SpawnDecoration(int x, int y, int tile, Transform parent) {
-        int i = ActiveDecor.Clamped(x, y);
-        if(i == 254 || i == 255) return;
-
-        var decoration = biomes[tile].decorations[i];
-        var go = Instantiate(decoration.gameObject, new Vector3(x, y, 0), Quaternion.identity, parent);
-        go.GetComponent<Decoration>().stats = decoration.stats; // not cloned because reference?
-        go.SetActive(true);
-    }
-
-    public ushort RandomSeed() {
-        return (ushort)Random.Range(0, 1000000);
-    }
-
-    public void SetSeed(ushort seed) {
-        this.seed = seed;
-
-        seed_main = 2589.216f+seed*252.3457f;
-        seed_rain = 913.8473f+seed*2345.195f;
-        seed_temp = 111.8325f+seed*762.0934f;
-    }
-
-    public void AdjustBounds() {
-        var origin = tilemaps[0].origin;
-        var size = tilemaps[0].size;
-        origin.x = currPos.x - renderDistance.x;
-        origin.y = currPos.y - renderDistance.y;
-        size.x = renderDistance.x*2;
-        size.y = renderDistance.y*2;
-        foreach(var tilemap in tilemaps) {
-            tilemap.origin = origin;
-            tilemap.size = size;
-            tilemap.ResizeBounds();
-        }
-    }
-
-    TileBase GetTileBase(int x, int y, int layer) {
-        int tile = GetTile(x, y);
-        if(InDungeon) {
-            return tile != layer ? dungeonTiles[tile] : null;
-        }
-        return layer == 0 ? tiles[tile] : null;
-    }
-
-    void LoadAll() {
-        for(int layer=0; layer<tilemaps.Length; ++layer) {
-            var positionArray = new Vector3Int[tilemaps[layer].size.x*tilemaps[layer].size.y];
-            var tilebaseArray = new TileBase[positionArray.Length];
-
-            Vector3Int pos = new Vector3Int(0, 0, 0);
-            int i=0;
-            for(pos.x=tilemaps[layer].origin.x; pos.x<tilemaps[layer].origin.x+tilemaps[layer].size.x; pos.x++) for(pos.y=tilemaps[layer].origin.y; pos.y<tilemaps[layer].origin.y+tilemaps[layer].size.y; pos.y++) {
-                positionArray[i] = pos;
-                tilebaseArray[i] = GetTileBase(pos.x, pos.y, layer);
-                ++i;
-            }
-            tilemaps[layer].SetTiles(positionArray, tilebaseArray);
-            tilemaps[layer].RefreshAllTiles();
-        }
-    }
-
-    void LoadMissing() {
-        Vector2Int diff = (Vector2Int)(currPos-prevPos);
-        diff.x = Mathf.Abs(diff.x);
-        diff.y = Mathf.Abs(diff.y);
-        if(diff.x+diff.x >= renderDistance.x || diff.y+diff.y >= renderDistance.y) {
-            LoadAll();
-            return;
-        }
-
-        var toFill = new (Vector2Int min, Vector2Int max)[2];
-        toFill[0].min = new Vector2Int(currPos.x > prevPos.x ? prevPos.x+renderDistance.x : currPos.x-renderDistance.x, currPos.y-renderDistance.y);
-        toFill[0].max = new Vector2Int(currPos.x > prevPos.x ? currPos.x+renderDistance.x : prevPos.x-renderDistance.x, currPos.y+renderDistance.y);
-        toFill[1].min = new Vector2Int(Mathf.Max(currPos.x, prevPos.x)-renderDistance.x, currPos.y > prevPos.y ? prevPos.y+renderDistance.y : currPos.y-renderDistance.y);
-        toFill[1].max = new Vector2Int(Mathf.Min(currPos.x, prevPos.x)+renderDistance.x, currPos.y > prevPos.y ? currPos.y+renderDistance.y : prevPos.y-renderDistance.y);
-
-        int area = 0;
-        foreach(var bounds in toFill) {
-            area += (bounds.max.x-bounds.min.x)*(bounds.max.y-bounds.min.y);
-        }
-        var positionArray = new Vector3Int[area];
-        var tilebaseArray = new TileBase[positionArray.Length];
-        Vector3Int pos = new Vector3Int(0, 0, 0);
-        for(int layer=0; layer<tilemaps.Length; ++layer) {
-            int i=0;
-            foreach(var bounds in toFill) {
-                for(pos.x=bounds.min.x; pos.x<bounds.max.x; pos.x++) for(pos.y=bounds.min.y; pos.y<bounds.max.y; pos.y++) {
-                    positionArray[i] = pos;
-                    tilebaseArray[i] = GetTileBase(pos.x, pos.y, layer);
-                    ++i;
+        var textures = textures_overworld;
+        var layers = world.layers_overworld;
+        while(true) {
+            for(int i=0; i<textures.Length; ++i) {
+                textures[i] = new Texture2D(resolution, resolution);
+                for(int x=0; x<resolution; x++) for(int y=0; y<resolution; y++) {
+                    var tile = layers[i][layers[i].GetLength(0)*x/resolution, layers[i].GetLength(1)*y/resolution];
+                    if(tile == null) {
+                        textures[i].SetPixel(x, y, Color.white);
+                        continue;
+                    }
+                    if(!tile_to_color.ContainsKey(tile)) {
+                        tile_to_color.Add(tile, tile.m_DefaultSprite.texture.AverageColorFromTexture());
+                    }
+                    textures[i].SetPixel(x, y, tile_to_color[tile]);
                 }
+                textures[i].Apply();
             }
-            tilemaps[layer].SetTiles(positionArray, tilebaseArray);
-        }
-    }
-
-    void UpdatePos() {
-        currPos.x = (int)Mathf.Floor(cameraFollow.transform.position.x);
-        currPos.y = (int)Mathf.Floor(cameraFollow.transform.position.y);
-    }
-
-    void Update() {
-        UpdatePos();
-
-        if(currPos != prevPos) {
-            AdjustBounds();
-            LoadMissing();
+            if(textures == textures_dungeons) break;
+            textures = textures_dungeons;
+            layers = world.layers_dungeon;
         }
 
-        prevPos.x = currPos.x;
-        prevPos.y = currPos.y;
-    }
-
-    public void ForceLoadAllLagSpike() {
-        UpdatePos();
-        AdjustBounds();
-        LoadAll();
+        return (textures_overworld, textures_dungeons);
     }
 }

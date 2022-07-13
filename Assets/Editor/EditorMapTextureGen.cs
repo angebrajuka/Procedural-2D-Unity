@@ -3,37 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Threading.Tasks;
+using System;
 
 [CustomEditor(typeof(_EditorMapTextureGen))]
-public class EditorMapTextureGen : Editor
-{
-    public override void OnInspectorGUI()
-    {
+public class EditorMapTextureGen : Editor {
+    Texture2D[] textures;
+
+    public override void OnInspectorGUI() {
         DrawDefaultInspector();
         var script = (_EditorMapTextureGen)target;
 
-        if(GUILayout.Button("generate"))
-        {
+        if(GUILayout.Button("generate")) {
             script.worldGen.Start();
-            if(script.randSeed)
-            {
-                script.worldGen.SetSeed(script.worldGen.RandomSeed());
-                script.seed = script.worldGen.seed;
+            if(script.randSeed) {
+                script.seed = script.worldGen.RandomSeed();
             }
-            else
-            {
-                script.worldGen.SetSeed(script.seed);
-            }
-            script.worldGen.GenerateMap();
-            script.worldGen.GenerateTexture(script.resolution);
+            var tex = script.worldGen.GenerateTextures(script.resolution, script.worldGen.GenerateWorld(script.seed));
+            textures = new Texture2D[tex.textures_overworld.Length + tex.textures_dungeons.Length];
+            Array.Copy(tex.textures_overworld, textures, tex.textures_overworld.Length);
+            Array.Copy(tex.textures_dungeons, 0, textures, tex.textures_overworld.Length, tex.textures_dungeons.Length);
         }
-        if(GUILayout.Button("clear"))
-        {
-            script.worldGen.Clear();
+        if(GUILayout.Button("clear")) {
+            textures = null;
         }
 
-        if(script.worldGen.textureBiome != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), script.worldGen.textureBiome, null, ScaleMode.ScaleToFit);
-        if(script.worldGen.textureDecor != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), script.worldGen.textureDecor, null, ScaleMode.ScaleToFit);
-        if(script.worldGen.textureDungeons != null) EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth), script.worldGen.textureDungeons, null, ScaleMode.ScaleToFit);
+        if(textures != null) {
+            foreach(var texture in textures) {
+                EditorGUI.DrawPreviewTexture(
+                    GUILayoutUtility.GetRect(EditorGUIUtility.currentViewWidth, EditorGUIUtility.currentViewWidth),
+                    texture,
+                    null,
+                    ScaleMode.ScaleToFit
+                );
+            }
+        }
     }
 }
