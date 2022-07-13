@@ -40,7 +40,7 @@ public class WorldLoading : MonoBehaviour {
 
     public void AdjustBounds() {
         foreach(var tilemap in tilemaps) {
-            tilemap.origin = currPos - new Vector3Int(renderDistance.x, renderDistance.y, 0);
+            tilemap.origin = new Vector3Int(currPos.x-renderDistance.x, currPos.y-renderDistance.y, 0);
             tilemap.size = new Vector3Int(renderDistance.x*2, renderDistance.y*2, 1);
             tilemap.ResizeBounds();
         }
