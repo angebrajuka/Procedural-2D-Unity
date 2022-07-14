@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour {
     public float debugSpode;
     public WorldLoading worldLoading;
     public Follow cameraFollow;
+    public float runSpeed, waterMultiplier;
+    public float sprintTime, sprintMult;
 
     public static Rigidbody2D rb;
     Collider2D c2d;
@@ -19,8 +21,8 @@ public class PlayerMovement : MonoBehaviour {
     public bool InWater { get { return inWater; } }
     private bool inOcean;
     public bool InOcean { get { return inOcean; } }
-    public static float speedMult;
-    static Vector2 input_move;
+    private float speedMult;
+    private Vector2 input_move = Vector2.zero;
 
     public void Start() {
         rb = GetComponent<Rigidbody2D>();
@@ -54,12 +56,13 @@ public class PlayerMovement : MonoBehaviour {
         inOcean = worldLoading.IsDeepWater(x,y);
 
         speedMult = 1;
-        speedMult *= InWater ? 0.6f : 1;
-        speedMult *= PlayerState.sprinting ? PlayerStats.k_SPRINT_MULTIPLIER : (Flashlight.on ? PlayerStats.k_FLASHLIGHT_MULTIPLIER : 1);
+        speedMult *= false ? sprintMult : 1;
+        speedMult *= InWater ? waterMultiplier : 1;
+        speedMult *= (Flashlight.on ? PlayerStats.k_FLASHLIGHT_MULTIPLIER : 1);
         speedMult *= debugSpode;
     }
 
     void FixedUpdate() {
-        rb.AddForce(input_move * speedMult * PlayerStats.k_RUN_ACCELL);
+        rb.velocity = (input_move * speedMult * runSpeed);
     }
 }

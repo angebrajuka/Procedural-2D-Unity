@@ -4,7 +4,7 @@
         {"name": "move north",              "keys": [119, 273] },
         {"name": "move west",               "keys": [97, 276] },
         {"name": "move south",              "keys": [115, 274] },
-        {"name": "sprint",                  "keys": [306] },
-        {"name": "flashlight",              "keys": [304] }
+        {"name": "sprint",                  "keys": [304] },
+        {"name": "flashlight",              "keys": [306] }
     ]
 }

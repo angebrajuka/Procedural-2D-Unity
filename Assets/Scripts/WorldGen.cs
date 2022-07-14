@@ -8,6 +8,8 @@ public class WorldGen : MonoBehaviour {
     // hierarchy
     public RuleTile tile_dungeonFloor;
     public RuleTile tile_dungeonWall;
+    public RuleTile[] water;
+    public RuleTile[] deep_water;
     public Biome ocean, shoreline, beach;
     public Biome[] biomes;
 
@@ -23,14 +25,15 @@ public class WorldGen : MonoBehaviour {
         deepWaterTiles = new HashSet<RuleTile>();
         rain_temp_map = new Biome[rain_temp_map_width, rain_temp_map_width];
 
+        foreach(var tile in water) {
+            waterTiles.Add(tile);
+        }
+        foreach(var tile in deep_water) {
+            deepWaterTiles.Add(tile);
+        }
+
         foreach(var biome in biomes) {
             biome.Init();
-            if(biome.tile.name == "water_shallow" || biome.tile.name == "water") {
-                waterTiles.Add(biome.tile);
-                if(biome.tile.name == "water") {
-                    deepWaterTiles.Add(biome.tile);
-                }
-            }
             for(int x=0; x<rain_temp_map_width; x++) for(int y=0; y<rain_temp_map_width; y++) {
                 if(rain_temp_map_tex.GetPixel(x, y) == (Color)biome.rain_temp_map_color) {
                     rain_temp_map[x,y] = biome;

@@ -187,6 +187,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile_dungeonFloor: {fileID: 11400000, guid: cdbb0c1e2aa6f384ba1c2616bba2981b, type: 2}
   tile_dungeonWall: {fileID: 11400000, guid: 0e4861ab6d5ac464c83a8770b1619e26, type: 2}
+  water:
+  - {fileID: 11400000, guid: b62ba4808d5c9b04ca2c13b71cd9ac1f, type: 2}
+  - {fileID: 11400000, guid: e9add67c912fa7a499de92ea46c0d6b1, type: 2}
+  deep_water:
+  - {fileID: 11400000, guid: b62ba4808d5c9b04ca2c13b71cd9ac1f, type: 2}
   ocean:
     biome_name: ocean
     tile: {fileID: 11400000, guid: b62ba4808d5c9b04ca2c13b71cd9ac1f, type: 2}
@@ -677,6 +682,10 @@ MonoBehaviour:
   debugSpode: 1
   worldLoading: {fileID: 27163494}
   cameraFollow: {fileID: 792913058}
+  runSpeed: 6
+  waterMultiplier: 0.6
+  sprintTime: 0.4
+  sprintMult: 1.4
 --- !u!114 &413550050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -706,11 +715,11 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 12
+  m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: e6a8b8b7a3ccd114f8ddf549ea8b3730, type: 2}
-  m_Interpolate: 2
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -1289,6 +1298,7 @@ GameObject:
   - component: {fileID: 792913055}
   - component: {fileID: 792913054}
   - component: {fileID: 792913058}
+  - component: {fileID: 792913059}
   m_Layer: 8
   m_Name: Main_Camera
   m_TagString: MainCamera
@@ -1364,7 +1374,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 13
+  orthographic size: 10.15625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1414,6 +1424,29 @@ MonoBehaviour:
   lockZ: 1
   type: 0
   maxDist: 0
+--- !u!114 &792913059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792913053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 1
+  m_AssetsPPU: 16
+  m_RefResolutionX: 480
+  m_RefResolutionY: 270
+  m_CropFrame: 0
+  m_GridSnapping: 1
+  m_UpscaleRT: 0
+  m_PixelSnapping: 0
+  m_CropFrameX: 0
+  m_CropFrameY: 0
+  m_StretchFill: 0
 --- !u!1 &1163101975
 GameObject:
   m_ObjectHideFlags: 0
