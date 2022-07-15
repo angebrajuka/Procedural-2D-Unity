@@ -185,6 +185,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb82c605c0c6c3458650bbf98a664b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dungeonPallets:
+  - entrance:
+      tile: {fileID: 0}
+      threshhold: 1
+      collider: 1
+    floorTint: {r: 1, g: 1, b: 1, a: 1}
+    wallTint: {r: 1, g: 1, b: 1, a: 1}
+    entranceTint: {r: 1, g: 1, b: 1, a: 1}
   tile_dungeonFloor: {fileID: 11400000, guid: cdbb0c1e2aa6f384ba1c2616bba2981b, type: 2}
   tile_dungeonWall: {fileID: 11400000, guid: 0e4861ab6d5ac464c83a8770b1619e26, type: 2}
   water:
@@ -224,7 +232,7 @@ MonoBehaviour:
       threshhold: 0.06
       collider: 0
     - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
-      threshhold: 0.089999996
+      threshhold: 0.21
       collider: 0
   - biome_name: forest
     tile: {fileID: 11400000, guid: 28136ec728890d84b844f5d17adefde4, type: 2}
@@ -236,7 +244,7 @@ MonoBehaviour:
       threshhold: 0.03
       collider: 1
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.06
+      threshhold: 0.12
       collider: 0
   - biome_name: desert
     tile: {fileID: 11400000, guid: 7e9560d2059432d4cb16cd174653d837, type: 2}
@@ -248,7 +256,7 @@ MonoBehaviour:
       threshhold: 0.03
       collider: 1
     - tile: {fileID: 11400000, guid: ec954a85d33fff844a6addf4f9209444, type: 2}
-      threshhold: 0.044
+      threshhold: 0.104
       collider: 0
   - biome_name: taiga
     tile: {fileID: 11400000, guid: 241c7afd028f41e4e9c7d65f8a555f86, type: 2}
@@ -260,10 +268,10 @@ MonoBehaviour:
       threshhold: 0.02
       collider: 1
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.04
+      threshhold: 0.08
       collider: 0
     - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
-      threshhold: 0.07
+      threshhold: 0.21
       collider: 0
   - biome_name: tundra
     tile: {fileID: 11400000, guid: 241c7afd028f41e4e9c7d65f8a555f86, type: 2}
@@ -275,7 +283,7 @@ MonoBehaviour:
       threshhold: 0.02
       collider: 0
     - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
-      threshhold: 0.04
+      threshhold: 0.08
       collider: 0
   - biome_name: rainforest
     tile: {fileID: 11400000, guid: b4dcf2dbfc3cb484a82896273b6719d9, type: 2}
@@ -287,13 +295,13 @@ MonoBehaviour:
       threshhold: 0.025
       collider: 1
     - tile: {fileID: 11400000, guid: 2cbf413d445415a4a8272615921dafd8, type: 2}
-      threshhold: 0.060000002
+      threshhold: 0.11
       collider: 1
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.16
+      threshhold: 0.35500002
       collider: 0
     - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
-      threshhold: 0.22
+      threshhold: 0.82000005
       collider: 0
   - biome_name: savanna
     tile: {fileID: 11400000, guid: 1049f7248b015ed41937199a322de3b6, type: 2}
@@ -305,10 +313,10 @@ MonoBehaviour:
       threshhold: 0.01
       collider: 1
     - tile: {fileID: 11400000, guid: ec954a85d33fff844a6addf4f9209444, type: 2}
-      threshhold: 0.024
+      threshhold: 0.044
       collider: 0
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.031
+      threshhold: 0.109
       collider: 0
   - biome_name: swamp
     tile: {fileID: 11400000, guid: e9add67c912fa7a499de92ea46c0d6b1, type: 2}
@@ -320,7 +328,7 @@ MonoBehaviour:
       threshhold: 0.04
       collider: 0
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.049999997
+      threshhold: 0.13
       collider: 0
 --- !u!114 &27163494
 MonoBehaviour:
@@ -638,9 +646,7 @@ MonoBehaviour:
   cameraFollow: {fileID: 792913058}
   pAnimator: {fileID: 413550054}
   walkSpeed: 4
-  accel: 24
-  decel: 24
-  runSpeed: 7.4
+  runSpeed: 7
   waterSpeed: 4
 --- !u!114 &413550050
 MonoBehaviour:
@@ -2036,7 +2042,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldGen: {fileID: 27163493}
   randSeed: 1
-  seed: 4504
+  seed: 6022
   resolution: 100
 --- !u!114 &1652026530
 MonoBehaviour:

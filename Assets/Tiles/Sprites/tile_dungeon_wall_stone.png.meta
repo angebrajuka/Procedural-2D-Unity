@@ -20,7 +20,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -1476,7 +1476,7 @@ TextureImporter:
     nameFileIdTable:
       tile_dungeon_wall_stone_5: -801848834
       tile_dungeon_wall_stone_24: 1699627808
-      tile_dungeon_wall_stone_40: -1807779183
+      tile_dungeon_wall_stone_12: -219933568
       tile_dungeon_wall_stone_26: 1582354581
       tile_dungeon_wall_stone_56: -1702094902
       tile_dungeon_wall_stone_60: -175805746
@@ -1505,9 +1505,9 @@ TextureImporter:
       tile_dungeon_wall_stone_48: -206248934
       tile_dungeon_wall_stone_42: 1684454428
       tile_dungeon_wall_stone_57: 1028972380
-      tile_dungeon_wall_stone_0: -1865091190
       tile_dungeon_wall_stone_8: -2096345524
       tile_dungeon_wall_stone_18: -1762266711
+      tile_dungeon_wall_stone_0: -1865091190
       tile_dungeon_wall_stone_37: -1249928414
       tile_dungeon_wall_stone_16: -838679951
       tile_dungeon_wall_stone_6: 566370947
@@ -1537,7 +1537,7 @@ TextureImporter:
       tile_dungeon_wall_stone_33: 767278349
       tile_dungeon_wall_stone_17: -860251264
       tile_dungeon_wall_stone_27: 273665994
-      tile_dungeon_wall_stone_12: -219933568
+      tile_dungeon_wall_stone_40: -1807779183
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

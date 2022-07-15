@@ -26,7 +26,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -114,7 +114,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 16
         width: 16
         height: 16
       alignment: 6
@@ -135,7 +135,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 0
+        y: 16
         width: 16
         height: 16
       alignment: 6
@@ -147,6 +147,48 @@ TextureImporter:
       bones: []
       spriteID: 80232f95cb4898360800000000000000
       internalID: 7172409826061988360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_water_shallow_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4974b56660eca4e4ebc22dddbcd40505
+      internalID: -2019826913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_water_shallow_3
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5663abbac8be1eb428a963a8b3262c5a
+      internalID: -1002074508
       vertices: []
       indices: 
       edges: []
@@ -163,6 +205,8 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       tile_water_shallow_1: 7172409826061988360
+      tile_water_shallow_2: -2019826913
+      tile_water_shallow_3: -1002074508
       tile_water_shallow_0: 5045714044771024420
   spritePackingTag: 
   pSDRemoveMatte: 0

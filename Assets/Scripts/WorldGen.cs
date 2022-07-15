@@ -4,7 +4,14 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Threading.Tasks;
 
+[System.Serializable]
+public struct DungeonPallet {
+    [SerializeField] public Decoration entrance;
+    [SerializeField] public Color floorTint, wallTint, entranceTint;
+}
+
 public class WorldGen : MonoBehaviour {
+    [SerializeField] private DungeonPallet[] dungeonPallets;
     [SerializeField] private RuleTile tile_dungeonFloor;
     [SerializeField] private RuleTile tile_dungeonWall;
     [SerializeField] private RuleTile[] water;
@@ -98,7 +105,65 @@ public class WorldGen : MonoBehaviour {
         return layer;
     }
 
-    RuleTile[,] GenDecorations(System.Random rand, float seed_main, float seed_rain, float seed_temp) {
+    public struct Room {
+        public Vector2Int BL, TR;
+        public int up, down, left, right;
+
+        public Vector2Int Center { get { return (BL+TR)/2; } }
+        public int Width  { get { return TR.x-BL.x+1; } }
+        public int Height { get { return TR.y-BL.y+1; } }
+    };
+
+    Room NewRoom(int x, int y, int w, int h) {
+        var room = new Room();
+        room.BL = new Vector2Int(x, y);
+        room.TR = new Vector2Int(x+w, y+h);
+        return room;
+    }
+
+    (RuleTile[][,], (Vector2Int, DungeonPallet)[]) GenDungeons(System.Random rand) {
+        var floor = new RuleTile[World.diameter, World.diameter];
+        var decor = new RuleTile[World.diameter, World.diameter];
+        Vector2Int pos = new Vector2Int(0, 0);
+        for(pos.x=0; pos.x<World.diameter; pos.x++) {
+            for(pos.y=0; pos.y<World.diameter; pos.y++) {
+                floor[pos.x, pos.y] = null;
+                decor[pos.x, pos.y] = tile_dungeonWall;
+            }
+        }
+
+        var rooms = new List<Room>();
+
+        var entrance = NewRoom(800, 800, 24, 18);
+
+        rooms.Add(entrance);
+
+        // for(int i=0; i<9; ++i) {
+
+        // Vector2Int TL=entrance, BR;
+        // TL.Add(-rand.Next(3, 10), -rand.Next(2, 7));
+        // BR = TL;
+        // BR.Add(24, 18);
+
+        // while(something) add side rooms
+
+        // generate alternative enterances/exits
+
+        // populate rooms
+
+        // }
+
+        foreach(var room in rooms) {
+            for(int x=room.BL.x; x<=room.TR.x; ++x) for(int y=room.BL.y; y<=room.TR.y; ++y) {
+                floor[x,y] = tile_dungeonFloor;
+                decor[x,y] = null;
+            }
+        }
+
+        return (new RuleTile[][,]{floor, decor}, new (Vector2Int, DungeonPallet)[]{(new Vector2Int(805, 805), dungeonPallets[0])});
+    }
+
+    RuleTile[,] GenDecorations(System.Random rand, float seed_main, float seed_rain, float seed_temp, (Vector2Int, DungeonPallet)[] entrances) {
         var layer = new RuleTile[World.diameter, World.diameter];
         var filled = new bool[World.diameter, World.diameter];
         Vector2Int pos = new Vector2Int(0, 0);
@@ -148,68 +213,6 @@ public class WorldGen : MonoBehaviour {
         return layer;
     }
 
-    public struct Room {
-        public Vector2Int BL, TR;
-        public int up, down, left, right;
-
-        public Vector2Int Center { get { return (BL+TR)/2; } }
-        public int Width  { get { return TR.x-BL.x+1; } }
-        public int Height { get { return TR.y-BL.y+1; } }
-    };
-
-    Room NewRoom(int x, int y, int w, int h) {
-        var room = new Room();
-        room.BL = new Vector2Int(x, y);
-        room.TR = new Vector2Int(x+w, y+h);
-        return room;
-    }
-
-    RuleTile[][,] GenDungeons(System.Random rand) {
-        var floor = new RuleTile[World.diameter, World.diameter];
-        var decor = new RuleTile[World.diameter, World.diameter];
-        Vector2Int pos = new Vector2Int(0, 0);
-        for(pos.x=0; pos.x<World.diameter; pos.x++) {
-            for(pos.y=0; pos.y<World.diameter; pos.y++) {
-                floor[pos.x, pos.y] = null;
-                decor[pos.x, pos.y] = tile_dungeonWall;
-            }
-        }
-
-        var rooms = new List<Room>();
-
-        var entrance = NewRoom(800, 800, 24, 18);
-
-        rooms.Add(entrance);
-
-        // for(int i=0; i<9; ++i) {
-
-        // add to mapTexture_decor
-
-        
-
-        // Vector2Int TL=entrance, BR;
-        // TL.Add(-rand.Next(3, 10), -rand.Next(2, 7));
-        // BR = TL;
-        // BR.Add(24, 18);
-
-        // while(something) add side rooms
-
-        // generate alternative enterances/exits
-
-        // populate rooms
-
-        // }
-
-        foreach(var room in rooms) {
-            for(int x=room.BL.x; x<=room.TR.x; ++x) for(int y=room.BL.y; y<=room.TR.y; ++y) {
-                floor[x,y] = tile_dungeonFloor;
-                decor[x,y] = null;
-            }
-        }
-
-        return new RuleTile[][,]{floor, decor};
-    }
-
     Vector2 GenPlayerSpawn(System.Random rand, World world) {
         var psp = rand.OnUnitCircle();
         var playerSpawnPoint = World.center + psp*World.radius;
@@ -238,11 +241,13 @@ public class WorldGen : MonoBehaviour {
         world.layers_overworld = new RuleTile[2][,];
         var rand = new System.Random(seed);
         world.layers_overworld[0] = GenLand(world.seed_main, world.seed_rain, world.seed_temp);
-        world.layers_dungeon = GenDungeons(rand);
-        world.layers_overworld[1] = GenDecorations(rand, world.seed_main, world.seed_rain, world.seed_temp);
+        var dungeons = GenDungeons(rand);
+        world.layers_dungeon = dungeons.Item1;
+        world.layers_overworld[1] = GenDecorations(rand, world.seed_main, world.seed_rain, world.seed_temp, dungeons.Item2);
         world.playerSpawnPoint = GenPlayerSpawn(rand, world);
         return world;
     }
+
 
 
 
