@@ -24,7 +24,7 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
 
-    // hierarchy
+    // inspector
     public GameObject gridItemPrefab;
     public GameObject itemPickupPrefab;
     public Transform inventory;

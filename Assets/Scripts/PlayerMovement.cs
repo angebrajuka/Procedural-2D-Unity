@@ -2,27 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using static Singles;
-
 public class PlayerMovement : MonoBehaviour {
-    // hierarchy
-    public float debugSpode;
-    public WorldLoading worldLoading;
-    public Follow cameraFollow;
-    public float runSpeed, waterMultiplier;
-    public float sprintTime, sprintMult;
+    [SerializeField] private WorldLoading worldLoading;
+    [SerializeField] private Follow cameraFollow;
+    [SerializeField] private PlayerAnimator pAnimator;
+    [SerializeField] private float walkSpeed, accel, decel, runSpeed, waterSpeed;
 
     public static Rigidbody2D rb;
-    Collider2D c2d;
-    float halfColliderHeight;
+    private Collider2D c2d;
+    private float halfColliderHeight;
 
-    public static bool moving=false;
-    private bool inWater;
-    public bool InWater { get { return inWater; } }
-    private bool inOcean;
-    public bool InOcean { get { return inOcean; } }
-    private float speedMult;
-    private Vector2 input_move = Vector2.zero;
+    public int X { get { return (int)Mathf.Floor(rb.position.x + c2d.offset.x); } }
+    public int Y { get { return (int)Mathf.Floor(rb.position.y + c2d.offset.y - halfColliderHeight); } }
+    public bool InWater { get { return worldLoading.IsWater(X, Y); } }
+    public bool InOcean { get { return worldLoading.IsDeepWater(X, Y); } }
+    public bool Moving { get { return !PauseHandler.paused && (rb.velocity != Vector2.zero); } }
 
     public void Start() {
         rb = GetComponent<Rigidbody2D>();
@@ -38,31 +32,38 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     void Update() {
-        input_move.x = 0;
-        input_move.y = 0;
-        if(PlayerInput.GetKey("move east" )) input_move.x ++;
-        if(PlayerInput.GetKey("move north")) input_move.y ++;
-        if(PlayerInput.GetKey("move west" )) input_move.x --;
-        if(PlayerInput.GetKey("move south")) input_move.y --;
-        input_move.Normalize();
+        var input = new Vector2(
+            (PlayerInput.GetKey("move east" ) ? 1 : 0) + (PlayerInput.GetKey("move west" ) ? -1 : 0),
+            (PlayerInput.GetKey("move north") ? 1 : 0) + (PlayerInput.GetKey("move south") ? -1 : 0)
+        );
+        bool sneak = PlayerInput.GetKey("sneak");
+        var target = input.normalized * (InWater ? waterSpeed : (sneak ? walkSpeed : runSpeed));
+        var targetWalk = input.normalized * walkSpeed;
+        float cornerWalkSpeed = walkSpeed * Math.ROOT_ONE_HALF;
 
-        PlayerAnimator.direction = (input_move.x == 0) ? (Input.mousePosition.x > (Screen.width / 2) ? 0 : 1) : (input_move.x > 0 ? 0 : 1);
+        var vel = rb.velocity;
 
-        moving = (input_move.x != 0 || input_move.y != 0) && (Mathf.Abs(rb.velocity.x) >= 0.01f || Mathf.Abs(rb.velocity.y) >= 0.01f) && !PauseHandler.paused;
+        float rbxSign = Mathf.Sign(vel.x);
+        float rbySign = Mathf.Sign(vel.y);
+        vel -= new Vector2(
+            (input.x != rbxSign || Mathf.Abs(vel.x) > Mathf.Abs(target.x)) ? rbxSign : 0,
+            (input.y != rbySign || Mathf.Abs(vel.y) > Mathf.Abs(target.y)) ? rbySign : 0
+        ).normalized * decel * Time.deltaTime;
+        vel = new Vector2(
+            Mathf.Abs(vel.x) <= (input.y == 0 ? walkSpeed : cornerWalkSpeed) ? targetWalk.x : vel.x,
+            Mathf.Abs(vel.y) <= (input.x == 0 ? walkSpeed : cornerWalkSpeed) ? targetWalk.y : vel.y
+        );
 
-        int x = (int)Mathf.Floor(rb.position.x+c2d.offset.x),
-            y = (int)Mathf.Floor(rb.position.y+c2d.offset.y-halfColliderHeight);
-        inWater = worldLoading.IsWater(x,y);
-        inOcean = worldLoading.IsDeepWater(x,y);
+        if(!sneak) {
+            vel += input.normalized * accel * Time.deltaTime;
+        }
+        vel.Cap(InWater ? waterSpeed : runSpeed);
+        rb.velocity = vel;
 
-        speedMult = 1;
-        speedMult *= false ? sprintMult : 1;
-        speedMult *= InWater ? waterMultiplier : 1;
-        speedMult *= (Flashlight.on ? PlayerStats.k_FLASHLIGHT_MULTIPLIER : 1);
-        speedMult *= debugSpode;
-    }
-
-    void FixedUpdate() {
-        rb.velocity = (input_move * speedMult * runSpeed);
+        pAnimator.UpdateMovement(
+            (rb.velocity.x == 0) ? (Input.mousePosition.x > (Screen.width / 2) ? false : true) : (rb.velocity.x > 0 ? false : true),
+            Moving,
+            rb.velocity.magnitude
+        );
     }
 }

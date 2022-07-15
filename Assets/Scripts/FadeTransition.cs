@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using System.Threading.Tasks;
 
 public class FadeTransition : MonoBehaviour {
-    // hierarchy
+    // inspector
     public float fadeSpeed=3.0f;
 
     public static bool black;

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-using static Singles;
-
 [System.Serializable]
 public class StringFloat {
     public string s;

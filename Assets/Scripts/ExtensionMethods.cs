@@ -36,4 +36,11 @@ public static class ExtensionMethods {
     public static T Clamped<T>(this T[,] map, int x, int y) {
         return map[UnityEngine.Mathf.Clamp(x, 0, map.GetLength(0)-1), UnityEngine.Mathf.Clamp(y, 0, map.GetLength(1)-1)];
     }
+
+    public static void Cap(this ref UnityEngine.Vector2 vec, float val) {
+        if(vec.magnitude > val) {
+            vec.Normalize();
+            vec *= val;
+        }
+    }
 }

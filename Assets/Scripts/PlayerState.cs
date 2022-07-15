@@ -7,12 +7,11 @@ public class PlayerState : MonoBehaviour
 {
     public static PlayerState instance;
 
-    // hierarchy
+    // inspector
     // public Transform knifeRotationPoint;
     // public Transform knifeStart;
 
     // general
-    public static bool moving=false;
     public static bool sprinting=false;
     public static bool shooting=false;
     public static bool punching=false;

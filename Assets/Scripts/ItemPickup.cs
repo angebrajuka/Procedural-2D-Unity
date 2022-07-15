@@ -6,7 +6,7 @@ public class ItemPickup : MonoBehaviour
 {
     static readonly Vector2 vecLength2 = new Vector2(2, 2);
 
-    // hierarchy
+    // inspector
     public string item;
 
     // components

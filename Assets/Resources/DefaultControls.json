@@ -1,10 +1,10 @@
 {
     "keybinds": [
-        {"name": "move east",               "keys": [100, 275] },
-        {"name": "move north",              "keys": [119, 273] },
-        {"name": "move west",               "keys": [97, 276] },
-        {"name": "move south",              "keys": [115, 274] },
-        {"name": "sprint",                  "keys": [304] },
-        {"name": "flashlight",              "keys": [306] }
+        {"name": "move east",               "keys": [100, 275]  },
+        {"name": "move north",              "keys": [119, 273]  },
+        {"name": "move west",               "keys": [97, 276]   },
+        {"name": "move south",              "keys": [115, 274]  },
+        {"name": "sneak",                   "keys": [304]       },
+        {"name": "flashlight",              "keys": [306]       }
     ]
 }

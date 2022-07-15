@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyTrigger : MonoBehaviour
 {
-    // hierarchy
+    // inspector
     public EnemyObject enemyObject;
 
     void OnTriggerEnter2D(Collider2D other)

@@ -26,7 +26,7 @@ public class DynamicEnemySpawning : MonoBehaviour
 {
     [HideInInspector] public static DynamicEnemySpawning instance;
 
-    // hierarchy
+    // inspector
     public GameObject enemyPrefab;
     public GameObject bloodSplatter;
     public float minRadius, maxRadius;

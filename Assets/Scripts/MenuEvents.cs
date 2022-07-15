@@ -21,6 +21,12 @@ public class MenuEvents : MonoBehaviour {
     const int FRAMES = 10;
     // number of frames to wait is arbitrary, just needs to be more than 1 to compensate for delta time, 10 seemed to solve all issues
 
+    public void Start() {
+        FadeTransition.black = true;
+        FadeTransition.Snap();
+        MainMenu();
+    }
+
     public async void MainMenu() {
         FadeTransition.black = true;
         DaylightCycle.time = DaylightCycle.k_NIGHT;

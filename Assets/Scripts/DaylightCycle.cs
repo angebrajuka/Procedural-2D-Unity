@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 public class DaylightCycle : MonoBehaviour {
     public const float k_MORNING=240, k_DAY=15, k_EVENING=135, k_NIGHT=150;
     
-    // hierarchy
+    // inspector
     public float brightness_day, brightness_night;
     public Color color_day, color_night;
     public WorldLoading worldLoading;

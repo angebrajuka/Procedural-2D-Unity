@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GunSortOrder : MonoBehaviour
 {
-    // hierarchy
+    // inspector
     public RectTransform sortPoint;
     public RectTransform gunSprite;
 

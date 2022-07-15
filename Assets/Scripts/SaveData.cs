@@ -4,7 +4,6 @@ using UnityEngine;
 using System.Threading.Tasks;
 
 using static GameState;
-using static Singles;
 
 [System.Serializable]
 public class GridItemSerializable

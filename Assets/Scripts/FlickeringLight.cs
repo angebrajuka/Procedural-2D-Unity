@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 public class FlickeringLight : MonoBehaviour
 {
-    // hierarchy
+    // inspector
     public float radiusRange, intensityRange, timingAverage, timingRange, changeSpeed;
     public float averageRadius, averageIntensity;
     public bool useBeginningRadius;

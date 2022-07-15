@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 using System.Threading.Tasks;
 
 public class WorldGen : MonoBehaviour {
-    // hierarchy
+    // inspector
     public RuleTile tile_dungeonFloor;
     public RuleTile tile_dungeonWall;
     public RuleTile[] water;

@@ -3,11 +3,10 @@ using UnityEngine.Tilemaps;
 using System;
 
 public class WorldLoading : MonoBehaviour {
-    // hierarchy
-    public WorldGen worldGen;
-    public Tilemap[] tilemaps;
-    public Follow cameraFollow;
-    public Vector2Int renderDistance;
+    [SerializeField] private WorldGen worldGen;
+    [SerializeField] private Tilemap[] tilemaps;
+    [SerializeField] private Follow cameraFollow;
+    [SerializeField] private Vector2Int renderDistance;
 
     [HideInInspector] public World world;
     private Vector3Int currPos = Vector3Int.zero, prevPos = Vector3Int.zero;

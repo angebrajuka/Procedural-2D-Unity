@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour {
-    // hierarchy
+    // inspector
+    [SerializeField] private float speed_runAnimation;
     public SpriteRenderer m_renderer;
     public Animator m_animator;
     public Transform gunSortingGroup;
@@ -16,9 +17,6 @@ public class PlayerAnimator : MonoBehaviour {
     public GameObject arm_left;
     public Transform gunRotatePoint;
     public Transform armRotatePoint;
-
-    // input
-    public static int direction=0; // 0 = right, 1 = left
 
     public void BeginMelee() {
         m_renderer_gun.enabled = false;
@@ -36,14 +34,17 @@ public class PlayerAnimator : MonoBehaviour {
 
     static Vector3 playerAngle = new Vector3(0, 0, 0);
 
-    void Update() {
-        m_renderer.flipX = (direction == 1);
+    public void UpdateMovement(bool flipped, bool moving, float speed) {
+        m_renderer.flipX = flipped;
+        m_animator.SetBool("moving", moving);
+        m_animator.speed = moving ? speed * speed_runAnimation : 1;
+    }
 
-        m_animator.SetBool("moving", PlayerMovement.moving);
+    void Update() {
+
         m_animator.SetInteger("biome", 2);
         // m_animator.SetBool("shooting", PlayerState.shooting || PlayerState.melee);
         // m_animator.SetBool("punching", PlayerState.punching);
-        m_animator.speed = PlayerMovement.moving ? PlayerMovement.rb.velocity.magnitude * 0.07f : 1;
 
         // m_renderer_gun.sprite = PlayerState.currentGun == null ? null : PlayerState.currentItem.sprite;
         // m_renderer_gun.flipY = (PlayerInput.angle > 90 && PlayerInput.angle < 270);

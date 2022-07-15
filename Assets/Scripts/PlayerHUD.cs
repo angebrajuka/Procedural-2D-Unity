@@ -7,7 +7,7 @@ public class PlayerHUD : MonoBehaviour
 {
     public static PlayerHUD instance;
 
-    // hierarchy
+    // inspector
 new public Transform transform;
     public Text currentGunAmmoTxt;
     public Text currentReserveTxt;
