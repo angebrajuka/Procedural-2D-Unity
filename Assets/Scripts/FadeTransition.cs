@@ -6,11 +6,10 @@ using UnityEngine.UI;
 using System.Threading.Tasks;
 
 public class FadeTransition : MonoBehaviour {
-    // inspector
-    public float fadeSpeed=3.0f;
+    [SerializeField] private float fadeSpeed=3.0f;
 
     public static bool black;
-    static RawImage image;
+    private static RawImage image;
 
     public void Start() {
         image = GetComponent<RawImage>();

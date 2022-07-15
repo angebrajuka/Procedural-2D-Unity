@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public class DaylightCycle : MonoBehaviour {
-    public const float k_MORNING=240, k_DAY=15, k_EVENING=135, k_NIGHT=150;
-    
-    // inspector
-    public float brightness_day, brightness_night;
-    public Color color_day, color_night;
-    public WorldLoading worldLoading;
+    [SerializeField] private float brightness_day, brightness_night;
+    [SerializeField] private Color color_day, color_night;
+    [SerializeField] private WorldLoading worldLoading;
 
+    public const float k_MORNING=240, k_DAY=15, k_EVENING=135, k_NIGHT=150;
+
+    private static float brightness;
+    public static float Brightness { get { return brightness; } }
     public static float time = k_DAY;
-    public static float brightness;
 
     Light2D globalLight;
 

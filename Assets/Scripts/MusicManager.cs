@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MusicManager : MonoBehaviour {
-    // inspector
-    public float delay;
-    public float swell;
+    [SerializeField] private float delay;
+    [SerializeField] private float swell;
 
     AudioSource m_audioSource;
     Dictionary<bool, AudioClip[]> clips;

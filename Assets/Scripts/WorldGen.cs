@@ -5,13 +5,12 @@ using UnityEngine.Tilemaps;
 using System.Threading.Tasks;
 
 public class WorldGen : MonoBehaviour {
-    // inspector
-    public RuleTile tile_dungeonFloor;
-    public RuleTile tile_dungeonWall;
-    public RuleTile[] water;
-    public RuleTile[] deep_water;
-    public Biome ocean, shoreline, beach;
-    public Biome[] biomes;
+    [SerializeField] private RuleTile tile_dungeonFloor;
+    [SerializeField] private RuleTile tile_dungeonWall;
+    [SerializeField] private RuleTile[] water;
+    [SerializeField] private RuleTile[] deep_water;
+    [SerializeField] private Biome ocean, shoreline, beach;
+    [SerializeField] private Biome[] biomes;
 
     public HashSet<RuleTile> waterTiles;
     public HashSet<RuleTile> deepWaterTiles;

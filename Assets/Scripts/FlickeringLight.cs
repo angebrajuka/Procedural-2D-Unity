@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class FlickeringLight : MonoBehaviour
-{
-    // inspector
-    public float radiusRange, intensityRange, timingAverage, timingRange, changeSpeed;
-    public float averageRadius, averageIntensity;
-    public bool useBeginningRadius;
-    public bool useBeginningIntensity;
+public class FlickeringLight : MonoBehaviour {
+    [SerializeField] private float radiusRange, intensityRange, timingAverage, timingRange, changeSpeed;
+    [SerializeField] private float averageRadius, averageIntensity;
+    [SerializeField] private bool useBeginningRadius;
+    [SerializeField] private bool useBeginningIntensity;
 
     public bool on;
 
@@ -19,17 +17,14 @@ public class FlickeringLight : MonoBehaviour
     private float targetIntensity;
     private float targetRadius;
 
-    void Start()
-    {
+    void Start() {
         light2D = GetComponent<Light2D>();
         mlight = GetComponent<MLight>();
 
-        if(useBeginningRadius)
-        {
+        if(useBeginningRadius) {
             averageRadius = light2D.pointLightOuterRadius;
         }
-        if(useBeginningIntensity)
-        {
+        if(useBeginningIntensity) {
             averageIntensity = light2D.intensity;
         }
         timer = 0;
@@ -38,11 +33,9 @@ public class FlickeringLight : MonoBehaviour
         targetRadius = averageRadius;
     }
 
-    void Update()
-    {
+    void Update() {
         timer += Time.deltaTime;
-        if(timer >= interval)
-        {
+        if(timer >= interval) {
             timer = 0;
             targetRadius = averageRadius + Random.value*radiusRange*2 - radiusRange;
             targetIntensity = averageIntensity + Random.value*intensityRange*2 - intensityRange;

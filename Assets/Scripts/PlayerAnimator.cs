@@ -3,20 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour {
-    // inspector
     [SerializeField] private float speed_runAnimation;
-    public SpriteRenderer m_renderer;
-    public Animator m_animator;
-    public Transform gunSortingGroup;
-    public Transform armSortingGroup;
-    public SpriteRenderer m_renderer_gun;
-    public SpriteRenderer m_renderer_arm;
-    public SpriteRenderer m_renderer_sword;
-    public GameObject gun;
-    public GameObject arm_right;
-    public GameObject arm_left;
-    public Transform gunRotatePoint;
-    public Transform armRotatePoint;
+    [SerializeField] private SpriteRenderer m_renderer;
+    [SerializeField] private Animator m_animator;
+    [SerializeField] private Transform gunSortingGroup, armSortingGroup;
+    [SerializeField] private SpriteRenderer m_renderer_gun, m_renderer_arm, m_renderer_sword;
+    [SerializeField] private GameObject gun, arm_right, arm_left;
+    [SerializeField] private Transform gunRotatePoint, armRotatePoint;
 
     public void BeginMelee() {
         m_renderer_gun.enabled = false;
