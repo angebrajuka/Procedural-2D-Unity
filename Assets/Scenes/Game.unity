@@ -638,8 +638,8 @@ MonoBehaviour:
   cameraFollow: {fileID: 792913058}
   pAnimator: {fileID: 413550054}
   walkSpeed: 4
-  accel: 16
-  decel: 16
+  accel: 24
+  decel: 24
   runSpeed: 7.4
   waterSpeed: 4
 --- !u!114 &413550050
