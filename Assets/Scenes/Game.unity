@@ -232,7 +232,7 @@ MonoBehaviour:
       threshhold: 0.06
       collider: 0
     - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
-      threshhold: 0.21
+      threshhold: 0.03
       collider: 0
   - biome_name: forest
     tile: {fileID: 11400000, guid: 28136ec728890d84b844f5d17adefde4, type: 2}
@@ -244,7 +244,7 @@ MonoBehaviour:
       threshhold: 0.03
       collider: 1
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.12
+      threshhold: 0.03
       collider: 0
   - biome_name: desert
     tile: {fileID: 11400000, guid: 7e9560d2059432d4cb16cd174653d837, type: 2}
@@ -256,7 +256,7 @@ MonoBehaviour:
       threshhold: 0.03
       collider: 1
     - tile: {fileID: 11400000, guid: ec954a85d33fff844a6addf4f9209444, type: 2}
-      threshhold: 0.104
+      threshhold: 0.014
       collider: 0
   - biome_name: taiga
     tile: {fileID: 11400000, guid: 241c7afd028f41e4e9c7d65f8a555f86, type: 2}
@@ -268,10 +268,10 @@ MonoBehaviour:
       threshhold: 0.02
       collider: 1
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.08
+      threshhold: 0.02
       collider: 0
     - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
-      threshhold: 0.21
+      threshhold: 0.03
       collider: 0
   - biome_name: tundra
     tile: {fileID: 11400000, guid: 241c7afd028f41e4e9c7d65f8a555f86, type: 2}
@@ -283,7 +283,7 @@ MonoBehaviour:
       threshhold: 0.02
       collider: 0
     - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
-      threshhold: 0.08
+      threshhold: 0.02
       collider: 0
   - biome_name: rainforest
     tile: {fileID: 11400000, guid: b4dcf2dbfc3cb484a82896273b6719d9, type: 2}
@@ -295,13 +295,13 @@ MonoBehaviour:
       threshhold: 0.025
       collider: 1
     - tile: {fileID: 11400000, guid: 2cbf413d445415a4a8272615921dafd8, type: 2}
-      threshhold: 0.11
+      threshhold: 0.035
       collider: 1
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.35500002
+      threshhold: 0.1
       collider: 0
     - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
-      threshhold: 0.82000005
+      threshhold: 0.06
       collider: 0
   - biome_name: savanna
     tile: {fileID: 11400000, guid: 1049f7248b015ed41937199a322de3b6, type: 2}
@@ -313,10 +313,10 @@ MonoBehaviour:
       threshhold: 0.01
       collider: 1
     - tile: {fileID: 11400000, guid: ec954a85d33fff844a6addf4f9209444, type: 2}
-      threshhold: 0.044
+      threshhold: 0.014
       collider: 0
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.109
+      threshhold: 0.007
       collider: 0
   - biome_name: swamp
     tile: {fileID: 11400000, guid: e9add67c912fa7a499de92ea46c0d6b1, type: 2}
@@ -328,7 +328,7 @@ MonoBehaviour:
       threshhold: 0.04
       collider: 0
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.13
+      threshhold: 0.01
       collider: 0
 --- !u!114 &27163494
 MonoBehaviour:
@@ -954,8 +954,8 @@ Canvas:
   m_GameObject: {fileID: 494162882}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 792913056}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -964,7 +964,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!224 &494162886
 RectTransform:
@@ -1261,7 +1261,6 @@ GameObject:
   - component: {fileID: 792913055}
   - component: {fileID: 792913054}
   - component: {fileID: 792913058}
-  - component: {fileID: 792913059}
   m_Layer: 8
   m_Name: Main_Camera
   m_TagString: MainCamera
@@ -1337,7 +1336,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10.375
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1385,32 +1384,9 @@ MonoBehaviour:
   lockX: 0
   lockY: 0
   lockZ: 1
-  type: 1
-  maxDist: 5
-  speed: 3
---- !u!114 &792913059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 792913053}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ComponentVersion: 1
-  m_AssetsPPU: 16
-  m_RefResolutionX: 480
-  m_RefResolutionY: 270
-  m_CropFrame: 0
-  m_GridSnapping: 1
-  m_UpscaleRT: 0
-  m_PixelSnapping: 0
-  m_CropFrameX: 0
-  m_CropFrameY: 0
-  m_StretchFill: 0
+  type: 0
+  maxDist: 10
+  speed: 2
 --- !u!1 &1163101975
 GameObject:
   m_ObjectHideFlags: 0
