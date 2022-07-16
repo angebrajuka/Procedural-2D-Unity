@@ -14,7 +14,7 @@ public class Decoration {
     public RuleTile tile;
     public float threshhold;
     public bool collider;
-    public Vector2Int Size { get { return new Vector2Int((int)Mathf.Round(tile.m_DefaultSprite.texture.width/16), (int)Mathf.Round(tile.m_DefaultSprite.texture.height/32)); } }
+    public Vector2Int Size { get { return new Vector2Int((int)Mathf.Round(tile.m_DefaultSprite.texture.width/16), (int)Mathf.Max(Mathf.Floor(tile.m_DefaultSprite.texture.height/32), 1)); } }
 }
 
 [System.Serializable]
