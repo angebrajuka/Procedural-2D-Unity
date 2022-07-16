@@ -1385,8 +1385,9 @@ MonoBehaviour:
   lockX: 0
   lockY: 0
   lockZ: 1
-  type: 0
-  maxDist: 0
+  type: 1
+  maxDist: 5
+  speed: 3
 --- !u!114 &792913059
 MonoBehaviour:
   m_ObjectHideFlags: 0
