@@ -23,10 +23,4 @@ public class Biome {
     public RuleTile tile;
     public Color32 rain_temp_map_color;
     public Decoration[] decorations;
-
-    public void Init() {
-        for(int i=1; i<decorations.Length; i++) {
-            decorations[i].threshhold += decorations[i-1].threshhold;
-        }
-    }
 }

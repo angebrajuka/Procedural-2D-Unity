@@ -39,7 +39,6 @@ public class WorldGen : MonoBehaviour {
         }
 
         foreach(var biome in biomes) {
-            biome.Init();
             for(int x=0; x<rain_temp_map_width; x++) for(int y=0; y<rain_temp_map_width; y++) {
                 if(rain_temp_map_tex.GetPixel(x, y) == (Color)biome.rain_temp_map_color) {
                     rain_temp_map[x,y] = biome;
@@ -204,6 +203,8 @@ public class WorldGen : MonoBehaviour {
                                 layer[pos.x, pos.y] = decoration.tile;
                                 break;
                             }
+                        } else {
+                            rval -= decoration.threshhold;
                         }
                     }
                 }

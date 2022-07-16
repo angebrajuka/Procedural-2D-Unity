@@ -229,7 +229,7 @@ MonoBehaviour:
       rgba: 4284572159
     decorations:
     - tile: {fileID: 11400000, guid: 51ffd28666bd8d345a8f7c06e8ebc562, type: 2}
-      threshhold: 0.06
+      threshhold: 0.05
       collider: 0
     - tile: {fileID: 11400000, guid: 7c3888349e914b14d82703765bb08070, type: 2}
       threshhold: 0.03
@@ -1336,7 +1336,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 12
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2019,7 +2019,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldGen: {fileID: 27163493}
   randSeed: 1
-  seed: 6022
+  seed: 62914
   resolution: 100
 --- !u!114 &1652026530
 MonoBehaviour:
