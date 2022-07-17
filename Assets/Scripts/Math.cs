@@ -96,4 +96,51 @@ public static class Math
     {
         return new Vector2Int(vec1.x/vec2.x, vec1.y/vec2.y);
     }
+
+    public static void forxy(int lim, System.Action<int, int> action) {
+        for(int x=0; x<lim; ++x) for(int y=0; y<lim; ++y) {
+            action(x, y);
+        }
+    }
+    public static void forxy(int lim, System.Action<Vector2Int> action) {
+        var pos = UnityEngine.Vector2Int.zero;
+        for(pos.x=0; pos.x<lim; pos.x++) for(pos.y=0; pos.y<lim; pos.y++) {
+            action(pos);
+        }
+    }
+    public static void forxy(int limX, int limY, System.Action<int, int> action) {
+        for(int x=0; x<limX; ++x) for(int y=0; y<limY; ++y) {
+            action(x, y);
+        }
+    }
+    public static void forxy(int limX, int limY, System.Action<UnityEngine.Vector2Int> action) {
+        var pos = UnityEngine.Vector2Int.zero;
+        for(pos.x=0; pos.x<limX; pos.x++) for(pos.y=0; pos.y<limY; pos.y++) {
+            action(pos);
+        }
+    }
+    public static void forxy(Vector2Int lim, System.Action<UnityEngine.Vector2Int> action) {
+        var pos = UnityEngine.Vector2Int.zero;
+        for(pos.x=0; pos.x<lim.x; pos.x++) for(pos.y=0; pos.y<lim.y; pos.y++) {
+            action(pos);
+        }
+    }
+    public static void forxy(Vector2Int lim, System.Action<int, int> action) {
+        var pos = UnityEngine.Vector2Int.zero;
+        for(pos.x=0; pos.x<lim.x; pos.x++) for(pos.y=0; pos.y<lim.y; pos.y++) {
+            action(pos.x, pos.y);
+        }
+    }
+    public static void forxy(Vector2Int lim, System.Action<UnityEngine.Vector3Int> action) {
+        var pos = UnityEngine.Vector3Int.zero;
+        for(pos.x=0; pos.x<lim.x; pos.x++) for(pos.y=0; pos.y<lim.y; pos.y++) {
+            action(pos);
+        }
+    }
+    public static void forxy(Vector2Int start, Vector2Int lim, System.Action<UnityEngine.Vector3Int> action) {
+        var pos = UnityEngine.Vector3Int.zero;
+        for(pos.x=start.x; pos.x<lim.x; pos.x++) for(pos.y=start.y; pos.y<lim.y; pos.y++) {
+            action(pos);
+        }
+    }
 }

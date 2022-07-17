@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 [System.Serializable]
 public struct DungeonPallet {
     [SerializeField] public Decoration entrance;
-    [SerializeField] public Color floorTint, wallTint, entranceTint;
+    [SerializeField] public Color floorTint, wallTint;
 }
 
 public class WorldGen : MonoBehaviour {
@@ -39,11 +39,11 @@ public class WorldGen : MonoBehaviour {
         }
 
         foreach(var biome in biomes) {
-            for(int x=0; x<rain_temp_map_width; x++) for(int y=0; y<rain_temp_map_width; y++) {
+            Math.forxy(rain_temp_map_width, rain_temp_map_width, (int x, int y) => {
                 if(rain_temp_map_tex.GetPixel(x, y) == (Color)biome.rain_temp_map_color) {
                     rain_temp_map[x,y] = biome;
                 }
-            }
+            });
         }
     }
 
@@ -95,12 +95,9 @@ public class WorldGen : MonoBehaviour {
 
     RuleTile[,] GenLand(float seed_main, float seed_rain, float seed_temp) {
         var layer = new RuleTile[World.diameter, World.diameter];
-        Vector2Int pos = new Vector2Int(0, 0);
-        for(pos.x=0; pos.x<World.diameter; pos.x++) {
-            for(pos.y=0; pos.y<World.diameter; pos.y++) {
-                layer[pos.x, pos.y] = PerlinMain(pos, seed_main, seed_rain, seed_temp).tile;
-            }
-        }
+        Math.forxy(World.diameter, World.diameter, (Vector2Int pos) => {
+            layer[pos.x, pos.y] = PerlinMain(pos, seed_main, seed_rain, seed_temp).tile;
+        });
         return layer;
     }
 
@@ -123,13 +120,10 @@ public class WorldGen : MonoBehaviour {
     (RuleTile[][,], (Vector2Int, DungeonPallet)[]) GenDungeons(System.Random rand) {
         var floor = new RuleTile[World.diameter, World.diameter];
         var decor = new RuleTile[World.diameter, World.diameter];
-        Vector2Int pos = new Vector2Int(0, 0);
-        for(pos.x=0; pos.x<World.diameter; pos.x++) {
-            for(pos.y=0; pos.y<World.diameter; pos.y++) {
-                floor[pos.x, pos.y] = null;
-                decor[pos.x, pos.y] = tile_dungeonWall;
-            }
-        }
+        Math.forxy(World.diameter, World.diameter, (Vector2Int pos) => {
+            floor[pos.x, pos.y] = null;
+            decor[pos.x, pos.y] = tile_dungeonWall;
+        });
 
         var rooms = new List<Room>();
 
@@ -153,10 +147,10 @@ public class WorldGen : MonoBehaviour {
         // }
 
         foreach(var room in rooms) {
-            for(int x=room.BL.x; x<=room.TR.x; ++x) for(int y=room.BL.y; y<=room.TR.y; ++y) {
-                floor[x,y] = tile_dungeonFloor;
-                decor[x,y] = null;
-            }
+            Math.forxy(room.BL, room.TR, (Vector3Int pos) => {
+                floor[pos.x,pos.y] = tile_dungeonFloor;
+                decor[pos.x,pos.y] = null;
+            });
         }
 
         return (new RuleTile[][,]{floor, decor}, new (Vector2Int, DungeonPallet)[]{(new Vector2Int(805, 805), dungeonPallets[0])});
@@ -165,51 +159,52 @@ public class WorldGen : MonoBehaviour {
     RuleTile[,] GenDecorations(System.Random rand, float seed_main, float seed_rain, float seed_temp, (Vector2Int, DungeonPallet)[] entrances) {
         var layer = new RuleTile[World.diameter, World.diameter];
         var filled = new bool[World.diameter, World.diameter];
-        Vector2Int pos = new Vector2Int(0, 0);
-        for(pos.x=0; pos.x<World.diameter; pos.x++) {
-            for(pos.y=0; pos.y<World.diameter; pos.y++) {
-                layer[pos.x, pos.y] = null;
-                filled[pos.x, pos.y] = false;
-            }
+        Math.forxy(World.diameter, (Vector2Int pos) => {
+            layer[pos.x, pos.y] = null;
+            filled[pos.x, pos.y] = false;
+        });
+
+        foreach(var entrance in entrances) {
+            layer[entrance.Item1.x, entrance.Item1.y] = entrance.Item2.entrance.tile;
+            Math.forxy(entrance.Item2.entrance.Size, (Vector2Int pos) => {
+                
+            });
         }
-        for(pos.x=0; pos.x<World.diameter; pos.x++) {
-            for(pos.y=0; pos.y<World.diameter; pos.y++) {
-                Biome biome = PerlinMain(pos, seed_main, seed_rain, seed_temp);
 
-                if(layer[pos.x, pos.y] == null) {
-                    var rval = rand.NextDouble();
-                    foreach(var decoration in biome.decorations) {
-                        if(rval < decoration.threshhold) {
+        Math.forxy(World.diameter, (Vector2Int pos) => {
+            Biome biome = PerlinMain(pos, seed_main, seed_rain, seed_temp);
 
-                            bool DecorationFits() {
-                                for(int x=0; x<decoration.Size.x; x++) {
-                                    for(int y=0; y<decoration.Size.y; y++) {
-                                        if(PerlinMain(pos+new Vector2Int(x, y), seed_main, seed_rain, seed_temp) != biome || filled[pos.x+x, pos.y+y]) {
-                                            return false;
-                                        }
-                                    }
+            if(layer[pos.x, pos.y] == null) {
+                var rval = rand.NextDouble();
+                foreach(var decoration in biome.decorations) {
+                    if(rval < decoration.threshhold) {
+
+                        bool DecorationFits() {
+                            bool val = true;
+                            Math.forxy(decoration.Size, (int x, int y) => {
+                                if(PerlinMain(pos+new Vector2Int(x, y), seed_main, seed_rain, seed_temp) != biome || filled[pos.x+x, pos.y+y]) {
+                                    val = false;
+                                    return;
                                 }
-                                return true;
-                            }
-
-                            if(DecorationFits()) {
-                                if(decoration.collider) {
-                                    for(int x=0; x<decoration.Size.x; x++) {
-                                        for(int y=0; y<decoration.Size.y; y++) {
-                                            filled[pos.x+x, pos.y+y] = true;
-                                        }
-                                    }
-                                }
-                                layer[pos.x, pos.y] = decoration.tile;
-                                break;
-                            }
-                        } else {
-                            rval -= decoration.threshhold;
+                            });
+                            return val;
                         }
+
+                        if(DecorationFits()) {
+                            if(decoration.collider) {
+                                Math.forxy(decoration.Size, (int x, int y) => {
+                                    filled[pos.x+x, pos.y+y] = true;
+                                });
+                            }
+                            layer[pos.x, pos.y] = decoration.tile;
+                            break;
+                        }
+                    } else {
+                        rval -= decoration.threshhold;
                     }
                 }
             }
-        }
+        });
 
         return layer;
     }
@@ -264,17 +259,18 @@ public class WorldGen : MonoBehaviour {
         while(true) {
             for(int i=0; i<textures.Length; ++i) {
                 textures[i] = new Texture2D(resolution, resolution);
-                for(int x=0; x<resolution; x++) for(int y=0; y<resolution; y++) {
+                Math.forxy(resolution, resolution, (int x, int y) => {
                     var tile = layers[i][layers[i].GetLength(0)*x/resolution, layers[i].GetLength(1)*y/resolution];
                     if(tile == null) {
                         textures[i].SetPixel(x, y, Color.white);
-                        continue;
+                        goto end;
                     }
                     if(!tile_to_color.ContainsKey(tile)) {
                         tile_to_color.Add(tile, tile.m_DefaultSprite.texture.AverageColorFromTexture());
                     }
                     textures[i].SetPixel(x, y, tile_to_color[tile]);
-                }
+                    end:;
+                });
                 textures[i].Apply();
             }
             if(textures == textures_dungeons) break;

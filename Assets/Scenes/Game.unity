@@ -187,12 +187,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dungeonPallets:
   - entrance:
-      tile: {fileID: 0}
+      tile: {fileID: 11400000, guid: a576a1eb5feef2a48953628343008569, type: 2}
       threshhold: 1
       collider: 1
     floorTint: {r: 1, g: 1, b: 1, a: 1}
     wallTint: {r: 1, g: 1, b: 1, a: 1}
-    entranceTint: {r: 1, g: 1, b: 1, a: 1}
   tile_dungeonFloor: {fileID: 11400000, guid: cdbb0c1e2aa6f384ba1c2616bba2981b, type: 2}
   tile_dungeonWall: {fileID: 11400000, guid: 0e4861ab6d5ac464c83a8770b1619e26, type: 2}
   water:
@@ -3390,7 +3389,7 @@ MonoBehaviour:
   worldLoading: {fileID: 27163494}
   menuCampfire: {fileID: 1517099173}
   cameraFollow: {fileID: 792913058}
-  pMovement: {fileID: 413550040}
+  player: {fileID: 413550053}
   menuSeeds:
   - seed: 10
     x: 475

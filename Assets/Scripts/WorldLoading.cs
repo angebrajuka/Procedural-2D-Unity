@@ -27,7 +27,7 @@ public class WorldLoading : MonoBehaviour {
         return worldGen.deepWaterTiles.Contains(GetRuleTile(x, y, 0));
     }
 
-    public async void EnterExitDungeon(int enter) {
+    public async void EnterExitDungeon(int enter, Color[] tints=null) {
         FadeTransition.black = true;
         await FadeTransition.AwaitFade();
         InDungeon = (enter != 0);
@@ -83,15 +83,14 @@ public class WorldLoading : MonoBehaviour {
         }
         var positionArray = new Vector3Int[area];
         var tilebaseArray = new RuleTile[positionArray.Length];
-        Vector3Int pos = new Vector3Int(0, 0, 0);
         for(int layer=0; layer<tilemaps.Length; ++layer) {
             int i=0;
             foreach(var bounds in toFill) {
-                for(pos.x=bounds.min.x; pos.x<bounds.max.x; pos.x++) for(pos.y=bounds.min.y; pos.y<bounds.max.y; pos.y++) {
+                Math.forxy(bounds.min, bounds.max, (Vector3Int pos) => {
                     positionArray[i] = pos;
                     tilebaseArray[i] = GetRuleTile(pos.x, pos.y, layer);
                     ++i;
-                }
+                });
             }
             tilemaps[layer].SetTiles(positionArray, tilebaseArray);
         }

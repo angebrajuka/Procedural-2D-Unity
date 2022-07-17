@@ -15,7 +15,7 @@ public class MenuEvents : MonoBehaviour {
     public WorldLoading worldLoading;
     public Campfire menuCampfire;
     public Follow cameraFollow;
-    public PlayerMovement pMovement;
+    public Transform player;
     public MenuSeedPosition[] menuSeeds;
 
     const int FRAMES = 10;
@@ -28,6 +28,7 @@ public class MenuEvents : MonoBehaviour {
     }
 
     public async void MainMenu() {
+        player.gameObject.SetActive(false);
         FadeTransition.black = true;
         DaylightCycle.time = DaylightCycle.k_NIGHT;
         menuCampfire.Lit = false;
@@ -77,8 +78,9 @@ public class MenuEvents : MonoBehaviour {
         menuCampfire.gameObject.SetActive(false);
         var world = worldGen.GenerateWorld(seed);
         worldLoading.world = world;
-        pMovement.transform.position = world.playerSpawnPoint; // transform.position is updated instantly, rb.position wont update till next frame, caused loading bug
-        cameraFollow.toFollow = pMovement.transform;
+        player.gameObject.SetActive(true);
+        player.position = world.playerSpawnPoint; // transform.position is updated instantly, rb.position wont update till next frame, caused loading bug
+        cameraFollow.toFollow = player;
         cameraFollow.offset = Vector3.zero;
         cameraFollow.Snap();
         worldLoading.ForceLoadAllLagSpike();
